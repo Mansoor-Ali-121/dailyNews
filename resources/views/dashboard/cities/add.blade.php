@@ -52,120 +52,130 @@
                         @endif
                         {{-- END FULL ERROR DISPLAY SECTION --}}
 
-                   {{-- Form to add a new city --}}
-<form method="POST" action="{{ route('city.add') }}" class="needs-validation" novalidate>
-    @csrf
+                        {{-- Form to add a new city --}}
+                        <form method="POST" action="{{ route('city.add') }}" class="needs-validation" novalidate>
+                            @csrf
 
-    <div class="row g-4">
-        {{-- Country ID Field --}}
-        <div class="col-12">
-            <div class="form-floating position-relative">
-                <i class="fas fa-globe floating-icon"></i>
-                <select class="form-select border-2 ps-5 py-3 @error('country_id') is-invalid @enderror" 
-                    id="country_id" name="country_id" required>
-                    <option value="" {{ old('country_id') == '' ? 'selected' : '' }} disabled>Select Country</option>
-                    @foreach ($countries as $country)
-                        <option value="{{ $country->id }}" {{ old('country_id') == $country->id ? 'selected' : '' }}>
-                            {{ $country->country_name }} ({{ $country->country_code }})
-                        </option>
-                    @endforeach
-                </select>
-                @error('country_id')
-                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
+                            <div class="row g-4">
+                                {{-- Country ID Field --}}
+                                <div class="col-12">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-globe floating-icon"></i>
+                                        <select
+                                            class="form-select border-2 ps-5 py-3 @error('country_id') is-invalid @enderror"
+                                            id="country_id" name="country_id" required>
+                                            <option value="" {{ old('country_id') == '' ? 'selected' : '' }} disabled>
+                                                Select Country</option>
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->id }}"
+                                                    {{ old('country_id') == $country->id ? 'selected' : '' }}>
+                                                    {{ $country->country_name }} ({{ $country->country_code }})
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        @error('country_id')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
-        {{-- City Name Field --}}
-        <div class="col-12">
-            <div class="form-floating position-relative">
-                <i class="fas fa-city floating-icon"></i>
-                <input type="text"
-                    class="form-control border-2 ps-5 py-3 @error('city_name') is-invalid @enderror"
-                    id="city_name" name="city_name" value="{{ old('city_name') }}" required 
-                    placeholder="City Name">
-                <label for="city_name" class="form-label text-muted ms-4">City Name</label>
-                @error('city_name')
-                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
+                                {{-- City Name Field --}}
+                                <div class="col-12">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-city floating-icon"></i>
+                                        <input type="text"
+                                            class="form-control border-2 ps-5 py-3 @error('city_name') is-invalid @enderror"
+                                            id="city_name" name="city_name" value="{{ old('city_name') }}" required
+                                            placeholder="City Name">
+                                        <label for="city_name" class="form-label text-muted ms-4">City Name</label>
+                                        @error('city_name')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
-        {{-- Zip Code Field --}}
-<div class="col-12">
-    <div class="form-floating position-relative">
-        {{-- Icon for Zip Code, centered vertically --}}
-        <i class="fas fa-mail-bulk floating-icon"></i> 
-        <input type="text" 
-            class="form-control border-2 ps-5 py-3 @error('zip_code') is-invalid @enderror"
-            id="zip_code" name="zip_code" value="{{ old('zip_code') }}" placeholder="Zip Code">
-        <label for="zip_code" class="form-label text-muted ms-4">Zip Code:</label>
-        @error('zip_code')
-            <div class="invalid-feedback d-block">{{ $message }}</div>
-        @enderror
-    </div>
-</div>
+                                {{-- Zip Code Field --}}
+                                <div class="col-12">
+                                    <div class="form-floating position-relative">
+                                        {{-- Icon for Zip Code, centered vertically --}}
+                                        <i class="fas fa-mail-bulk floating-icon"></i>
+                                        <input type="text"
+                                            class="form-control border-2 ps-5 py-3 @error('zip_code') is-invalid @enderror"
+                                            id="zip_code" name="zip_code" value="{{ old('zip_code') }}"
+                                            placeholder="Zip Code">
+                                        <label for="zip_code" class="form-label text-muted ms-4">Zip Code:</label>
+                                        @error('zip_code')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
 
-        {{-- City Status Select --}}
-        <div class="col-12">
-            <div class="form-floating position-relative">
-                <i class="fas fa-toggle-on floating-icon"></i>
-                <select name="city_status" id="city_status" 
-                    class="form-select border-2 ps-5 py-3 @error('city_status') is-invalid @enderror" required>
-                    <option value="" {{ old('city_status') == '' ? 'selected' : '' }} disabled>Select Status</option>
-                    <option value="active" {{ old('city_status') == 'active' ? 'selected' : '' }}>Active</option>
-                    <option value="inactive" {{ old('city_status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                </select>
-              
-                @error('city_status')
-                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
+                                {{-- City Status Select --}}
+                                <div class="col-12">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-toggle-on floating-icon"></i>
+                                        <select name="city_status" id="city_status"
+                                            class="form-select border-2 ps-5 py-3 @error('city_status') is-invalid @enderror"
+                                            required>
+                                            <option value="" {{ old('city_status') == '' ? 'selected' : '' }}
+                                                disabled>Select Status</option>
+                                            <option value="active" {{ old('city_status') == 'active' ? 'selected' : '' }}>
+                                                Active</option>
+                                            <option value="inactive"
+                                                {{ old('city_status') == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                        </select>
 
-        {{-- Slug Fields in One Row --}}
-        <div class="col-md-6">
-            <div class="form-floating position-relative">
-                <i class="fas fa-link floating-icon"></i>
-                <input type="text"
-                    class="form-control border-2 ps-5 py-3 @error('actual_slug') is-invalid @enderror"
-                    id="actual_slug" name="actual_slug" value="{{ old('actual_slug') }}" 
-                    onkeyup="generateSlug()" placeholder="Custom Slug">
-                <label for="actual_slug" class="form-label text-muted ms-4">Custom Slug</label>
-                @error('actual_slug')
-                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
+                                        @error('city_status')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
-        <div class="col-md-6">
-            <div class="form-floating position-relative">
-                <i class="fas fa-hashtag floating-icon"></i>
-                <input type="text"
-                    class="form-control border-2 ps-5 py-3 bg-light"
-                    id="city_slug" name="city_slug" value="{{ old('city_slug') }}" 
-                    readonly placeholder="System Generated Slug">
-                <label for="city_slug" class="form-label text-muted ms-4">System Generated Slug</label>
-                @error('city_slug')
-                    <div class="invalid-feedback d-block">{{ $message }}</div>
-                @enderror
-            </div>
-        </div>
+                                {{-- Slug Fields in One Row --}}
+                                <div class="col-md-6">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-link floating-icon"></i>
+                                        <input type="text"
+                                            class="form-control border-2 ps-5 py-3 @error('actual_slug') is-invalid @enderror"
+                                            id="actual_slug" name="actual_slug" value="{{ old('actual_slug') }}"
+                                            onkeyup="generateSlug()" placeholder="Custom Slug">
+                                        <label for="actual_slug" class="form-label text-muted ms-4">Custom Slug</label>
+                                        @error('actual_slug')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
 
-        {{-- Submit Button --}}
-        <div class="col-12 mt-4">
-            <div class="d-flex justify-content-end gap-3">
-                <a href="{{ route('city.show') }}" class="btn btn-lg btn-light rounded-pill px-4 shadow-sm hover-scale">
-                    <i class="fas fa-times me-2"></i> Cancel
-                </a>
-                <button type="submit" class="btn btn-lg btn-primary rounded-pill px-4 shadow-sm hover-scale pulse-on-hover">
-                    <i class="fas fa-plus me-2"></i> Add City
-                </button>
-            </div>
-        </div>
-    </div>
-</form>
+                                <div class="col-md-6">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-hashtag floating-icon"></i>
+                                        <input type="text" class="form-control border-2 ps-5 py-3 bg-light"
+                                            id="city_slug" name="city_slug" value="{{ old('city_slug') }}" readonly
+                                            placeholder="System Generated Slug">
+                                        <label for="city_slug" class="form-label text-muted ms-4">System Generated
+                                            Slug</label>
+                                        @error('city_slug')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                {{-- Submit Button --}}
+                                <div class="col-12 mt-4">
+                                    <div class="d-flex justify-content-end gap-3">
+                                        <a href="{{ route('city.show') }}"
+                                            class="btn btn-lg btn-light rounded-pill px-4 shadow-sm hover-scale">
+                                            <i class="fas fa-times me-2"></i> Cancel
+                                        </a>
+                                        <button type="submit"
+                                            class="btn btn-lg btn-primary rounded-pill px-4 shadow-sm hover-scale pulse-on-hover">
+                                            <i class="fas fa-plus me-2"></i> Add City
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -398,7 +408,7 @@
     </style>
 
 
-      <script>
+    <script>
         function generateSlug() {
             var packageName = document.getElementById('actual_slug').value;
             // var packageSlug = packageName.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
@@ -412,5 +422,5 @@
         }
     </script>
 
-     
+
 @endsection

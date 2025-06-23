@@ -31,15 +31,15 @@ class UserController extends Controller
     {
         $validated = $request->validate([
             'name' => 'required|string|max:255',
-           'email' => [
-            'required',     // Ensures the field is not empty.
-            'string',       // Ensures the input is a string.
-            'email:rfc,dns',// Validates email format according to RFC 5322.
-                            // 'rfc' ensures strict adherence to the standard.
-                            // 'dns' checks if the domain has a valid DNS record (MX or A).
-            'max:255',      
-            'unique:users', 
-        ],
+            'email' => [
+                'required',     // Ensures the field is not empty.
+                'string',       // Ensures the input is a string.
+                'email:rfc,dns', // Validates email format according to RFC 5322.
+                // 'rfc' ensures strict adherence to the standard.
+                // 'dns' checks if the domain has a valid DNS record (MX or A).
+                'max:255',
+                'unique:users',
+            ],
             'password' => 'required|string|min:8',
             'user_type' => 'required|string|in:admin,editor,author,rewiewer',
             'user_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
@@ -62,7 +62,7 @@ class UserController extends Controller
      */
     public function show()
     {
-        $users = User::all();
+        $users = User::paginate(3);
         return view('dashboard.users.show', compact('users'));
     }
 
@@ -110,26 +110,26 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-   
-     public function destroy(string $id)
-     {
 
-         $user = User::find($id);
- 
-         if (!$user) {
-             return redirect()->route('user.show')->with('error', 'User not found.');
-         }
- 
-         // Delete user's image if it exists
-         if ($user->user_image && file_exists(public_path('images/users/' . $user->user_image))) {
-             unlink(public_path('images/users/' . $user->user_image));
-         }
- 
-         // Delete the user record from the database
-         if ($user->delete()) {
-             return redirect()->route('user.show')->with('success', 'User deleted successfully!');
-         } else {
-             return redirect()->route('user.show')->with('error', 'Failed to delete user. Please try again.');
-         }
-     }
+    public function destroy(string $id)
+    {
+
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route('user.show')->with('error', 'User not found.');
+        }
+
+        // Delete user's image if it exists
+        if ($user->user_image && file_exists(public_path('images/users/' . $user->user_image))) {
+            unlink(public_path('images/users/' . $user->user_image));
+        }
+
+        // Delete the user record from the database
+        if ($user->delete()) {
+            return redirect()->route('user.show')->with('success', 'User deleted successfully!');
+        } else {
+            return redirect()->route('user.show')->with('error', 'Failed to delete user. Please try again.');
+        }
+    }
 }

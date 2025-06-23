@@ -2,7 +2,7 @@
 
 @section('main_section')
 
-    <div class="container-fluid px-lg-2 py-4">
+    <div class="container-fluid py-4">
         <div class="row">
             <div class="col-12">
                 <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: 20px;">
@@ -77,7 +77,8 @@
                                             </th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Status</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Activity</th>
-                                            <th class="pe-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0 text-center">
+                                            <th
+                                                class="pe-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0 text-center">
                                                 Actions</th>
                                         </tr>
                                     </thead>
@@ -153,7 +154,64 @@
                                             </tr>
                                         @endforeach
                                     </tbody>
+
                                 </table>
+                                <!-- Replace your current pagination code with this -->
+                                <div class="pagination-container">
+                                    <nav aria-label="Cities pagination">
+                                        <ul class="pagination">
+                                            {{-- Previous Page Link --}}
+                                            @if ($users->onFirstPage())
+                                                <li class="page-item disabled" aria-disabled="true">
+                                                    <span class="page-link">
+                                                        <i class="fas fa-chevron-left"></i>
+                                                        <span class="d-none d-sm-inline ms-2">Prev</span>
+                                                    </span>
+                                                </li>
+                                            @else
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $users->previousPageUrl() }}"
+                                                        rel="prev">
+                                                        <i class="fas fa-chevron-left"></i>
+                                                        <span class="d-none d-sm-inline ms-2">Prev</span>
+                                                    </a>
+                                                </li>
+                                            @endif
+
+                                            {{-- Pagination Elements --}}
+                                            @foreach ($users->getUrlRange(1, $users->lastPage()) as $page => $url)
+                                                @if ($page == $users->currentPage())
+                                                    <li class="page-item active" aria-current="page">
+                                                        <span class="page-link">{{ $page }}</span>
+                                                    </li>
+                                                @else
+                                                    <li class="page-item">
+                                                        <a class="page-link"
+                                                            href="{{ $url }}">{{ $page }}</a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+
+                                            {{-- Next Page Link --}}
+                                            @if ($users->hasMorePages())
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $users->nextPageUrl() }}"
+                                                        rel="next">
+                                                        <span class="d-none d-sm-inline me-2">Next</span>
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </a>
+                                                </li>
+                                            @else
+                                                <li class="page-item disabled" aria-disabled="true">
+                                                    <span class="page-link">
+                                                        <span class="d-none d-sm-inline me-2">Next</span>
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </span>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
                         @endif
                     </div>
@@ -223,7 +281,7 @@
 
         .table tr:hover {
             background-color: rgba(15, 76, 129, 0.03) !important;
-            transform: scale(1.005);
+            /* transform: scale(1.005); */
             box-shadow: 0 6px 15px rgba(15, 76, 129, 0.1);
         }
 
@@ -365,4 +423,85 @@
         }
     </style>
 
+<style>
+        /* Custom Pagination Styles - Add this to your existing CSS */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .page-item {
+            margin: 0 3px;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px !important;
+            border: 2px solid #dee2e6;
+            background-color: white;
+            color: #0f4c81;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .page-link:hover {
+            background: linear-gradient(135deg, #0f4c81 0%, #1b8b9c 100%);
+            color: white !important;
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(15, 76, 129, 0.2);
+        }
+
+        .page-item.active .page-link {
+            background: linear-gradient(135deg, #0f4c81 0%, #1b8b9c 100%);
+            color: white !important;
+            border-color: transparent;
+            box-shadow: 0 4px 10px rgba(15, 76, 129, 0.3);
+        }
+
+        .page-item.disabled .page-link {
+            color: #adb5bd !important;
+            background-color: #f8f9fa;
+            border-color: #e9ecef;
+        }
+
+        .page-item:first-child .page-link,
+        .page-item:last-child .page-link {
+            width: auto;
+            padding: 0 20px;
+            border-radius: 30px !important;
+        }
+
+        .page-item:first-child .page-link {
+            margin-right: 15px;
+        }
+
+        .page-item:last-child .page-link {
+            margin-left: 15px;
+        }
+
+        .page-link i {
+            font-size: 1.1rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .page-link {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+
+            .page-item:first-child .page-link,
+            .page-item:last-child .page-link {
+                padding: 0 15px;
+            }
+        }
+    </style>
 @endsection

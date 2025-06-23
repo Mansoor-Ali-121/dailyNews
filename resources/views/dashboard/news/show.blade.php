@@ -143,20 +143,20 @@
                                                     <div class="d-flex justify-content-end gap-2 action-buttons">
                                                         {{-- Edit Button --}}
                                                         <a href="{{ route('news.edit', $item->id) }}"
-                                                            class="btn btn-outline-primary" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" title="Edit News"
+                                                            class="btn btn-outline-primary btn-sm text-center"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="Edit News"
                                                             aria-label="Edit News {{ $item->news_title }}">
                                                             <i class="fas fa-edit me-1" aria-hidden="true"></i> Edit
                                                         </a>
 
                                                         {{-- Corrected View Button --}}
-                                                        <a href="{{ route('news.view', $item->id) }}" {{-- Assuming 'news.show' route exists --}}
-                                                            class="btn btn-outline-info" {{-- Changed to info for visual distinction, but primary is fine too --}}
+                                                        <a href="{{ route('news.view', $item->id) }}"
+                                                            class="btn btn-outline-info btn-sm text-center"
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
                                                             title="View News"
                                                             aria-label="View News {{ $item->news_title }}">
                                                             <i class="fas fa-eye me-1" aria-hidden="true"></i> View
-                                                            {{-- Changed icon to eye --}}
                                                         </a>
 
                                                         {{-- Delete Form (kept as is, it's correct for a DELETE request) --}}
@@ -165,11 +165,11 @@
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit"
-                                                                class="btn btn-lg btn-outline-danger rounded-pill px-4 shadow-sm"
+                                                                class="btn btn-outline-danger btn-sm text-center"
                                                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                                                 title="Delete News"
                                                                 onclick="return confirm('Are you sure you want to delete?')">
-                                                                <i class="fas fa-trash-alt me-2"></i> Delete
+                                                                <i class="fas fa-trash-alt me-1"></i> Delete
                                                             </button>
                                                         </form>
                                                     </div>
@@ -178,6 +178,60 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                <!-- Replace your current pagination code with this -->
+                                <div class="pagination-container">
+                                    <nav aria-label="Cities pagination">
+                                        <ul class="pagination">
+                                            {{-- Previous Page Link --}}
+                                            @if ($news->onFirstPage())
+                                                <li class="page-item disabled" aria-disabled="true">
+                                                    <span class="page-link">
+                                                        <i class="fas fa-chevron-left"></i>
+                                                        <span class="d-none d-sm-inline ms-2">Prev</span>
+                                                    </span>
+                                                </li>
+                                            @else
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $news->previousPageUrl() }}"
+                                                        rel="prev">
+                                                        <i class="fas fa-chevron-left"></i>
+                                                        <span class="d-none d-sm-inline ms-2">Prev</span>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                            {{-- Pagination Elements --}}
+                                            @foreach ($news->getUrlRange(1, $news->lastPage()) as $page => $url)
+                                                @if ($page == $news->currentPage())
+                                                    <li class="page-item active" aria-current="page">
+                                                        <span class="page-link">{{ $page }}</span>
+                                                    </li>
+                                                @else
+                                                    <li class="page-item">
+                                                        <a class="page-link"
+                                                            href="{{ $url }}">{{ $page }}</a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                            {{-- Next Page Link --}}
+                                            @if ($news->hasMorePages())
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $news->nextPageUrl() }}"
+                                                        rel="next">
+                                                        <span class="d-none d-sm-inline me-2">Next</span>
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </a>
+                                                </li>
+                                            @else
+                                                <li class="page-item disabled" aria-disabled="true">
+                                                    <span class="page-link">
+                                                        <span class="d-none d-sm-inline me-2">Next</span>
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </span>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
                         @endif
                     </div>
@@ -211,11 +265,11 @@
 
         .card:hover {
             /* transform: translateY(-8px);   public function show()
-                    {
-                        $news = News::all();
-                        return view('dashboard.news.show', compact('news'));
-                    }
-                 */
+                                {
+                                    $news = News::all();
+                                    return view('dashboard.news.show', compact('news'));
+                                }
+                             */
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
@@ -496,6 +550,88 @@
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
     </script> --}}
 
+    {{-- Pgination --}}
+    <style>
+        /* Custom Pagination Styles - Add this to your existing CSS */
+        .pagination-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 10px;
+        }
+
+        .page-item {
+            margin: 0 3px;
+        }
+
+        .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border-radius: 12px !important;
+            border: 2px solid #dee2e6;
+            background-color: white;
+            color: #0f4c81;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .page-link:hover {
+            background: linear-gradient(135deg, #0f4c81 0%, #1b8b9c 100%);
+            color: white !important;
+            border-color: transparent;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(15, 76, 129, 0.2);
+        }
+
+        .page-item.active .page-link {
+            background: linear-gradient(135deg, #0f4c81 0%, #1b8b9c 100%);
+            color: white !important;
+            border-color: transparent;
+            box-shadow: 0 4px 10px rgba(15, 76, 129, 0.3);
+        }
+
+        .page-item.disabled .page-link {
+            color: #adb5bd !important;
+            background-color: #f8f9fa;
+            border-color: #e9ecef;
+        }
+
+        .page-item:first-child .page-link,
+        .page-item:last-child .page-link {
+            width: auto;
+            padding: 0 20px;
+            border-radius: 30px !important;
+        }
+
+        .page-item:first-child .page-link {
+            margin-right: 15px;
+        }
+
+        .page-item:last-child .page-link {
+            margin-left: 15px;
+        }
+
+        .page-link i {
+            font-size: 1.1rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .page-link {
+                width: 40px;
+                height: 40px;
+                font-size: 0.9rem;
+            }
+
+            .page-item:first-child .page-link,
+            .page-item:last-child .page-link {
+                padding: 0 15px;
+            }
+        }
+    </style>
 
     <script>
         // Initialize tooltips (ensure Bootstrap JS is loaded before this)

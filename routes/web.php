@@ -7,98 +7,113 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\WebController;
+use App\Http\Middleware\ValidUser;
+
+
 
 
 // Admin Routes
 // Route to display the login form
 Route::get('/admin/login', [AuthController::class, 'loginForm'])->name('login.form');
 Route::post('/admin/login', [AuthController::class, 'authentication'])->name('login.submit');
-Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout');
-Route::get('/admin/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
-Route::get('/admin/profile', [AuthController::class, 'profile'])->name('profile');
+// Middleware routes
+Route::middleware(ValidUser::class)->group(function () {
+    Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/admin/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+    Route::get('/admin/profile', [AuthController::class, 'profile'])->name('profile');
 
-Route::redirect('/admin', '/admin/login');
-// City Routes
-Route::prefix('city')->group(function () {
+    // Route::redirect('/admin', '/admin/login');
+    // City Routes
+    Route::prefix('city')->group(function () {
 
-    Route::get('/add', [CitiesController::class, 'index'])->name('city.add');
-    Route::post('/add', [CitiesController::class, 'store']);
-    Route::get('/show', [CitiesController::class, 'show'])->name('city.show');
-    Route::get('/edit{id}', [CitiesController::class, 'edit'])->name('city.edit');
-    Route::patch('/update{id}', [CitiesController::class, 'update'])->name('city.update');
-    Route::delete('/delete{id}', [CitiesController::class, 'destroy'])->name('city.delete');
+        Route::get('/add', [CitiesController::class, 'index'])->name('city.add');
+        Route::post('/add', [CitiesController::class, 'store']);
+        Route::get('/show', [CitiesController::class, 'show'])->name('city.show');
+        Route::get('/edit{id}', [CitiesController::class, 'edit'])->name('city.edit');
+        Route::patch('/update{id}', [CitiesController::class, 'update'])->name('city.update');
+        Route::delete('/delete{id}', [CitiesController::class, 'destroy'])->name('city.delete');
+    });
+
+    // End City Routes
+
+    // Country Routes
+    Route::prefix('country')->group(function () {
+
+        Route::get('/add', [CountriesController::class, 'index'])->name('country.add');
+        Route::post('/add', [CountriesController::class, 'store']);
+        Route::get('/show', [CountriesController::class, 'show'])->name('country.show');
+        Route::get('/edit/{id}', [CountriesController::class, 'edit'])->name('country.edit');
+        Route::patch('/update/{id}', [CountriesController::class, 'update'])->name('country.update');
+        Route::delete('/delete/{id}', [CountriesController::class, 'destroy'])->name('country.delete');
+    });
+
+    // End Country Routes
+
+    // City Routes
+    Route::prefix('city')->group(function () {
+
+        Route::get('/add', [CitiesController::class, 'index'])->name('city.add');
+        Route::post('/add', [CitiesController::class, 'store']);
+        Route::get('/show', [CitiesController::class, 'show'])->name('city.show');
+        Route::get('/edit/{id}', [CitiesController::class, 'edit'])->name('city.edit');
+        Route::patch('/update/{id}', [CitiesController::class, 'update'])->name('city.update');
+        Route::delete('/delete/{id}', [CitiesController::class, 'destroy'])->name('city.delete');
+    });
+
+    // End City Routes
+
+    // Category Routes
+    Route::prefix('category')->group(function () {
+
+        Route::get('/add', [CategoriesController::class, 'index'])->name('category.add');
+        Route::post('/add', [CategoriesController::class, 'store']);
+        Route::get('/show', [CategoriesController::class, 'show'])->name('category.show');
+        Route::get('/edit/{id}', [CategoriesController::class, 'edit'])->name('category.edit');
+        Route::patch('/update/{id}', [CategoriesController::class, 'update'])->name('category.update');
+        Route::delete('/delete/{id}', [CategoriesController::class, 'destroy'])->name('category.delete');
+    });
+    // End Category Routes
+
+    // News Routes
+
+    Route::prefix('news')->group(function () {
+
+        Route::get('/add', [NewsController::class, 'index'])->name('news.add');
+        Route::post('/add', [NewsController::class, 'store']);
+        Route::get('/show', [NewsController::class, 'show'])->name('news.show');
+        Route::get('/view/{id}', [NewsController::class, 'view'])->name('news.view');
+        Route::get('/edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
+        Route::patch('/update/{id}', [NewsController::class, 'update'])->name('news.update');
+        Route::delete('/delete/{id}', [NewsController::class, 'destroy'])->name('news.delete');
+    });
+    // End News Routes
+
+    // User Routes
+    Route::prefix('user')->group(function () {
+
+        Route::get('/add', [UserController::class, 'index'])->name('user.add');
+        Route::post('/add', [UserController::class, 'store']);
+        Route::get('/show', [UserController::class, 'show'])->name('user.show');
+        Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+        Route::patch('/update/{id}', [UserController::class, 'update'])->name('user.update');
+        Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
+    });
+    // MIddleware end
+    // End User Routes
 });
 
-// End City Routes
 
-// Country Routes
-Route::prefix('country')->group(function () {
+// Websites Routes Start
 
-    Route::get('/add', [CountriesController::class, 'index'])->name('country.add');
-    Route::post('/add', [CountriesController::class, 'store']);
-    Route::get('/show', [CountriesController::class, 'show'])->name('country.show');
-    Route::get('/edit/{id}', [CountriesController::class, 'edit'])->name('country.edit');
-    Route::patch('/update/{id}', [CountriesController::class, 'update'])->name('country.update');
-    Route::delete('/delete/{id}', [CountriesController::class, 'destroy'])->name('country.delete');
-});
-
-// End Country Routes
-
-// City Routes
-Route::prefix('city')->group(function () {
-
-    Route::get('/add', [CitiesController::class, 'index'])->name('city.add');
-    Route::post('/add', [CitiesController::class, 'store']);
-    Route::get('/show', [CitiesController::class, 'show'])->name('city.show');
-    Route::get('/edit/{id}', [CitiesController::class, 'edit'])->name('city.edit');
-    Route::patch('/update/{id}', [CitiesController::class, 'update'])->name('city.update');
-    Route::delete('/delete/{id}', [CitiesController::class, 'destroy'])->name('city.delete');
-});
-
-// End City Routes
-
-// Category Routes
-Route::prefix('category')->group(function () {
-
-    Route::get('/add', [CategoriesController::class, 'index'])->name('category.add');
-    Route::post('/add', [CategoriesController::class, 'store']);
-    Route::get('/show', [CategoriesController::class, 'show'])->name('category.show');
-    Route::get('/edit/{id}', [CategoriesController::class, 'edit'])->name('category.edit');
-    Route::patch('/update/{id}', [CategoriesController::class, 'update'])->name('category.update');
-    Route::delete('/delete/{id}', [CategoriesController::class, 'destroy'])->name('category.delete');
-});
-// End Category Routes
-
-// News Routes
-
-Route::prefix('news')->group(function () {
-
-    Route::get('/add', [NewsController::class, 'index'])->name('news.add');
-    Route::post('/add', [NewsController::class, 'store']);
-    Route::get('/show', [NewsController::class, 'show'])->name('news.show');
-    Route::get('/view/{id}', [NewsController::class, 'view'])->name('news.view');
-    Route::get('/edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
-    Route::patch('/update/{id}', [NewsController::class, 'update'])->name('news.update');
-    Route::delete('/delete/{id}', [NewsController::class, 'destroy'])->name('news.delete');
-});
-// End News Routes
-
-// User Routes
-Route::prefix('user')->group(function () {
-
-    Route::get('/add', [UserController::class, 'index'])->name('user.add');
-    Route::post('/add', [UserController::class, 'store']);
-    Route::get('/show', [UserController::class, 'show'])->name('user.show');
-    Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
-    Route::patch('/update/{id}', [UserController::class, 'update'])->name('user.update');
-    Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
-});
-
-// End User Routes
-
-
+Route::get('/', [WebController::class, 'homepage'])->name('news.index');
+Route::get('/news', [WebController::class, 'view'])->name('news.view');
+Route::get('/category', [WebController::class, 'category'])->name('news.category');
+Route::get('/country', [WebController::class, 'country'])->name('news.country');
+Route::get('/city', [WebController::class, 'city'])->name('news.city');
+Route::get('/search', [WebController::class, 'search'])->name('news.search');
 
 // 404 Route
-// Route::fallback(function () {
-//     return view('404');
-// });
+Route::fallback(function () {
+    return view('404');
+});

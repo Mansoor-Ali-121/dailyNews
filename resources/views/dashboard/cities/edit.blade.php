@@ -4,19 +4,43 @@
 
     @include('dashboard.includes.alerts')
 
-    <div class="container mt-4">
-        <div class="row justify-content-center">
+    <div class="container-fluid px-5 py-4">
+        <div class="row g-4 justify-content-center">
             <div class="col-md-8">
-                <div class="card">
-                    <div class="card-header">
-                        <h2>Edit City: {{ $city->city_name }}</h2>
+                <div class="card border-0 shadow-lg overflow-hidden">
+                    {{-- Card Header with Animated Gradient --}}
+                    <div class="card-header p-5 position-relative overflow-hidden">
+                        <div class="gradient-animation"
+                            style="background: linear-gradient(135deg, #7F00FF 0%, #E100FF 100%); position: absolute; top: 0; left: 0; width: 200%; height: 100%; animation: gradientShift 8s ease infinite;">
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center position-relative" style="z-index: 2;">
+                            <div>
+                                <h2 class="h3 mb-2 text-white"><i class="fas fa-edit me-3"></i> Edit City: {{ $city->city_name }}</h2>
+                                <p class="mb-0 text-white-50 fs-5">Modify the details of your city</p>
+                            </div>
+                            <a href="{{ route('city.show') }}"
+                                class="btn btn-light btn-lg rounded-pill px-4 py-2 shadow-sm hover-scale">
+                                <i class="fas fa-arrow-left me-2"></i> Back to Cities
+                            </a>
+                        </div>
+                        <div class="position-absolute bottom-0 end-0 w-100 overflow-hidden"
+                            style="color: rgba(255,255,255,0.15); z-index: 1;">
+                            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+                                <path
+                                    d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
+                                    style="stroke: none; fill: currentColor;"></path>
+                            </svg>
+                        </div>
                     </div>
-                    <div class="card-body">
 
-                        {{-- FULL ERROR DISPLAY SECTION --}}
+                    {{-- Card Body with Enhanced Form --}}
+                    <div class="card-body p-5">
+
+                        {{-- FULL ERROR DISPLAY SECTION (Enhanced Styling) --}}
                         @if ($errors->any())
-                            <div class="alert alert-danger">
-                                <ul>
+                            <div class="alert alert-danger mb-4">
+                                <strong>Whoops! Something went wrong:</strong>
+                                <ul class="mb-0 mt-2">
                                     @foreach ($errors->all() as $error)
                                         <li>{{ $error }}</li>
                                     @endforeach
@@ -26,113 +50,136 @@
                         {{-- END FULL ERROR DISPLAY SECTION --}}
 
                         {{-- Form to edit an existing city --}}
-                        <form action="{{ route('city.update', $city->id) }}" method="POST">
+                        <form action="{{ route('city.update', $city->id) }}" method="POST" class="needs-validation" novalidate>
                             @csrf
                             @method('PATCH')
 
-                            {{-- Country ID Field (Dropdown populated from countries) --}}
-                            <div class="mb-3">
-                                <label for="country_id" class="form-label">Country:</label>
-                                <select class="form-select @error('country_id') is-invalid @enderror" id="country_id"
-                                    name="country_id" required>
-                                    <option value="">Select a Country</option>
-                                    @foreach ($countries as $country)
-                                        <option value="{{ $country->id }}"
-                                            {{ old('country_id', $city->country_id) == $country->id ? 'selected' : '' }}>
-                                            {{ $country->country_name }} ({{ $country->country_code }})
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('country_id')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
+                            <div class="row g-4">
+                                {{-- Country ID Field --}}
+                                <div class="col-12">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-globe floating-icon"></i>
+                                        <select
+                                            class="form-select border-2 ps-5 py-3 @error('country_id') is-invalid @enderror"
+                                            id="country_id" name="country_id" required>
+                                            <option value="">Select a Country</option>
+                                            @foreach ($countries as $country)
+                                                <option value="{{ $country->id }}"
+                                                    {{ old('country_id', $city->country_id) == $country->id ? 'selected' : '' }}>
+                                                    {{ $country->country_name }} ({{ $country->country_code }})
+                                                </option>
+                                            @endforeach
+                                        </select>
+                                        <label for="country_id" class="form-label text-muted ms-4">Country:</label>
+                                        @error('country_id')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
                                     </div>
-                                @enderror
-                            </div>
-
-                            {{-- City Name Field --}}
-                            <div class="mb-3">
-                                <label for="city_name" class="form-label">City Name:</label>
-                                <input type="text" class="form-control @error('city_name') is-invalid @enderror"
-                                    id="city_name" name="city_name" value="{{ old('city_name', $city->city_name) }}"
-                                    required>
-                                @error('city_name')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- Zip Code Field --}}
-                            <div class="mb-3">
-                                <label for="zip_code" class="form-label">Zip Code:</label>
-                                <input type="text" class="form-control @error('zip_code') is-invalid @enderror"
-                                    id="zip_code" name="zip_code" value="{{ old('zip_code', $city->zip_code) }}">
-                                @error('zip_code')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- User Input for Slug (Actual Slug) --}}
-                            {{-- This field is what the user types to create/modify the slug --}}
-                            <div class="mb-3">
-                                <label for="actual_slug" class="form-label">City Slug (User Input):</label>
-                                <input type="text" name="actual_slug" id="actual_slug"
-                                    class="form-control @error('actual_slug') is-invalid @enderror" onkeyup="generateSlug()"
-                                    value="{{ old('actual_slug', $city->city_slug) }}" required>
-                                <div class="form-text">Lowercase, alphanumeric, and hyphens only (e.g., `new-york-city`).
                                 </div>
-                                @error('actual_slug')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
 
-                            {{-- Generated Slug (Readonly) --}}
-                            {{-- This field displays the generated slug based on 'actual_slug' --}}
-                            <div class="mb-3">
-                                <label for="city_slug" class="form-label">Generated Slug (Readonly):</label>
-                                <input type="text" class="form-control" id="city_slug" name="city_slug"
-                                    value="{{ old('city_slug', $city->city_slug) }}"
-                                    placeholder="This will be your actual slug!" readonly>
-                                {{-- No @error for 'city_slug' here if it's purely generated and not directly validated --}}
-                                {{-- If 'city_slug' has a unique rule in controller, you might need @error here --}}
-                                @error('city_slug')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
+                                {{-- City Name Field --}}
+                                <div class="col-12">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-city floating-icon"></i>
+                                        <input type="text"
+                                            class="form-control border-2 ps-5 py-3 @error('city_name') is-invalid @enderror"
+                                            id="city_name" name="city_name" value="{{ old('city_name', $city->city_name) }}"
+                                            required placeholder="City Name">
+                                        <label for="city_name" class="form-label text-muted ms-4">City Name:</label>
+                                        @error('city_name')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
                                     </div>
-                                @enderror
-                            </div>
+                                </div>
 
-                            {{-- Status Field --}}
-                            <div class="mb-3">
-                                {{-- CONSISTENCY FIX: Changed 'city_status' to 'status' for name and ID --}}
-                                <label for="city_status" class="form-label">Status:</label>
-                                <select class="form-select @error('city_status') is-invalid @enderror" id="city_status"
-                                    name="city_status" required>
-                                    {{-- CONSISTENCY FIX: Added $city->city_status for old() and added 'pending' option --}}
-                                    <option value="active" {{ old('city_status', $city->city_status) == 'active' ? 'selected' : '' }}>Active</option>
-                                    <option value="inactive" {{ old('city_status', $city->city_status) == 'inactive' ? 'selected' : '' }}>Inactive</option>
-                                
-                                </select>
-                                @error('city_status')
-                                    <div class="invalid-feedback">
-                                        {{ $message }}
+                                {{-- Zip Code Field --}}
+                                <div class="col-12">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-mail-bulk floating-icon"></i>
+                                        <input type="text"
+                                            class="form-control border-2 ps-5 py-3 @error('zip_code') is-invalid @enderror"
+                                            id="zip_code" name="zip_code" value="{{ old('zip_code', $city->zip_code) }}"
+                                            placeholder="Zip Code">
+                                        <label for="zip_code" class="form-label text-muted ms-4">Zip Code:</label>
+                                        @error('zip_code')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
                                     </div>
-                                @enderror
-                            </div>
+                                </div>
 
-                            <button type="submit" class="btn btn-primary">Update City</button>
-                            <a href="{{ url()->previous() }}" class="btn btn-secondary">Cancel</a>
+                                {{-- City Status Select --}}
+                                <div class="col-12">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-toggle-on floating-icon"></i>
+                                        <select name="city_status" id="city_status"
+                                            class="form-select border-2 ps-5 py-3 @error('city_status') is-invalid @enderror"
+                                            required>
+                                            <option value="">Select Status</option>
+                                            <option value="active" {{ old('city_status', $city->city_status) == 'active' ? 'selected' : '' }}>
+                                                Active</option>
+                                            <option value="inactive"
+                                                {{ old('city_status', $city->city_status) == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                        </select>
+                                        <label for="city_status" class="form-label text-muted ms-4">Status:</label>
+                                        @error('city_status')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                {{-- Slug Fields in One Row --}}
+                                <div class="col-md-6">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-link floating-icon"></i>
+                                        <input type="text"
+                                            class="form-control border-2 ps-5 py-3 @error('actual_slug') is-invalid @enderror"
+                                            id="actual_slug" name="actual_slug" value="{{ old('actual_slug', $city->city_slug) }}"
+                                            onkeyup="generateSlug()" placeholder="Custom Slug">
+                                        <label for="actual_slug" class="form-label text-muted ms-4">Custom Slug</label>
+                                        @error('actual_slug')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-hashtag floating-icon"></i>
+                                        <input type="text" class="form-control border-2 ps-5 py-3 bg-light"
+                                            id="city_slug" name="city_slug" value="{{ old('city_slug', $city->city_slug) }}" readonly
+                                            placeholder="System Generated Slug">
+                                        <label for="city_slug" class="form-label text-muted ms-4">System Generated
+                                            Slug</label>
+                                        @error('city_slug')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+                                {{-- Submit and Cancel Buttons --}}
+                                <div class="col-12 mt-4">
+                                    <div class="d-flex justify-content-end gap-3">
+                                        <a href="{{ route('city.show') }}"
+                                            class="btn btn-lg btn-light rounded-pill px-4 shadow-sm hover-scale">
+                                            <i class="fas fa-times me-2"></i> Cancel
+                                        </a>
+                                        <button type="submit"
+                                            class="btn btn-lg btn-primary rounded-pill px-4 shadow-sm hover-scale pulse-on-hover">
+                                            <i class="fas fa-save me-2"></i> Update City
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    {{-- The following custom styles are part of the original content you provided within the Blade file.
+        For better organization in a Laravel project, it's a common practice to move these
+        into a dedicated CSS file or push them to a stack in your main template. --}}
     <style>
         /* Base Card Styles */
         .card {
@@ -357,15 +404,17 @@
 
     <script>
         function generateSlug() {
-            var inputSlug = document.getElementById('actual_slug').value;
-            var generatedSlug = inputSlug
+            var packageName = document.getElementById('actual_slug').value;
+            var packageSlug = packageName
                 .trim()
                 .toLowerCase()
-                .replace(/[^a-z0-9äöüß]+/g, '-') // Allow ÄäÖöÜüß and replace non-alphanumeric with hyphen
-                .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
+                .replace(/[^a-z0-9äöüß]+/g, '-') // Allow ÄäÖöÜüß
+                .replace(/^-|-$/g, '');
 
-            document.getElementById('city_slug').value = generatedSlug;
+            document.getElementById('city_slug').value = packageSlug;
         }
+        // Call generateSlug on page load to ensure the slug field is populated correctly initially
+        document.addEventListener('DOMContentLoaded', generateSlug);
     </script>
 
 @endsection

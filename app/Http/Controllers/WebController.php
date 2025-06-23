@@ -9,9 +9,9 @@ class WebController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function homepage()
     {
-        //
+        return view('website.homepage');
     }
 
     /**

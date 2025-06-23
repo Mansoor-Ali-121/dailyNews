@@ -43,7 +43,7 @@ class CategoriesController extends Controller
      */
     public function show()
     {
-        $categories = Categories::all();
+        $categories = Categories::paginate(3);
         return view('dashboard.categories.show', compact('categories'));
     }
 

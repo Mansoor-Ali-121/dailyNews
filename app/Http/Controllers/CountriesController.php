@@ -52,7 +52,7 @@ class CountriesController extends Controller
     public function show()
     {
 
-        $countries = Country::all();
+        $countries = Country::paginate(3);
         return view('dashboard.countries.show', compact('countries'));
     }
 

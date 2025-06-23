@@ -49,7 +49,8 @@ class CitiesController extends Controller
     {
         // Eager load the 'country' relationship when fetching cities
 
-        $cities = Cities::with('country')->get(); //
+        $cities = Cities::with('country')
+        ->Paginate(3);
         $countries = Country::all();
 
         return view('dashboard.cities.show', compact('cities', 'countries'));
@@ -67,7 +68,7 @@ class CitiesController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */ 
+     */
     public function update(Request $request, string $id)
     {
         // 1. Validate the incoming request data
@@ -101,7 +102,7 @@ class CitiesController extends Controller
      */
     public function destroy(string $id)
     {
-        
+
         $city = Cities::find($id);
         $city->delete();
         return redirect()->route('city.show')->with('success', 'City deleted successfully!');
