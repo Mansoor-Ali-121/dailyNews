@@ -189,8 +189,8 @@
                     <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">News</span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
-                    <li><a class="dropdown-item" href="">View News</a></li>
-                    <li><a class="dropdown-item" href="">Add News</a></li>
+                    <li><a class="dropdown-item" href="{{route('news.show')}}">View News</a></li>
+                    <li><a class="dropdown-item" href="{{route('news.add')}}">Add News</a></li>
                 </ul>
             </li>
 

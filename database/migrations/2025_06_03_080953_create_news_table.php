@@ -15,7 +15,7 @@ return new class extends Migration
 
             $table->id();
             $table->string('category_id');
-            $table->string('author_id');
+            $table->string('author_id')->nullable();
             $table->string('city_id');
             $table->string('country_id');
             $table->string('news_title');

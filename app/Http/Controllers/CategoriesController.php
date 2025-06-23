@@ -31,6 +31,7 @@ class CategoriesController extends Controller
         $validated = $request->validate([
             'category_name' => 'required|string|max:255',
             'category_slug' => 'required|string|unique:categories,category_slug|max:255',
+            'category_status' => 'required|string|in:active,inactive',
         ]);
 
         Categories::create($validated);

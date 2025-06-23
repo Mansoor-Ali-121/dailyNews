@@ -32,8 +32,16 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
+        {{-- jQuery (needed by DataTables) --}}
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+        {{-- DataTables JS with Bootstrap 5 integration --}}
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
+
 
     <link href=" {{ asset('dashboard/assets/css/app.css') }}" rel="stylesheet">
     <link href=" {{ asset('dashboard/assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+    
 </head>

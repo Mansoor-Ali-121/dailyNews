@@ -133,6 +133,227 @@
             </div>
         </div>
     </div>
+    <style>
+        /* Base Card Styles */
+        .card {
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            /* Softer, larger shadow */
+        }
+
+        /* Animated Gradient Header */
+        .gradient-animation {
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Form Elements */
+        .form-control,
+        .form-select {
+            border-radius: 12px;
+            border-width: 2px;
+            padding: 1rem 1.25rem 1rem 3rem;
+            /* Increased left padding for icon */
+            transition: all 0.3s ease;
+            background-color: #f8fafc;
+            font-size: 1rem;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #8A2BE2;
+            /* A more vibrant primary color on focus */
+            box-shadow: 0 0 0 0.25rem rgba(138, 43, 226, 0.2);
+            /* Matching glow */
+            background-color: white;
+        }
+
+        /* Floating Labels with Icons */
+        .form-floating label {
+            color: #6c757d;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            left: 2.5rem;
+            /* Adjust label position */
+        }
+
+        .form-floating label::after {
+            content: "";
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            /* Prevent label from covering icon */
+        }
+
+        /* General label for non-floating inputs */
+        .form-label {
+            font-weight: 600;
+            color: #495057;
+            margin-bottom: 0.75rem;
+        }
+
+        .floating-icon {
+            position: absolute;
+            left: 1.25rem;
+            /* Position the icon inside the input */
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8A2BE2;
+            /* Primary color for icons */
+            font-size: 1.1rem;
+            z-index: 3;
+            /* Ensure icon is above label */
+            transition: color 0.3s ease;
+        }
+
+        .form-control:focus+.form-label+.floating-icon,
+        .form-select:focus+.form-label+.floating-icon {
+            color: #6a11cb;
+            /* Slight color change on focus */
+        }
+
+        /* Buttons with Hover Effects */
+        .btn-primary {
+            background: linear-gradient(135deg, #8A2BE2 0%, #A020F0 100%);
+            /* Deeper purple gradient */
+            border: none;
+            font-weight: 600;
+            /* Slightly bolder text */
+            transition: all 0.3s ease, background-position 0.5s ease;
+            background-size: 200% 100%;
+            /* For background-position animation */
+            padding: 0.75rem 1.75rem;
+            /* Adjusted padding for better look */
+            border-radius: 0.75rem;
+            /* Consistent border-radius */
+        }
+
+        .btn-primary:hover {
+            background-position: -100% 0;
+            /* Shift gradient on hover */
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.3);
+            /* Enhanced shadow */
+        }
+
+        /* Corrected btn-light for cancel button */
+        .btn-light {
+            border-radius: 0.75rem;
+            /* Consistent border-radius */
+            padding: 0.75rem 1.75rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            color: #495057;
+            /* Ensure text is visible */
+            background-color: #f8f9fa;
+            /* Light background */
+            border: 1px solid #ced4da;
+            /* Subtle border */
+        }
+
+        .btn-light:hover {
+            background-color: #e2e6ea;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-color: #dae0e5;
+        }
+
+        .hover-scale {
+            transition: transform 0.3s ease;
+        }
+
+        .hover-scale:hover {
+            transform: translateY(-3px) scale(1.02);
+        }
+
+        .pulse-on-hover:hover {
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(138, 43, 226, 0.4);
+            }
+
+            /* Use primary color for pulse */
+            70% {
+                box-shadow: 0 0 0 12px rgba(138, 43, 226, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(138, 43, 226, 0);
+            }
+        }
+
+        /* Alert Messages */
+        .alert {
+            border-radius: 10px;
+            padding: 1.25rem 1.5rem;
+            font-weight: 500;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            border-left: 5px solid;
+            /* For a prominent visual cue */
+        }
+
+        .alert-success {
+            border-color: #28a745;
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .card-header {
+                padding: 1.5rem !important;
+            }
+
+            .card-body {
+                padding: 1.5rem !important;
+            }
+
+            .form-control,
+            .form-select {
+                padding-left: 2.5rem;
+                /* Smaller padding for smaller screens */
+            }
+
+            .floating-icon {
+                left: 0.75rem;
+            }
+
+            .form-floating label {
+                left: 1.5rem;
+            }
+        }
+    </style>
 
     <script>
         function generateSlug() {

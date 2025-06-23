@@ -1,7 +1,8 @@
 <?php
 
-use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\CountriesController;
@@ -70,6 +71,16 @@ Route::prefix('category')->group(function () {
 
 // News Routes
 
+Route::prefix('news')->group(function () {
+
+    Route::get('/add', [NewsController::class, 'index'])->name('news.add');
+    Route::post('/add', [NewsController::class, 'store']);
+    Route::get('/show', [NewsController::class, 'show'])->name('news.show');
+    Route::get('/view/{id}', [NewsController::class, 'view'])->name('news.view');
+    Route::get('/edit/{id}', [NewsController::class, 'edit'])->name('news.edit');
+    Route::patch('/update/{id}', [NewsController::class, 'update'])->name('news.update');
+    Route::delete('/delete/{id}', [NewsController::class, 'destroy'])->name('news.delete');
+});
 // End News Routes
 
 // User Routes

@@ -15,7 +15,7 @@ return new class extends Migration
             
             $table->id();
      // Remove the default and make it nullable
-            $table->string('user_type')->nullable()->change();
+            $table->string('user_type');
             $table->string('email')->unique();
             $table->string('password'); 
             $table->string('name');
@@ -44,7 +44,7 @@ return new class extends Migration
               Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
-            $table->string('user_type')->default('admin')->nullable(false)->change();
+           
         });
     }
 };

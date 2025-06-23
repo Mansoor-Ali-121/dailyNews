@@ -1,74 +1,93 @@
 @extends('template')
+
 @section('main_section')
 
-    @include('dashboard.includes.alerts')
-
-    <div class="container-fluid px-5 py-4">
-        <div class="row g-4">
+    <div class="container-fluid px-lg-2 py-4">
+        <div class="row">
             <div class="col-12">
                 <div class="card border-0 shadow-lg overflow-hidden" style="border-radius: 20px;">
                     <!-- Card Header with Gradient Background -->
-                    <div class="card-header p-5 position-relative"
-                        style="background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);">
-                        <div class="d-flex justify-content-between align-items-center">
+                    <div class="card-header position-relative"
+                        style="background: linear-gradient(135deg, #0f4c81 0%, #1b8b9c 100%);">
+                        <div class="d-flex justify-content-between align-items-center flex-wrap">
                             <div>
-                                <h2 class="h3 mb-2 text-white"><i class="fas fa-user-cog me-3"></i> User Management Dashboard
-                                </h2>
+                                <h2 class="h3 mb-2 text-white"><i class="fas fa-user-cog me-3" aria-hidden="true"></i>
+                                    User Management Dashboard</h2>
                                 <p class="mb-0 text-white-50 fs-5">Manage all system users and their permissions</p>
                             </div>
-                            <a href="{{ route('user.add') }}" class="btn btn-light btn-lg rounded-pill px-4 py-2 shadow-sm"
-                                id="addUserBtn" style="position: relative; z-index: 2;">
-                                <i class="fas fa-plus-circle me-2"></i> Add New User
-                            </a>
-                        </div>
-                        <div class="position-absolute bottom-0 end-0 w-100 overflow-hidden"
-                            style="color: rgba(255,255,255,0.1); z-index: 1;">
-                            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
-                                <path
-                                    d="M0.00,49.98 C149.99,150.00 349.20,-49.98 500.00,49.98 L500.00,150.00 L0.00,150.00 Z"
-                                    style="stroke: none; fill: currentColor;"></path>
-                            </svg>
+                            <div class="d-flex gap-3 mt-3 mt-md-0">
+                                {{-- Accessible Add New User Button --}}
+                                <a href="{{ route('user.add') }}"
+                                    class="btn btn-light btn-lg rounded-pill px-4 py-2 shadow-sm" id="addUserBtn"
+                                    aria-label="Add New User">
+                                    <i class="fas fa-plus-circle me-2" aria-hidden="true"></i> Add New User
+                                </a>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Card Body -->
-                    <div class="card-body p-0">
+                    <div class="card-body p-4">
+                        <div class="global-stats">
+                            @php
+                                $totalUsers = count($users);
+                                $activeUsers = $users->where('user_status', 'active')->count();
+                                $inactiveUsers = $users->where('user_status', 'inactive')->count();
+                                $adminUsers = $users->where('user_type', 'admin')->count();
+                            @endphp
+
+                            <div class="stat-item">
+                                <div class="stat-value">{{ $totalUsers }}</div>
+                                <div class="stat-label">Total Users</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">{{ $activeUsers }}</div>
+                                <div class="stat-label">Active</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">{{ $inactiveUsers }}</div>
+                                <div class="stat-label">Inactive</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">{{ $adminUsers }}</div>
+                                <div class="stat-label">Admin Users</div>
+                            </div>
+                        </div>
+
                         @if ($users->isEmpty())
-                            <div class="text-center py-6">
+                            <div class="empty-state">
                                 <div class="mb-5">
-                                    <i class="fas fa-users-slash fa-5x text-muted opacity-25"></i>
+                                    <i class="fas fa-users-slash empty-state-icon"></i>
                                 </div>
                                 <h4 class="h3 text-muted mb-4">No Users Found</h4>
                                 <p class="text-muted fs-5 mb-5">Get started by adding your first user to the system</p>
-                                <a href="{{ route('user.add') }}"
-                                    class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm">
+                                <a href="{{ route('user.add') }}" class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm"
+                                    aria-label="Create First User">
                                     <i class="fas fa-user-plus me-2"></i> Create First User
                                 </a>
                             </div>
                         @else
                             <div class="table-responsive">
-                                <table class="table table-hover align-middle mb-0">
+                                <table id="usersTable" class="table align-middle mb-0 display">
                                     <thead class="bg-light">
                                         <tr>
-                                            <th class="ps-5 py-4 text-uppercase fw-bold text-muted fs-5 border-0">ID</th>
-                                            <th class="py-4 text-uppercase fw-bold text-muted fs-5 border-0">User Profile
+                                            <th class="ps-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0">ID</th>
+                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">User Profile
                                             </th>
-                                            <th class="py-4 text-uppercase fw-bold text-muted fs-5 border-0">User Details
+                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">User Details
                                             </th>
-                                            <th class="py-4 text-uppercase fw-bold text-muted fs-5 border-0">Status</th>
-                                            <th class="py-4 text-uppercase fw-bold text-muted fs-5 border-0">Activity</th>
-                                            <th
-                                                class="pe-5 py-4 text-uppercase fw-bold text-muted fs-5 border-0 text-end text-center">
+                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Status</th>
+                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Activity</th>
+                                            <th class="pe-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0 text-center">
                                                 Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach ($users as $user)
                                             <tr class="border-top">
-                                                <td class="ps-5 fw-bold text-muted fs-5">#{{ $user->id }}</td>
+                                                <td class="ps-4 fw-bold text-muted fs-5">#{{ $user->id }}</td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
-                                                        <div class="position-relative me-4">
+                                                        <div class="position-relative me-3">
                                                             <img src="{{ asset('images/users/' . $user->user_image) }}"
                                                                 class="rounded-circle shadow" width="60" height="60"
                                                                 alt="{{ $user->name }}">
@@ -87,9 +106,9 @@
                                                 <td>
                                                     <div class="d-flex flex-column gap-2">
                                                         <span
-                                                            class="badge admin-badge fs-6 bg-{{ $user->user_type == 'admin' ? 'secondary' : 'primary' }} px-3 py-2">
+                                                            class="badge admin-badge fs-6 bg-{{ $user->user_type == 'admin' ? 'info' : 'primary' }} px-3 py-2">
                                                             <i
-                                                                class="fas fa-{{ $user->user_type == 'admin' ? 'crown' : 'user' }} me-2 {{ $loop->first ? 'text-warning' : '' }}"></i>
+                                                                class="fas fa-{{ $user->user_type == 'admin' ? 'crown' : 'user' }} me-2"></i>
                                                             {{ ucfirst($user->user_type) }}
                                                         </span>
                                                         <small class="text-muted fs-6"><i class="fas fa-link me-2"></i>
@@ -114,26 +133,21 @@
                                                             {{ $user->updated_at->format('d M Y, H:i') }}</small>
                                                     </div>
                                                 </td>
-                                                <td class="pe-5 text-end">
-                                                    <div class="d-flex justify-content-end gap-3">
+                                                <td class="pe-4 text-end">
+                                                    <div class="d-flex justify-content-end gap-2 action-buttons">
                                                         <a href="{{ route('user.edit', $user->id) }}"
-                                                            class="btn btn-lg btn-outline-primary rounded-pill px-4 shadow-sm"
-                                                            data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            title="Edit User">
-                                                            <i class="fas fa-pen-fancy me-2"></i> Edit
+                                                            class="btn btn-outline-primary" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" title="Edit User"
+                                                            aria-label="Edit User {{ $user->name }}">
+                                                            <i class="fas fa-edit me-1" aria-hidden="true"></i> Edit
                                                         </a>
-                                                        <form action="{{ route('user.delete', $user->id) }}"
-                                                            method="POST">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit"
-                                                                class="btn btn-lg btn-outline-danger rounded-pill px-4 shadow-sm"
-                                                                data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Delete User"
-                                                                onclick="return confirm('Are you sure you want to delete {{ $user->name }}?')">
-                                                                <i class="fas fa-trash-alt me-2"></i> Delete
-                                                            </button>
-                                                        </form>
+                                                        <a href="{{ route('user.delete', $user->id) }}"
+                                                            class="btn btn-outline-danger" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" title="Delete User"
+                                                            aria-label="Delete User {{ $user->name }}">
+                                                            <i class="fas fa-trash-alt me-1" aria-hidden="true"></i>
+                                                            Delete
+                                                        </a>
                                                     </div>
                                                 </td>
                                             </tr>
@@ -143,31 +157,17 @@
                             </div>
                         @endif
                     </div>
-                    {{-- 
-                @if ($users->hasPages())
-                <div class="card-footer bg-white border-0 py-4">
-                    <div class="d-flex justify-content-between align-items-center px-5">
-                        <div class="text-muted fs-5">
-                            Showing <span class="fw-bold">{{ $users->firstItem() }}</span> to <span class="fw-bold">{{ $users->lastItem() }}</span> of <span class="fw-bold">{{ $users->total() }}</span> entries
-                        </div>
-                        <div>
-                            {{ $users->onEachSide(1)->links('pagination::bootstrap-5') }}
-                        </div>
-                    </div>
-                </div>
-                @endif --}}
                 </div>
             </div>
         </div>
     </div>
 
-@endsection
-
-@push('styles')
     <style>
-        .admin-badge {
-            color: black !important;
-            background: #f5365c !important;
+        :root {
+            --primary-gradient: linear-gradient(135deg, #0f4c81 0%, #1b8b9c 100%);
+            --secondary-gradient: linear-gradient(135deg, #1b8b9c 0%, #0f4c81 100%);
+            --active-color: #1b8b9c;
+            --inactive-color: #f56036;
         }
 
         .card {
@@ -175,10 +175,11 @@
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
             box-shadow: 0 15px 30px rgba(0, 0, 0, 0.05);
+            border: none;
+            margin-bottom: 30px;
         }
 
         .card:hover {
-            transform: translateY(-8px);
             box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
@@ -186,59 +187,102 @@
             position: relative;
             overflow: hidden;
             padding: 2rem !important;
+            color: white;
         }
 
+        /* Table styling */
         .table {
             margin-bottom: 0;
+            border-collapse: separate;
+            border-spacing: 0 10px;
         }
 
         .table th {
             border-top: none;
             font-weight: 700;
             letter-spacing: 0.5px;
-            padding: 1.5rem !important;
+            padding: 1.25rem 1.5rem !important;
             background-color: #f8fafc;
+            color: #0f4c81;
+            border-bottom: 2px solid #dee2e6;
         }
 
         .table td {
-            padding: 1.5rem !important;
+            padding: 1.25rem 1.5rem !important;
             vertical-align: middle;
+            background-color: white;
+            border-top: none;
+            border-bottom: 1px solid #f0f0f0;
         }
 
         .table tr {
             transition: all 0.3s ease;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
         }
 
         .table tr:hover {
-            background-color: rgba(106, 17, 203, 0.03) !important;
+            background-color: rgba(15, 76, 129, 0.03) !important;
             transform: scale(1.005);
+            box-shadow: 0 6px 15px rgba(15, 76, 129, 0.1);
+        }
+
+        /* DataTables styling */
+        .dataTables_wrapper .dataTables_filter input,
+        .dataTables_wrapper .dataTables_length select {
+            border-radius: 0.25rem;
+            border: 1px solid #ced4da;
+            padding: 0.375rem 0.75rem;
+            margin-left: 0.5rem;
+        }
+
+        .dataTables_wrapper .dataTables_filter input:focus,
+        .dataTables_wrapper .dataTables_length select:focus {
+            border-color: #80bdff;
+            outline: 0;
+            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            padding: 0.5em 0.8em;
+            margin-left: 2px;
+            border-radius: 0.25rem;
+            border: 1px solid #dee2e6;
+            background-color: #fff;
+            color: #0d6efd;
+            transition: all 0.3s ease;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+            background-color: #e9ecef;
+            border-color: #dee2e6;
+            color: #0a58ca;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+            background-color: #0d6efd;
+            border-color: #0d6efd;
+            color: #fff !important;
         }
 
         .badge {
             font-weight: 600;
             letter-spacing: 0.5px;
             transition: all 0.2s ease;
-        }
-
-        .bg-purple {
-
-            background-color: #6f42c1 !important;
-        }
-
-        .text-purple {
-
-            color: #6f42c1 !important;
-
+            padding: 0.6em 1em;
         }
 
         .btn-outline-primary {
             border-width: 2px;
             font-weight: 500;
             transition: all 0.3s ease;
+            color: #0f4c81;
+            border-color: #0f4c81;
         }
 
         .btn-outline-primary:hover {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            background: var(--primary-gradient);
             color: white !important;
             border-color: transparent;
             transform: translateY(-2px);
@@ -248,6 +292,8 @@
             border-width: 2px;
             font-weight: 500;
             transition: all 0.3s ease;
+            color: #f56036;
+            border-color: #f56036;
         }
 
         .btn-outline-danger:hover {
@@ -257,43 +303,66 @@
             transform: translateY(-2px);
         }
 
-        .pagination .page-item.active .page-link {
-            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-            border-color: transparent;
-            font-weight: 600;
+        .action-buttons .btn {
+            border-radius: 30px;
+            padding: 0.5rem 1.25rem;
         }
 
-        .pagination .page-link {
-            padding: 0.75rem 1.25rem;
-            font-size: 1rem;
-            border-radius: 12px !important;
-            margin: 0 5px;
+        .empty-state {
+            padding: 4rem 0;
+            text-align: center;
         }
 
-        .fs-5 {
-            font-size: 1.1rem !important;
+        .empty-state-icon {
+            font-size: 5rem;
+            opacity: 0.2;
+            color: #0f4c81;
+            margin-bottom: 1.5rem;
         }
 
-        .fs-6 {
-            font-size: 1rem !important;
+        .global-stats {
+            display: flex;
+            justify-content: space-between;
+            background: #f8fafc;
+            padding: 1.5rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+            flex-wrap: wrap;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 0 1rem;
+            flex-grow: 1;
+            min-width: 120px;
+            margin-bottom: 1rem;
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f4c81;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #6c757d;
+        }
+
+        .admin-badge {
+            color: white !important;
+            background: #0f4c81 !important;
+        }
+
+        .user-image {
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border: 2px solid #fff;
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
         }
     </style>
-@endpush
 
-@push('scripts')
-    <script>
-        // Initialize tooltips
-        document.addEventListener('DOMContentLoaded', function() {
-            var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
-            var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
-                return new bootstrap.Tooltip(tooltipTriggerEl, {
-                    animation: true,
-                    delay: {
-                        "show": 100,
-                        "hide": 50
-                    }
-                });
-            });
-        });
-    </script>
-@endpush
+@endsection
