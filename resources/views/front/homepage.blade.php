@@ -417,6 +417,7 @@
         <!-- Section end -->
 
         <!-- Section start 3 -->
+        {{-- Upper news category --}}
         <div class="section panel overflow-hidden">
             <div class="section-outer panel">
                 <div class="container max-w-xl">
@@ -429,7 +430,7 @@
                                             class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
                                             <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
                                                 href="blog-category.html">
-                                                <span>Poltics</span>
+                                                <span>Sports</span>
                                                 <i class="icon-1 fw-bold unicon-chevron-right"></i>
                                             </a>
                                         </h2>
@@ -515,7 +516,7 @@
                                             <div class="order-1 md:order-0">
                                                 <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
                                                     <div>
-                                                        @foreach ($politicsNews as $political )
+                                                        @foreach ($sportsNews as $sports )
                                                             
                                                         <article class="post type-post panel uc-transition-toggle">
                                                             <div class="row child-cols g-2 lg:g-3" data-uc-grid>
@@ -524,12 +525,14 @@
                                                                         class="post-header panel vstack justify-between gap-1">
                                                                         <h3 class="post-title h6 m-0 text-truncate-2">
                                                                             <a class="text-none hover:text-primary duration-150"
-                                                                                href="">{{ $political->news_title }}</a>
+                                                                                href="{{ route('single.news', $sports->news_slug) }}">{{ $sports->news_title }}</a>
                                                                         </h3>
                                                                         <div
                                                                             class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                            <span>{{ $political->created_at->diffForHumans() }}</span>
+                                                                            <span>{{ $sports->created_at->diffForHumans() }}</span>
                                                                         </div>
+                                                                        <hr>
+
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-auto">
@@ -538,11 +541,11 @@
                                                                         <div
                                                                             class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-1x1">
                                                                             <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                                src="{{ asset('website/assets/images/demo-seven/posts/img-05.jpg') }}"
+                                                                                src="{{ asset('news/news_images/' . $sports->news_image) }}"
                                                                                 alt="The Future of Sustainable Living: Driving Eco-Friendly Lifestyles"
                                                                                 data-uc-img="loading: lazy">
                                                                         </div>
-                                                                        <a href="{{ route('Webnews.view') }}"
+                                                                        <a href="{{ route('single.news', $sports->news_slug) }}"
                                                                             class="position-cover"></a>
                                                                     </div>
                                                                 </div>
@@ -667,14 +670,14 @@
                                             class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
                                             <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
                                                 href="blog-category.html">
-                                                <span>Media</span>
+                                                <span>Business</span>
                                                 <i class="icon-1 fw-bold unicon-chevron-right"></i>
                                             </a>
                                         </h2>
                                     </div>
                                     <div class="block-content">
                                         <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
-                                            @foreach ($medianews as $media)
+                                            @foreach ($businessnews as $business)
                                                 
                                            
                                             <div>
@@ -684,12 +687,11 @@
                                                             <div class="post-header panel vstack justify-between gap-1">
                                                                 <h3 class="post-title h6 m-0 text-truncate-2">
                                                                     <a class="text-none hover:text-primary duration-150"
-                                                                        href="blog-details.html">Solo Travel: Some Tips and
-                                                                        Destinations for the Adventurous Explorer</a>
+                                                                        href="{{ route('single.news', $business->news_slug) }}">{{ $business->news_title }}</a>
                                                                 </h3>
                                                                 <div
                                                                     class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                    <span>2mo</span>
+                                                                    <span>{{ $business->created_at->diffForHumans() }}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -699,7 +701,7 @@
                                                                 <div
                                                                     class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-1x1">
                                                                     <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                        src="{{ asset('website/assets/images/demo-seven/posts/img-11.jpg') }}"
+                                                                        src="{{ asset('news/news_images/' . $business->news_image) }}"
                                                                         alt="Solo Travel: Some Tips and Destinations for the Adventurous Explorer"
                                                                         data-uc-img="loading: lazy">
                                                                 </div>
@@ -722,14 +724,14 @@
         <!-- Section end -->
 
         <!-- Section start 4 -->
+        {{-- Latest News --}}
         <div class="section panel overflow-hidden swiper-parent">
             <div class="section-outer panel py-4 lg:py-6 dark:text-white">
                 <div class="container max-w-xl">
                     <div class="section-inner panel vstack gap-2">
                         <div class="block-layout carousel-layout vstack gap-2 lg:gap-3 panel">
                             <div class="block-header panel pt-1 border-top">
-                                <h2 class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">Hot
-                                    now</h2>
+                                <h2 class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">Latest News</h2>
                             </div>
                             <div class="block-content panel">
                                 <div class="swiper"
@@ -799,6 +801,7 @@
         <!-- Section end -->
 
         <!-- Section start 5 -->
+        {{-- Lower news category --}}
         <div class="section panel overflow-hidden">
             <div class="section-outer panel">
                 <div class="container max-w-xl">
@@ -1051,26 +1054,27 @@
                                             class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
                                             <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
                                                 href="blog-category.html">
-                                                <span>World</span>
+                                                <span>Automobile</span>
                                                 <i class="icon-1 fw-bold unicon-chevron-right"></i>
                                             </a>
                                         </h2>
                                     </div>
                                     <div class="block-content">
                                         <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
+                                            @foreach ($autonews as $auto )
                                             <div>
+                                                    
                                                 <article class="post type-post panel uc-transition-toggle">
                                                     <div class="row child-cols g-2 lg:g-3" data-uc-grid>
                                                         <div>
                                                             <div class="post-header panel vstack justify-between gap-1">
                                                                 <h3 class="post-title h6 m-0 text-truncate-2">
                                                                     <a class="text-none hover:text-primary duration-150"
-                                                                        href="blog-details.html">Tech Innovations Reshaping
-                                                                        the Retail Landscape: AI Payments</a>
+                                                                        href={{ route('single.news', $auto->news_slug) }}>{{$auto->news_title}}</a>
                                                                 </h3>
                                                                 <div
                                                                     class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                    <span>55min</span>
+                                                                    <span>{{ $auto->created_at->diffForHumans() }}</span>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -1080,18 +1084,20 @@
                                                                 <div
                                                                     class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-1x1">
                                                                     <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                        src="../assets/images/common/img-fallback.png"
-                                                                        data-src="../assets/images/demo-seven/posts/img-02.jpg"
+                                                                        src="{{ asset('news/news_images/' . $auto->news_image) }}"
+                                                                        data-src="{{ asset('news/news_images/' . $auto->news_image) }}"
                                                                         alt="Tech Innovations Reshaping the Retail Landscape: AI Payments"
                                                                         data-uc-img="loading: lazy">
                                                                 </div>
-                                                                <a href="blog-details.html" class="position-cover"></a>
+                                                                <a href="{{ route('single.news', $auto->news_slug) }}" class="position-cover"></a>
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </article>
                                             </div>
-                                            <div>
+                                                @endforeach
+
+                                            {{-- <div>
                                                 <article class="post type-post panel uc-transition-toggle">
                                                     <div class="row child-cols g-2 lg:g-3" data-uc-grid>
                                                         <div>
@@ -1189,7 +1195,7 @@
                                                         </div>
                                                     </div>
                                                 </article>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </div>

@@ -68,16 +68,18 @@
                         <div class="lg:col-8 uc-first-column">
                             <div class="max-w-lg">
                                 <div class="post-content panel fs-6 md:fs-5" data-uc-lightbox="animation: scale">
-                                    {{ strip_tags($news->news_content) }}
-
+                                    {!! $news->news_content !!}
                                 </div>
 
                                 {{-- Tags --}}
                                 <div
                                     class="post-footer panel vstack sm:hstack gap-3 justify-between justifybetween border-top py-4 mt-4 xl:py-9 xl:mt-9">
                                     <ul class="nav-x gap-narrow text-primary">
-                                        <li><span class="text-black dark:text-white me-narrow">Category of this news:</span></li> 
-                                        <li><a href="#" class="uc-link gap-0 dark:text-white">{{ $news->category->category_name }}</a></li>
+                                        <li><span class="text-black dark:text-white me-narrow">Category of this news:</span>
+                                        </li>
+                                        <li><a href="#"
+                                                class="uc-link gap-0 dark:text-white">{{ $news->category->category_name }}</a>
+                                        </li>
                                     </ul>
                                     <ul class="post-share-icons nav-x gap-narrow">
                                         <li class="me-1"><span class="text-black dark:text-white">Share:</span></li>
@@ -377,7 +379,7 @@
                                                         <div class="post-desc">
                                                             <div class="rt-site-mega">
                                                                 <span class="author-post">
-                                                                    {{ $recentnews->created_at }} </span>
+                                                                    {{ $recentnews->created_at->diffForHumans() }} </span>
                                                                 {{-- <span class="date-post">
                                                                     By <a href="#">Anna</a> --}}
                                                                 </span>

@@ -30,8 +30,8 @@ class WebController extends Controller
         // $news = News::where('news_status', 'active')->latest()->take(4)->get();
 
         // --- This is the new part: Get 4 active news from the 'Politics' category ---
-        $politicsNews = News::whereHas('category', function ($query) {
-            $query->where('category_name', 'Politics'); // Ensure 'category_name' is the correct column and 'Politics' is spelled exactly as in your DB
+        $sportsNews = News::whereHas('category', function ($query) {
+            $query->where('category_name', 'Sports'); // Ensure 'category_name' is the correct column and 'Politics' is spelled exactly as in your DB
         })
             ->where('news_status', 'active') // Only active news
             ->latest() // Get the latest ones
@@ -42,8 +42,8 @@ class WebController extends Controller
 
 
         /*media news fetching code start*/
-        $medianews = News::whereHas('category', function ($query) {
-            $query->where('category_name', 'Media'); // Ensure 'category_name' is the correct column and 'Politics' is spelled exactly as in your DB
+        $entertainmentnews = News::whereHas('category', function ($query) {
+            $query->where('category_name', 'Entertainment'); // Ensure 'category_name' is the correct column and 'Politics' is spelled exactly as in your DB
         })
             ->where('news_status', 'active') // Only active news
             ->latest() // Get the latest ones
@@ -51,7 +51,27 @@ class WebController extends Controller
             ->get();
         /*media news fetching code end*/
 
-        return view('front.homepage', compact('news', 'activeNews', 'categories', 'politicsNews','medianews'));
+        // Business news fetching code start
+        $businessnews = News::whereHas('category', function ($query) {
+            $query->where('category_name', 'Business'); // Ensure 'category_name' is the correct column and 'Politics' is spelled exactly as in your DB
+        })
+        ->where('news_status', 'active') // Only active news
+        ->latest() // Get the latest ones
+        ->take(4) // Limit to 4 articles
+        ->get();
+        // Business news fetching code end
+
+        // Auto news fetching code start
+        $autonews = News::whereHas('category', function ($query) {
+            $query->where('category_name', 'Auto'); // Ensure 'category_name' is the correct column and 'Politics' is spelled exactly as in your DB
+        })
+        ->where('news_status', 'active') // Only active news
+        ->latest() // Get the latest ones
+        ->take(4) // Limit to 4 articles
+        ->get();
+        // Auto news fetching code end
+
+        return view('front.homepage', compact('news', 'activeNews', 'categories', 'sportsNews','businessnews','autonews','entertainmentnews'));
     }
 
 

@@ -52,7 +52,7 @@ class NewsController extends Controller
             'news_slug' => ['nullable', 'string', 'max:255'],
             'news_title' => ['required', 'string', 'max:255'],
             'news_description' => ['required', 'string', 'max:255'],
-            'news_image' => 'required|image|mimes:jpeg,png,gif|max:5120',
+            'news_image' => 'required|image|mimes:jpeg,png,webp,gif|max:5120',
             'category_id' => 'required|exists:categories,id',
             'city_id' => 'required|exists:cities,id',
         ]);
@@ -120,7 +120,7 @@ class NewsController extends Controller
             'news_slug' => ['nullable', 'string', 'max:255'],
             'news_title' => ['required', 'string', 'max:255'],
             'news_description' => ['required', 'string', 'max:255'],
-            'news_image' => 'nullable|image|mimes:jpeg,png,gif|max:5120', // This is correct
+            'news_image' => 'nullable|image|mimes:jpeg,png,webp,gif|max:5120', // This is correct
             'category_id' => 'required|exists:categories,id',
             'city_id' => 'required|exists:cities,id',
         ]);
