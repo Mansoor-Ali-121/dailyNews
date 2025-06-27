@@ -8,10 +8,14 @@ class Categories extends Model
 {
     protected $fillable = [
 
-
-'category_name',
-'category_slug',
-'category_status'
+        'category_name',
+        'category_slug',
+        'category_status'
 
     ];
+
+    public function news()
+    {
+        return $this->hasMany(News::class, 'category_id');
+    }
 }

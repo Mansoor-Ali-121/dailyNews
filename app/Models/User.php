@@ -25,6 +25,7 @@ class User extends Authenticatable
         'password',
         'name',
         'user_slug',
+        'user_description',
         'user_image',
         'user_status'
      

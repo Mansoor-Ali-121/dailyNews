@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\News;
 use Illuminate\Database\Eloquent\Model;
 
 class BreakingNews extends Model
@@ -17,4 +18,9 @@ class BreakingNews extends Model
         'breakingnews_status'
 
     ];
+
+    public function news()
+    {
+        return $this->belongsTo(News::class);
+    }
 }

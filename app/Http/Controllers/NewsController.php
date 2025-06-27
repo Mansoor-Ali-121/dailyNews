@@ -7,6 +7,7 @@ use App\Models\Cities;
 use App\Models\Country;
 use App\Models\Categories;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class NewsController extends Controller
@@ -62,8 +63,15 @@ class NewsController extends Controller
             $image->move(public_path('news/news_images'), $imageName);
             $validatedData['news_image'] = $imageName;
         }
+
+          if (Auth::check()) {
+            $validatedData['author_id'] = Auth::id(); // Add the logged-in user's ID
+        } else {
+            $validatedData['author_id'] = null; // Set to null if allowed by DB schema
+        }
         // Save the validated data to the database
         $news = News::create($validatedData);
+        // dd($news);
         return redirect()->route('news.show')->with('success', 'News added successfully');
     }
 

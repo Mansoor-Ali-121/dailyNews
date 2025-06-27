@@ -1,14 +1,15 @@
 <?php
 
+use App\Http\Middleware\ValidUser;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WebController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\WebController;
-use App\Http\Middleware\ValidUser;
+use App\Http\Controllers\BreakingNewsController;
 
 
 
@@ -103,17 +104,35 @@ Route::middleware(ValidUser::class)->group(function () {
     // End User Routes
 });
 
-
 // Websites Routes Start
 
-Route::get('/', [WebController::class, 'homepage'])->name('news.index');
-Route::get('/news', [WebController::class, 'view'])->name('news.view');
+Route::get('/', [WebController::class, 'index'])->name('news.index');
+Route::get('/website/news', [WebController::class, 'view'])->name('Webnews.view');
 Route::get('/category', [WebController::class, 'category'])->name('news.category');
 Route::get('/country', [WebController::class, 'country'])->name('news.country');
 Route::get('/city', [WebController::class, 'city'])->name('news.city');
+Route::get('/shownews', [WebController::class, 'shownews'])->name('show.news');
 Route::get('/search', [WebController::class, 'search'])->name('news.search');
+
+// End Websites Routes
+
+// Braeking News Routes
+Route::prefix('breakingnews')->group(function () {
+   
+    Route::get('/add', [BreakingNewsController::class, 'index'])->name('breakingnews.add');
+    Route::post('/add', [BreakingNewsController::class, 'store']);
+    Route::get('/show', [BreakingNewsController::class, 'show'])->name('breakingnews.show');
+    Route::get('/edit/{id}', [BreakingNewsController::class, 'edit'])->name('breakingnews.edit');
+    Route::patch('/update/{id}', [BreakingNewsController::class, 'update'])->name('breakingnews.update');
+    Route::delete('/delete/{id}', [BreakingNewsController::class, 'destroy'])->name('breakingnews.delete');
+});
+// Single News show in website 
+Route::get('/news/{id}', [WebController::class, 'showsinglenews'])->name('single.news');
+
+Route::redirect('/admin', '/admin/login');
 
 // 404 Route
 Route::fallback(function () {
     return view('404');
 });
+

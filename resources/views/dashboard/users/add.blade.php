@@ -76,7 +76,22 @@
                                         <small id="password-strength-text" class="text-muted"></small>
                                     </div>
                                 </div>
-                                
+                                {{-- User description --}}
+                                <div class="col-md-6">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-user floating-icon"></i>
+                                        <input type="text" name="user_description" id="user_description" class="form-control border-2 ps-5 py-3"
+                                            value="{{ old('user_description') }}" required placeholder="User Description">
+                                        <label for="user_description" class="form-label text-muted ms-4">User Description</label>
+                                        @error('user_description')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
+
+
+                                {{-- User image --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="user_image" class="form-label text-muted mb-3">

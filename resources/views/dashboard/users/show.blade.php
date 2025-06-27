@@ -1,6 +1,7 @@
 @extends('template')
 
 @section('main_section')
+    @include('dashboard.includes.alerts')
 
     <div class="container-fluid py-4">
         <div class="row">

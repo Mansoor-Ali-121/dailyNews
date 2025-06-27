@@ -41,6 +41,7 @@ class UserController extends Controller
                 'unique:users',
             ],
             'password' => 'required|string|min:8',
+            'user_description' => 'required|string',
             'user_type' => 'required|string|in:admin,editor,author,rewiewer',
             'user_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'user_slug' => 'required|string|max:255',
@@ -87,6 +88,7 @@ class UserController extends Controller
             'user_type' => 'required|string|in:admin,editor,author,rewiewer',
             'user_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'user_slug' => 'nullable|string|max:255',
+            'user_description' => 'required|string',
         ]);
         // 2. Handle User Image Upload
         if ($request->hasFile('user_image')) {

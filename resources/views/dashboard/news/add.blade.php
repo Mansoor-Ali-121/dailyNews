@@ -211,12 +211,23 @@
 
     <div class="form-container">
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="mb-0"><i class="fas fa-newspaper me-2"></i> Add New Article</h4>
-                <a href="{{ route('news.show') }}" class="btn btn-light btn-sm rounded-pill px-4 py-2 shadow-sm">
-                    <i class="fas fa-arrow-left me-2"></i> Back to News
-                </a>
-            </div>
+           <div class="card-header d-flex justify-content-between align-items-center">
+    <h4 class="mb-0">
+        <i class="fas fa-newspaper me-2"></i> Add New News
+    </h4>
+    <div class="d-flex align-items-center">
+    @if (Auth::check())
+        <div class="me-3 text-end">
+            <small class="text-light d-block">Logged in as:</small>
+            <span class="fw-bold">{{ Auth::user()->name }}</span>
+            <div class="fw-bold">User ID: {{ Auth::user()->id }}</div>
+        </div>
+    @endif
+    <a href="{{ route('news.show') }}" class="btn btn-light btn-sm rounded-pill px-4 py-2 shadow-sm ms-3">
+        <i class="fas fa-arrow-left me-2"></i> Back to News
+    </a>
+</div>
+</div>
 
             <div class="card-body">
                 <form action="{{ route('news.add') }}" method="POST" enctype="multipart/form-data">
@@ -306,7 +317,7 @@
                             <div class="col-md-12">
                                 <label for="news_title" class="form-label">News Title </label>
                                 <input type="text" class="form-control" id="news_title" name="news_title"
-                                    placeholder="Enter news title" required>
+                                    placeholder="Enter news title" value="{{ old('news_title') }}" required>
                                 @error('news_title')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -329,8 +340,8 @@
                             <div class="col-md-12">
                                 <label for="news_description" class="form-label">News Description</label>
                                 <textarea class="form-control @error('news_description') is-invalid @enderror" id="news_description"
-                                    name="news_description" rows="5" {{-- 'rows' attribute sets initial height --}} placeholder="Enter the full news description here">{{ old('news_description') }}</textarea>
-                                {{-- For textarea, the value goes between the opening and closing tags --}}
+                                    name="news_description" rows="5" placeholder="Enter the full news description here">{{ old('news_description') }}</textarea>
+
                                 @error('news_description')
                                     <div class="invalid-feedback d-block"> {{-- 'd-block' ensures it shows for textareas too --}}
                                         {{ $message }}
@@ -388,9 +399,9 @@
                     </div>
 
                     <div class="mt-5">
-                      
+
                         <button type="submit" class="btn-submit">
-                            <i class="fas fa-plus-circle me-2"></i> Create Article
+                            <i class="fas fa-plus-circle me-2"></i> Add News
                         </button>
                     </div>
                 </form>
@@ -489,7 +500,7 @@
 
 
 
-// --- DOM Elements ---
+            // --- DOM Elements ---
             const countrySelect = document.getElementById('country_id');
             const citySelect = document.getElementById('city_id');
             const noCitiesMessage = document.getElementById('noCitiesMessage');

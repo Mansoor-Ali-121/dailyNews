@@ -319,38 +319,20 @@
                                     </div>
                                 </div>
 
-                                {{-- User Image Field with Enhanced Preview --}}
+                                    {{-- User description --}}
                                 <div class="col-md-6">
-                                    <div class="form-group">
-                                        <label for="user_image" class="form-label text-muted mb-3">
-                                            <i class="fas fa-camera me-2"></i>User Profile Image
-                                        </label>
-                                        @if ($user->user_image)
-                                            <div class="mb-3 text-center">
-                                                <img src="{{ asset('images/users/' . $user->user_image) }}" alt="Current User Image"
-                                                    class="current-image-preview img-fluid">
-                                                <p class="text-muted text-sm mt-2">Current image. Upload a new one to replace it.</p>
-                                            </div>
-                                        @endif
-                                        <div class="file-upload-wrapper">
-                                            <input type="file" name="user_image" id="user_image"
-                                                class="form-control border-2 py-3 file-upload-input @error('user_image') is-invalid @enderror"
-                                                onchange="previewImage(this)">
-                                            <div class="file-upload-label">
-                                                <i class="fas fa-cloud-upload-alt me-2"></i>
-                                                <span>Choose file or drag & drop</span>
-                                            </div>
-                                        </div>
-                                        <div class="mt-3 text-center">
-                                            <img id="imagePreview" src="#" alt="Image Preview"
-                                                class="img-thumbnail rounded-circle shadow-sm d-none hover-zoom"
-                                                style="width: 120px; height: 120px; object-fit: cover;">
-                                        </div>
-                                        @error('user_image')
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-user floating-icon"></i>
+                                        <input type="text" name="user_description" id="user_description" class="form-control border-2 ps-5 py-3"
+                                            value="{{ old('user_description') }}" required placeholder="User Description">
+                                        <label for="user_description" class="form-label text-muted ms-4">User Description</label>
+                                        @error('user_description')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
+
+                              
 
                                 {{-- User Type Field with Floating Icon --}}
                                 <div class="col-md-6">
@@ -408,6 +390,39 @@
                                             class="form-control border-2 ps-5 py-3 bg-light"
                                             value="{{ old('user_slug', $user->user_slug) }}" readonly placeholder="System Generated Slug">
                                         <label for="user_slug" class="form-label text-muted ms-4">System Generated Slug</label>
+                                    </div>
+                                </div>
+
+                                  {{-- User Image Field with Enhanced Preview --}}
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="user_image" class="form-label text-muted mb-3">
+                                            <i class="fas fa-camera me-2"></i>User Profile Image
+                                        </label>
+                                        @if ($user->user_image)
+                                            <div class="mb-3 text-center">
+                                                <img src="{{ asset('images/users/' . $user->user_image) }}" alt="Current User Image"
+                                                    class="current-image-preview img-fluid">
+                                                <p class="text-muted text-sm mt-2">Current image. Upload a new one to replace it.</p>
+                                            </div>
+                                        @endif
+                                        <div class="file-upload-wrapper">
+                                            <input type="file" name="user_image" id="user_image"
+                                                class="form-control border-2 py-3 file-upload-input @error('user_image') is-invalid @enderror"
+                                                onchange="previewImage(this)">
+                                            <div class="file-upload-label">
+                                                <i class="fas fa-cloud-upload-alt me-2"></i>
+                                                <span>Choose file or drag & drop</span>
+                                            </div>
+                                        </div>
+                                        <div class="mt-3 text-center">
+                                            <img id="imagePreview" src="#" alt="Image Preview"
+                                                class="img-thumbnail rounded-circle shadow-sm d-none hover-zoom"
+                                                style="width: 120px; height: 120px; object-fit: cover;">
+                                        </div>
+                                        @error('user_image')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
                                     </div>
                                 </div>
 

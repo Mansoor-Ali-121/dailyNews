@@ -208,7 +208,7 @@
     <div class="form-container">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <h4 class="mb-0"><i class="fas fa-edit me-2"></i> Edit Article</h4>
+                <h4 class="mb-0"><i class="fas fa-edit me-2"></i> Edit News</h4>
                 <a href="{{ route('news.show') }}" class="btn btn-light btn-sm rounded-pill px-4 py-2 shadow-sm">
                     <i class="fas fa-arrow-left me-2"></i> Back to News
                 </a>
@@ -405,7 +405,7 @@
 
                     <div class="mt-5">
                         <button type="submit" class="btn-submit">
-                            <i class="fas fa-save me-2"></i> Update Article
+                            <i class="fas fa-save me-2"></i> Update News
                         </button>
                     </div>
                 </form>

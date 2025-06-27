@@ -11,6 +11,7 @@ class News extends Model
         'category_id',
         'city_id',
         'country_id',
+        'author_id',
         'news_title',
         'news_slug',
         'news_description',
@@ -25,16 +26,23 @@ class News extends Model
     {
         return $this->belongsTo(Country::class);
     }
-  public function category()
+    public function category()
     {
         // Adjust pivot table name and foreign keys if different in your migrations
-        return $this->belongsTo(Categories::class);
+        return $this->belongsTo(Categories::class, 'category_id');
     }
 
 
-     public function city()
+    public function city()
     {
         // Adjust pivot table name and foreign keys if different in your migrations
         return $this->belongsTo(Cities::class);
     }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class, 'author_id');
+    }
+
+    
 }

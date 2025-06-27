@@ -1,20 +1,18 @@
 <nav id="sidebar" class="sidebar js-sidebar">
     <div class="sidebar-content js-simplebar">
         <div class="user-info text-center py-4">
-<div class="profile-pic-container">
-    @auth
-        {{-- Define a default image path for users with no custom image --}}
+            <div class="profile-pic-container">
+                @auth
+                    {{-- Define a default image path for users with no custom image --}}
 
 
-        <img src="{{ asset('images/users/' . Auth::user()->user_image) }}"  {{-- Use default image file for non-existing user_image --}}
-             class="profile-pic rounded-circle shadow"
-             alt="Admin Profile"
-             > {{-- Use default image file on error --}}
-   
-    @endauth
-</div>
-    <h2 class="user-role fancy-text">Admin</h2>
-</div>
+                    <img src="{{ asset('images/users/' . Auth::user()->user_image) }}" {{-- Use default image file for non-existing user_image --}}
+                        class="profile-pic rounded-circle shadow" alt="Admin Profile"> {{-- Use default image file on error --}}
+
+                @endauth
+            </div>
+            <h2 class="user-role fancy-text">{{ Auth::user()->user_type }}</h2>
+        </div>
 
         <style>
             .profile-pic-container {
@@ -26,6 +24,7 @@
                 position: relative;
                 overflow: hidden;
             }
+
             .profile-pic {
                 width: 80px;
                 height: 80px;
@@ -137,8 +136,8 @@
                     <i class="align-middle" data-feather="users"></i> <span class="align-middle">Users</span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="userDropdown">
-                    <li><a class="dropdown-item" href="{{route('user.show')}}">View Users</a></li>
-                    <li><a class="dropdown-item" href="{{route('user.add')}}">Add User</a></li>
+                    <li><a class="dropdown-item" href="{{ route('user.show') }}">View Users</a></li>
+                    <li><a class="dropdown-item" href="{{ route('user.add') }}">Add User</a></li>
                 </ul>
             </li>
 
@@ -150,8 +149,8 @@
                     <i class="align-middle" data-feather="globe"></i> <span class="align-middle">Countries</span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="menuDropdown">
-                    <li><a class="dropdown-item" href="{{route('country.show')}}">View countries</a></li>
-                    <li><a class="dropdown-item" href="{{route('country.add')}}">Add countries</a></li>
+                    <li><a class="dropdown-item" href="{{ route('country.show') }}">View countries</a></li>
+                    <li><a class="dropdown-item" href="{{ route('country.add') }}">Add countries</a></li>
                 </ul>
             </li>
 
@@ -176,8 +175,8 @@
                     <i class="align-middle" data-feather="map-pin"></i> <span class="align-middle">Cites</span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="chefDropdown">
-                    <li><a class="dropdown-item" href="{{route('city.show')}}">View Cites</a></li>
-                    <li><a class="dropdown-item" href="{{route('city.add')}}">Add Cites</a></li>
+                    <li><a class="dropdown-item" href="{{ route('city.show') }}">View Cites</a></li>
+                    <li><a class="dropdown-item" href="{{ route('city.add') }}">Add Cites</a></li>
                 </ul>
             </li>
 
@@ -189,8 +188,11 @@
                     <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">News</span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
-                    <li><a class="dropdown-item" href="{{route('news.show')}}">View News</a></li>
-                    <li><a class="dropdown-item" href="{{route('news.add')}}">Add News</a></li>
+                    <li><a class="dropdown-item" href="{{ route('news.show') }}">View News</a></li>
+                    {{-- Using Blade's @if directive --}}
+                    @if (Auth::check() && Auth::user()->user_type == 'author' || Auth::user()->user_type == 'admin')
+                        <li><a class="dropdown-item" href="{{ route('news.add') }}">Add News</a></li>
+                    @endif
                 </ul>
             </li>
 
@@ -199,17 +201,18 @@
             <li class="sidebar-item dropdown">
                 <a class="sidebar-link dropdown-toggle" href="#" id="galleryDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="align-middle" data-feather="alert-triangle"></i> <span class="align-middle">Breaking News</span>
+                    <i class="align-middle" data-feather="alert-triangle"></i> <span class="align-middle">Breaking
+                        News</span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
-                    <li><a class="dropdown-item" href="">View Breaking News</a></li>
-                    <li><a class="dropdown-item" href="">Add Breaking News</a></li>
+                    <li><a class="dropdown-item" href="{{ route('breakingnews.show') }}">View Breaking News</a></li>
+                    <li><a class="dropdown-item" href="{{ route('breakingnews.add') }}">Add Breaking News</a></li>
                 </ul>
             </li>
 
 
             <li class="sidebar-item">
-                <a class="sidebar-link text-danger" href="{{route('logout')}}">
+                <a class="sidebar-link text-danger" href="{{ route('logout') }}">
                     <i class="align-middle" data-feather="power"></i> <span class="align-middle">Logout</span>
                 </a>
             </li>
