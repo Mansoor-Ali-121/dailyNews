@@ -81,7 +81,7 @@
                                     <thead class="bg-light">
                                         <tr class="text-center">
                                             <th class="ps-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0">ID</th>
-                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Title</th>
+                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">News Category</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Slug</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Country</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Status</th>
@@ -97,7 +97,7 @@
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div>
-                                                            <h6 class="mb-1 fw-bold fs-5">{{ $item->news_title }}</h6>
+                                                            <h6 class="mb-1 fw-bold fs-5">{{ $item->category->category_name }}</h6>
                                                         </div>
                                                     </div>
                                                 </td>

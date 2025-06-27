@@ -95,20 +95,6 @@
                                     </div>
                                 </div>
 
-                                {{-- Category Slug (User Editable Input for Slug Generation) --}}
-                                <div class="col-12">
-                                    <div class="form-floating position-relative">
-                                        <i class="fas fa-link floating-icon"></i>
-                                        <input type="text"
-                                            class="form-control border-2 ps-5 py-3 @error('actual_slug') is-invalid @enderror"
-                                            id="actual_slug" name="actual_slug" value="{{ old('actual_slug') }}"
-                                            onkeyup="generateSlug()" placeholder="Custom Slug (Optional)">
-                                        <label for="actual_slug" class="form-label text-muted ms-4">Custom Slug </label>
-                                        @error('actual_slug')
-                                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                                        @enderror
-                                    </div>
-                                </div>
 
                                 {{-- Generated Category Slug (Read-only) --}}
                                 <div class="col-12">
@@ -376,8 +362,8 @@
             // Get value from the user-editable 'actual_slug' field (or category_name if you want to use that for initial slug)
             var inputslug = document.getElementById('category_name')
             .value; // Using category_name for initial slug generation
-            if (document.getElementById('actual_slug').value !== '') { // Prioritize actual_slug if user types there
-                inputslug = document.getElementById('actual_slug').value;
+            if (document.getElementById('category_name').value !== '') { // Prioritize category_name if user types there
+                inputslug = document.getElementById('category_name').value;
             }
 
             // Generate a clean slug
@@ -396,7 +382,7 @@
             generateSlug();
         };
 
-        // Enhanced Form Validation (copied from your user add file)
+        // Form Validation 
         (function() {
             'use strict';
             const forms = document.querySelectorAll('.needs-validation');

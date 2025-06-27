@@ -429,7 +429,7 @@
                                             class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
                                             <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
                                                 href="blog-category.html">
-                                                <span>{{ $categories->where('category_name', 'Politics')->first()->category_name }}</span>
+                                                <span>Poltics</span>
                                                 <i class="icon-1 fw-bold unicon-chevron-right"></i>
                                             </a>
                                         </h2>
@@ -515,6 +515,8 @@
                                             <div class="order-1 md:order-0">
                                                 <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
                                                     <div>
+                                                        @foreach ($politicsNews as $political )
+                                                            
                                                         <article class="post type-post panel uc-transition-toggle">
                                                             <div class="row child-cols g-2 lg:g-3" data-uc-grid>
                                                                 <div>
@@ -522,13 +524,11 @@
                                                                         class="post-header panel vstack justify-between gap-1">
                                                                         <h3 class="post-title h6 m-0 text-truncate-2">
                                                                             <a class="text-none hover:text-primary duration-150"
-                                                                                href="{{ route('Webnews.view') }}">The
-                                                                                Future of Sustainable Living: Driving
-                                                                                Eco-Friendly Lifestyles</a>
+                                                                                href="">{{ $political->news_title }}</a>
                                                                         </h3>
                                                                         <div
                                                                             class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                            <span>12h</span>
+                                                                            <span>{{ $political->created_at->diffForHumans() }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -548,8 +548,9 @@
                                                                 </div>
                                                             </div>
                                                         </article>
+                                                        @endforeach
                                                     </div>
-                                                    <div>
+                                                    {{-- <div>
                                                         <article class="post type-post panel uc-transition-toggle">
                                                             <div class="row child-cols g-2 lg:g-3" data-uc-grid>
                                                                 <div>
@@ -652,7 +653,7 @@
                                                                 </div>
                                                             </div>
                                                         </article>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
                                         </div>
@@ -673,6 +674,9 @@
                                     </div>
                                     <div class="block-content">
                                         <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
+                                            @foreach ($medianews as $media)
+                                                
+                                           
                                             <div>
                                                 <article class="post type-post panel uc-transition-toggle">
                                                     <div class="row child-cols g-2 lg:g-3" data-uc-grid>
@@ -705,102 +709,7 @@
                                                     </div>
                                                 </article>
                                             </div>
-                                            <div>
-                                                <article class="post type-post panel uc-transition-toggle">
-                                                    <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                        <div>
-                                                            <div class="post-header panel vstack justify-between gap-1">
-                                                                <h3 class="post-title h6 m-0 text-truncate-2">
-                                                                    <a class="text-none hover:text-primary duration-150"
-                                                                        href="blog-details.html">Gaming in the Age of AI:
-                                                                        Strategies for Startups</a>
-                                                                </h3>
-                                                                <div
-                                                                    class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                    <span>9mo</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <div
-                                                                class="post-media panel overflow-hidden max-w-72px min-w-72px">
-                                                                <div
-                                                                    class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-1x1">
-                                                                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                        src="{{ asset('website/assets/images/demo-seven/posts/img-15.jpg') }}"
-                                                                        alt="Gaming in the Age of AI: Strategies for Startups"
-                                                                        data-uc-img="loading: lazy">
-                                                                </div>
-                                                                <a href="blog-details.html" class="position-cover"></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                            <div>
-                                                <article class="post type-post panel uc-transition-toggle">
-                                                    <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                        <div>
-                                                            <div class="post-header panel vstack justify-between gap-1">
-                                                                <h3 class="post-title h6 m-0 text-truncate-2">
-                                                                    <a class="text-none hover:text-primary duration-150"
-                                                                        href="blog-details.html">Virtual Reality and Mental
-                                                                        Health: Exploring the Therapeutic</a>
-                                                                </h3>
-                                                                <div
-                                                                    class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                    <span>2mo</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <div
-                                                                class="post-media panel overflow-hidden max-w-72px min-w-72px">
-                                                                <div
-                                                                    class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-1x1">
-                                                                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                        src="{{ asset('website/assets/images/demo-seven/posts/img-18.jpg') }}"
-                                                                        alt="Virtual Reality and Mental Health: Exploring the Therapeutic"
-                                                                        data-uc-img="loading: lazy">
-                                                                </div>
-                                                                <a href="blog-details.html" class="position-cover"></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                            <div>
-                                                <article class="post type-post panel uc-transition-toggle">
-                                                    <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                        <div>
-                                                            <div class="post-header panel vstack justify-between gap-1">
-                                                                <h3 class="post-title h6 m-0 text-truncate-2">
-                                                                    <a class="text-none hover:text-primary duration-150"
-                                                                        href="blog-details.html">Smart Homes, Smarter
-                                                                        Living: Exploring IoT and AI</a>
-                                                                </h3>
-                                                                <div
-                                                                    class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                    <span>23d</span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-auto">
-                                                            <div
-                                                                class="post-media panel overflow-hidden max-w-72px min-w-72px">
-                                                                <div
-                                                                    class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-1x1">
-                                                                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                        src="{{ asset('website/assets/images/demo-seven/posts/img-20.jpg') }}"
-                                                                        alt="Smart Homes, Smarter Living: Exploring IoT and AI"
-                                                                        data-uc-img="loading: lazy">
-                                                                </div>
-                                                                <a href="blog-details.html" class="position-cover"></a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
+                                          @endforeach
                                         </div>
                                     </div>
                                 </div>
