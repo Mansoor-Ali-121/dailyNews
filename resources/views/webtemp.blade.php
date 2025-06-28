@@ -266,7 +266,7 @@
                             <ul class="uc-navbar-nav gap-3 justify-between flex-1 fs-6 fw-bold"
                                 style="--uc-nav-height: 48px">
                                 <li>
-                                    <a href="#"><span class="icon-1 unicon-finance"></span></a>
+                                    <a href=""><span class="icon-1 unicon-finance"></span></a>
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
                                         <div class="row child-cols col-match g-2">
@@ -1896,7 +1896,7 @@
                                 </a>
                             </div>
                             <div class="uc-logo d-block md:d-none">
-                                <a href="index.html">
+                                <a href="{{ route('news.index') }}">
                                     <img class="w-100px text-dark dark:text-white"
                                         src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp')}}" alt="News5"
                                         data-uc-svg>
@@ -1905,7 +1905,7 @@
                         </div>
                         <div class="uc-navbar-center">
                             <div class="uc-logo d-none md:d-block">
-                                <a href="index.html">
+                                <a href="{{ route('news.index') }}">
                                     <img class="text-dark dark:text-white main-logo"
                                         src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp')}}" alt="News5"
                                         data-uc-svg>

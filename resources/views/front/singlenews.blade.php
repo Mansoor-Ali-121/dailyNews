@@ -2,19 +2,6 @@
 @section('content')
     <!-- Wrapper start -->
     <div id="wrapper" class="wrap overflow-hidden-x">
-        <div class="breadcrumbs panel z-1 py-2 bg-gray-25 dark:bg-gray-100 dark:bg-opacity-5 dark:text-white">
-            <div class="container max-w-xl">
-                <ul class="breadcrumb nav-x justify-center gap-1 fs-7 sm:fs-6 m-0">
-                    <li><a href="index.html">Home</a></li>
-                    <li><i class="unicon-chevron-right opacity-50"></i></li>
-                    <li><a href="blog.html">Blog</a></li>
-                    <li><i class="unicon-chevron-right opacity-50"></i></li>
-                    <li><a href="blog-category.html">Strategy</a></li>
-                    <li><i class="unicon-chevron-right opacity-50"></i></li>
-                    <li><span class="opacity-50">The Rise of Gourmet Street Food: Trends and Top Picks</span></li>
-                </ul>
-            </div>
-        </div>
 
         <article class="post type-post single-post py-4 lg:py-6 xl:py-9">
             <div class="container max-w-xl">
@@ -171,7 +158,7 @@
                                 </div>
                                 {{-- Related to this topic: --}}
                                 <div class="post-related panel border-top pt-2 mt-8 xl:mt-9">
-                                    <h4 class="h5 xl:h4 mb-5 xl:mb-6">Related to this topic:</h4>
+                                    <h4 class="h5 xl:h4 mb-5 xl:mb-6">Related to this News:</h4>
                                     <div class="row child-cols-6 md:child-cols-4 gx-2 gy-4 sm:gx-3 sm:gy-6">
 
                                         {{-- Loop through each related news item. Ensure $relatedNews (capital 'N') is passed from controller. --}}
@@ -397,7 +384,7 @@
                                         <h2 class="widget-title">Category</h2>
                                         <ul>
                                             @foreach ($categories as $category)
-                                                <li><a href="#">{{ $category->category_name }}</a>
+                                                <li><a href="{{ route('single.category', $category->category_slug) }}">{{ $category->category_name }}</a>
                                                     <span>{{ $category->news_count }}</span>
                                                 </li>
                                             @endforeach

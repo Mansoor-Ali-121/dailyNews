@@ -515,8 +515,8 @@
                                             {{-- Section --}}
                                             <div class="order-1 md:order-0">
                                                 <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
+                                                    @foreach ($sportsNews as $sports )
                                                     <div>
-                                                        @foreach ($sportsNews as $sports )
                                                             
                                                         <article class="post type-post panel uc-transition-toggle">
                                                             <div class="row child-cols g-2 lg:g-3" data-uc-grid>
@@ -531,7 +531,7 @@
                                                                             class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
                                                                             <span>{{ $sports->created_at->diffForHumans() }}</span>
                                                                         </div>
-                                                                        <hr>
+                                                                        {{-- <hr> --}}
 
                                                                     </div>
                                                                 </div>
@@ -551,8 +551,8 @@
                                                                 </div>
                                                             </div>
                                                         </article>
-                                                        @endforeach
                                                     </div>
+                                                    @endforeach
                                                     {{-- <div>
                                                         <article class="post type-post panel uc-transition-toggle">
                                                             <div class="row child-cols g-2 lg:g-3" data-uc-grid>
@@ -814,7 +814,7 @@
                                             class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
                                             <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
                                                 href="blog-category.html">
-                                                <span>Opinions</span>
+                                                <span>Entertainment</span>
                                                 <i class="icon-1 fw-bold unicon-chevron-right"></i>
                                             </a>
                                         </h2>
@@ -822,6 +822,7 @@
                                     <div class="block-content">
                                         <div class="panel row child-cols-12 md:child-cols g-2 lg:g-4 col-match sep-y"
                                             data-uc-grid>
+                                            {{-- Left side news --}}
                                             <div class="col-12 md:col-6 order-0 md:order-1">
                                                 <div>
                                                     <article
@@ -895,8 +896,12 @@
                                                     </article>
                                                 </div>
                                             </div>
+                                            {{-- Left side news and --}}
+{{-- Right side news --}}
                                             <div class="order-1 md:order-0">
                                                 <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
+                                                    @foreach ($entertainmentnews as $item)
+                                                        
                                                     <div>
                                                         <article class="post type-post panel uc-transition-toggle">
                                                             <div class="row child-cols g-2 lg:g-3" data-uc-grid>
@@ -905,13 +910,11 @@
                                                                         class="post-header panel vstack justify-between gap-1">
                                                                         <h3 class="post-title h6 m-0 text-truncate-2">
                                                                             <a class="text-none hover:text-primary duration-150"
-                                                                                href="blog-details.html">Business Agility
-                                                                                the Digital Age: Leveraging AI and
-                                                                                Automation</a>
+                                                                                href={{ route('single.news', $item->news_slug) }}>{{$item->news_title}}</a>
                                                                         </h3>
                                                                         <div
                                                                             class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                            <span>7d</span>
+                                                                            <span>{{ $item->created_at->diffForHumans() }}</span>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -921,8 +924,8 @@
                                                                         <div
                                                                             class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-1x1">
                                                                             <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                                src="../assets/images/common/img-fallback.png"
-                                                                                data-src="../assets/images/demo-seven/posts/img-06.jpg"
+                                                                                src="{{ asset('news/news_images/' . $item->news_image) }}"
+                                                                                data-src="{{ asset('news/news_images/' . $item->news_image) }}"
                                                                                 alt="Business Agility the Digital Age: Leveraging AI and Automation"
                                                                                 data-uc-img="loading: lazy">
                                                                         </div>
@@ -933,7 +936,8 @@
                                                             </div>
                                                         </article>
                                                     </div>
-                                                    <div>
+                                                    @endforeach
+                                                    {{-- <div>
                                                         <article class="post type-post panel uc-transition-toggle">
                                                             <div class="row child-cols g-2 lg:g-3" data-uc-grid>
                                                                 <div>
@@ -1040,9 +1044,11 @@
                                                                 </div>
                                                             </div>
                                                         </article>
-                                                    </div>
+                                                    </div> --}}
                                                 </div>
                                             </div>
+{{-- Right side news --}}
+                
                                         </div>
                                     </div>
                                 </div>

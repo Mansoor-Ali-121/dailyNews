@@ -100,8 +100,21 @@ Route::middleware(ValidUser::class)->group(function () {
         Route::patch('/update/{id}', [UserController::class, 'update'])->name('user.update');
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
     });
-    // MIddleware end
     // End User Routes
+
+
+    // Braeking News Routes
+    Route::prefix('breakingnews')->group(function () {
+
+        Route::get('/add', [BreakingNewsController::class, 'index'])->name('breakingnews.add');
+        Route::post('/add', [BreakingNewsController::class, 'store']);
+        Route::get('/show', [BreakingNewsController::class, 'show'])->name('breakingnews.show');
+        Route::get('/edit/{id}', [BreakingNewsController::class, 'edit'])->name('breakingnews.edit');
+        Route::patch('/update/{id}', [BreakingNewsController::class, 'update'])->name('breakingnews.update');
+        Route::delete('/delete/{id}', [BreakingNewsController::class, 'destroy'])->name('breakingnews.delete');
+    });
+
+    // MIddleware end
 });
 
 // Websites Routes Start
@@ -116,18 +129,11 @@ Route::get('/search', [WebController::class, 'search'])->name('news.search');
 
 // End Websites Routes
 
-// Braeking News Routes
-Route::prefix('breakingnews')->group(function () {
-   
-    Route::get('/add', [BreakingNewsController::class, 'index'])->name('breakingnews.add');
-    Route::post('/add', [BreakingNewsController::class, 'store']);
-    Route::get('/show', [BreakingNewsController::class, 'show'])->name('breakingnews.show');
-    Route::get('/edit/{id}', [BreakingNewsController::class, 'edit'])->name('breakingnews.edit');
-    Route::patch('/update/{id}', [BreakingNewsController::class, 'update'])->name('breakingnews.update');
-    Route::delete('/delete/{id}', [BreakingNewsController::class, 'destroy'])->name('breakingnews.delete');
-});
+
 // Single News show in website 
 Route::get('/news/{id}', [WebController::class, 'showsinglenews'])->name('single.news');
+// Single category show in website 
+Route::get('/news/category/{id}', [WebController::class, 'singlecategoryview'])->name('single.category');
 
 Route::redirect('/admin', '/admin/login');
 
@@ -135,4 +141,3 @@ Route::redirect('/admin', '/admin/login');
 Route::fallback(function () {
     return view('404');
 });
-

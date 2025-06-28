@@ -39,8 +39,6 @@ class WebController extends Controller
             ->get();
 
 
-
-
         /*media news fetching code start*/
         $entertainmentnews = News::whereHas('category', function ($query) {
             $query->where('category_name', 'Entertainment'); // Ensure 'category_name' is the correct column and 'Politics' is spelled exactly as in your DB
@@ -55,23 +53,23 @@ class WebController extends Controller
         $businessnews = News::whereHas('category', function ($query) {
             $query->where('category_name', 'Business'); // Ensure 'category_name' is the correct column and 'Politics' is spelled exactly as in your DB
         })
-        ->where('news_status', 'active') // Only active news
-        ->latest() // Get the latest ones
-        ->take(4) // Limit to 4 articles
-        ->get();
+            ->where('news_status', 'active') // Only active news
+            ->latest() // Get the latest ones
+            ->take(4) // Limit to 4 articles
+            ->get();
         // Business news fetching code end
 
         // Auto news fetching code start
         $autonews = News::whereHas('category', function ($query) {
             $query->where('category_name', 'Auto'); // Ensure 'category_name' is the correct column and 'Politics' is spelled exactly as in your DB
         })
-        ->where('news_status', 'active') // Only active news
-        ->latest() // Get the latest ones
-        ->take(4) // Limit to 4 articles
-        ->get();
+            ->where('news_status', 'active') // Only active news
+            ->latest() // Get the latest ones
+            ->take(4) // Limit to 4 articles
+            ->get();
         // Auto news fetching code end
 
-        return view('front.homepage', compact('news', 'activeNews', 'categories', 'sportsNews','businessnews','autonews','entertainmentnews'));
+        return view('front.homepage', compact('news', 'activeNews', 'categories', 'sportsNews', 'businessnews', 'autonews', 'entertainmentnews'));
     }
 
 
@@ -82,7 +80,7 @@ class WebController extends Controller
         // show categories in single news
         $categories = Categories::withCount('news')->get();
         // show single news
-        $news = News::with('author')->where([ // <--- THIS IS THE CRITICAL CORRECTION
+        $news = News::with('author')->where([
             ['news_slug', '=', $slug],
             ['news_status', '=', 'active']
         ])->firstOrFail();
@@ -105,13 +103,26 @@ class WebController extends Controller
     }
 
 
-    /**
-     * Show the form for creating a new resource.
-     */
+    // View of single news
     public function view()
     {
         return view('front.singlenews');
     }
+
+    // View of single Category
+
+    public function singlecategoryview($slug)
+    {
+
+        $category = Categories::where('category_slug', $slug)->firstOrFail();
+        $categoryname = $category->category_name;
+        $totalNewsCount = News::count();
+        $news = News::where('category_id', $category->id)->get();   
+
+        return view('front.singlecategory', compact('news', 'categoryname', 'totalNewsCount'));
+    }
+
+
 
     /**
      * Store a newly created resource in storage.

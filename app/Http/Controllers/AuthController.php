@@ -15,6 +15,7 @@ class AuthController extends Controller
         return view('template');
     }
 
+
     public function loginForm()
     {
         // This will display your login form, which you've set up in 'dashboard.users.login'
