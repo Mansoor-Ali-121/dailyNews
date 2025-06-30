@@ -356,8 +356,8 @@
                                                 {{ (isset($user) && $user->user_type == 'author') || old('user_type') == 'author' ? 'selected' : '' }}>
                                                 Author
                                             </option>
-                                            <option value="rewiewer"
-                                                {{ (isset($user) && $user->user_type == 'rewiewer') || old('user_type') == 'rewiewer' ? 'selected' : '' }}>
+                                            <option value="reviewer"
+                                                {{ (isset($user) && $user->user_type == 'reviewer') || old('user_type') == 'reviewer' ? 'selected' : '' }}>
                                                 Reviewer
                                             </option>
                                         </select>

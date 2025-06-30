@@ -4,6 +4,7 @@ use App\Http\Middleware\ValidUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BlogController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CitiesController;
@@ -23,6 +24,7 @@ Route::middleware(ValidUser::class)->group(function () {
     Route::get('/admin/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/admin/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('/admin/profile', [AuthController::class, 'profile'])->name('profile');
+
 
     // Route::redirect('/admin', '/admin/login');
     // City Routes
@@ -113,6 +115,18 @@ Route::middleware(ValidUser::class)->group(function () {
         Route::patch('/update/{id}', [BreakingNewsController::class, 'update'])->name('breakingnews.update');
         Route::delete('/delete/{id}', [BreakingNewsController::class, 'destroy'])->name('breakingnews.delete');
     });
+
+// Blog Routes
+
+// Route::prefix('blog')->group(function () {
+
+//     Route::get('/add', [BlogController::class, 'index'])->name('blog.add');
+//     Route::post('/add', [BlogController::class, 'store']);
+//     Route::get('/show', [BlogController::class, 'show'])->name('blog.show');
+//     Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
+//     Route::patch('/update/{id}', [BlogController::class, 'update'])->name('blog.update');
+//     Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
+// });
 
     // MIddleware end
 });

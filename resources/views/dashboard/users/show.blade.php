@@ -143,6 +143,14 @@
                                                             aria-label="Edit User {{ $user->name }}">
                                                             <i class="fas fa-edit me-1" aria-hidden="true"></i> Edit
                                                         </a>
+
+                                                        <!-- Button trigger modal -->
+                                                        <button type="button" class="btn btn-primary"
+                                                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                            View User
+                                                        </button>
+                                                        @include('dashboard.includes.modal')
+
                                                         <a href="{{ route('user.delete', $user->id) }}"
                                                             class="btn btn-outline-danger" data-bs-toggle="tooltip"
                                                             data-bs-placement="top" title="Delete User"
@@ -424,7 +432,7 @@
         }
     </style>
 
-<style>
+    <style>
         /* Custom Pagination Styles - Add this to your existing CSS */
         .pagination-container {
             display: flex;

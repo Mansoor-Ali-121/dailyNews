@@ -141,6 +141,19 @@
                 </ul>
             </li>
 
+            {{-- Admin profile --}}
+
+            <li class="sidebar-item dropdown">
+                <a class="sidebar-link dropdown-toggle" href="#" id="profileDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">Profile</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                    <li><a class="dropdown-item" href="{{ route('profile') }}">View Profile</a></li>
+                    {{-- <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a></li> --}}
+                </ul>
+            </li>
+
             {{-- Countries --}}
 
             <li class="sidebar-item dropdown">
@@ -190,7 +203,7 @@
                 <ul class="dropdown-menu" aria-labelledby="eventsDropdown">
                     <li><a class="dropdown-item" href="{{ route('news.show') }}">View News</a></li>
                     {{-- Using Blade's @if directive --}}
-                    @if (Auth::check() && Auth::user()->user_type == 'author' || Auth::user()->user_type == 'admin')
+                    @if ((Auth::check() && Auth::user()->user_type == 'author') || Auth::user()->user_type == 'admin')
                         <li><a class="dropdown-item" href="{{ route('news.add') }}">Add News</a></li>
                     @endif
                 </ul>
@@ -210,6 +223,17 @@
                 </ul>
             </li>
 
+            {{-- Blogs --}}
+            {{-- <li class="sidebar-item dropdown">
+                <a class="sidebar-link dropdown-toggle" href="#" id="galleryDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Blogs</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
+                    <li><a class="dropdown-item" href="">View Blogs</a></li>
+                    <li><a class="dropdown-item" href="{{ route('blog.add') }}">Add Blogs</a></li>
+                </ul>
+            </li> --}}
 
             <li class="sidebar-item">
                 <a class="sidebar-link text-danger" href="{{ route('logout') }}">

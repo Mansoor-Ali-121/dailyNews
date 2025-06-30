@@ -42,7 +42,7 @@ class UserController extends Controller
             ],
             'password' => 'required|string|min:8',
             'user_description' => 'required|string',
-            'user_type' => 'required|string|in:admin,editor,author,rewiewer',
+            'user_type' => 'required|string|in:admin,editor,author,reviewer',
             'user_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'user_slug' => 'required|string|max:255',
         ]);
@@ -85,7 +85,7 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email',
-            'user_type' => 'required|string|in:admin,editor,author,rewiewer',
+            'user_type' => 'required|string|in:admin,editor,author,reviewer',
             'user_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'user_slug' => 'nullable|string|max:255',
             'user_description' => 'required|string',

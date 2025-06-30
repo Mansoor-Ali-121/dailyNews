@@ -116,6 +116,7 @@
                                     </div>
                                 </div>
                                 
+                                {{-- User type --}}
                                 <div class="col-md-6">
                                     <div class="form-floating position-relative">
                                         <i class="fas fa-user-tag floating-icon"></i>
@@ -124,7 +125,7 @@
                                             <option value="admin" {{ old('user_type') == 'admin' ? 'selected' : '' }}>Admin</option>
                                             <option value="editor" {{ old('user_type') == 'editor' ? 'selected' : '' }}>Editor</option>
                                             <option value="author" {{ old('user_type') == 'author' ? 'selected' : '' }}>Author</option>
-                                            <option value="rewiewer" {{ old('user_type') == 'rewiewer' ? 'selected' : '' }}>Reviewer</option>
+                                            <option value="reviewer" {{ old('user_type') == 'reviewer' ? 'selected' : '' }}>Reviewer</option>
                                         </select>
                                         <label for="user_type" class="form-label text-muted ms-4">User Role</label>
                                         @error('user_type')

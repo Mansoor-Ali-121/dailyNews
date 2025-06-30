@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth; // Correctly import the Auth facade
 use Illuminate\Support\Facades\Session; // Import Session for flash messages (optional but good for errors)
@@ -22,6 +23,10 @@ class AuthController extends Controller
         return view('dashboard.users.login');
     }
 
+    //Admin Profile page
+    public function profile(){
+        return view('dashboard.users.profile');
+    }
 
   // Authentication _ Login
     public function authentication(Request $request)
