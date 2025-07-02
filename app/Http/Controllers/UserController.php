@@ -19,20 +19,49 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
+//  public function showDetails(User $user)
+//     {
+//         // You can customize what data you want to return
+//         return response()->json([
+//             'id' => $user->id,
+//             'name' => $user->name,
+//             'email' => $user->email,
+//             'user_description' => $user->user_description, // Make sure this column exists in your User model/table
+//             'created_at' => $user->created_at->format('M d, Y H:i A'), // Format for display
+//             'updated_at' => $user->updated_at->format('M d, Y H:i A'),
+//             // Add any other user fields you want to display in the modal
+//         ]);
+//     }
+
+
+
  public function showDetails(User $user)
     {
+        // Eager load the 'userArticles' relationship
+        $user->load('userArticles');
+
         // You can customize what data you want to return
         return response()->json([
             'id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
-            'user_description' => $user->user_description, // Make sure this column exists in your User model/table
+            'user_description' => $user->user_description ?? 'No description provided.', // Handle null gracefully
             'created_at' => $user->created_at->format('M d, Y H:i A'), // Format for display
             'updated_at' => $user->updated_at->format('M d, Y H:i A'),
-            // Add any other user fields you want to display in the modal
+            'user_image' => asset('images/users/' . $user->user_image), // Add user image for the modal
+            'user_type' => ucfirst($user->user_type), // Display user type
+            'user_status' => ucfirst($user->user_status), // Display user status
+            'articles' => $user->userArticles->map(function ($article) {
+                return [
+                    'id' => $article->id,
+                    'title' => $article->news_title,
+                    'content' => \Illuminate\Support\Str::limit($article->news_content, 100), // Limit content for summary
+                    'created_at' => $article->created_at->format('M d, Y H:i A'),
+                    // Add other article fields you want to show
+                ];
+            }),
         ]);
     }
-
 
     /**
      * Store a newly created resource in storage.

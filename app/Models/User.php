@@ -32,8 +32,13 @@ class User extends Authenticatable
     ];
 
     // ... (rest of your model)
-      public function userArticles() // Renamed the relationship here
+    //   public function userArticles() // Renamed the relationship here
+    // {
+    //     return $this->hasMany(News::class); // Still links to the News model
+    // }
+     public function userArticles()
     {
-        return $this->hasMany(News::class); // Still links to the News model
+        // Tell Laravel that the foreign key in the 'news' table is 'author_id', not 'user_id'
+        return $this->hasMany(News::class, 'author_id');
     }
 }

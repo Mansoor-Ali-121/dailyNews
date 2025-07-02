@@ -171,7 +171,9 @@
                                                 {{-- IMPORTANT: Place the modal structure OUTSIDE the loop,
    ideally at the end of the <body> or before the closing </body> tag.
    You should only have ONE modal with a specific ID. --}}
-                                                @include('dashboard.includes.view_user_modal') {{-- Renamed for clarity --}}
+                                                @once
+                                                @include('dashboard.includes.view_user_modal')
+                                                @endonce('dashboard.includes.view_user_modal') {{-- Renamed for clarity --}}
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -526,67 +528,71 @@
         }
     </style>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const viewUserModal = new bootstrap.Modal(document.getElementById('viewUserModal'));
-        const modalUserDetails = document.getElementById('modalUserDetails');
-        const modalLoading = document.getElementById('modalLoading');
-        const modalError = document.getElementById('modalError');
+    {{-- <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const viewUserModal = new bootstrap.Modal(document.getElementById('viewUserModal'));
+            const modalUserDetails = document.getElementById('modalUserDetails');
+            const modalLoading = document.getElementById('modalLoading');
+            const modalError = document.getElementById('modalError');
 
-        document.querySelectorAll('.view-user-btn').forEach(button => {
-            button.addEventListener('click', function () {
-                const userId = this.dataset.userId; // Get user ID from data-user-id attribute
+            document.querySelectorAll('.view-user-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const userId = this.dataset.userId; // Get user ID from data-user-id attribute
 
-                // Show loading spinner, hide details and error
-                modalLoading.classList.remove('d-none');
-                modalUserDetails.classList.add('d-none');
+                    // Show loading spinner, hide details and error
+                    modalLoading.classList.remove('d-none');
+                    modalUserDetails.classList.add('d-none');
+                    modalError.classList.add('d-none');
+
+                    // Fetch user details via AJAX
+                    fetch(`/user/${userId}/details`) // Use the route you defined
+                        .then(response => {
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok');
+                            }
+                            return response.json();
+                        })
+                        .then(data => {
+                            // Populate modal with user data
+                            document.getElementById('userName').textContent = data.name;
+                            document.getElementById('userEmail').textContent = data.email;
+                            document.getElementById('userDescription').textContent = data
+                                .user_description ||
+                                'N/A'; // Handle potentially missing description
+                            document.getElementById('userCreatedAt').textContent = data
+                                .created_at;
+                            document.getElementById('userUpdatedAt').textContent = data
+                                .updated_at;
+
+                            // Hide loading, show details
+                            modalLoading.classList.add('d-none');
+                            modalUserDetails.classList.remove('d-none');
+                        })
+                        .catch(error => {
+                            console.error('Error fetching user details:', error);
+                            // Hide loading, show error
+                            modalLoading.classList.add('d-none');
+                            modalError.classList.remove('d-none');
+                        });
+
+                    // The modal is automatically shown by Bootstrap because of data-bs-toggle="modal"
+                    // If you removed data-bs-toggle, you'd call viewUserModal.show(); here.
+                });
+            });
+
+            // Optional: Clear modal content when closed (good for forms, less critical for display)
+            document.getElementById('viewUserModal').addEventListener('hidden.bs.modal', function() {
+                // Optionally clear the content
+                document.getElementById('userName').textContent = '';
+                document.getElementById('userEmail').textContent = '';
+                document.getElementById('userDescription').textContent = '';
+                document.getElementById('userCreatedAt').textContent = '';
+                document.getElementById('userUpdatedAt').textContent = '';
+                // Reset visibility
+                modalLoading.classList.add('d-none');
+                modalUserDetails.classList.remove('d-none'); // Show details for next load
                 modalError.classList.add('d-none');
-
-                // Fetch user details via AJAX
-                fetch(`/user/${userId}/details`) // Use the route you defined
-                    .then(response => {
-                        if (!response.ok) {
-                            throw new Error('Network response was not ok');
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        // Populate modal with user data
-                        document.getElementById('userName').textContent = data.name;
-                        document.getElementById('userEmail').textContent = data.email;
-                        document.getElementById('userDescription').textContent = data.user_description || 'N/A'; // Handle potentially missing description
-                        document.getElementById('userCreatedAt').textContent = data.created_at;
-                        document.getElementById('userUpdatedAt').textContent = data.updated_at;
-
-                        // Hide loading, show details
-                        modalLoading.classList.add('d-none');
-                        modalUserDetails.classList.remove('d-none');
-                    })
-                    .catch(error => {
-                        console.error('Error fetching user details:', error);
-                        // Hide loading, show error
-                        modalLoading.classList.add('d-none');
-                        modalError.classList.remove('d-none');
-                    });
-
-                // The modal is automatically shown by Bootstrap because of data-bs-toggle="modal"
-                // If you removed data-bs-toggle, you'd call viewUserModal.show(); here.
             });
         });
-
-        // Optional: Clear modal content when closed (good for forms, less critical for display)
-        document.getElementById('viewUserModal').addEventListener('hidden.bs.modal', function () {
-            // Optionally clear the content
-            document.getElementById('userName').textContent = '';
-            document.getElementById('userEmail').textContent = '';
-            document.getElementById('userDescription').textContent = '';
-            document.getElementById('userCreatedAt').textContent = '';
-            document.getElementById('userUpdatedAt').textContent = '';
-            // Reset visibility
-            modalLoading.classList.add('d-none');
-            modalUserDetails.classList.remove('d-none'); // Show details for next load
-            modalError.classList.add('d-none');
-        });
-    });
-</script>
+    </script> --}}
 @endsection

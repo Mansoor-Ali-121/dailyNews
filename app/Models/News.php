@@ -43,5 +43,8 @@ class News extends Model
     {
         return $this->belongsTo(User::class, 'author_id');
     }
-    
+     public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
