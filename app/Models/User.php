@@ -32,4 +32,8 @@ class User extends Authenticatable
     ];
 
     // ... (rest of your model)
+      public function userArticles() // Renamed the relationship here
+    {
+        return $this->hasMany(News::class); // Still links to the News model
+    }
 }

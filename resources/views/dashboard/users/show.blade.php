@@ -144,22 +144,34 @@
                                                             <i class="fas fa-edit me-1" aria-hidden="true"></i> Edit
                                                         </a>
 
-                                                        <!-- Button trigger modal -->
-                                                        <button type="button" class="btn btn-primary"
-                                                            data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                                                        <button type="button" class="btn btn-primary view-user-btn"
+                                                            data-bs-toggle="modal" data-bs-target="#viewUserModal"
+                                                            data-user-id="{{ $user->id }}"> {{-- <--- ADD THIS LINE --}}
                                                             View User
                                                         </button>
-                                                        @include('dashboard.includes.modal')
 
-                                                        <a href="{{ route('user.delete', $user->id) }}"
-                                                            class="btn btn-outline-danger" data-bs-toggle="tooltip"
-                                                            data-bs-placement="top" title="Delete User"
-                                                            aria-label="Delete User {{ $user->name }}">
-                                                            <i class="fas fa-trash-alt me-1" aria-hidden="true"></i>
-                                                            Delete
-                                                        </a>
+                                                        {{-- Remove @include('dashboard.includes.modal') from here --}}
+                                                        {{-- We'll put the modal structure once outside the loop --}}
+
+                                                        <form action="{{ route('user.delete', $user->id) }}"
+                                                            method="POST">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-outline-danger"
+                                                                data-bs-toggle="tooltip" data-bs-placement="top"
+                                                                title="Delete User"
+                                                                aria-label="Delete User {{ $user->name }}">
+                                                                <i class="fas fa-trash-alt me-1" aria-hidden="true"></i>
+                                                                Delete
+                                                            </button>
+                                                        </form>
                                                     </div>
                                                 </td>
+
+                                                {{-- IMPORTANT: Place the modal structure OUTSIDE the loop,
+   ideally at the end of the <body> or before the closing </body> tag.
+   You should only have ONE modal with a specific ID. --}}
+                                                @include('dashboard.includes.view_user_modal') {{-- Renamed for clarity --}}
                                             </tr>
                                         @endforeach
                                     </tbody>
@@ -513,4 +525,68 @@
             }
         }
     </style>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const viewUserModal = new bootstrap.Modal(document.getElementById('viewUserModal'));
+        const modalUserDetails = document.getElementById('modalUserDetails');
+        const modalLoading = document.getElementById('modalLoading');
+        const modalError = document.getElementById('modalError');
+
+        document.querySelectorAll('.view-user-btn').forEach(button => {
+            button.addEventListener('click', function () {
+                const userId = this.dataset.userId; // Get user ID from data-user-id attribute
+
+                // Show loading spinner, hide details and error
+                modalLoading.classList.remove('d-none');
+                modalUserDetails.classList.add('d-none');
+                modalError.classList.add('d-none');
+
+                // Fetch user details via AJAX
+                fetch(`/user/${userId}/details`) // Use the route you defined
+                    .then(response => {
+                        if (!response.ok) {
+                            throw new Error('Network response was not ok');
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        // Populate modal with user data
+                        document.getElementById('userName').textContent = data.name;
+                        document.getElementById('userEmail').textContent = data.email;
+                        document.getElementById('userDescription').textContent = data.user_description || 'N/A'; // Handle potentially missing description
+                        document.getElementById('userCreatedAt').textContent = data.created_at;
+                        document.getElementById('userUpdatedAt').textContent = data.updated_at;
+
+                        // Hide loading, show details
+                        modalLoading.classList.add('d-none');
+                        modalUserDetails.classList.remove('d-none');
+                    })
+                    .catch(error => {
+                        console.error('Error fetching user details:', error);
+                        // Hide loading, show error
+                        modalLoading.classList.add('d-none');
+                        modalError.classList.remove('d-none');
+                    });
+
+                // The modal is automatically shown by Bootstrap because of data-bs-toggle="modal"
+                // If you removed data-bs-toggle, you'd call viewUserModal.show(); here.
+            });
+        });
+
+        // Optional: Clear modal content when closed (good for forms, less critical for display)
+        document.getElementById('viewUserModal').addEventListener('hidden.bs.modal', function () {
+            // Optionally clear the content
+            document.getElementById('userName').textContent = '';
+            document.getElementById('userEmail').textContent = '';
+            document.getElementById('userDescription').textContent = '';
+            document.getElementById('userCreatedAt').textContent = '';
+            document.getElementById('userUpdatedAt').textContent = '';
+            // Reset visibility
+            modalLoading.classList.add('d-none');
+            modalUserDetails.classList.remove('d-none'); // Show details for next load
+            modalError.classList.add('d-none');
+        });
+    });
+</script>
 @endsection

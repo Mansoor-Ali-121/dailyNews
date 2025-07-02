@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\User;
 use App\Http\Middleware\ValidUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController;
@@ -101,6 +102,7 @@ Route::middleware(ValidUser::class)->group(function () {
         Route::get('/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
         Route::patch('/update/{id}', [UserController::class, 'update'])->name('user.update');
         Route::delete('/delete/{id}', [UserController::class, 'destroy'])->name('user.delete');
+       Route::get('/{user}/details', [UserController::class, 'showDetails'])->name('user.details');
     });
     // End User Routes
 
@@ -116,17 +118,17 @@ Route::middleware(ValidUser::class)->group(function () {
         Route::delete('/delete/{id}', [BreakingNewsController::class, 'destroy'])->name('breakingnews.delete');
     });
 
-// Blog Routes
+    // Blog Routes
 
-// Route::prefix('blog')->group(function () {
+    // Route::prefix('blog')->group(function () {
 
-//     Route::get('/add', [BlogController::class, 'index'])->name('blog.add');
-//     Route::post('/add', [BlogController::class, 'store']);
-//     Route::get('/show', [BlogController::class, 'show'])->name('blog.show');
-//     Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
-//     Route::patch('/update/{id}', [BlogController::class, 'update'])->name('blog.update');
-//     Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
-// });
+    //     Route::get('/add', [BlogController::class, 'index'])->name('blog.add');
+    //     Route::post('/add', [BlogController::class, 'store']);
+    //     Route::get('/show', [BlogController::class, 'show'])->name('blog.show');
+    //     Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
+    //     Route::patch('/update/{id}', [BlogController::class, 'update'])->name('blog.update');
+    //     Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
+    // });
 
     // MIddleware end
 });

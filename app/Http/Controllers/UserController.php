@@ -19,10 +19,20 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+ public function showDetails(User $user)
     {
-        //
+        // You can customize what data you want to return
+        return response()->json([
+            'id' => $user->id,
+            'name' => $user->name,
+            'email' => $user->email,
+            'user_description' => $user->user_description, // Make sure this column exists in your User model/table
+            'created_at' => $user->created_at->format('M d, Y H:i A'), // Format for display
+            'updated_at' => $user->updated_at->format('M d, Y H:i A'),
+            // Add any other user fields you want to display in the modal
+        ]);
     }
+
 
     /**
      * Store a newly created resource in storage.
@@ -45,6 +55,7 @@ class UserController extends Controller
             'user_type' => 'required|string|in:admin,editor,author,reviewer',
             'user_image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'user_slug' => 'required|string|max:255',
+            'user_status' => 'required|string|in:active,inactive',
         ]);
         // image upload
         if ($request->hasFile('user_image')) {
@@ -63,7 +74,7 @@ class UserController extends Controller
      */
     public function show()
     {
-        $users = User::paginate(3);
+        $users = User::paginate(10);
         return view('dashboard.users.show', compact('users'));
     }
 
@@ -89,6 +100,7 @@ class UserController extends Controller
             'user_image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
             'user_slug' => 'nullable|string|max:255',
             'user_description' => 'required|string',
+            'user_status' => 'required|string|in:active,inactive',
         ]);
         // 2. Handle User Image Upload
         if ($request->hasFile('user_image')) {

@@ -9,7 +9,8 @@
             border-radius: 20px;
             overflow: hidden;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.1);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15); /* Softer, larger shadow */
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+            /* Softer, larger shadow */
         }
 
         /* Animated Gradient Header */
@@ -19,24 +20,37 @@
         }
 
         @keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         /* Form Elements */
-        .form-control, .form-select {
+        .form-control,
+        .form-select {
             border-radius: 12px;
             border-width: 2px;
-            padding: 1rem 1.25rem 1rem 3rem; /* Increased left padding for icon */
+            padding: 1rem 1.25rem 1rem 3rem;
+            /* Increased left padding for icon */
             transition: all 0.3s ease;
             background-color: #f8fafc;
             font-size: 1rem;
         }
 
-        .form-control:focus, .form-select:focus {
-            border-color: #8A2BE2; /* A more vibrant primary color on focus */
-            box-shadow: 0 0 0 0.25rem rgba(138, 43, 226, 0.2); /* Matching glow */
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #8A2BE2;
+            /* A more vibrant primary color on focus */
+            box-shadow: 0 0 0 0.25rem rgba(138, 43, 226, 0.2);
+            /* Matching glow */
             background-color: white;
         }
 
@@ -45,7 +59,8 @@
             color: #6c757d;
             font-weight: 500;
             transition: all 0.2s ease;
-            left: 2.5rem; /* Adjust label position */
+            left: 2.5rem;
+            /* Adjust label position */
         }
 
         .form-floating label::after {
@@ -53,7 +68,8 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background-color: transparent; /* Prevent label from covering icon */
+            background-color: transparent;
+            /* Prevent label from covering icon */
         }
 
         /* General label for non-floating inputs */
@@ -66,18 +82,22 @@
 
         .floating-icon {
             position: absolute;
-            left: 1.25rem; /* Position the icon inside the input */
+            left: 1.25rem;
+            /* Position the icon inside the input */
             top: 50%;
             transform: translateY(-50%);
-            color: #8A2BE2; /* Primary color for icons */
+            color: #8A2BE2;
+            /* Primary color for icons */
             font-size: 1.1rem;
-            z-index: 3; /* Ensure icon is above label */
+            z-index: 3;
+            /* Ensure icon is above label */
             transition: color 0.3s ease;
         }
 
-        .form-control:focus + .form-label + .floating-icon,
-        .form-select:focus + .form-label + .floating-icon {
-            color: #6a11cb; /* Slight color change on focus */
+        .form-control:focus+.form-label+.floating-icon,
+        .form-select:focus+.form-label+.floating-icon {
+            color: #6a11cb;
+            /* Slight color change on focus */
         }
 
         /* Enhanced File Upload */
@@ -100,25 +120,30 @@
 
         .file-upload-label {
             padding: 1rem;
-            border: 2px dashed #9370DB; /* More distinct dashed border */
+            border: 2px dashed #9370DB;
+            /* More distinct dashed border */
             border-radius: 12px;
             text-align: center;
             color: #6c757d;
-            background-color: #F0F8FF; /* Light background */
+            background-color: #F0F8FF;
+            /* Light background */
             transition: all 0.3s ease;
-            display: block; /* Ensure it takes full width */
+            display: block;
+            /* Ensure it takes full width */
             font-weight: 500;
         }
 
         .file-upload-label:hover {
             border-color: #6a11cb;
-            background-color: rgba(106, 17, 203, 0.1); /* Slightly more opaque hover */
+            background-color: rgba(106, 17, 203, 0.1);
+            /* Slightly more opaque hover */
             color: #6a11cb;
         }
 
         /* Image Preview */
         #imagePreview {
-            border: 3px solid rgba(138, 43, 226, 0.5); /* Thicker, colored border */
+            border: 3px solid rgba(138, 43, 226, 0.5);
+            /* Thicker, colored border */
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
         }
 
@@ -132,6 +157,7 @@
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
             transition: all 0.3s ease;
         }
+
         .current-image-preview:hover {
             transform: scale(1.05);
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
@@ -140,22 +166,30 @@
 
         /* Buttons with Hover Effects */
         .btn-primary {
-            background: linear-gradient(135deg, #8A2BE2 0%, #A020F0 100%); /* Deeper purple gradient */
+            background: linear-gradient(135deg, #8A2BE2 0%, #A020F0 100%);
+            /* Deeper purple gradient */
             border: none;
-            font-weight: 600; /* Slightly bolder text */
+            font-weight: 600;
+            /* Slightly bolder text */
             transition: all 0.3s ease, background-position 0.5s ease;
-            background-size: 200% 100%; /* For background-position animation */
-            padding: 0.75rem 1.75rem; /* Adjusted padding for better look */
-            border-radius: 0.75rem; /* Consistent border-radius */
+            background-size: 200% 100%;
+            /* For background-position animation */
+            padding: 0.75rem 1.75rem;
+            /* Adjusted padding for better look */
+            border-radius: 0.75rem;
+            /* Consistent border-radius */
         }
 
         .btn-primary:hover {
-            background-position: -100% 0; /* Shift gradient on hover */
-            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.3); /* Enhanced shadow */
+            background-position: -100% 0;
+            /* Shift gradient on hover */
+            box-shadow: 0 8px 20px rgba(138, 43, 226, 0.3);
+            /* Enhanced shadow */
         }
 
         .btn-secondary {
-            border-radius: 0.75rem; /* Consistent border-radius */
+            border-radius: 0.75rem;
+            /* Consistent border-radius */
             padding: 0.75rem 1.75rem;
             font-weight: 600;
             transition: all 0.3s ease;
@@ -163,7 +197,7 @@
 
         .btn-secondary:hover {
             background-color: #e2e6ea;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
         }
 
         .hover-scale {
@@ -179,9 +213,18 @@
         }
 
         @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(138, 43, 226, 0.4); } /* Use primary color for pulse */
-            70% { box-shadow: 0 0 0 12px rgba(138, 43, 226, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(138, 43, 226, 0); }
+            0% {
+                box-shadow: 0 0 0 0 rgba(138, 43, 226, 0.4);
+            }
+
+            /* Use primary color for pulse */
+            70% {
+                box-shadow: 0 0 0 12px rgba(138, 43, 226, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(138, 43, 226, 0);
+            }
         }
 
         /* Interactive Elements */
@@ -191,11 +234,13 @@
         }
 
         .hover-pointer:hover {
-            color: #8A2BE2 !important; /* Brighter color on hover */
+            color: #8A2BE2 !important;
+            /* Brighter color on hover */
         }
 
         .hover-zoom:hover {
-            transform: scale(1.08); /* Slightly more zoom */
+            transform: scale(1.08);
+            /* Slightly more zoom */
         }
 
         /* Alert Messages */
@@ -205,11 +250,26 @@
             font-weight: 500;
             margin-bottom: 1.5rem;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
-            border-left: 5px solid; /* For a prominent visual cue */
+            border-left: 5px solid;
+            /* For a prominent visual cue */
         }
-        .alert-success { border-color: #28a745; background-color: #d4edda; color: #155724; }
-        .alert-danger { border-color: #dc3545; background-color: #f8d7da; color: #721c24; }
-        .alert ul { margin-bottom: 0; padding-left: 20px; }
+
+        .alert-success {
+            border-color: #28a745;
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-danger {
+            border-color: #dc3545;
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
 
 
         /* Responsive Adjustments */
@@ -217,15 +277,21 @@
             .card-header {
                 padding: 1.5rem !important;
             }
+
             .card-body {
                 padding: 1.5rem !important;
             }
-            .form-control, .form-select {
-                padding-left: 2.5rem; /* Smaller padding for smaller screens */
+
+            .form-control,
+            .form-select {
+                padding-left: 2.5rem;
+                /* Smaller padding for smaller screens */
             }
+
             .floating-icon {
                 left: 0.75rem;
             }
+
             .form-floating label {
                 left: 1.5rem;
             }
@@ -249,13 +315,17 @@
                 <div class="card border-0 shadow-lg overflow-hidden">
                     {{-- Card Header with Animated Gradient --}}
                     <div class="card-header p-5 position-relative overflow-hidden">
-                        <div class="gradient-animation" style="background: linear-gradient(135deg, #7F00FF 0%, #E100FF 100%); position: absolute; top: 0; left: 0; width: 200%; height: 100%; animation: gradientShift 8s ease infinite;"></div>
+                        <div class="gradient-animation"
+                            style="background: linear-gradient(135deg, #7F00FF 0%, #E100FF 100%); position: absolute; top: 0; left: 0; width: 200%; height: 100%; animation: gradientShift 8s ease infinite;">
+                        </div>
                         <div class="d-flex justify-content-between align-items-center position-relative" style="z-index: 2;">
                             <div>
-                                <h2 class="h3 mb-2 text-white"><i class="fas fa-edit me-3"></i> Edit User: {{ $user->name }}</h2>
+                                <h2 class="h3 mb-2 text-white"><i class="fas fa-edit me-3"></i> Edit User:
+                                    {{ $user->name }}</h2>
                                 <p class="mb-0 text-white-50 fs-5">Update user details and permissions</p>
                             </div>
-                            <a href="{{ route('user.show') }}" class="btn btn-light btn-lg rounded-pill px-4 py-2 shadow-sm hover-scale">
+                            <a href="{{ route('user.show') }}"
+                                class="btn btn-light btn-lg rounded-pill px-4 py-2 shadow-sm hover-scale">
                                 <i class="fas fa-arrow-left me-2"></i> Back to Users
                             </a>
                         </div>
@@ -319,29 +389,32 @@
                                     </div>
                                 </div>
 
-                                    {{-- User description --}}
+                                {{-- User description --}}
                                 <div class="col-md-6">
                                     <div class="form-floating position-relative">
                                         <i class="fas fa-user floating-icon"></i>
-                                        <input type="text" name="user_description" id="user_description" class="form-control border-2 ps-5 py-3"
-                                            value="{{ old('user_description') }}" required placeholder="User Description">
-                                        <label for="user_description" class="form-label text-muted ms-4">User Description</label>
+                                        <input type="text" name="user_description" id="user_description"
+                                            class="form-control border-2 ps-5 py-3"
+                                            value="{{ old('user_description', $user->user_description ?? '') }}" required
+                                            placeholder="User Description">
+                                        <label for="user_description" class="form-label text-muted ms-4">User
+                                            Description</label>
                                         @error('user_description')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
                                     </div>
                                 </div>
 
-                              
-
                                 {{-- User Type Field with Floating Icon --}}
                                 <div class="col-md-6">
                                     <div class="form-floating position-relative">
                                         <i class="fas fa-user-tag floating-icon"></i>
                                         <select name="user_type" id="user_type"
-                                            class="form-select border-2 ps-5 py-3 @error('user_type') is-invalid @enderror" required>
+                                            class="form-select border-2 ps-5 py-3 @error('user_type') is-invalid @enderror"
+                                            required>
                                             <option value=""
-                                                {{ (isset($user) && $user->user_type == '') || old('user_type') == '' ? 'selected' : '' }} disabled>
+                                                {{ (isset($user) && $user->user_type == '') || old('user_type') == '' ? 'selected' : '' }}
+                                                disabled>
                                                 Select User type
                                             </option>
                                             <option value="admin"
@@ -374,8 +447,10 @@
                                         <i class="fas fa-link floating-icon"></i>
                                         <input type="text" name="actual_slug" id="actual_slug"
                                             class="form-control border-2 ps-5 py-3 @error('user_slug') is-invalid @enderror"
-                                            value="{{ old('actual_slug', $user->user_slug) }}" onkeyup="generateSlug()" placeholder="Custom Slug (Optional)">
-                                        <label for="actual_slug" class="form-label text-muted ms-4">Custom Slug (Optional)</label>
+                                            value="{{ old('actual_slug', $user->user_slug) }}" onkeyup="generateSlug()"
+                                            placeholder="Custom Slug (Optional)">
+                                        <label for="actual_slug" class="form-label text-muted ms-4">Custom Slug
+                                            (Optional)</label>
                                         @error('user_slug')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
@@ -388,12 +463,14 @@
                                         <i class="fas fa-hashtag floating-icon"></i>
                                         <input type="text" name="user_slug" id="user_slug"
                                             class="form-control border-2 ps-5 py-3 bg-light"
-                                            value="{{ old('user_slug', $user->user_slug) }}" readonly placeholder="System Generated Slug">
-                                        <label for="user_slug" class="form-label text-muted ms-4">System Generated Slug</label>
+                                            value="{{ old('user_slug', $user->user_slug) }}" readonly
+                                            placeholder="System Generated Slug">
+                                        <label for="user_slug" class="form-label text-muted ms-4">System Generated
+                                            Slug</label>
                                     </div>
                                 </div>
 
-                                  {{-- User Image Field with Enhanced Preview --}}
+                                {{-- User Image Field with Enhanced Preview --}}
                                 <div class="col-md-6">
                                     <div class="form-group">
                                         <label for="user_image" class="form-label text-muted mb-3">
@@ -401,9 +478,10 @@
                                         </label>
                                         @if ($user->user_image)
                                             <div class="mb-3 text-center">
-                                                <img src="{{ asset('images/users/' . $user->user_image) }}" alt="Current User Image"
-                                                    class="current-image-preview img-fluid">
-                                                <p class="text-muted text-sm mt-2">Current image. Upload a new one to replace it.</p>
+                                                <img src="{{ asset('images/users/' . $user->user_image) }}"
+                                                    alt="Current User Image" class="current-image-preview img-fluid">
+                                                <p class="text-muted text-sm mt-2">Current image. Upload a new one to
+                                                    replace it.</p>
                                             </div>
                                         @endif
                                         <div class="file-upload-wrapper">
@@ -426,13 +504,37 @@
                                     </div>
                                 </div>
 
+                                {{-- User status --}}
+                                <div class="col-md-6">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-toggle-on floating-icon"></i>
+                                        <select name="user_status" id="user_status"
+                                            class="form-select border-2 ps-5 py-3 @error('user_status') is-invalid @enderror">
+                                            <option value="active"
+                                                {{ (isset($user) && $user->status == 'active') || old('user_status') == 'active' ? 'selected' : '' }}>
+                                                Active
+                                            </option>
+                                            <option value="inactive"
+                                                {{ (isset($user) && $user->status == 'inactive') || old('user_status') == 'inactive' ? 'selected' : '' }}>
+                                                Inactive
+                                            </option>
+                                        </select>
+                                        <label for="user_status" class="form-label text-muted ms-4">User Status</label>
+                                        @error('user_status')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+
                                 {{-- Form Actions with Animated Buttons --}}
                                 <div class="col-12 mt-4">
                                     <div class="d-flex justify-content-end gap-3">
-                                        <a href="{{ route('user.show') }}" class="btn btn-lg btn-secondary rounded-pill px-4 shadow-sm hover-scale">
+                                        <a href="{{ route('user.show') }}"
+                                            class="btn btn-lg btn-secondary rounded-pill px-4 shadow-sm hover-scale">
                                             <i class="fas fa-times me-2"></i> Cancel
                                         </a>
-                                        <button type="submit" class="btn btn-lg btn-primary rounded-pill px-4 shadow-sm hover-scale pulse-on-hover">
+                                        <button type="submit"
+                                            class="btn btn-lg btn-primary rounded-pill px-4 shadow-sm hover-scale pulse-on-hover">
                                             <i class="fas fa-save me-2"></i> Update User
                                         </button>
                                     </div>
@@ -464,7 +566,7 @@
         function previewImage(input) {
             const preview = document.getElementById('imagePreview');
             const file = input.files[0];
-            
+
             if (file) {
                 if (!file.type.match('image.*')) {
                     alert('Please select an image file.');
@@ -472,14 +574,14 @@
                     preview.classList.add('d-none'); // Hide preview
                     return;
                 }
-                
+
                 if (file.size > 2 * 1024 * 1024) { // 2MB limit
                     alert('Image must be less than 2MB.');
                     input.value = ''; // Clear the input
                     preview.classList.add('d-none'); // Hide preview
                     return;
                 }
-                
+
                 const reader = new FileReader();
                 reader.onload = function(e) {
                     preview.src = e.target.result;
