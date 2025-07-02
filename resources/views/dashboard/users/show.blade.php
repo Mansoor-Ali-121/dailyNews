@@ -172,7 +172,7 @@
    ideally at the end of the <body> or before the closing </body> tag.
    You should only have ONE modal with a specific ID. --}}
                                                 @once
-                                                @include('dashboard.includes.view_user_modal')
+                                                    @include('dashboard.includes.view_user_modal')
                                                 @endonce('dashboard.includes.view_user_modal') {{-- Renamed for clarity --}}
                                             </tr>
                                         @endforeach

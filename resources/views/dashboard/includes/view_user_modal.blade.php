@@ -58,7 +58,7 @@
                         </div>
                     </div>
 
-                    {{-- Section for User's News Articles --}}
+                    {{-- Section for User's News Articles  want to display in table form--}}
                     <div class="mt-4">
                         <h5 class="fw-bold text-primary mb-3"><i class="fas fa-newspaper me-2"></i> User's Articles</h5>
                         <div id="userArticlesList" class="list-group">
@@ -79,8 +79,8 @@
 </div>
 
 <style>
-    /* Add specific styles for the modal if needed */
-    #userArticlesList .list-group-item {
+     /* Add specific styles for the modal if needed  */
+     #userArticlesList .list-group-item {
         border-radius: 8px;
         margin-bottom: 10px;
         transition: all 0.2s ease;
@@ -92,7 +92,7 @@
         border-color: #0f4c81;
         transform: translateY(-2px);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
-    }
+    } 
 </style>
 
 <script>
@@ -160,9 +160,10 @@
                                 articleItem.classList.add('list-group-item',
                                     'd-flex', 'flex-column');
                                 articleItem.innerHTML = `
-                                    <h6 class="mb-1 fw-bold text-dark">${article.title}</h6>
-                                    <small class="text-muted mb-2"><i class="far fa-calendar-alt me-1"></i> ${article.created_at}</small>
-                                    <p class="mb-0 text-secondary">${article.content}</p>
+                                    <h6 class="mb-1 fw-bold text-dark text-hover">${article.title}</h6>
+                                    <small class="text-muted mb-2"><i class="far fa-calendar-alt me-1"></i>Created At <br> ${article.created_at}</small>
+                                    <small class="text-muted mb-2"><i class="far fa-calendar-alt me-1"></i>Updated At <br>  ${article.updated_at}</small>
+                                  
                                 `;
                                 userArticlesList.appendChild(articleItem);
                             });

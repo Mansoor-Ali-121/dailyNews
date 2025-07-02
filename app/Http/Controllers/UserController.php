@@ -55,8 +55,9 @@ class UserController extends Controller
                 return [
                     'id' => $article->id,
                     'title' => $article->news_title,
-                    'content' => \Illuminate\Support\Str::limit($article->news_content, 100), // Limit content for summary
+                    
                     'created_at' => $article->created_at->format('M d, Y H:i A'),
+                    'updated_at' => $article->updated_at->format('M d, Y H:i A'),
                     // Add other article fields you want to show
                 ];
             }),
