@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\News;
 use App\Models\BreakingNews;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
 class BreakingNewsController extends Controller
@@ -35,7 +36,7 @@ class BreakingNewsController extends Controller
         $validated = $request->validate([
             'news_id' => 'required|exists:news,id',
             'description' => 'required|string',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
             'breakingnews_status' => 'required|string|in:active,inactive',
             'title' => 'required|string',
             'breakingnews_slug' => 'required|string',
@@ -47,7 +48,8 @@ class BreakingNewsController extends Controller
             $image->move(public_path('breakingnews_images/images'), $imageName);
             $validated['image'] = $imageName;
         }
-
+      // Add the authenticated user's ID to the validated data array
+        $validated['author_id'] = Auth::id(); // <--- Corrected line
         BreakingNews::create($validated);
         return redirect()->route('breakingnews.show')->with('success', 'Breaking news added successfully');
     }
@@ -57,7 +59,7 @@ class BreakingNewsController extends Controller
      */
     public function show()
     {
-        $breakingNews = BreakingNews::all();
+        $breakingNews = BreakingNews::paginate(5);
         return view('dashboard.breakingnews.show', compact('breakingNews'));
     }
 
@@ -79,7 +81,7 @@ class BreakingNewsController extends Controller
         $validated = $request->validate([
             'news_id' => 'required|exists:news,id',
             'description' => 'required|string',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'image' => 'image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
             'breakingnews_status' => 'required|string|in:active,inactive',
             'title' => 'required|string',
             'breakingnews_slug' => 'required|string',
@@ -89,7 +91,7 @@ class BreakingNewsController extends Controller
 
         // Delete the old image if a new image is uploaded
         if ($request->hasFile('image')) {
-            if ($breakingNews->image) { 
+            if ($breakingNews->image) {
                 $oldImagePath = public_path('breakingnews_images/images/' . $breakingNews->image);
                 if (File::exists($oldImagePath)) { // Use File::exists to check if the file actually exists
                     File::delete($oldImagePath); // Use File::delete or unlink()

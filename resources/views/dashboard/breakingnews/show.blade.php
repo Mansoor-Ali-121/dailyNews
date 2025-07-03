@@ -4,7 +4,7 @@
 
     @include('dashboard.includes.alerts')
 
-    <div class="container-fluid px-lg-5">
+    <div class="container-fluid px-lg-8">
         <div class="row">
             <div class="col-12">
                 <div class="card border-0 shadow-lg overflow-hidden">
@@ -91,8 +91,8 @@
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Related News
                                             </th> {{-- Renamed for clarity --}}
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Image</th>
-                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Description
-                                            </th>
+                                            {{-- <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Description
+                                            </th> --}}
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Slug</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Status</th>
                                             <th class="pe-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0">Actions
@@ -102,7 +102,7 @@
                                     <tbody>
                                         {{-- Loop through the $breakingNews collection --}}
                                         @foreach ($breakingNews as $item)
-                                            <tr class="border-top">
+                                            <tr class="border-top col-12">
                                                 <td class="ps-4 fw-bold text-muted fs-5">{{ $item->id }}</td>
                                                 <td>
                                                     <div class="d-flex align-items-center">
@@ -132,16 +132,16 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                {{-- <td>
                                                     <div class="d-flex align-items-center">
                                                         <div>
                                                             <h6 class="mb-1 fw-bold fs-5">
                                                                 {{ Str::limit($item->description, 50) ?? 'N/A' }}
-                                                                {{-- Added Str::limit for description --}}
+                                                               
                                                             </h6>
                                                         </div>
                                                     </div>
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div>
@@ -173,7 +173,7 @@
                                                     @endif
                                                 </td>
                                                 <td class="pe-4 text-end">
-                                                    <div class="d-flex justify-content-end gap-2 action-buttons">
+                                                    <div class="d-flex justify-content-between gap-1 action-buttons">
                                                         {{-- Edit Button --}}
                                                         <a href="{{ route('breakingnews.edit', $item->id) }}"
                                                             class="btn btn-outline-primary btn-sm text-center"
@@ -201,6 +201,60 @@
                                         @endforeach
                                     </tbody>
                                 </table>
+                                 <!-- Replace your current pagination code with this -->
+                                <div class="pagination-container">
+                                    <nav aria-label="Cities pagination">
+                                        <ul class="pagination">
+                                            {{-- Previous Page Link --}}
+                                            @if ($breakingNews->onFirstPage())
+                                                <li class="page-item disabled" aria-disabled="true">
+                                                    <span class="page-link">
+                                                        <i class="fas fa-chevron-left"></i>
+                                                        <span class="d-none d-sm-inline ms-2">Prev</span>
+                                                    </span>
+                                                </li>
+                                            @else
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $breakingNews->previousPageUrl() }}"
+                                                        rel="prev">
+                                                        <i class="fas fa-chevron-left"></i>
+                                                        <span class="d-none d-sm-inline ms-2">Prev</span>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                            {{-- Pagination Elements --}}
+                                            @foreach ($breakingNews->getUrlRange(1, $breakingNews->lastPage()) as $page => $url)
+                                                @if ($page == $breakingNews->currentPage())
+                                                    <li class="page-item active" aria-current="page">
+                                                        <span class="page-link">{{ $page }}</span>
+                                                    </li>
+                                                @else
+                                                    <li class="page-item">
+                                                        <a class="page-link"
+                                                            href="{{ $url }}">{{ $page }}</a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                            {{-- Next Page Link --}}
+                                            @if ($breakingNews->hasMorePages())
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $breakingNews->nextPageUrl() }}"
+                                                        rel="next">
+                                                        <span class="d-none d-sm-inline me-2">Next</span>
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </a>
+                                                </li>
+                                            @else
+                                                <li class="page-item disabled" aria-disabled="true">
+                                                    <span class="page-link">
+                                                        <span class="d-none d-sm-inline me-2">Next</span>
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </span>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
                         @endif
                     </div>
@@ -283,71 +337,6 @@
             box-shadow: 0 6px 15px rgba(15, 76, 129, 0.1);
         }
 
-        /* DataTables search input and length dropdown styling */
-        .dataTables_wrapper .dataTables_filter input,
-        .dataTables_wrapper .dataTables_length select {
-            border-radius: 0.25rem;
-            /* Bootstrap default for form controls */
-            border: 1px solid #ced4da;
-            /* Bootstrap default */
-            padding: 0.375rem 0.75rem;
-            /* Bootstrap default */
-            margin-left: 0.5rem;
-            /* Add some space if needed */
-        }
-
-        .dataTables_wrapper .dataTables_filter input:focus,
-        .dataTables_wrapper .dataTables_length select:focus {
-            border-color: #80bdff;
-            /* Bootstrap focus color */
-            outline: 0;
-            box-shadow: 0 0 0 0.25rem rgba(0, 123, 255, 0.25);
-            /* Bootstrap focus shadow */
-        }
-
-        /* DataTables pagination styling */
-        .dataTables_wrapper .dataTables_paginate .paginate_button {
-            padding: 0.5em 0.8em;
-            margin-left: 2px;
-            border-radius: 0.25rem;
-            border: 1px solid #dee2e6;
-            background-color: #fff;
-            color: #0d6efd;
-            /* Bootstrap blue for links */
-            text-decoration: none;
-            transition: all 0.3s ease;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
-            background-color: #e9ecef;
-            border-color: #dee2e6;
-            color: #0a58ca;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current,
-        .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-            background-color: #0d6efd;
-            /* Bootstrap blue for active */
-            border-color: #0d6efd;
-            color: #fff !important;
-        }
-
-        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled,
-        .dataTables_wrapper .dataTables_paginate .paginate_button.disabled:hover {
-            color: #6c757d !important;
-            background-color: #fff;
-            border-color: #dee2e6;
-            cursor: default;
-        }
-
-        /* DataTables info text */
-        .dataTables_wrapper .dataTables_info {
-            color: #6c757d;
-            /* Bootstrap muted text color */
-            padding-top: 0.85em;
-        }
-
-        /* --- End DataTable Specific Styling Adjustments --- */
 
         .badge {
             font-weight: 600;
@@ -394,22 +383,6 @@
             font-size: 1rem !important;
         }
 
-        .flag-container {
-            width: 60px;
-            height: 40px;
-            border-radius: 5px;
-            overflow: hidden;
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-            background: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .flag-icon {
-            font-size: 2rem;
-        }
-
         .action-buttons .btn {
             border-radius: 30px;
             padding: 0.5rem 1.25rem;
@@ -426,23 +399,6 @@
             color: #0f4c81;
             margin-bottom: 1.5rem;
         }
-
-        .search-container {
-            max-width: 350px;
-        }
-
-        .search-input {
-            border-radius: 50px;
-            padding: 0.75rem 1.5rem;
-            border: 2px solid #e0e0e0;
-            transition: all 0.3s ease;
-        }
-
-        .search-input:focus {
-            border-color: #1b8b9c;
-            box-shadow: 0 0 0 0.25rem rgba(27, 139, 156, 0.25);
-        }
-
         .status-indicator {
             width: 12px;
             height: 12px;
@@ -507,91 +463,7 @@
         }
     </style>
 
-    {{-- Custom Pagination Styles (Keep if you want custom pagination appearance) --}}
-    <style>
-        /* Custom Pagination Styles - Add this to your existing CSS */
-        .pagination-container {
-            display: flex;
-            justify-content: center;
-            margin-top: 10px;
-        }
 
-        .page-item {
-            margin: 0 3px;
-        }
-
-        .page-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 45px;
-            height: 45px;
-            border-radius: 12px !important;
-            border: 2px solid #dee2e6;
-            background-color: white;
-            color: #0f4c81;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-        }
-
-        .page-link:hover {
-            background: linear-gradient(135deg, #0f4c81 0%, #1b8b9c 100%);
-            color: white !important;
-            border-color: transparent;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 12px rgba(15, 76, 129, 0.2);
-        }
-
-        .page-item.active .page-link {
-            background: linear-gradient(135deg, #0f4c81 0%, #1b8b9c 100%);
-            color: white !important;
-            border-color: transparent;
-            box-shadow: 0 4px 10px rgba(15, 76, 129, 0.3);
-        }
-
-        .page-item.disabled .page-link {
-            color: #adb5bd !important;
-            background-color: #f8f9fa;
-            border-color: #e9ecef;
-        }
-
-        .page-item:first-child .page-link,
-        .page-item:last-child .page-link {
-            width: auto;
-            padding: 0 20px;
-            border-radius: 30px !important;
-        }
-
-        .page-item:first-child .page-link {
-            margin-right: 15px;
-        }
-
-        .page-item:last-child .page-link {
-            margin-left: 15px;
-        }
-
-        .page-link i {
-            font-size: 1.1rem;
-        }
-
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            .page-link {
-                width: 40px;
-                height: 40px;
-                font-size: 0.9rem;
-            }
-
-            .page-item:first-child .page-link,
-            .page-item:last-child .page-link {
-                padding: 0 15px;
-            }
-        }
-    </style>
-    {{-- Include jQuery (required by DataTables) and DataTables JS --}}
-    <script type="text/javascript" src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-    <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-2.0.8/datatables.min.js"></script>
 
     {{-- Pagination Styles (Keep if you want custom pagination appearance) --}}
     <style>

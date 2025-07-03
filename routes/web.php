@@ -148,6 +148,8 @@ Route::get('/search', [WebController::class, 'search'])->name('news.search');
 
 // Single News show in website 
 Route::get('/news/{id}', [WebController::class, 'showsinglenews'])->name('single.news');
+// Single Breaking news show in website
+Route::get('/breakingnews/{id}', [WebController::class, 'showsinglebreakingnews'])->name('single.breakingnews');
 // Single category show in website 
 Route::get('/news/category/{id}', [WebController::class, 'singlecategoryview'])->name('single.category');
 

@@ -215,13 +215,16 @@
                         <div class="swiper swiper-ticker swiper-ticker-sep px-2" style="--uc-ticker-gap: 32px"
                             data-uc-swiper="items: auto; gap: 32; center: true; center-bounds: true; autoplay: 10000; speed: 10000; autoplay-delay: 0.1; loop: true; allowTouchMove: false; freeMode: true; autoplay-disableOnInteraction: true;">
                             <div class="swiper-wrapper">
+                                {{-- @foreach ($livebreakingnews as $item ) --}}
+                                    
                                 <div class="swiper-slide text-white">
                                     <div class="type-post post panel">
-                                        <a href="blog-details.html" class="fs-7 fw-normal text-none text-inherit">The
-                                            Rise of AI-Powered Personal Assistants: How They Manage</a>
+                                        <a href="" class="fs-7 fw-normal text-none text-inherit">unun</a>
                                     </div>
                                 </div>
-                                <div class="swiper-slide text-white">
+                                {{-- @endforeach --}}
+
+                                {{-- <div class="swiper-slide text-white">
                                     <div class="type-post post panel">
                                         <a href="blog-details.html" class="fs-7 fw-normal text-none text-inherit">Tech
                                             Innovations Reshaping the Retail Landscape: AI Payments</a>
@@ -252,7 +255,7 @@
                                             class="fs-7 fw-normal text-none text-inherit">Business Agility the Digital
                                             Age: Leveraging AI and Automation</a>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -266,7 +269,7 @@
                             <ul class="uc-navbar-nav gap-3 justify-between flex-1 fs-6 fw-bold"
                                 style="--uc-nav-height: 48px">
                                 <li>
-                                    <a href=""><span class="icon-1 unicon-finance"></span></a>
+                                    <a href="{{ url('/') }}"><span class="icon-1 unicon-finance"></span></a>
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
                                         <div class="row child-cols col-match g-2">

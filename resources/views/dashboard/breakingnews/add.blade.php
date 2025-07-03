@@ -12,6 +12,17 @@
         </div>
     @endif
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
+    @include('dashboard.includes.alerts')
     {{-- Form --}}
     <div class="container">
         <div class="row g-4 justify-content-center">
@@ -22,12 +33,22 @@
                         <div class="gradient-animation"
                             style="position: absolute; top: 0; left: 0; width: 200%; height: 100%;">
                         </div>
-                        <div class="d-flex justify-content-between align-items-center position-relative" style="z-index: 2;">
+                        <div class="d-flex justify-content-between align-items-center position-relative"
+                            style="z-index: 2;">
                             <div>
                                 <h2 class="h3 mb-2 text-white"><i class="fas fa-bolt me-3"></i> Add Breaking News</h2>
                                 <p class="mb-0 text-white-50 fs-5">Create urgent news alerts for your readers</p>
                             </div>
-                            <a href="{{ route('breakingnews.show') }}" class="btn btn-light btn-lg rounded-pill px-4 py-2 shadow-sm hover-scale">
+                            @if (Auth::check())
+                                <div class="me-3 text-end">
+                                    <small class="text-light d-block">Logged in as:</small>
+                                    <span class="fw-bold">{{ Auth::user()->name }}</span>
+                                    <div class="fw-bold">User ID: {{ Auth::user()->id }}</div>
+                                </div>
+                            @endif
+
+                            <a href="{{ route('breakingnews.show') }}"
+                                class="btn btn-light btn-lg rounded-pill px-4 py-2 shadow-sm hover-scale">
                                 <i class="fas fa-arrow-left me-2"></i> Back to News
                             </a>
                         </div>
@@ -120,8 +141,8 @@
                                     <div class="form-floating position-relative">
                                         <i class="fas fa-hashtag floating-icon breaking-news-icon"></i>
                                         <input type="text" class="form-control border-2 ps-5 py-3 bg-light"
-                                            id="slug" name="slug"
-                                            placeholder="System Generated Slug" onkeyup="generateSlug()">
+                                            id="slug" name="slug" placeholder="System Generated Slug"
+                                            onkeyup="generateSlug()">
                                         <label for="slug" class="form-label text-muted ms-4">Custom
                                             Slug</label>
                                     </div>

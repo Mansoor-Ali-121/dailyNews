@@ -23,11 +23,12 @@
                                                     <figure
                                                         class="featured-image m-0 ratio ratio-16x9 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
                                                         <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                            src="{{ asset ('news/news_images/'.$item->news_image) }}"
-                                                            data-src="{{ asset ('news/news_images/'.$item->news_image) }}"
+                                                            src="{{ asset('news/news_images/' . $item->news_image) }}"
+                                                            data-src="{{ asset('news/news_images/' . $item->news_image) }}"
                                                             alt="Tech Innovations Reshaping the Retail Landscape: AI Payments"
                                                             data-uc-img="loading: lazy">
-                                                        <a href="{{ route('single.news', $item->news_slug) }}" class="position-cover"
+                                                        <a href="{{ route('single.news', $item->news_slug) }}"
+                                                            class="position-cover"
                                                             data-caption="Tech Innovations Reshaping the Retail Landscape: AI Payments"></a>
                                                     </figure>
                                                     <div
@@ -37,11 +38,12 @@
                                                     <div
                                                         class="position-absolute top-0 end-0 w-150px h-150px rounded-top-end bg-gradient-45 from-transparent via-transparent to-black opacity-50">
                                                     </div>
-                                                   
+
                                                 </div>
                                                 <div class="post-header panel vstack gap-1 lg:gap-2">
                                                     <h3 class="post-title h6 sm:h5 xl:h4 m-0 text-truncate-2 m-0">
-                                                        <a class="text-none" href="{{ route('single.news', $item->news_slug) }}">{{$item->news_title}}</a>
+                                                        <a class="text-none"
+                                                            href="{{ route('single.news', $item->news_slug) }}">{{ $item->news_title }}</a>
                                                     </h3>
                                                     <div>
                                                         <div
@@ -49,18 +51,29 @@
                                                             <div class="meta">
                                                                 <div class="hstack gap-2">
                                                                     <div>
-                                                                        <div class="post-author hstack gap-1">
-                                                                            <a href="page-author.html"
-                                                                                data-uc-tooltip="{{$item->author->name}}"><img
-                                                                                    src="{{ asset('images/users/'.$item->author->user_image) }}"
-                                                                                    alt="Jason Blake"
-                                                                                    class="w-24px h-24px rounded-circle"></a>
-                                                                            <span>{{$item->author->name}}</span>
-                                                                        </div>
+                                                                        {{-- This entire block will only render if $item->author is NOT null --}}
+                                                                        @if ($item->author)
+                                                                            <div class="post-author hstack gap-1">
+                                                                                <a href="page-author.html"
+                                                                                    data-uc-tooltip="{{ $item->author->name }}">
+                                                                                    <img src="{{ asset('images/users/' . $item->author->user_image) }}"
+                                                                                        alt="{{ $item->author->name ?? 'Author' }}"
+                                                                                        class="w-24px h-24px rounded-circle">
+                                                                                </a>
+                                                                                <span>{{ $item->author->name }}</span>
+                                                                            </div>
+                                                                        @endif
+
+                                                                        {{-- The d-none div you had for null case is not needed if you simply don't render the main div --}}
+                                                                        {{-- If you absolutely need a div for some reason when author is null, you could keep it:
+    @if ($item->author == null)
+        <div class="post-author d-none"></div>
+    @endif
+    --}}
                                                                     </div>
                                                                     <div>
                                                                         <div class="post-date hstack gap-narrow">
-                                                                            <span>{{$item->created_at->diffForHumans()}}
+                                                                            <span>{{ $item->created_at->diffForHumans() }}
                                                                             </span>
                                                                         </div>
                                                                     </div>

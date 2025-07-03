@@ -12,6 +12,16 @@
         </div>
     @endif
 
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     {{-- Form --}}
     <div class="container">
         <div class="row g-4 justify-content-center">
@@ -21,7 +31,8 @@
                         <div class="gradient-animation"
                             style="position: absolute; top: 0; left: 0; width: 200%; height: 100%;">
                         </div>
-                        <div class="d-flex justify-content-between align-items-center position-relative" style="z-index: 2;">
+                        <div class="d-flex justify-content-between align-items-center position-relative"
+                            style="z-index: 2;">
                             <div>
                                 <h2 class="h3 mb-2 text-white"><i class="fas fa-edit me-3"></i> Edit Breaking News</h2>
                                 <p class="mb-0 text-white-50 fs-5">Update urgent news alerts for your readers</p>
@@ -42,11 +53,13 @@
 
                     <div class="card-body p-5">
                         {{-- IMPORTANT: Add @method('PUT') and pass the breaking news ID to the route --}}
-                        <form method="POST" action="{{ route('breakingnews.update', $breakingNews->id) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('breakingnews.update', $breakingNews->id) }}"
+                            enctype="multipart/form-data">
                             @csrf
-                            @method('PATCh') 
+                            @method('PATCh')
                             <div class="row g-4">
 
+                                {{-- Related News --}}
                                 <div class="col-12">
                                     <div class="form-floating position-relative">
                                         <i class="fas fa-newspaper floating-icon breaking-news-icon"></i>
@@ -68,7 +81,7 @@
                                         </span>
                                     @enderror
                                 </div>
-
+                                {{-- Title --}}
                                 <div class="col-12">
                                     <div class="form-floating position-relative">
                                         <i class="fas fa-heading floating-icon breaking-news-icon"></i>
@@ -83,7 +96,7 @@
                                         </span>
                                     @enderror
                                 </div>
-
+                                {{-- Description --}}
                                 <div class="col-12">
                                     <div class="form-floating position-relative">
                                         <i class="fas fa-align-left floating-icon breaking-news-icon"></i>
@@ -97,7 +110,7 @@
                                         </span>
                                     @enderror
                                 </div>
-
+                                {{-- image --}}
                                 <div class="col-12">
                                     <div class="form-floating position-relative">
                                         <i class="fas fa-image floating-icon breaking-news-icon"></i>
@@ -116,13 +129,13 @@
                                         {{-- Assuming 'image_path' is your column for the image URL --}}
                                         <div class="mt-3">
                                             <label class="form-label text-muted">Current Image:</label><br>
-                                            <img src="{{ asset('storage/' . $breakingNews->image_path) }}"
+                                            <img src="{{ asset('breakingnews_images/images/' . $breakingNews->image_path) }}"
                                                 alt="Current Breaking News Image" class="img-thumbnail"
                                                 style="max-width: 200px;">
                                         </div>
                                     @endif
                                 </div>
-
+                                {{-- Custom Slug --}}
                                 <div class="col-md-12">
                                     <div class="form-floating position-relative">
                                         <i class="fas fa-hashtag floating-icon breaking-news-icon"></i>
@@ -139,7 +152,7 @@
                                         </span>
                                     @enderror
                                 </div>
-
+                                {{-- Generated Slug --}}
                                 <div class="col-md-12">
                                     <div class="form-floating position-relative">
                                         <i class="fas fa-hashtag floating-icon breaking-news-icon"></i>
@@ -156,7 +169,7 @@
                                         </span>
                                     @enderror
                                 </div>
-
+                                {{-- Status --}}
                                 <div class="col-12">
                                     <div class="form-floating position-relative">
                                         <i class="fas fa-toggle-on floating-icon breaking-news-icon"></i>
