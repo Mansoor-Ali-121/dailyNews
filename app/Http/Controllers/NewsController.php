@@ -51,7 +51,7 @@ class NewsController extends Controller
             'news_content' => ['required', 'string'],
             'news_slug' => ['nullable', 'string', 'max:255'],
             'news_title' => ['required', 'string', 'max:255'],
-            'news_description' => ['required', 'string', 'max:255'],
+            'news_description' => ['required', 'string'],
             'news_image' => 'required|image|mimes:jpeg,png,webp,gif|max:5120',
             'category_id' => 'required|exists:categories,id',
             'city_id' => 'required|exists:cities,id',

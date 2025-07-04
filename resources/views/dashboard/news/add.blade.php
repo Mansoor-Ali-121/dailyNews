@@ -328,7 +328,7 @@
                             <div class="col-md-12">
                                 <label for="news_content" class="form-label">News Content </label>
                                 <textarea type="text" id="news_content" name="news_content" class="form-control tinymce"
-                                    placeholder="Enter news content" rows="20"></textarea>
+                                    placeholder="Enter news content" value="{{ old('news_content') }}" rows="20"></textarea>
                                 @error('news_content')
                                     <div class="invalid-feedback">
                                         {{ $message }}

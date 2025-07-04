@@ -78,7 +78,26 @@ class WebController extends Controller
             ->get();
         // Auto news fetching code end
 
-        return view('front.homepage', compact('news', 'breakingNews', 'activeNews', 'categories', 'sportsNews', 'businessnews', 'autonews', 'entertainmentnews'));
+         $politicsnews = News::whereHas('category', function ($query) {
+            $query->where('category_name', 'Politics'); // Ensure 'category_name' is correct
+        })
+            ->where('news_status', 'active') // Only active news
+            ->latest() // Get the latest ones
+            ->take(4) // Limit to 4 articles
+            ->get();
+        // Politics news fetching code end
+
+        // World news fetching code start
+        $worldnews = News::whereHas('category', function ($query) {
+            $query->where('category_name', 'World'); // Ensure 'category_name' is the correct column and 'Politics' is spelled exactly as in your DB
+        })
+            ->where('news_status', 'active') // Only active news
+            ->latest() // Get the latest ones
+            ->take(4) // Limit to 4 articles
+            ->get();
+        // World news fetching code end
+
+        return view('front.homepage', compact('news', 'breakingNews', 'activeNews', 'categories', 'sportsNews', 'businessnews', 'autonews', 'entertainmentnews', 'politicsnews', 'worldnews'));
     }
 
 
@@ -104,7 +123,7 @@ class WebController extends Controller
             ->where('category_id', $news->category_id) // <--- Filter by current news's category
             ->where('id', '!=', $news->id)           // <--- Exclude the current news article itself
             ->latest()                               // Order by latest (you can change this to random() if preferred)
-            ->take(4)                                // Limit to 4 related articles as per your layout's structure
+            ->take(3)                                // Limit to 4 related articles as per your layout's structure
             ->get();
 
 
