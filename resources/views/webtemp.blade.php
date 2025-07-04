@@ -215,14 +215,14 @@
                         <div class="swiper swiper-ticker swiper-ticker-sep px-2" style="--uc-ticker-gap: 32px"
                             data-uc-swiper="items: auto; gap: 32; center: true; center-bounds: true; autoplay: 10000; speed: 10000; autoplay-delay: 0.1; loop: true; allowTouchMove: false; freeMode: true; autoplay-disableOnInteraction: true;">
                             <div class="swiper-wrapper">
-                                {{-- @foreach ($livebreakingnews as $item ) --}}
+                                @foreach ($livebreakingnews as $item )
                                     
                                 <div class="swiper-slide text-white">
                                     <div class="type-post post panel">
-                                        <a href="" class="fs-7 fw-normal text-none text-inherit">unun</a>
+                                        <a href="" class="fs-7 fw-normal text-none text-inherit">{{ $item->title }}</a>
                                     </div>
                                 </div>
-                                {{-- @endforeach --}}
+                                @endforeach
 
                                 {{-- <div class="swiper-slide text-white">
                                     <div class="type-post post panel">
