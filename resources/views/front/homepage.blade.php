@@ -825,7 +825,7 @@
                                                                                     alt="Business Agility the Digital Age: Leveraging AI and Automation"
                                                                                     data-uc-img="loading: lazy">
                                                                             </div>
-                                                                            <a href="blog-details.html"
+                                                                            <a href="{{ route('single.news', $item->news_slug) }}"
                                                                                 class="position-cover"></a>
                                                                         </div>
                                                                     </div>
