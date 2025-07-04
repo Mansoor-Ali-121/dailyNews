@@ -219,7 +219,7 @@
                                     
                                 <div class="swiper-slide text-white">
                                     <div class="type-post post panel">
-                                        <a href="" class="fs-7 fw-normal text-none text-inherit">{{ $item->title }}</a>
+                                        <a href="{{ route('single.breakingnews', $item->breakingnews_slug) }}" class="fs-7 fw-normal text-none text-inherit">{{ $item->title }}</a>
                                     </div>
                                 </div>
                                 @endforeach

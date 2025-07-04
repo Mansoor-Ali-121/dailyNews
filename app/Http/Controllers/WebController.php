@@ -20,7 +20,7 @@ class WebController extends Controller
         $breakingNews = BreakingNews::all()->where('breakingnews_status', 'active');
 
 
-        $livebreakingnews = BreakingNews::where('breakingnews_status', 'active')->latest()->take(4)->get();
+        // $livebreakingnews = BreakingNews::where('breakingnews_status', 'active')->latest()->take(4)->get();
         // dd($livebreakingnews);
 
         // Crousel Breaking news section 2 home page
@@ -32,9 +32,6 @@ class WebController extends Controller
 
         // Active news
         $news = News::all()->where('news_status', 'active');
-
-
-
 
         // Single Category with only four news if category name politics then show only politics news
         $categories = Categories::withCount('news')->get();
@@ -81,7 +78,7 @@ class WebController extends Controller
             ->get();
         // Auto news fetching code end
 
-        return view('front.homepage', compact('news', 'livebreakingnews', 'breakingNews', 'activeNews', 'categories', 'sportsNews', 'businessnews', 'autonews', 'entertainmentnews'));
+        return view('front.homepage', compact('news', 'breakingNews', 'activeNews', 'categories', 'sportsNews', 'businessnews', 'autonews', 'entertainmentnews'));
     }
 
 
@@ -89,8 +86,11 @@ class WebController extends Controller
 
     public function showsinglenews(string $slug)
     {
-        // show categories in single news
 
+        // live breaking news
+        // $livebreakingnews = BreakingNews::where('breakingnews_status', 'active')->latest()->take(4)->get();
+
+        // show categories in single news
         $categories = Categories::withCount('news')->get();
         // show single news
         $news = News::with('author')->where([
@@ -118,7 +118,9 @@ class WebController extends Controller
 
     public function showsinglebreakingnews(string $slug)
     {
-
+// live breaking news
+        // $livebreakingnews = BreakingNews::where('breakingnews_status', 'active')->latest()->take(4)->get();
+        // end
         $categories = Categories::withCount('news')->get();
         // $latestnews = News::where('news_status', 'active')->latest()->take(4)->get();
         $breakingnews = BreakingNews::where([
@@ -147,13 +149,13 @@ class WebController extends Controller
     public function singlecategoryview($slug)
     {
 
-        $livebreakingnews = BreakingNews::where('breakingnews_status', 'active');
+        // $livebreakingnews = BreakingNews::where('breakingnews_status', 'active');
         $category = Categories::where('category_slug', $slug)->firstOrFail();
         $categoryname = $category->category_name;
         $totalNewsCount = News::count();
         $news = News::where('category_id', $category->id)->get();
 
-        return view('front.singlecategory', compact('news', 'categoryname', 'totalNewsCount', 'livebreakingnews'));
+        return view('front.singlecategory', compact('news', 'categoryname', 'totalNewsCount'));
     }
 
 
@@ -163,6 +165,9 @@ class WebController extends Controller
      */
     public function shownews(Request $request)
     {
+        // live breaking news
+        // $livebreakingnews = BreakingNews::where('breakingnews_status', 'active')->latest()->take(4)->get();
+        // end
         $news = News::all();
         return view('front.homepage', compact('news'));
     }
