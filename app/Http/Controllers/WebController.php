@@ -97,7 +97,17 @@ class WebController extends Controller
             ->get();
         // World news fetching code end
 
-        return view('front.homepage', compact('news', 'breakingNews', 'activeNews', 'categories', 'sportsNews', 'businessnews', 'autonews', 'entertainmentnews', 'politicsnews', 'worldnews'));
+        // Health news fetching code start
+        $healthnews = News::whereHas('category', function ($query) {
+            $query->where('category_name', 'Health'); // Ensure 'category_name' is the correct column and 'Politics' is spelled exactly as in your DB
+        })
+            ->where('news_status', 'active') // Only active news
+            ->latest() // Get the latest ones
+            ->take(4) // Limit to 4 articles
+            ->get();
+        // Health news fetching code end
+
+        return view('front.homepage', compact('news', 'breakingNews', 'activeNews', 'categories', 'sportsNews', 'businessnews', 'autonews', 'entertainmentnews', 'politicsnews', 'worldnews', 'healthnews'));
     }
 
 

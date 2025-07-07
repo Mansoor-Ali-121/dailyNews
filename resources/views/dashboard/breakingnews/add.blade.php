@@ -37,7 +37,7 @@
                             style="z-index: 2;">
                             <div>
                                 <h2 class="h3 mb-2 text-white"><i class="fas fa-bolt me-3"></i> Add Breaking News</h2>
-                                <p class="mb-0 text-white-50 fs-5">Create urgent news alerts for your readers</p>
+                                <p class="mb-0 text-white-50 fs-5">Create Breaking news alerts for your readers</p>
                             </div>
                             @if (Auth::check())
                                 <div class="me-3 text-end">

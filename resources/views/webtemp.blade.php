@@ -34,7 +34,7 @@
 
     <link rel="preload" href="{{ asset('website/assets/css/unicons.min.css') }}" as="style">
     <link rel="preload" href="{{ asset('website/assets/css/swiper-bundle.min.css') }}" as="style">
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preload" href="{{ asset('website/assets/js/libs/jquery.min.js') }}" as="script">
     <link rel="preload" href="{{ asset('website/assets/js/libs/scrollmagic.min.js') }}" as="script">
     <link rel="preload" href="{{ asset('website/assets/js/libs/swiper-bundle.min.js') }}" as="script">

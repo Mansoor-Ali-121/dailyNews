@@ -11,6 +11,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\CategoriesController;
+use App\Http\Controllers\LiveVideosController;
 use App\Http\Controllers\BreakingNewsController;
 
 
@@ -116,6 +117,20 @@ Route::middleware(ValidUser::class)->group(function () {
         Route::get('/edit/{id}', [BreakingNewsController::class, 'edit'])->name('breakingnews.edit');
         Route::patch('/update/{id}', [BreakingNewsController::class, 'update'])->name('breakingnews.update');
         Route::delete('/delete/{id}', [BreakingNewsController::class, 'destroy'])->name('breakingnews.delete');
+    });
+
+    // End Breaking News Routes
+
+    // Live video Routes
+
+    Route::prefix('livevideo')->group(function () {
+
+        Route::get('/add', [LiveVideosController::class, 'index'])->name('livevideo.add');
+        Route::post('/add', [LiveVideosController::class, 'store']);
+        Route::get('/show', [LiveVideosController::class, 'show'])->name('livevideo.show');
+        Route::get('/edit/{id}', [LiveVideosController::class, 'edit'])->name('livevideo.edit');
+        Route::patch('/update/{id}', [LiveVideosController::class, 'update'])->name('livevideo.update');
+        Route::delete('/delete/{id}', [LiveVideosController::class, 'destroy'])->name('livevideo.delete');
     });
 
     // Blog Routes
