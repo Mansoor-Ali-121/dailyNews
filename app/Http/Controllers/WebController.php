@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\News;
 use App\Models\Categories;
 use App\Models\BreakingNews;
+use App\Models\liveVideos;
 use Illuminate\Http\Request;
 
 class WebController extends Controller
@@ -107,7 +108,14 @@ class WebController extends Controller
             ->get();
         // Health news fetching code end
 
-        return view('front.homepage', compact('news', 'breakingNews', 'activeNews', 'categories', 'sportsNews', 'businessnews', 'autonews', 'entertainmentnews', 'politicsnews', 'worldnews', 'healthnews'));
+        // Live videos fethcing code start
+        $livevideos = liveVideos::where('video_status', 'active') // Only active news
+            ->latest() // Get the latest ones
+            ->take(4) // Limit to 4 videos
+            ->get();
+        // Live videos fetching code end
+
+        return view('front.homepage', compact('news', 'breakingNews', 'activeNews', 'categories', 'sportsNews', 'businessnews', 'autonews', 'entertainmentnews', 'politicsnews', 'worldnews', 'healthnews', 'livevideos'));
     }
 
 

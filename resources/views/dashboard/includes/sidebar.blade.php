@@ -122,14 +122,7 @@
                 </a>
             </li>
 
-            <li class="sidebar-item">
-                <a class="sidebar-link" href="">
-                    <i class="align-middle" data-feather="shield"></i> <span class="align-middle">Roles</span>
-                </a>
-            </li>
-
             {{-- User --}}
-
             <li class="sidebar-item dropdown">
                 <a class="sidebar-link dropdown-toggle" href="#" id="userDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -140,9 +133,9 @@
                     <li><a class="dropdown-item" href="{{ route('user.add') }}">Add User</a></li>
                 </ul>
             </li>
+            {{-- User end --}}
 
             {{-- Admin profile --}}
-
             <li class="sidebar-item dropdown">
                 <a class="sidebar-link dropdown-toggle" href="#" id="profileDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -153,9 +146,9 @@
                     {{-- <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Edit Profile</a></li> --}}
                 </ul>
             </li>
+            {{-- Admin profile end --}}
 
             {{-- Countries --}}
-
             <li class="sidebar-item dropdown">
                 <a class="sidebar-link dropdown-toggle" href="" id="menuDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -166,9 +159,9 @@
                     <li><a class="dropdown-item" href="{{ route('country.add') }}">Add countries</a></li>
                 </ul>
             </li>
+            {{-- Countries end --}}
 
             {{-- Categories --}}
-
             <li class="sidebar-item dropdown">
                 <a class="sidebar-link dropdown-toggle" href="#" id="categoryDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -179,9 +172,9 @@
                     <li><a class="dropdown-item" href="{{ route('category.add') }}">Add Categories</a></li>
                 </ul>
             </li>
+            {{-- Categories end --}}
 
             {{-- Cites --}}
-
             <li class="sidebar-item dropdown">
                 <a class="sidebar-link dropdown-toggle" href="#" id="chefDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -192,9 +185,9 @@
                     <li><a class="dropdown-item" href="{{ route('city.add') }}">Add Cites</a></li>
                 </ul>
             </li>
+            {{-- Cites end --}}
 
             {{-- News --}}
-
             <li class="sidebar-item dropdown">
                 <a class="sidebar-link dropdown-toggle" href="#" id="eventsDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -208,9 +201,9 @@
                     @endif
                 </ul>
             </li>
+            {{-- News end --}}
 
             {{-- Breaking News --}}
-
             <li class="sidebar-item dropdown">
                 <a class="sidebar-link dropdown-toggle" href="#" id="galleryDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
@@ -222,18 +215,33 @@
                     <li><a class="dropdown-item" href="{{ route('breakingnews.add') }}">Add Breaking News</a></li>
                 </ul>
             </li>
+            {{-- Breaking News end --}}
+
+            {{-- Live Videos --}}
+            <li class="sidebar-item dropdown">
+                <a class="sidebar-link dropdown-toggle" href="#" id="galleryDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="align-middle" data-feather="video"></i> <span class="align-middle">Live Videos</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
+                    <li><a class="dropdown-item" href="{{ route('livevideo.show') }}">View Live Videos</a></li>
+                    <li><a class="dropdown-item" href="{{ route('livevideo.add') }}">Add Live Videos</a></li>
+                </ul>
+            </li>
+            {{-- Live Videos end --}}
 
             {{-- Blogs --}}
-            {{-- <li class="sidebar-item dropdown">
+            <li class="sidebar-item dropdown">
                 <a class="sidebar-link dropdown-toggle" href="#" id="galleryDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
                     <i class="align-middle" data-feather="file-text"></i> <span class="align-middle">Blogs</span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="galleryDropdown">
-                    <li><a class="dropdown-item" href="">View Blogs</a></li>
+                    <li><a class="dropdown-item" href="{{ route('blog.show') }}">View Blogs</a></li>
                     <li><a class="dropdown-item" href="{{ route('blog.add') }}">Add Blogs</a></li>
                 </ul>
-            </li> --}}
+            </li>
+            {{-- Blogs end --}}
 
             <li class="sidebar-item">
                 <a class="sidebar-link text-danger" href="{{ route('logout') }}">

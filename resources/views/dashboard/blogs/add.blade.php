@@ -11,6 +11,17 @@
         </div>
     @endif
 
+    {{-- Dispaly errors --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <script src="{{ asset('tinymce\tinymce.min.js') }}" referrerpolicy="origin"></script>
 
     <style>
@@ -209,80 +220,152 @@
         }
     </style>
 
-    {{-- <div class="form-container">
+    <div class="form-container">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">
-                    <i class="fas fa-newspaper me-2"></i> Add New Blog
+                    <i class="fas fa-newspaper me-2"></i> Add New BLog
                 </h4>
                 <div class="d-flex align-items-center">
-
+                    @if (Auth::check())
+                        <div class="me-3 text-end">
+                            <small class="text-light d-block">Logged in as:</small>
+                            <span class="fw-bold">{{ Auth::user()->name }}</span>
+                            <div class="fw-bold">User ID: {{ Auth::user()->id }}</div>
+                        </div>
+                    @endif
                     <a href="{{ route('news.show') }}" class="btn btn-light btn-sm rounded-pill px-4 py-2 shadow-sm ms-3">
-                        <i class="fas fa-arrow-left me-2"></i> Back to News
+                        <i class="fas fa-arrow-left me-2"></i> Back to BLogs
                     </a>
                 </div>
             </div>
 
             <div class="card-body">
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('blog.add') }}" method="POST" enctype="multipart/form-data">
                     @csrf
-                    <div class="mb-5"> --}}
-                        {{-- <h5 class="section-title">Basic Information</h5> --}}
+                    <div class="mb-5">
                         <div class="row g-4">
 
+                            {{-- Country from database --}}
+                            <div class="col-md-6">
+                                <label for="country_id" class="form-label">Country </label>
+                                <select class="form-select @error('country_id') is-invalid @enderror" id="country_id"
+                                    name="country_id">
+                                    {{-- This option will pass an empty string, which Laravel's validation and casting often converts to null for nullable integer fields --}}
+                                    <option value=""
+                                        {{ old('country_id') === null || old('country_id') === '' ? 'selected' : '' }}>
+                                        Select a country</option>
 
-                            {{-- News Status --}}
-                            {{-- <div class="col-md-6">
-                                <label for="news_status" class="form-label">Status</label>
-                                <select class="form-select" id="news_status" name="news_status" required>
+                                    @foreach ($countries as $country)
+                                        <option value="{{ $country->id }}"
+                                            {{ (string) old('country_id') === (string) $country->id ? 'selected' : '' }}>
+                                            {{ $country->country_name }}</option>
+                                    @endforeach
+                                </select>
+                                @error('country_id')
+                                    <div class="invalid-feedback">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            {{-- Blogs Status --}}
+                            <div class="col-md-6">
+                                <label for="blog_status" class="form-label">Status</label>
+                                <select class="form-select" id="blog_status" name="blog_status" required>
                                     <option value="active" selected>Active</option>
                                     <option value="inactive">Inactive</option>
                                 </select>
-                                @error('news_status')
+                                @error('blog_status')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div> --}}
+                            </div>
 
-                            {{-- News title --}}
-                            {{-- <div class="col-md-12">
-                                <label for="news_title" class="form-label">News Title </label>
-                                <input type="text" class="form-control" id="news_title" name="news_title"
-                                    placeholder="Enter news title" value="{{ old('news_title') }}" required>
-                                @error('news_title')
+                            {{-- City Dropdown (Dynamic based on Country) --}}
+                            <div class="col-md-6">
+                                <label for="city_id" class="form-label">City</label>
+                                <select class="form-select @error('city_id') is-invalid @enderror" id="city_id"
+                                    name="city_id">
+                                    <option value="">Select a Country First</option>
+                                    {{-- N/A option is dynamically added/shown by JS --}}
+                                </select>
+                                <p id="noCitiesMessage" class="text-muted" style="display: none;">No cities found for the
+                                    selected country.</p>
+                                <p id="selectCountryMessage" class="text-muted" style="display: block;">Select a country to
+                                    see available cities.</p>
+
+                                @error('city_id')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            {{-- Category from database (now a dropdown) --}}
+                            <div class="col-md-6">
+                                <label for="category_id" class="form-label">Category</label>
+                                <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
+                                    name="category_id">
+                                    {{-- Default "Select a Category" option (optional, you can make it required instead) --}}
+                                    <option value="" {{ old('category_id') == '' ? 'selected' : '' }}>Select a
+                                        Category</option>
+
+                                    {{-- Loop through your categories --}}
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"
+                                            {{ old('category_id') == $category->id ? 'selected' : '' }}>
+                                            {{ $category->category_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('category_id')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+                            {{-- Blogs title --}}
+                            <div class="col-md-12">
+                                <label for="blog_title" class="form-label">Blog Title </label>
+                                <input type="text" class="form-control" id="blog_title" name="blog_title"
+                                    placeholder="Enter news title" value="{{ old('blog_title') }}" required>
+                                @error('blog_title')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div> --}}
-                            {{-- News Content --}}
-                            {{-- <div class="col-md-12">
-                                <label for="news_content" class="form-label">News Content </label>
-                                <textarea type="text" id="news_content" name="news_content" class="form-control tinymce"
-                                    placeholder="Enter news content" rows="20"></textarea>
-                                @error('news_content')
+                            </div>
+
+                            {{-- Blogs Content --}}
+                            <div class="col-md-12">
+                                <label for="blog_content" class="form-label">Blog Content </label>
+                                <textarea type="text" id="blog_content" name="blog_content" class="form-control tinymce"
+                                    placeholder="Enter news content" value="{{ old('blog_content') }}" rows="20"></textarea>
+                                @error('blog_content')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div> --}}
+                            </div>
 
                             {{-- New description --}}
-                            {{-- <div class="col-md-12">
-                                <label for="news_description" class="form-label">News Description</label>
-                                <textarea class="form-control @error('news_description') is-invalid @enderror" id="news_description"
-                                    name="news_description" rows="5" placeholder="Enter the full news description here">{{ old('news_description') }}</textarea>
+                            <div class="col-md-12">
+                                <label for="blog_description" class="form-label">Blog Description</label>
+                                <textarea class="form-control @error('blog_description') is-invalid @enderror" id="blog_description"
+                                    name="blog_description" rows="5" placeholder="Enter the full blog description here">{{ old('blog_description') }}</textarea>
 
-                                @error('news_description')
-                                    <div class="invalid-feedback d-block"> 
+                                @error('blog_description')
+                                    <div class="invalid-feedback d-block"> {{-- 'd-block' ensures it shows for textareas too --}}
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div> --}}
+                            </div>
                             {{-- Custom Slug --}}
-                            {{-- <div class="col-md-12">
-                                <label for="slug" class="form-label">News Slug</label>
+                            <div class="col-md-12">
+                                <label for="slug" class="form-label">Blog Slug</label>
                                 <input type="text" class="form-control" id="slug" name="slug"
                                     placeholder="Write a slug" value="{{ old('slug') }}" onkeyup="generateSlug()">
                                 @error('slug')
@@ -290,24 +373,26 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div> --}}
+                            </div>
+                            {{-- Custom Slug end --}}
+
                             {{-- Slug which stored in database --}}
-                            {{-- <div class="col-md-12">
-                                <label for="news_slug" class="form-label">System Generated Slug</label>
-                                <input type="text" class="form-control" id="news_slug" name="news_slug"
+                            <div class="col-md-12">
+                                <label for="blog_slug" class="form-label">System Generated Slug</label>
+                                <input type="text" class="form-control" id="blog_slug" name="blog_slug"
                                     placeholder="Auto-generated from title" readonly>
-                                @error('news_slug')
+                                @error('blog_slug')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div> --}}
+                            </div>
                             {{-- End of IMPORTANT section --}}
 
                         </div>
                     </div>
                     {{-- Image Upload --}}
-                    {{-- <div class="mb-5">
+                    <div class="mb-5">
                         <h5 class="section-title">Featured Image</h5>
                         <div class="row g-4">
                             <div class="col-12">
@@ -318,34 +403,34 @@
                                     <h5>Drag & Drop or Click to Upload</h5>
                                     <p class="text-muted">Recommended size: 1200x630 pixels (JPG, PNG, or GIF)</p>
                                     <p class="text-muted">Max file size: 5MB</p>
-                                    <input type="file" id="news_image" name="news_image" accept="image/*"
-                                        style="display: none;"> --}}
+                                    <input type="file" id="blog_image" name="blog_image" accept="image/*"
+                                        style="display: none;">
 
                                     {{-- This is where the image preview will appear --}}
-                                    {{-- <img id="image-preview" src="" alt="Image Preview"
+                                    <img id="image-preview" src="" alt="Image Preview"
                                         style="max-width: 200px; height: auto; display: none; border-radius: 8px; margin-top: 15px;">
                                 </div>
                             </div>
                         </div>
-                    </div> --}}
-
-                    {{-- <div class="mt-5">
-
+                    </div>
+                    {{-- Button  --}}
+                    <div class="mt-5">
                         <button type="submit" class="btn-submit">
-                            <i class="fas fa-plus-circle me-2"></i> Add News
+                            <i class="fas fa-plus-circle me-2"></i> Add Blogs
                         </button>
                     </div>
                 </form>
             </div>
         </div>
-    </div> --}}
-
+    </div>
+    {{-- Image and City Filter Functionality --}}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             // Image Upload Functionality
             const imageUploadArea = document.getElementById('image-upload-area');
-            const newsImageInput = document.getElementById('news_image');
+            const newsImageInput = document.getElementById('blog_image');
             const imagePreview = document.getElementById('image-preview');
+
 
             // Make the whole container clickable
             imageUploadArea.addEventListener('click', function() {
@@ -425,9 +510,121 @@
 
 
             // document.getElementById('slug').addEventListener('input', generateSlug);
+
+
+
+
+
+
+            // --- DOM Elements ---
+            const countrySelect = document.getElementById('country_id');
+            const citySelect = document.getElementById('city_id');
+            const noCitiesMessage = document.getElementById('noCitiesMessage');
+            const selectCountryMessage = document.getElementById('selectCountryMessage');
+            // IMPORTANT: This line passes all cities data from Laravel to JavaScript
+            // Ensure $cities is an Eloquent Collection (or array of objects) with id, city_name, and country_id
+            const allCitiesData = @json($cities);
+
+            // --- Data from Laravel (ensure this is defined in a <script> block above this one) ---
+            // const allCitiesData = @json($cities); // Already defined above
+
+            // --- Old Input for City (for validation re-population) ---
+            const oldSelectedCityId = "{{ old('city_id', '') }}";
+
+            // --- Function to Filter and Populate Cities Dropdown ---
+            function filterCitiesDropdown() {
+                const selectedCountryId = countrySelect.value;
+                let citiesFoundForCountry = false;
+
+                // Clear previous city options, then add a placeholder
+                citySelect.innerHTML = '';
+                const defaultOption = document.createElement('option');
+                defaultOption.value = '';
+                defaultOption.textContent = 'Select a City';
+                citySelect.appendChild(defaultOption);
+
+                // Hide all messages initially
+                selectCountryMessage.style.display = 'none';
+                noCitiesMessage.style.display = 'none';
+
+                if (!selectedCountryId) {
+                    // If no country is selected, reset city dropdown and show "select country" message
+                    citySelect.value = '';
+                    selectCountryMessage.style.display = 'block';
+                    return;
+                }
+
+                // Loop through all cities data to find matches for the selected country
+                allCitiesData.forEach(city => {
+                    if (String(city.country_id) === String(
+                            selectedCountryId)) { // Ensure comparison type matches
+                        const option = document.createElement('option');
+                        option.value = city.id;
+                        option.textContent = city.city_name;
+                        citySelect.appendChild(option);
+                        citiesFoundForCountry = true;
+                    }
+                });
+
+                // Handle scenario: no cities found for the selected country
+                if (!citiesFoundForCountry) {
+                    const naOption = document.createElement('option');
+                    naOption.value = 'N/A';
+                    naOption.textContent = 'N/A (No City)';
+                    citySelect.appendChild(naOption);
+                    // If no cities found, automatically select 'N/A'
+                    citySelect.value = 'N/A';
+                    noCitiesMessage.style.display = 'block';
+                }
+
+                // Attempt to re-select the old value (if page reloaded due to validation error)
+                if (oldSelectedCityId) {
+                    // Check if the old ID exists as an option
+                    if (citySelect.querySelector(`option[value="${oldSelectedCityId}"]`)) {
+                        citySelect.value = oldSelectedCityId;
+                    } else if (oldSelectedCityId === 'N/A' && !citiesFoundForCountry) {
+                        // If old value was 'N/A' and still no cities found, ensure 'N/A' is selected
+                        citySelect.value = 'N/A';
+                    } else {
+                        // If oldSelectedCityId exists but isn't valid for the new country, reset to default
+                        citySelect.value = '';
+                    }
+                } else if (citiesFoundForCountry) {
+                    // If no old ID, and cities were found, ensure "Select a City" is chosen
+                    citySelect.value = '';
+                }
+            }
+
+            // --- Event Listener ---
+            // Trigger filterCitiesDropdown when the country selection changes
+            if (countrySelect) {
+                countrySelect.addEventListener('change', filterCitiesDropdown);
+            } else {
+                console.warn(
+                    "Country select element with ID 'country_id' not found. Dynamic city filtering will not work."
+                );
+            }
+
+            // --- Initial Call on Page Load ---
+            // This handles cases where the page loads with a pre-selected country (e.g., after a validation error)
+            filterCitiesDropdown();
+
+            // If page loads with no country selected but old input was 'N/A', ensure 'N/A' is selected
+            if (!countrySelect.value && oldSelectedCityId === 'N/A') {
+                // Add N/A option if not already present (filterCitiesDropdown would have cleared it)
+                if (!citySelect.querySelector('option[value="N/A"]')) {
+                    const naOption = document.createElement('option');
+                    naOption.value = 'N/A';
+                    naOption.textContent = 'N/A (No City)';
+                    citySelect.appendChild(naOption);
+                }
+                citySelect.value = 'N/A';
+                selectCountryMessage.style.display = 'none';
+                noCitiesMessage.style.display = 'none';
+            }
+
         });
     </script>
-
     {{-- Slug --}}
     <script>
         function generateSlug() {
@@ -439,15 +636,16 @@
                 .replace(/[^a-z0-9äöüß]+/g, '-') // Allow ÄäÖöÜüß
                 .replace(/^-|-$/g, '');
 
-            document.getElementById('news_slug').value = packageSlug;
+            document.getElementById('blog_slug').value = packageSlug;
         }
     </script>
 
     {{-- Editor --}}
+
     <script>
         // Initialize TinyMCE for all textareas
         tinymce.init({
-            selector: 'textarea:not(#news_description)',
+            selector: 'textarea:not(#blog_description)',
             advcode_inline: true,
             plugins: 'searchreplace autolink directionality visualblocks visualchars image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap emoticons autosave fullscreen code',
             toolbar: "undo redo print spellcheckdialog formatpainter | blocks fontfamily fontsize | bold italic underline forecolor backcolor | link image | alignleft aligncenter alignright alignjustify | code | checklist numlist bullist indent outdent | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol",
