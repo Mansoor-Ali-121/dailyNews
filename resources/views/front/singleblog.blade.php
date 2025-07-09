@@ -84,58 +84,65 @@
                                 {{-- Author section end --}}
 
                                 {{-- Previous Post and Next Post --}}
-                                <div class="post-navigation panel vstack sm:hstack justify-between gap-2 mt-8 xl:mt-9">
+                                {{-- Previous Post and Next Post --}}
+<div class="post-navigation panel vstack sm:hstack justify-between gap-2 mt-8 xl:mt-9">
 
-                                    {{-- Previous Post --}}
-                                    @if ($previousPost)
-                                        <div class="new-post panel hstack w-100 sm:w-1/2">
-                                            <div class="panel hstack justify-center w-100px h-100px">
-                                                <figure
-                                                    class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
-                                                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                        src="{{ asset('Blogs/blog_images/' . $previousPost->blog_image) }}"
-                                                        data-src="{{ asset('Blogs/blog_images/' . $previousPost->blog_image) }}"
-                                                        alt="{{ $previousPost->blog_title }}" data-uc-img="loading: lazy">
-                                                    <a href="{{ route('single.blog', $previousPost->blog_slug) }}"
-                                                        class="position-cover"
-                                                        data-caption="{{ $previousPost->blog_title }}"></a>
-                                                </figure>
-                                            </div>
-                                            <div class="panel vstack justify-center px-2 gap-1 w-1/3">
-                                                <span class="fs-7 opacity-60">Prev Article</span>
-                                                <h6 class="h6 lg:h5 m-0 text-truncate-2">{{ $previousPost->blog_title }}
-                                                </h6>
-                                            </div>
-                                            <a href="{{ route('single.blog', $previousPost->blog_slug) }}"
-                                                class="position-cover"></a>
-                                        </div>
-                                    @endif
+    @php
+        // Determine how many navigation links are present
+        $navLinksCount = (isset($previousPost) && $previousPost ? 1 : 0) + (isset($nextPost) && $nextPost ? 1 : 0);
+        $singleLinkClass = ($navLinksCount === 1) ? 'w-100' : 'sm:w-1/2';
+    @endphp
 
-                                    {{-- Next Post --}}
-                                    @if ($nextPost)
-                                        <div class="new-post panel hstack w-100 sm:w-1/2">
-                                            <div class="panel vstack justify-center px-2 gap-1 w-1/3 text-end">
-                                                <span class="fs-7 opacity-60">Next Article</span>
-                                                <h6 class="h6 lg:h5 m-0 text-truncate-2">{{ $nextPost->blog_title }}</h6>
-                                            </div>
-                                            <div class="panel hstack justify-center w-100px h-100px">
-                                                <figure
-                                                    class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
-                                                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                        src="{{ asset('Blogs/blog_images/' . $nextPost->blog_image) }}"
-                                                        data-src="{{ asset('Blogs/blog_images/' . $nextPost->blog_image) }}"
-                                                        alt="{{ $nextPost->blog_title }}" data-uc-img="loading: lazy">
-                                                    <a href="{{ route('single.blog', $nextPost->blog_slug) }}"
-                                                        class="position-cover"
-                                                        data-caption="{{ $nextPost->blog_title }}"></a>
-                                                </figure>
-                                            </div>
-                                            <a href="{{ route('single.blog', $nextPost->blog_slug) }}"
-                                                class="position-cover"></a>
-                                        </div>
-                                    @endif
+    {{-- Previous Post --}}
+    @if (isset($previousPost) && $previousPost)
+        <div class="new-post panel hstack {{ $singleLinkClass }}">
+            <div class="panel hstack justify-center w-100px h-100px">
+                <figure
+                    class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
+                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                        src="{{ asset('Blogs/blog_images/' . $previousPost->blog_image) }}"
+                        data-src="{{ asset('Blogs/blog_images/' . $previousPost->blog_image) }}"
+                        alt="{{ $previousPost->blog_title }}" data-uc-img="loading: lazy">
+                    <a href="{{ route('single.blog', $previousPost->blog_slug) }}"
+                        class="position-cover"
+                        data-caption="{{ $previousPost->blog_title }}"></a>
+                </figure>
+            </div>
+            <div class="panel vstack justify-center px-2 gap-1 flex-grow-1"> {{-- Changed w-1/3 to flex-grow-1 --}}
+                <span class="fs-7 opacity-60">Prev Article</span>
+                <h6 class="h6 lg:h5 m-0 text-truncate-2">{{ $previousPost->blog_title }}</h6>
+            </div>
+            <a href="{{ route('single.blog', $previousPost->blog_slug) }}"
+                class="position-cover"></a>
+        </div>
+    @endif
 
-                                </div>
+    {{-- Next Post --}}
+    @if (isset($nextPost) && $nextPost)
+        <div class="new-post panel hstack {{ $singleLinkClass }}">
+            {{-- For the next post, the content (text) is on the left, image on the right --}}
+            <div class="panel vstack justify-center px-2 gap-1 flex-grow-1 text-end"> {{-- Changed w-1/3 to flex-grow-1 --}}
+                <span class="fs-7 opacity-60">Next Article</span>
+                <h6 class="h6 lg:h5 m-0 text-truncate-2">{{ $nextPost->blog_title }}</h6>
+            </div>
+            <div class="panel hstack justify-center w-100px h-100px">
+                <figure
+                    class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
+                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                        src="{{ asset('Blogs/blog_images/' . $nextPost->blog_image) }}"
+                        data-src="{{ asset('Blogs/blog_images/' . $nextPost->blog_image) }}"
+                        alt="{{ $nextPost->blog_title }}" data-uc-img="loading: lazy">
+                    <a href="{{ route('single.blog', $nextPost->blog_slug) }}"
+                        class="position-cover"
+                        data-caption="{{ $nextPost->blog_title }}"></a>
+                </figure>
+            </div>
+            <a href="{{ route('single.blog', $nextPost->blog_slug) }}"
+                class="position-cover"></a>
+        </div>
+    @endif
+
+</div>
                             </div>
                         </div>
                         <div class="lg:col-4">
