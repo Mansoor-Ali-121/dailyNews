@@ -28,4 +28,12 @@ class Blog extends Model
     {
         return $this->belongsTo(Country::class);
     }
+    public function category()
+    {
+        return $this->belongsTo(Categories::class);
+    }
+    public function author()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

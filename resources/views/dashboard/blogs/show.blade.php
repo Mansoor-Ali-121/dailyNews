@@ -1,5 +1,4 @@
 @extends('template')
-
 @section('main_section')
 
     @include('dashboard.includes.alerts')
@@ -35,9 +34,7 @@
                                 // Assuming $breakingNews is the variable holding your breaking news collection
                                 $totalBlogs = $blogs->count(); // Use count() for collections
                                 $activeBlogsPost = $blogs->where('blog_status', 'active')->count();
-                                $inactiveBlogPost = $blogs
-                                    ->where('blog_status', 'inactive')
-                                    ->count();
+                                $inactiveBlogPost = $blogs->where('blog_status', 'inactive')->count();
                                 $recentlyAddedBlogPost = $blogs
                                     ->filter(function ($item) {
                                         // Adjust 'created_at' if your column name is different
@@ -74,10 +71,9 @@
                                 <p class="text-muted fs-5 mb-5">Get started by adding your first Blogs Post to
                                     the system
                                 </p>
-                                <a href="{{ route('blog.add') }}"
-                                    class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm"
+                                <a href="{{ route('blog.add') }}" class="btn btn-primary btn-lg px-5 rounded-pill shadow-sm"
                                     aria-label="Create First News">
-                                    <i class="fas fa-plus-circle me-2"></i> Create First Blog Post 
+                                    <i class="fas fa-plus-circle me-2"></i> Create First Blog Post
                                 </a>
                             </div>
                         @else
@@ -88,11 +84,11 @@
                                         <tr class="text-center">
                                             <th class="ps-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0">ID</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Title</th>
-                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Related News
-                                            </th> {{-- Renamed for clarity --}}
+                                            {{-- <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Related News
+                                            </th>  --}}
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Image</th>
-                                            {{-- <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Description
-                                            </th> --}}
+                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Description
+                                            </th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Slug</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Status</th>
                                             <th class="pe-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0">Actions
@@ -104,19 +100,11 @@
                                         @foreach ($blogs as $item)
                                             <tr class="border-top col-12">
                                                 <td class="ps-4 fw-bold text-muted fs-5">{{ $item->id }}</td>
+                                                {{-- Title --}}
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div>
                                                             <h6 class="mb-1 fw-bold fs-5">{{ $item->blog_title }}</h6>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div>
-                                                            {{-- Assuming $item->news is the related news model --}}
-                                                            <h6 class="mb-1 fw-bold fs-5">
-                                                                {{ $item->blog_slug }}</h6>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -132,16 +120,17 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                {{-- <td>
+                                                {{-- description --}}
+                                                <td>
                                                     <div class="d-flex align-items-center">
                                                         <div>
                                                             <h6 class="mb-1 fw-bold fs-5">
-                                                                {{ Str::limit($item->description, 50) ?? 'N/A' }}
-                                                               
+                                                                {{ Str::limit($item->blog_description, 50) ?? 'N/A' }}
                                                             </h6>
                                                         </div>
                                                     </div>
-                                                </td> --}}
+                                                </td>
+                                                {{-- Slug --}}
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div>
@@ -150,9 +139,9 @@
                                                         </div>
                                                     </div>
                                                 </td>
-
+                                                {{-- Status --}}
                                                 <td>
-                                                    @if ($item->breakingnews_status == 'active')
+                                                    @if ($item->blog_status == 'active')
                                                         <span
                                                             class="badge rounded-pill fs-6 bg-success bg-opacity-10 text-success px-3 py-2">
                                                             <i class="fas fa-circle me-2" aria-hidden="true"></i>
@@ -172,26 +161,34 @@
                                                         </span>
                                                     @endif
                                                 </td>
+                                                {{-- Buttons --}}
                                                 <td class="pe-4 text-end">
                                                     <div class="d-flex justify-content-between gap-1 action-buttons">
                                                         {{-- Edit Button --}}
-                                                        <a href=""
+                                                        <a href="{{ route('blog.edit', $item->id) }}"
                                                             class="btn btn-outline-primary btn-sm text-center"
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
-                                                            title="Edit Breaking News"
+                                                            title="Edit Blog Post "
                                                             aria-label="Edit Blog Post {{ $item->blog_title }}">
                                                             <i class="fas fa-edit me-1" aria-hidden="true"></i> Edit
                                                         </a>
+                                                         {{-- Corrected View Button --}}
+                                                        <a href="{{ route('blog.view', $item->id) }}"
+                                                            class="btn btn-outline-info btn-sm text-center"
+                                                            data-bs-toggle="tooltip" data-bs-placement="top"
+                                                            title="View News"
+                                                            aria-label="View News {{ $item->blog_title }}">
+                                                            <i class="fas fa-eye me-1" aria-hidden="true"></i> View
+                                                        </a>
                                                         {{-- Delete Form (kept as is, it's correct for a DELETE request) --}}
-                                                        <form action=""
-                                                            method="POST">
+                                                        <form action="{{ route('blog.delete', $item->id) }}" method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit"
                                                                 class="btn btn-outline-danger btn-sm text-center"
                                                                 data-bs-toggle="tooltip" data-bs-placement="top"
-                                                                title="Delete Breaking News"
-                                                                onclick="return confirm('Are you sure you want to delete this breaking news item?')">
+                                                                title="Delete Blog Post "
+                                                                onclick="return confirm('Are you sure you want to delete this Blog Post item?')">
                                                                 <i class="fas fa-trash-alt me-1"></i> Delete
                                                             </button>
                                                         </form>
@@ -201,7 +198,7 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-                               
+
                             </div>
                         @endif
                     </div>
@@ -346,6 +343,7 @@
             color: #0f4c81;
             margin-bottom: 1.5rem;
         }
+
         .status-indicator {
             width: 12px;
             height: 12px;
@@ -401,11 +399,7 @@
             display: inline-block;
             margin-top: 0.5rem;
         }
-
-    
     </style>
-
-
 
     {{-- Pagination Styles (Keep if you want custom pagination appearance) --}}
     <style>

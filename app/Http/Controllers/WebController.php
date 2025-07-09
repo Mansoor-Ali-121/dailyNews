@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Blog;
 use App\Models\News;
 use App\Models\Categories;
-use App\Models\BreakingNews;
 use App\Models\liveVideos;
+use App\Models\BreakingNews;
 use Illuminate\Http\Request;
 
 class WebController extends Controller
@@ -19,10 +20,6 @@ class WebController extends Controller
 
         // Breaking News Start top crousel
         $breakingNews = BreakingNews::all()->where('breakingnews_status', 'active');
-
-
-        // $livebreakingnews = BreakingNews::where('breakingnews_status', 'active')->latest()->take(4)->get();
-        // dd($livebreakingnews);
 
         // Crousel Breaking news section 2 home page
         $activeNews = BreakingNews::where('breakingnews_status', 'active')
@@ -79,7 +76,7 @@ class WebController extends Controller
             ->get();
         // Auto news fetching code end
 
-         $politicsnews = News::whereHas('category', function ($query) {
+        $politicsnews = News::whereHas('category', function ($query) {
             $query->where('category_name', 'Politics'); // Ensure 'category_name' is correct
         })
             ->where('news_status', 'active') // Only active news
@@ -115,10 +112,41 @@ class WebController extends Controller
             ->get();
         // Live videos fetching code end
 
-        return view('front.homepage', compact('news', 'breakingNews', 'activeNews', 'categories', 'sportsNews', 'businessnews', 'autonews', 'entertainmentnews', 'politicsnews', 'worldnews', 'healthnews', 'livevideos'));
+        // Blogs fethcing code start
+        $blogs = Blog::where('blog_status', 'active') // Only active news
+            ->latest() // Get the latest ones
+            ->take(4) // Limit to 4 videos
+            ->get();
+        // Blogs fetching code end
+
+        return view('front.homepage', compact('news', 'breakingNews', 'activeNews', 'categories', 'sportsNews', 'businessnews', 'autonews', 'entertainmentnews', 'politicsnews', 'worldnews', 'healthnews', 'livevideos', 'blogs'));
     }
 
+    public function singleblog(string $slug)
+    {
 
+        // show single blog
+        $blog = Blog::with('author')->where([
+            ['blog_slug', '=', $slug],
+            ['blog_status', '=', 'active']
+        ])->firstOrFail();
+
+        // show related news
+        $relatedNews = News::where('news_status', 'active')
+            ->where('category_id', $blog->category_id) // <--- Filter by current blog's category
+            ->where('id', '!=', $blog->id)           // <--- Exclude the current news article itself
+            ->latest()                               // Order by latest (you can change this to random() if preferred)
+            ->take(3)                                // Limit to 4 related articles as per your layout's structure
+            ->get();
+
+        // Categories
+        $categories = Categories::withCount('news')->get();
+// recent news
+        $latestnews = News::where('news_status', 'active')->latest()->take(4)->get();
+        
+
+        return view('front.singleblog', compact('blog', 'relatedNews', 'categories', 'latestnews'));
+    }
 
 
     public function showsinglenews(string $slug)
@@ -155,7 +183,7 @@ class WebController extends Controller
 
     public function showsinglebreakingnews(string $slug)
     {
-// live breaking news
+        // live breaking news
         // $livebreakingnews = BreakingNews::where('breakingnews_status', 'active')->latest()->take(4)->get();
         // end
         $categories = Categories::withCount('news')->get();

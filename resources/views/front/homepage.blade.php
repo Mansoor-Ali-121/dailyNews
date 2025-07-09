@@ -1391,10 +1391,11 @@
                                         <div class="block-header panel pt-1 border-top">
                                             <h2
                                                 class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
-                                                Latest</h2>
+                                                Latest Blogs</h2>
                                         </div>
                                         <div class="block-content">
                                             <div class="row child-cols-12 g-2 lg:g-4 sep-x">
+                                                @foreach ($blogs as $item )
                                                 <div>
                                                     <article class="post type-post panel uc-transition-toggle">
                                                         <div class="row child-cols g-2 lg:g-3" data-uc-grid>
@@ -1404,8 +1405,8 @@
                                                                     <div
                                                                         class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
                                                                         <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="../assets/images/common/img-fallback.png"
-                                                                            data-src="../assets/images/demo-seven/posts/img-01.jpg"
+                                                                            src="{{ asset('Blogs/blog_images/' . $item->blog_image ) }}"
+                                                                            data-src="{{ asset('Blogs/blog_images/' . $item->blog_image ) }}"
                                                                             alt="The Rise of AI-Powered Personal Assistants: How They Manage"
                                                                             data-uc-img="loading: lazy">
                                                                     </div>
@@ -1418,17 +1419,12 @@
                                                                     class="post-header panel vstack justify-between gap-1">
                                                                     <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
                                                                         <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">The Rise of
-                                                                            AI-Powered Personal Assistants: How They
-                                                                            Manage</a>
+                                                                            href={{ route('single.blog', $item->blog_slug) }}>{{$item->blog_title}}</a>
                                                                     </h3>
                                                                 </div>
                                                                 <p
                                                                     class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                    Law enforcement officers have been accused of sexually
-                                                                    abusing children over the past two decades, a Post
-                                                                    investigation found. Nisi dignissim tortor sed quam sed
-                                                                    ipsum ut. Dolor sit amet, consectetur adipiscing elit.
+                                                                   {{$item->blog_description}}
                                                                 </p>
                                                                 <div class="post-link">
                                                                     <a href="blog-details.html"
@@ -1440,7 +1436,8 @@
                                                         </div>
                                                     </article>
                                                 </div>
-                                                <div>
+                                                @endforeach
+                                                {{-- <div>
                                                     <article class="post type-post panel uc-transition-toggle">
                                                         <div class="row child-cols g-2 lg:g-3" data-uc-grid>
                                                             <div class="col-auto">
@@ -1913,7 +1910,7 @@
                                                             </div>
                                                         </div>
                                                     </article>
-                                                </div>
+                                                </div> --}}
                                             </div>
                                         </div>
                                         <div class="block-footer cstack lg:mt-2">

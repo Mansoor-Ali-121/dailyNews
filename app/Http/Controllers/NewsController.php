@@ -83,7 +83,7 @@ class NewsController extends Controller
         $news = News::paginate(10);
         return view('dashboard.news.show', compact('news'));
     }
-    public function view(string$id)
+    public function view(string $id)
     {
         $news = News::findOrFail($id);
         return view('dashboard.news.view', compact('news'));

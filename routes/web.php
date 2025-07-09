@@ -140,6 +140,7 @@ Route::middleware(ValidUser::class)->group(function () {
         Route::get('/add', [BlogController::class, 'index'])->name('blog.add');
         Route::post('/add', [BlogController::class, 'store']);
         Route::get('/show', [BlogController::class, 'show'])->name('blog.show');
+        Route::get('/view/{id}', [BlogController::class, 'view'])->name('blog.view');
         Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
         Route::patch('/update/{id}', [BlogController::class, 'update'])->name('blog.update');
         Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
@@ -167,6 +168,8 @@ Route::get('/news/{id}', [WebController::class, 'showsinglenews'])->name('single
 Route::get('/breakingnews/{id}', [WebController::class, 'showsinglebreakingnews'])->name('single.breakingnews');
 // Single category show in website 
 Route::get('/news/category/{id}', [WebController::class, 'singlecategoryview'])->name('single.category');
+// Single blogs show in website
+Route::get('/blog/{id}', [WebController::class, 'singleblog'])->name('single.blog');
 
 Route::redirect('/admin', '/admin/login');
 
