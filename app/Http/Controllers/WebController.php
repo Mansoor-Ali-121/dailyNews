@@ -125,7 +125,7 @@ class WebController extends Controller
     public function singleblog(string $slug)
     {
 
-        // show single blog
+        // show single blog with slug
         $blog = Blog::with('author')->where([
             ['blog_slug', '=', $slug],
             ['blog_status', '=', 'active']
@@ -141,11 +141,14 @@ class WebController extends Controller
 
         // Categories
         $categories = Categories::withCount('news')->get();
-// recent news
+        // recent news
         $latestnews = News::where('news_status', 'active')->latest()->take(4)->get();
-        
 
-        return view('front.singleblog', compact('blog', 'relatedNews', 'categories', 'latestnews'));
+        // previous and next blog
+        $previousPost = Blog::where('id', '<', $blog->id)->orderBy('id', 'desc')->first();
+        $nextPost  = Blog::where('id', '>', $blog->id)->orderBy('id', 'asc')->first();
+
+        return view('front.singleblog', compact('blog', 'relatedNews', 'categories', 'latestnews', 'previousPost', 'nextPost'));
     }
 
 

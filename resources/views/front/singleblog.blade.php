@@ -56,40 +56,6 @@
                                 <div class="post-content panel fs-6 md:fs-5" data-uc-lightbox="animation: scale">
                                     {!! $blog->blog_content !!}
                                 </div>
-
-                                {{-- Tags --}}
-                                {{-- <div
-                                    class="post-footer panel vstack sm:hstack gap-3 justify-between justifybetween border-top py-4 mt-4 xl:py-9 xl:mt-9">
-                                    <ul class="nav-x gap-narrow text-primary">
-                                        <li><span class="text-black dark:text-white me-narrow">Related News:</span>
-                                            <li><a href="{{ route('single.news', $breakingnews->news->news_slug) }}"
-                                                class="uc-link gap-0 dark:text-white">{{ $breakingnews->news->news_slug }}</a></li>
-                                        </li>
-                                     
-                                        </li>
-                                    </ul>
-                                    <ul class="post-share-icons nav-x gap-narrow" style="width: 180px">
-                                      
-                                        <li>
-                                            <a class="btn btn-md btn-outline-gray-100 p-0 w-32px lg:w-40px h-32px lg:h-40px text-dark dark:text-white dark:border-gray-600 hover:bg-primary hover:border-primary hover:text-white rounded-circle"
-                                                href="#"><i class="unicon-logo-facebook icon-1"></i></a>
-                                        </li>
-                                        <li>
-                                            <a class="btn btn-md btn-outline-gray-100 p-0 w-32px lg:w-40px h-32px lg:h-40px text-dark dark:text-white dark:border-gray-600 hover:bg-primary hover:border-primary hover:text-white rounded-circle"
-                                                href="#"><i class="unicon-logo-x-filled icon-1"></i></a>
-                                        </li>
-                                        <li>
-                                            <a class="btn btn-md btn-outline-gray-100 p-0 w-32px lg:w-40px h-32px lg:h-40px text-dark dark:text-white dark:border-gray-600 hover:bg-primary hover:border-primary hover:text-white rounded-circle"
-                                                href="#"><i class="unicon-email icon-1"></i></a>
-                                        </li>
-                                        <li>
-                                            <a class="btn btn-md btn-outline-gray-100 p-0 w-32px lg:w-40px h-32px lg:h-40px text-dark dark:text-white dark:border-gray-600 hover:bg-primary hover:border-primary hover:text-white rounded-circle"
-                                                href="#"><i class="unicon-link icon-1"></i></a>
-                                        </li>
-                                    </ul>
-                                </div> --}}
-                                {{-- Tags end --}}
-
                                 {{-- Author section --}}
                                 @if ($blog->author)
                                     <div
@@ -117,177 +83,59 @@
                                 @endif
                                 {{-- Author section end --}}
 
+                                {{-- Previous Post and Next Post --}}
                                 <div class="post-navigation panel vstack sm:hstack justify-between gap-2 mt-8 xl:mt-9">
-                                    <div class="new-post panel hstack w-100 sm:w-1/2">
-                                        <div class="panel hstack justify-center w-100px h-100px">
-                                            <figure
-                                                class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
-                                                <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                    src="../assets/images/common/img-fallback.png"
-                                                    data-src="../assets/images/demo-two/posts/img-02.jpg"
-                                                    alt="Tech Innovations Reshaping the Retail Landscape: AI Payments"
-                                                    data-uc-img="loading: lazy">
-                                                <a href="blog-details.html" class="position-cover"
-                                                    data-caption="Tech Innovations Reshaping the Retail Landscape: AI Payments"></a>
-                                            </figure>
+
+                                    {{-- Previous Post --}}
+                                    @if ($previousPost)
+                                        <div class="new-post panel hstack w-100 sm:w-1/2">
+                                            <div class="panel hstack justify-center w-100px h-100px">
+                                                <figure
+                                                    class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
+                                                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                        src="{{ asset('Blogs/blog_images/' . $previousPost->blog_image) }}"
+                                                        data-src="{{ asset('Blogs/blog_images/' . $previousPost->blog_image) }}"
+                                                        alt="{{ $previousPost->blog_title }}" data-uc-img="loading: lazy">
+                                                    <a href="{{ route('single.blog', $previousPost->blog_slug) }}"
+                                                        class="position-cover"
+                                                        data-caption="{{ $previousPost->blog_title }}"></a>
+                                                </figure>
+                                            </div>
+                                            <div class="panel vstack justify-center px-2 gap-1 w-1/3">
+                                                <span class="fs-7 opacity-60">Prev Article</span>
+                                                <h6 class="h6 lg:h5 m-0 text-truncate-2">{{ $previousPost->blog_title }}
+                                                </h6>
+                                            </div>
+                                            <a href="{{ route('single.blog', $previousPost->blog_slug) }}"
+                                                class="position-cover"></a>
                                         </div>
-                                        <div class="panel vstack justify-center px-2 gap-1 w-1/3">
-                                            <span class="fs-7 opacity-60">Prev Article</span>
-                                            <h6 class="h6 lg:h5 m-0">Tech Innovations Reshaping the Retail Landscape: AI
-                                                Payments</h6>
+                                    @endif
+
+                                    {{-- Next Post --}}
+                                    @if ($nextPost)
+                                        <div class="new-post panel hstack w-100 sm:w-1/2">
+                                            <div class="panel vstack justify-center px-2 gap-1 w-1/3 text-end">
+                                                <span class="fs-7 opacity-60">Next Article</span>
+                                                <h6 class="h6 lg:h5 m-0 text-truncate-2">{{ $nextPost->blog_title }}</h6>
+                                            </div>
+                                            <div class="panel hstack justify-center w-100px h-100px">
+                                                <figure
+                                                    class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
+                                                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                        src="{{ asset('Blogs/blog_images/' . $nextPost->blog_image) }}"
+                                                        data-src="{{ asset('Blogs/blog_images/' . $nextPost->blog_image) }}"
+                                                        alt="{{ $nextPost->blog_title }}" data-uc-img="loading: lazy">
+                                                    <a href="{{ route('single.blog', $nextPost->blog_slug) }}"
+                                                        class="position-cover"
+                                                        data-caption="{{ $nextPost->blog_title }}"></a>
+                                                </figure>
+                                            </div>
+                                            <a href="{{ route('single.blog', $nextPost->blog_slug) }}"
+                                                class="position-cover"></a>
                                         </div>
-                                        <a href="blog-details.html" class="position-cover"></a>
-                                    </div>
-                                    <div class="new-post panel hstack w-100 sm:w-1/2">
-                                        <div class="panel vstack justify-center px-2 gap-1 w-1/3 text-end">
-                                            <span class="fs-7 opacity-60">Next Article</span>
-                                            <h6 class="h6 lg:h5 m-0">The Rise of AI-Powered Personal Assistants: How
-                                                They Manage</h6>
-                                        </div>
-                                        <div class="panel hstack justify-center w-100px h-100px">
-                                            <figure
-                                                class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
-                                                <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                    src="../assets/images/common/img-fallback.png"
-                                                    data-src="../assets/images/demo-two/posts/img-01.jpg"
-                                                    alt="The Rise of AI-Powered Personal Assistants: How They Manage"
-                                                    data-uc-img="loading: lazy">
-                                                <a href="blog-details.html" class="position-cover"
-                                                    data-caption="The Rise of AI-Powered Personal Assistants: How They Manage"></a>
-                                            </figure>
-                                        </div>
-                                        <a href="blog-details.html" class="position-cover"></a>
-                                    </div>
+                                    @endif
+
                                 </div>
-
-                                {{-- Comment section  --}}
-                                {{-- <div id="blog-comment" class="panel border-top pt-2 mt-8 xl:mt-9">
-                                    <h4 class="h5 xl:h4 mb-5 xl:mb-6">Comments (5)</h4>
-
-                                    <div class="spacer-half"></div>
-
-                                    <ol>
-                                        <li>
-                                            <div class="avatar">
-                                                <img src="../assets/images/avatars/01.png" alt="">
-                                            </div>
-                                            <div class="comment-info">
-                                                <span class="c_name">Merrill Rayos</span>
-                                                <span class="c_date id-color">2 days ago</span>
-                                                <span class="c_reply"><a href="#">Reply</a></span>
-                                                <div class="clearfix"></div>
-                                            </div>
-
-                                            <div class="comment">Sed ut perspiciatis unde omnis iste natus error sit
-                                                voluptatem
-                                                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                                                illo
-                                                inventore veritatis et quasi architecto beatae vitae dicta sunt
-                                                explicabo.</div>
-                                            <ol>
-                                                <li>
-                                                    <div class="avatar">
-                                                        <img src="../assets/images/avatars/02.png" alt="">
-                                                    </div>
-                                                    <div class="comment-info">
-                                                        <span class="c_name">Jackqueline Sprang</span>
-                                                        <span class="c_date id-color">2 days ago</span>
-                                                        <span class="c_reply"><a href="#">Reply</a></span>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                    <div class="comment">Sed ut perspiciatis unde omnis iste natus error
-                                                        sit
-                                                        voluptatem accusantium doloremque laudantium, totam rem aperiam,
-                                                        eaque ipsa
-                                                        quae ab illo inventore veritatis et quasi architecto beatae
-                                                        vitae dicta sunt
-                                                        explicabo.</div>
-                                                </li>
-                                            </ol>
-                                        </li>
-
-                                        <li>
-                                            <div class="avatar">
-                                                <img src="../assets/images/avatars/03.png" alt="">
-                                            </div>
-                                            <div class="comment-info">
-                                                <span class="c_name">Sanford Crowley</span>
-                                                <span class="c_date id-color">2 days ago</span>
-                                                <span class="c_reply"><a href="#">Reply</a></span>
-                                                <div class="clearfix"></div>
-                                            </div>
-                                            <div class="comment">Sed ut perspiciatis unde omnis iste natus error sit
-                                                voluptatem
-                                                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                                                illo
-                                                inventore veritatis et quasi architecto beatae vitae dicta sunt
-                                                explicabo.</div>
-                                            <ol>
-                                                <li>
-                                                    <div class="avatar">
-                                                        <img src="../assets/images/avatars/04.png" alt="">
-                                                    </div>
-                                                    <div class="comment-info">
-                                                        <span class="c_name">Lyndon Pocekay</span>
-                                                        <span class="c_date id-color">2 days ago</span>
-                                                        <span class="c_reply"><a href="#">Reply</a></span>
-                                                        <div class="clearfix"></div>
-                                                    </div>
-                                                    <div class="comment">Sed ut perspiciatis unde omnis iste natus error
-                                                        sit
-                                                        voluptatem accusantium doloremque laudantium, totam rem aperiam,
-                                                        eaque ipsa
-                                                        quae ab illo inventore veritatis et quasi architecto beatae
-                                                        vitae dicta sunt
-                                                        explicabo.</div>
-                                                </li>
-                                            </ol>
-                                        </li>
-
-                                        <li>
-                                            <div class="avatar">
-                                                <img src="../assets/images/avatars/05.png" alt="">
-                                            </div>
-                                            <div class="comment-info">
-                                                <span class="c_name">Aleen Crigger</span>
-                                                <span class="c_date id-color">2 days ago</span>
-                                                <span class="c_reply"><a href="#">Reply</a></span>
-
-                                                <div class="clearfix"></div>
-                                            </div>
-                                            <div class="comment">Sed ut perspiciatis unde omnis iste natus error sit
-                                                voluptatem
-                                                accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab
-                                                illo
-                                                inventore veritatis et quasi architecto beatae vitae dicta sunt
-                                                explicabo.</div>
-                                        </li>
-                                    </ol>
-
-                                    <div class="spacer-single"></div>
-
-                                    <div id="comment-form-wrapper" class="panel pt-2 mt-8 xl:mt-9">
-                                        <h4 class="h5 xl:h4 mb-5 xl:mb-6">Leave a Comment</h4>
-                                        <div class="comment_form_holder">
-                                            <form class="vstack gap-2">
-                                                <input
-                                                    class="form-control form-control-sm h-40px w-full fs-6 bg-white dark:bg-opacity-0 dark:text-white dark:border-gray-300 dark:border-opacity-30"
-                                                    type="text" placeholder="First name" required>
-                                                <input
-                                                    class="form-control form-control-sm h-40px w-full fs-6 bg-white dark:bg-opacity-0 dark:text-white dark:border-gray-300 dark:border-opacity-30"
-                                                    type="text" placeholder="Last name" required>
-                                                <input
-                                                    class="form-control form-control-sm h-40px w-full fs-6 bg-white dark:bg-opacity-0 dark:text-white dark:border-gray-300 dark:border-opacity-30"
-                                                    type="email" placeholder="Your email" required>
-                                                <textarea
-                                                    class="form-control h-250px w-full fs-6 bg-white dark:bg-opacity-0 dark:text-white dark:border-gray-300 dark:border-opacity-30"
-                                                    type="text" placeholder="Your comment" required></textarea>
-                                                <button class="btn btn-primary btn-sm mt-1" type="submit">Send</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div> --}}
-                                {{-- Comment section end --}}
                             </div>
                         </div>
                         <div class="lg:col-4">
@@ -312,7 +160,7 @@
                                                             <div class="rt-site-mega">
                                                                 <span class="author-post">
                                                                     {{ $recentnews->created_at->diffForHumans() }} </span>
-                                                              
+
                                                                 </span>
                                                             </div>
                                                             <a href="{{ route('single.news', $recentnews->news_slug) }}">
@@ -328,7 +176,8 @@
                                         <h2 class="widget-title">Category</h2>
                                         <ul>
                                             @foreach ($categories as $category)
-                                                <li><a href="{{ route('single.category', $category->category_slug) }}">{{ $category->category_name }}</a>
+                                                <li><a
+                                                        href="{{ route('single.category', $category->category_slug) }}">{{ $category->category_name }}</a>
                                                     <span>{{ $category->news_count }}</span>
                                                 </li>
                                             @endforeach

@@ -87,8 +87,6 @@
                                             {{-- <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Related News
                                             </th>  --}}
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Image</th>
-                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Description
-                                            </th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Slug</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Status</th>
                                             <th class="pe-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0">Actions
@@ -117,16 +115,6 @@
                                                                 alt="Breaking News Image"
                                                                 class="img-thumbnail rounded-circle me-3"
                                                                 style="width: 50px; height: 50px; object-fit: cover;">
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                                {{-- description --}}
-                                                <td>
-                                                    <div class="d-flex align-items-center">
-                                                        <div>
-                                                            <h6 class="mb-1 fw-bold fs-5">
-                                                                {{ Str::limit($item->blog_description, 50) ?? 'N/A' }}
-                                                            </h6>
                                                         </div>
                                                     </div>
                                                 </td>
@@ -172,7 +160,7 @@
                                                             aria-label="Edit Blog Post {{ $item->blog_title }}">
                                                             <i class="fas fa-edit me-1" aria-hidden="true"></i> Edit
                                                         </a>
-                                                         {{-- Corrected View Button --}}
+                                                        {{-- Corrected View Button --}}
                                                         <a href="{{ route('blog.view', $item->id) }}"
                                                             class="btn btn-outline-info btn-sm text-center"
                                                             data-bs-toggle="tooltip" data-bs-placement="top"
@@ -181,7 +169,8 @@
                                                             <i class="fas fa-eye me-1" aria-hidden="true"></i> View
                                                         </a>
                                                         {{-- Delete Form (kept as is, it's correct for a DELETE request) --}}
-                                                        <form action="{{ route('blog.delete', $item->id) }}" method="POST">
+                                                        <form action="{{ route('blog.delete', $item->id) }}"
+                                                            method="POST">
                                                             @csrf
                                                             @method('DELETE')
                                                             <button type="submit"
@@ -198,7 +187,60 @@
                                         @endforeach
                                     </tbody>
                                 </table>
-
+                                <!-- Replace your current pagination code with this -->
+                                <div class="pagination-container">
+                                    <nav aria-label="Cities pagination">
+                                        <ul class="pagination">
+                                            {{-- Previous Page Link --}}
+                                            @if ($blogs->onFirstPage())
+                                                <li class="page-item disabled" aria-disabled="true">
+                                                    <span class="page-link">
+                                                        <i class="fas fa-chevron-left"></i>
+                                                        <span class="d-none d-sm-inline ms-2">Prev</span>
+                                                    </span>
+                                                </li>
+                                            @else
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $blogs->previousPageUrl() }}"
+                                                        rel="prev">
+                                                        <i class="fas fa-chevron-left"></i>
+                                                        <span class="d-none d-sm-inline ms-2">Prev</span>
+                                                    </a>
+                                                </li>
+                                            @endif
+                                            {{-- Pagination Elements --}}
+                                            @foreach ($blogs->getUrlRange(1, $blogs->lastPage()) as $page => $url)
+                                                @if ($page == $blogs->currentPage())
+                                                    <li class="page-item active" aria-current="page">
+                                                        <span class="page-link">{{ $page }}</span>
+                                                    </li>
+                                                @else
+                                                    <li class="page-item">
+                                                        <a class="page-link"
+                                                            href="{{ $url }}">{{ $page }}</a>
+                                                    </li>
+                                                @endif
+                                            @endforeach
+                                            {{-- Next Page Link --}}
+                                            @if ($blogs->hasMorePages())
+                                                <li class="page-item">
+                                                    <a class="page-link" href="{{ $blogs->nextPageUrl() }}"
+                                                        rel="next">
+                                                        <span class="d-none d-sm-inline me-2">Next</span>
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </a>
+                                                </li>
+                                            @else
+                                                <li class="page-item disabled" aria-disabled="true">
+                                                    <span class="page-link">
+                                                        <span class="d-none d-sm-inline me-2">Next</span>
+                                                        <i class="fas fa-chevron-right"></i>
+                                                    </span>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </nav>
+                                </div>
                             </div>
                         @endif
                     </div>

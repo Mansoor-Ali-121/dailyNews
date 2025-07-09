@@ -75,7 +75,7 @@ class BlogController extends Controller
      */
     public function show()
     {
-        $blogs = Blog::all();
+        $blogs = Blog::paginate(5);
         return view('dashboard.blogs.show', compact('blogs'));
     }
 

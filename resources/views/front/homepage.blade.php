@@ -180,8 +180,8 @@
                                                 </div>
                                                 <div class="widget-content">
                                                     <a class="cstack max-w-300px mx-auto text-none"
-                                                        href="https://themeforest.net/user/reacthemes/portfolio"
-                                                        target="_blank" rel="nofollow">
+                                                        href="{{ route('news.index') }}"
+                                                         rel="nofollow">
                                                         <img class="d-none sm:d-block"
                                                             src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
                                                             alt="Ad slot">
@@ -1385,536 +1385,65 @@
                 <div class="container max-w-xl">
                     <div class="section-inner">
                         <div class="content-wrap row child-cols-12 g-4 lg:g-6" data-uc-grid>
+                            {{-- Left side blog --}}
                             <div class="md:col-9">
                                 <div class="main-wrap panel vstack gap-3 lg:gap-6">
                                     <div class="block-layout grid-layout vstack gap-2 panel overflow-hidden">
                                         <div class="block-header panel pt-1 border-top">
                                             <h2
                                                 class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
-                                                Latest Blogs</h2>
+                                                Latest Blogs
+                                            </h2>
                                         </div>
                                         <div class="block-content">
                                             <div class="row child-cols-12 g-2 lg:g-4 sep-x">
-                                                @foreach ($blogs as $item )
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
+                                                @foreach ($blogs as $item)
+                                                    <div>
+                                                        <article class="post type-post panel uc-transition-toggle">
+                                                            <div class="row child-cols g-2 lg:g-3" data-uc-grid>
+                                                                <div class="col-auto">
                                                                     <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="{{ asset('Blogs/blog_images/' . $item->blog_image ) }}"
-                                                                            data-src="{{ asset('Blogs/blog_images/' . $item->blog_image ) }}"
-                                                                            alt="The Rise of AI-Powered Personal Assistants: How They Manage"
-                                                                            data-uc-img="loading: lazy">
+                                                                        class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
+                                                                        <div
+                                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
+                                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                                                src="{{ asset('Blogs/blog_images/' . $item->blog_image) }}"
+                                                                                data-src="{{ asset('Blogs/blog_images/' . $item->blog_image) }}"
+                                                                                alt="The Rise of AI-Powered Personal Assistants: How They Manage"
+                                                                                data-uc-img="loading: lazy">
+                                                                        </div>
+                                                                        <a href="{{ route('single.blog', $item->blog_slug) }}"
+                                                                            class="position-cover"></a>
                                                                     </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
+                                                                </div>
+                                                                <div>
+                                                                    <div
+                                                                        class="post-header panel vstack justify-between gap-1">
+                                                                        <h3
+                                                                            class="post-title h5 lg:h4 m-0 text-truncate-2">
+                                                                            <a class="text-none hover:text-primary duration-150"
+                                                                                href={{ route('single.blog', $item->blog_slug) }}>{{ $item->blog_title }}</a>
+                                                                        </h3>
+                                                                    </div>
+                                                                    <p
+                                                                        class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
+                                                                        {{ $item->blog_description }}
+                                                                    </p>
+                                                                    <div class="post-link">
+                                                                        <a href="{{ route('single.blog', $item->blog_slug) }}"
+                                                                            class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
+                                                                            <span>Read more</span>
+                                                                        </a>
+                                                                    </div>
                                                                 </div>
                                                             </div>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href={{ route('single.blog', $item->blog_slug) }}>{{$item->blog_title}}</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <p
-                                                                    class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                   {{$item->blog_description}}
-                                                                </p>
-                                                                <div class="post-link">
-                                                                    <a href="blog-details.html"
-                                                                        class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                        <span>Read more</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
+                                                        </article>
+                                                    </div>
                                                 @endforeach
-                                                {{-- <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="../assets/images/common/img-fallback.png"
-                                                                            data-src="../assets/images/demo-seven/posts/img-02.jpg"
-                                                                            alt="Tech Innovations Reshaping the Retail Landscape: AI Payments"
-                                                                            data-uc-img="loading: lazy">
-                                                                    </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">Tech Innovations
-                                                                            Reshaping the Retail Landscape: AI Payments</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <p
-                                                                    class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                    Officers have been accused of sexually abusing children
-                                                                    over the past two decades, a Post investigation found.
-                                                                    Nisi dignissim tortor sed quam sed ipsum ut. Dolor sit
-                                                                    amet, consectetur adipiscing elit.</p>
-                                                                <div class="post-link">
-                                                                    <a href="blog-details.html"
-                                                                        class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                        <span>Read more</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="../assets/images/common/img-fallback.png"
-                                                                            data-src="../assets/images/demo-seven/posts/img-03.jpg"
-                                                                            alt="Balancing Work and Wellness: Tech Solutions for Healthy"
-                                                                            data-uc-img="loading: lazy">
-                                                                    </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">Balancing Work and
-                                                                            Wellness: Tech Solutions for Healthy</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <p
-                                                                    class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                    Children over the past two decades, a Post investigation
-                                                                    found. Nisi dignissim tortor sed quam sed ipsum ut.
-                                                                    Dolor sit amet, consectetur adipiscing elit.</p>
-                                                                <div class="post-link">
-                                                                    <a href="blog-details.html"
-                                                                        class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                        <span>Read more</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="../assets/images/common/img-fallback.png"
-                                                                            data-src="../assets/images/demo-seven/posts/img-04.jpg"
-                                                                            alt="The Importance of Sleep: Tips for Better Rest and Recovery"
-                                                                            data-uc-img="loading: lazy">
-                                                                    </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">The Importance of
-                                                                            Sleep: Tips for Better Rest and Recovery</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <p
-                                                                    class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                    Post investigation found. Nisi dignissim tortor sed quam
-                                                                    sed ipsum ut. Dolor sit amet, consectetur adipiscing
-                                                                    elit.</p>
-                                                                <div class="post-link">
-                                                                    <a href="blog-details.html"
-                                                                        class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                        <span>Read more</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="../assets/images/common/img-fallback.png"
-                                                                            data-src="../assets/images/demo-seven/posts/img-05.jpg"
-                                                                            alt="The Future of Sustainable Living: Driving Eco-Friendly Lifestyles"
-                                                                            data-uc-img="loading: lazy">
-                                                                    </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">The Future of
-                                                                            Sustainable Living: Driving Eco-Friendly
-                                                                            Lifestyles</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <p
-                                                                    class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                    Nisi dignissim tortor sed quam sed ipsum ut. Dolor sit
-                                                                    amet, consectetur adipiscing elit To spread the word,
-                                                                    the company embarked on a mass marketing drive. TV
-                                                                    campaigns launched in the platform’s key markets.</p>
-                                                                <div class="post-link">
-                                                                    <a href="blog-details.html"
-                                                                        class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                        <span>Read more</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="../assets/images/common/img-fallback.png"
-                                                                            data-src="../assets/images/demo-seven/posts/img-06.jpg"
-                                                                            alt="Business Agility the Digital Age: Leveraging AI and Automation"
-                                                                            data-uc-img="loading: lazy">
-                                                                    </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">Business Agility the
-                                                                            Digital Age: Leveraging AI and Automation</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <p
-                                                                    class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                    To spread the word, the company embarked on a mass
-                                                                    marketing drive. TV campaigns launched in the platform’s
-                                                                    key markets. Nisi dignissim tortor sed quam sed ipsum
-                                                                    ut. Dolor sit amet, consectetur adipiscing elit.</p>
-                                                                <div class="post-link">
-                                                                    <a href="blog-details.html"
-                                                                        class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                        <span>Read more</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="../assets/images/common/img-fallback.png"
-                                                                            data-src="../assets/images/demo-seven/posts/img-07.jpg"
-                                                                            alt="The Art of Baking: From Classic Bread to Artisan Pastries"
-                                                                            data-uc-img="loading: lazy">
-                                                                    </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">The Art of Baking:
-                                                                            From Classic Bread to Artisan Pastries</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <p
-                                                                    class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                    To spread the word, the company embarked on a mass
-                                                                    marketing drive. TV campaigns launched in the platform’s
-                                                                    key markets. Nisi dignissim tortor sed quam sed ipsum
-                                                                    ut. Dolor sit amet, consectetur adipiscing elit.</p>
-                                                                <div class="post-link">
-                                                                    <a href="blog-details.html"
-                                                                        class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                        <span>Read more</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="../assets/images/common/img-fallback.png"
-                                                                            data-src="../assets/images/demo-seven/posts/img-08.jpg"
-                                                                            alt="AI and Marketing: Unlocking Customer Insights"
-                                                                            data-uc-img="loading: lazy">
-                                                                    </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">AI and Marketing:
-                                                                            Unlocking Customer Insights</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <p
-                                                                    class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                    To spread the word, the company embarked on a mass
-                                                                    marketing drive. TV campaigns launched in the platform’s
-                                                                    key markets. Nisi dignissim tortor sed quam sed ipsum
-                                                                    ut. Dolor sit amet, consectetur adipiscing elit.</p>
-                                                                <div class="post-link">
-                                                                    <a href="blog-details.html"
-                                                                        class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                        <span>Read more</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="../assets/images/common/img-fallback.png"
-                                                                            data-src="../assets/images/demo-seven/posts/img-09.jpg"
-                                                                            alt="Hidden Gems: Underrated Travel Destinations Around the World"
-                                                                            data-uc-img="loading: lazy">
-                                                                    </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">Hidden Gems:
-                                                                            Underrated Travel Destinations Around the
-                                                                            World</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <p
-                                                                    class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                    To spread the word, the company embarked on a mass
-                                                                    marketing drive. TV campaigns launched in the platform’s
-                                                                    key markets. Nisi dignissim tortor sed quam sed ipsum
-                                                                    ut. Dolor sit amet, consectetur adipiscing elit.</p>
-                                                                <div class="post-link">
-                                                                    <a href="blog-details.html"
-                                                                        class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                        <span>Read more</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="../assets/images/common/img-fallback.png"
-                                                                            data-src="../assets/images/demo-seven/posts/img-10.jpg"
-                                                                            alt="Eco-Tourism: Traveling Responsibly and Sustainably"
-                                                                            data-uc-img="loading: lazy">
-                                                                    </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">Eco-Tourism:
-                                                                            Traveling Responsibly and Sustainably</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <p
-                                                                    class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                    To spread the word, the company embarked on a mass
-                                                                    marketing drive. TV campaigns launched in the platform’s
-                                                                    key markets. Nisi dignissim tortor sed quam sed ipsum
-                                                                    ut. Dolor sit amet, consectetur adipiscing elit.</p>
-                                                                <div class="post-link">
-                                                                    <a href="blog-details.html"
-                                                                        class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                        <span>Read more</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="../assets/images/common/img-fallback.png"
-                                                                            data-src="../assets/images/demo-seven/posts/img-11.jpg"
-                                                                            alt="Solo Travel: Some Tips and Destinations for the Adventurous Explorer"
-                                                                            data-uc-img="loading: lazy">
-                                                                    </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">Solo Travel: Some
-                                                                            Tips and Destinations for the Adventurous
-                                                                            Explorer</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <p
-                                                                    class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                    To spread the word, the company embarked on a mass
-                                                                    marketing drive. TV campaigns launched in the platform’s
-                                                                    key markets. Nisi dignissim tortor sed quam sed ipsum
-                                                                    ut. Dolor sit amet, consectetur adipiscing elit.</p>
-                                                                <div class="post-link">
-                                                                    <a href="blog-details.html"
-                                                                        class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                        <span>Read more</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-150px min-w-100px lg:min-w-250px">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="../assets/images/common/img-fallback.png"
-                                                                            data-src="../assets/images/demo-seven/posts/img-12.jpg"
-                                                                            alt="AI-Powered Financial Planning: How Algorithms Revolutionizing"
-                                                                            data-uc-img="loading: lazy">
-                                                                    </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
-                                                                </div>
-                                                            </div>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h5 lg:h4 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">AI-Powered Financial
-                                                                            Planning: How Algorithms Revolutionizing</a>
-                                                                    </h3>
-                                                                </div>
-                                                                <p
-                                                                    class="post-excrept ft-tertiary fs-6 text-gray-900 dark:text-white text-opacity-60 text-truncate-2 my-1">
-                                                                    To spread the word, the company embarked on a mass
-                                                                    marketing drive. TV campaigns launched in the platform’s
-                                                                    key markets. Nisi dignissim tortor sed quam sed ipsum
-                                                                    ut. Dolor sit amet, consectetur adipiscing elit.</p>
-                                                                <div class="post-link">
-                                                                    <a href="blog-details.html"
-                                                                        class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                        <span>Read more</span>
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div> --}}
                                             </div>
                                         </div>
                                         <div class="block-footer cstack lg:mt-2">
-                                            <a href="#"
+                                            <a href="   " {{-- Assuming you have a route named 'all.blogs' for the main blog listing page --}}
                                                 class="animate-btn gap-0 btn btn-sm btn-alt-primary bg-transparent text-black dark:text-white border w-100">
                                                 <span>Load more posts</span>
                                                 <i class="icon icon-1 unicon-chevron-right"></i>
@@ -1923,18 +1452,19 @@
                                     </div>
                                 </div>
                             </div>
+                            {{-- Left side blog --}}
                             <div class="md:col-3">
                                 <div class="sidebar-wrap panel vstack gap-2 pb-2"
                                     data-uc-sticky="end: .content-wrap; offset: 150; media: @m;">
                                     <div class="widget ad-widget vstack gap-2 text-center p-2 border">
                                         <div class="widgt-content">
                                             <a class="cstack max-w-300px mx-auto text-none"
-                                                href="https://themeforest.net/user/reacthemes/portfolio" target="_blank"
+                                                href="{{ route('news.index') }}"
                                                 rel="nofollow">
                                                 <img class="d-block dark:d-none"
-                                                    src="../assets/images/common/ad-slot-aside.jpg" alt="Ad slot">
+                                                    src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp')}}" alt="Ad slot">
                                                 <img class="d-none dark:d-block"
-                                                    src="../assets/images/common/ad-slot-aside-2.jpg" alt="Ad slot">
+                                                    src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp')}}" alt="Ad slot">
                                             </a>
                                         </div>
                                     </div>
