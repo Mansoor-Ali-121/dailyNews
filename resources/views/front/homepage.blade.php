@@ -1656,7 +1656,8 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="widget social-widget vstack gap-2 text-center p-2 border">
+                                    {{-- User mail --}}
+                                    {{-- <div class="widget social-widget vstack gap-2 text-center p-2 border">
                                         <div class="widgt-title">
                                             <h4 class="fs-7 ft-tertiary text-uppercase m-0">Follow @News5</h4>
                                         </div>
@@ -1690,7 +1691,7 @@
                                                 </li>
                                             </ul>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>

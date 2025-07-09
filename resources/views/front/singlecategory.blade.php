@@ -1,6 +1,5 @@
 @extends('webtemp')
 @section('content')
-    <!-- Wrapper start -->
     <div id="wrapper" class="wrap overflow-hidden-x">
 
         <div class="section py-3 sm:py-6 lg:py-9">
@@ -8,8 +7,8 @@
                 <div class="panel vstack gap-3 sm:gap-6 lg:gap-9">
                     <header class="page-header panel vstack text-center">
                         <h1 class="h3 lg:h1">Category: {{ $categoryname }}</h1>
-                        <span class="m-0 opacity-60">Showing {{ $news->count() }} news out of {{ $totalNewsCount }} total
-                            News</span>
+                        {{-- Laravel's Paginator provides total() and perPage() --}}
+                        <span class="m-0 opacity-60">Showing {{ $news->firstItem() }} to {{ $news->lastItem() }} of {{ $news->total() }} total News</span>
                     </header>
                     <div class="row g-4 xl:g-8">
                         <div class="col">
@@ -51,7 +50,6 @@
                                                             <div class="meta">
                                                                 <div class="hstack gap-2">
                                                                     <div>
-                                                                        {{-- This entire block will only render if $item->author is NOT null --}}
                                                                         @if ($item->author)
                                                                             <div class="post-author hstack gap-1">
                                                                                 <a href="page-author.html"
@@ -63,13 +61,6 @@
                                                                                 <span>{{ $item->author->name }}</span>
                                                                             </div>
                                                                         @endif
-
-                                                                        {{-- The d-none div you had for null case is not needed if you simply don't render the main div --}}
-                                                                        {{-- If you absolutely need a div for some reason when author is null, you could keep it:
-    @if ($item->author == null)
-        <div class="post-author d-none"></div>
-    @endif
-    --}}
                                                                     </div>
                                                                     <div>
                                                                         <div class="post-date hstack gap-narrow">
@@ -95,25 +86,34 @@
                                             </article>
                                         </div>
                                     @endforeach
-
-
                                 </div>
-                                <div
-                                    class="nav-pagination pt-3 mt-6 lg:mt-9 border-top border-gray-100 dark:border-gray-800">
-                                    <ul class="nav-x uc-pagination hstack gap-1 justify-center ft-secondary"
-                                        data-uc-margin="">
-                                        <li>
-                                            <a href="#"><span class="icon icon-1 unicon-chevron-left"></span></a>
-                                        </li>
-                                        <li><a href="#">1</a></li>
-                                        <li><a href="#" class="uc-active">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li class="uc-disabled"><span>…</span></li>
-                                        <li><a href="#">8</a></li>
-                                        <li><a href="#">9</a></li>
-                                        <li>
-                                            <a href="#"><span class="icon icon-1 unicon-chevron-right"></span></a>
-                                        </li>
+
+                                {{-- Custom Pagination Links --}}
+                                <div class="nav-pagination pt-3 mt-6 lg:mt-9 border-top border-gray-100 dark:border-gray-800">
+                                    <ul class="nav-x uc-pagination hstack gap-1 justify-center ft-secondary" data-uc-margin="">
+
+                                        {{-- Previous Page Link --}}
+                                        @if ($news->onFirstPage())
+                                            <li class="uc-disabled"><span><span class="icon icon-1 unicon-chevron-left"></span></span></li>
+                                        @else
+                                            <li><a href="{{ $news->previousPageUrl() }}"><span class="icon icon-1 unicon-chevron-left"></span></a></li>
+                                        @endif
+
+                                        {{-- Pagination Elements --}}
+                                        @foreach ($news->getUrlRange(1, $news->lastPage()) as $page => $url)
+                                            @if ($page == $news->currentPage())
+                                                <li><a href="{{ $url }}" class="uc-active">{{ $page }}</a></li>
+                                            @else
+                                                <li><a href="{{ $url }}">{{ $page }}</a></li>
+                                            @endif
+                                        @endforeach
+
+                                        {{-- Next Page Link --}}
+                                        @if ($news->hasMorePages())
+                                            <li><a href="{{ $news->nextPageUrl() }}"><span class="icon icon-1 unicon-chevron-right"></span></a></li>
+                                        @else
+                                            <li class="uc-disabled"><span><span class="icon icon-1 unicon-chevron-right"></span></span></li>
+                                        @endif
                                     </ul>
                                 </div>
                             </div>
@@ -123,9 +123,6 @@
             </div>
         </div>
 
-        <!-- Newsletter -->
-    </div>
+        </div>
 
-    <!-- Wrapper end -->
-    >
-@endsection
+    @endsection

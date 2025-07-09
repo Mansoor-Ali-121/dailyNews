@@ -80,7 +80,7 @@ class NewsController extends Controller
      */
     public function show()
     {
-        $news = News::paginate(10);
+        $news = News::paginate(5);
         return view('dashboard.news.show', compact('news'));
     }
     public function view(string $id)

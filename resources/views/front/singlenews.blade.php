@@ -116,46 +116,66 @@
                                 {{-- Author section end --}}
 
                                 <div class="post-navigation panel vstack sm:hstack justify-between gap-2 mt-8 xl:mt-9">
-                                    <div class="new-post panel hstack w-100 sm:w-1/2">
-                                        <div class="panel hstack justify-center w-100px h-100px">
-                                            <figure
-                                                class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
-                                                <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                    src="../assets/images/common/img-fallback.png"
-                                                    data-src="../assets/images/demo-two/posts/img-02.jpg"
-                                                    alt="Tech Innovations Reshaping the Retail Landscape: AI Payments"
-                                                    data-uc-img="loading: lazy">
-                                                <a href="blog-details.html" class="position-cover"
-                                                    data-caption="Tech Innovations Reshaping the Retail Landscape: AI Payments"></a>
-                                            </figure>
+
+                                    {{-- Previous Post Navigation --}}
+                                    @if ($previousPost)
+                                        <div class="new-post panel hstack w-100 sm:w-1/2">
+                                            <div class="panel hstack justify-center w-100px h-100px">
+                                                <figure
+                                                    class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
+                                                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                        src="{{ asset('news/news_images/' . $previousPost->news_image) }}"
+                                                        data-src="{{ asset('news/news_images/' . $previousPost->news_image) }}"
+                                                        alt="{{ $previousPost->news_title }}" data-uc-img="loading: lazy">
+                                                    <a href="{{ route('single.news', $previousPost->news_slug) }}"
+                                                        class="position-cover"
+                                                        data-caption="{{ $previousPost->news_title }}"></a>
+                                                </figure>
+                                            </div>
+                                            <div class="panel vstack justify-center px-2 gap-1 w-1/3">
+                                                <span class="fs-7 opacity-60">Prev Article</span>
+                                                <h6 class="h6 lg:h5 m-0 text-truncate-2">
+                                                    <a href="{{ route('single.news', $previousPost->news_slug) }}"
+                                                        class="text-none">
+                                                        {{ $previousPost->news_title }}
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <a href="{{ route('single.news', $previousPost->news_slug) }}"
+                                                class="position-cover"></a>
                                         </div>
-                                        <div class="panel vstack justify-center px-2 gap-1 w-1/3">
-                                            <span class="fs-7 opacity-60">Prev Article</span>
-                                            <h6 class="h6 lg:h5 m-0">Tech Innovations Reshaping the Retail Landscape: AI
-                                                Payments</h6>
+                                    @endif
+
+                                    {{-- Next Post Navigation --}}
+                                    @if ($nextPost)
+                                        <div class="new-post panel hstack w-100 sm:w-1/2">
+                                            <div class="panel vstack justify-center px-2 gap-1 w-1/3 text-end">
+                                                <span class="fs-7 opacity-60">Next Article</span>
+                                                <h6 class="h6 lg:h5 m-0 text-truncate-2">
+                                                    <a href="{{ route('single.news', $nextPost->news_slug) }}"
+                                                        class="text-none">
+                                                        {{ $nextPost->news_title }}
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div class="panel hstack justify-center w-100px h-100px">
+                                                <figure
+                                                    class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
+                                                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                        src="{{ asset('news/news_images/' . $nextPost->news_image) }}"
+                                                        data-src="{{ asset('news/news_images/' . $nextPost->news_image) }}"
+                                                        alt="{{ $nextPost->news_title }}" data-uc-img="loading: lazy">
+                                                    <a href="{{ route('single.news', $nextPost->news_slug) }}"
+                                                        class="position-cover"
+                                                        data-caption="{{ $nextPost->news_title }}"></a>
+                                                </figure>
+                                            </div>
+                                            <a href="{{ route('single.news', $nextPost->news_slug) }}"
+                                                class="position-cover"></a>
                                         </div>
-                                        <a href="blog-details.html" class="position-cover"></a>
-                                    </div>
-                                    <div class="new-post panel hstack w-100 sm:w-1/2">
-                                        <div class="panel vstack justify-center px-2 gap-1 w-1/3 text-end">
-                                            <span class="fs-7 opacity-60">Next Article</span>
-                                            <h6 class="h6 lg:h5 m-0">The Rise of AI-Powered Personal Assistants: How
-                                                They Manage</h6>
-                                        </div>
-                                        <div class="panel hstack justify-center w-100px h-100px">
-                                            <figure
-                                                class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
-                                                <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                    src="../assets/images/common/img-fallback.png"
-                                                    data-src="../assets/images/demo-two/posts/img-01.jpg"
-                                                    alt="The Rise of AI-Powered Personal Assistants: How They Manage"
-                                                    data-uc-img="loading: lazy">
-                                                <a href="blog-details.html" class="position-cover"
-                                                    data-caption="The Rise of AI-Powered Personal Assistants: How They Manage"></a>
-                                            </figure>
-                                        </div>
-                                        <a href="blog-details.html" class="position-cover"></a>
-                                    </div>
+                                 
+                                    @endif
+
                                 </div>
                                 {{-- Related to this topic: --}}
                                 <div class="post-related panel border-top pt-2 mt-8 xl:mt-9">
@@ -393,13 +413,6 @@
 
                                         </ul>
                                     </div>
-                                    <section id="media_image-1" class="widget widget_media_image"><img width="600"
-                                            height="700"
-                                            src="https://reactheme.com/news5/news-magazine/wp-content/uploads/sites/26/2025/04/add__image.png"
-                                            class="image wp-image-10098 attachment-full size-full" alt=""
-                                            decoding="async"
-                                            srcset="https://reactheme.com/news5/news-magazine/wp-content/uploads/sites/26/2025/04/add__image.png 600w, https://reactheme.com/news5/news-magazine/wp-content/uploads/sites/26/2025/04/add__image-257x300.png 257w"
-                                            sizes="(max-width: 600px) 100vw, 600px"></section>
                                 </div>
                             </div>
                         </div>

@@ -175,9 +175,25 @@ class WebController extends Controller
             ->take(3)                                // Limit to 4 related articles as per your layout's structure
             ->get();
 
+        $currentCategoryId = $news->category_id;
+
+        // Fetch the previous post within the SAME category
+        $previousPost = News::where('news_status', 'active') // Ensure previous post is also active
+                            ->where('category_id', $currentCategoryId) // <-- ADDED: Filter by current news's category
+                            ->where('id', '<', $news->id)
+                            ->orderBy('id', 'desc')
+                            ->first();
+
+        // Fetch the next post within the SAME category
+        $nextPost = News::where('news_status', 'active') // Ensure next post is also active
+                        ->where('category_id', $currentCategoryId) // <-- ADDED: Filter by current news's category
+                        ->where('id', '>', $news->id)
+                        ->orderBy('id', 'asc')
+                        ->first();
+
 
         if ($news && $categories) {
-            return view('front.singlenews', compact('news', 'categories', 'latestnews', 'relatedNews'));
+            return view('front.singlenews', compact('news', 'categories', 'latestnews', 'relatedNews', 'previousPost', 'nextPost'));
         } else {
             return view('404');
         }
@@ -221,7 +237,9 @@ class WebController extends Controller
         $category = Categories::where('category_slug', $slug)->firstOrFail();
         $categoryname = $category->category_name;
         $totalNewsCount = News::count();
-        $news = News::where('category_id', $category->id)->get();
+        $news = News::where('category_id', $category->id)
+            ->orderBy('created_at', 'desc') // Good practice to order your results
+            ->paginate(3);
 
         return view('front.singlecategory', compact('news', 'categoryname', 'totalNewsCount'));
     }
