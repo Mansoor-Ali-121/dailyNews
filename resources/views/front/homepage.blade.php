@@ -118,6 +118,7 @@
                                                                         <a class="text-none text-white"
                                                                             href="{{ route('single.breakingnews', $item->breakingnews_slug) }}">{{ $item->title }}</a>
                                                                     </h3>
+                                                                    {{-- Author --}}
                                                                     <div>
                                                                         <div
                                                                             class="post-meta panel hstack justify-between fs-7 text-white text-opacity-60 mt-1">
@@ -128,8 +129,8 @@
                                                                                             <div
                                                                                                 class="post-author hstack gap-1">
 
-                                                                                                <a href="page-author.html"
-                                                                                                    data-uc-tooltip="Peter Sawyer"><img
+                                                                                                <a href="{{ route('author.profile', $item->author->user_slug) }}"
+                                                                                                    data-uc-tooltip={{ $item->author->name }}><img
                                                                                                         src="{{ asset('images/users/' . $item->author->user_image) }}"
                                                                                                         alt="Peter Sawyer"
                                                                                                         class="w-24px h-24px rounded-circle"></a>

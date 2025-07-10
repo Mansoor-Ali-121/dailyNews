@@ -8,7 +8,8 @@
                     <header class="page-header panel vstack text-center">
                         <h1 class="h3 lg:h1">Category: {{ $categoryname }}</h1>
                         {{-- Laravel's Paginator provides total() and perPage() --}}
-                        <span class="m-0 opacity-60">Showing {{ $news->firstItem() }} to {{ $news->lastItem() }} of {{ $news->total() }} total News</span>
+                        <span class="m-0 opacity-60">Showing {{ $news->firstItem() }} to {{ $news->lastItem() }} of
+                            {{ $news->total() }} total News</span>
                     </header>
                     <div class="row g-4 xl:g-8">
                         <div class="col">
@@ -89,20 +90,25 @@
                                 </div>
 
                                 {{-- Custom Pagination Links --}}
-                                <div class="nav-pagination pt-3 mt-6 lg:mt-9 border-top border-gray-100 dark:border-gray-800">
-                                    <ul class="nav-x uc-pagination hstack gap-1 justify-center ft-secondary" data-uc-margin="">
+                                <div
+                                    class="nav-pagination pt-3 mt-6 lg:mt-9 border-top border-gray-100 dark:border-gray-800">
+                                    <ul class="nav-x uc-pagination hstack gap-1 justify-center ft-secondary"
+                                        data-uc-margin="">
 
                                         {{-- Previous Page Link --}}
                                         @if ($news->onFirstPage())
-                                            <li class="uc-disabled"><span><span class="icon icon-1 unicon-chevron-left"></span></span></li>
+                                            <li class="uc-disabled"><span><span
+                                                        class="icon icon-1 unicon-chevron-left"></span></span></li>
                                         @else
-                                            <li><a href="{{ $news->previousPageUrl() }}"><span class="icon icon-1 unicon-chevron-left"></span></a></li>
+                                            <li><a href="{{ $news->previousPageUrl() }}"><span
+                                                        class="icon icon-1 unicon-chevron-left"></span></a></li>
                                         @endif
 
                                         {{-- Pagination Elements --}}
                                         @foreach ($news->getUrlRange(1, $news->lastPage()) as $page => $url)
                                             @if ($page == $news->currentPage())
-                                                <li><a href="{{ $url }}" class="uc-active">{{ $page }}</a></li>
+                                                <li><a href="{{ $url }}"
+                                                        class="uc-active">{{ $page }}</a></li>
                                             @else
                                                 <li><a href="{{ $url }}">{{ $page }}</a></li>
                                             @endif
@@ -110,9 +116,11 @@
 
                                         {{-- Next Page Link --}}
                                         @if ($news->hasMorePages())
-                                            <li><a href="{{ $news->nextPageUrl() }}"><span class="icon icon-1 unicon-chevron-right"></span></a></li>
+                                            <li><a href="{{ $news->nextPageUrl() }}"><span
+                                                        class="icon icon-1 unicon-chevron-right"></span></a></li>
                                         @else
-                                            <li class="uc-disabled"><span><span class="icon icon-1 unicon-chevron-right"></span></span></li>
+                                            <li class="uc-disabled"><span><span
+                                                        class="icon icon-1 unicon-chevron-right"></span></span></li>
                                         @endif
                                     </ul>
                                 </div>
@@ -123,6 +131,5 @@
             </div>
         </div>
 
-        </div>
-
-    @endsection
+    </div>
+@endsection

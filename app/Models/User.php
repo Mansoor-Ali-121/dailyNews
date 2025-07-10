@@ -41,4 +41,8 @@ class User extends Authenticatable
         // Tell Laravel that the foreign key in the 'news' table is 'author_id', not 'user_id'
         return $this->hasMany(News::class, 'author_id');
     }
+     public function news()
+    {
+        return $this->hasMany(News::class, 'author_id');
+    }
 }

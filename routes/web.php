@@ -159,7 +159,6 @@ Route::get('/city', [WebController::class, 'city'])->name('news.city');
 Route::get('/shownews', [WebController::class, 'shownews'])->name('show.news');
 Route::get('/search', [WebController::class, 'search'])->name('news.search');
 
-// End Websites Routes
 
 
 // Single News show in website 
@@ -170,6 +169,10 @@ Route::get('/breakingnews/{id}', [WebController::class, 'showsinglebreakingnews'
 Route::get('/news/category/{id}', [WebController::class, 'singlecategoryview'])->name('single.category');
 // Single blogs show in website
 Route::get('/blog/{id}', [WebController::class, 'singleblog'])->name('single.blog');
+// End Websites Routes
+// Show Author profile with news
+Route::get('/author/{slug}', [WebController::class, 'showAuthorProfile'])->name('author.profile');
+
 
 Route::redirect('/admin', '/admin/login');
 

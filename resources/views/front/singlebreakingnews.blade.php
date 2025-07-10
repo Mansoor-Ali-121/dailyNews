@@ -62,8 +62,9 @@
                                     class="post-footer panel vstack sm:hstack gap-3 justify-between justifybetween border-top py-4 mt-4 xl:py-9 xl:mt-9">
                                     <ul class="nav-x gap-narrow text-primary">
                                         <li><span class="text-black dark:text-white me-narrow">Related News:</span>
-                                            <li><a href="{{ route('single.news', $breakingnews->news->news_slug) }}"
-                                                class="uc-link gap-0 dark:text-white">{{ $breakingnews->news->news_slug }}</a></li>
+                                        <li><a href="{{ route('single.news', $breakingnews->news->news_slug) }}"
+                                                class="uc-link gap-0 dark:text-white">{{ $breakingnews->news->news_slug }}</a>
+                                        </li>
                                         </li>
                                         {{-- <li><a href="#"
                                                 class="uc-link gap-0 dark:text-white">{{ $breakingnews->category->category_name }}</a> --}}
@@ -117,48 +118,81 @@
                                     </div>
                                 @endif
                                 {{-- Author section end --}}
+                                {{-- Previous and next breaking news --}}
+                                <div
+                                    class="post-navigation panel vstack sm:hstack gap-2 mt-8 xl:mt-9
+    @if ($previousPost && $nextPost) justify-between
+    @elseif ($previousPost) justify-start
+    @elseif ($nextPost) justify-end @endif
+">
 
-                                <div class="post-navigation panel vstack sm:hstack justify-between gap-2 mt-8 xl:mt-9">
-                                    <div class="new-post panel hstack w-100 sm:w-1/2">
-                                        <div class="panel hstack justify-center w-100px h-100px">
-                                            <figure
-                                                class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
-                                                <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                    src="../assets/images/common/img-fallback.png"
-                                                    data-src="../assets/images/demo-two/posts/img-02.jpg"
-                                                    alt="Tech Innovations Reshaping the Retail Landscape: AI Payments"
-                                                    data-uc-img="loading: lazy">
-                                                <a href="blog-details.html" class="position-cover"
-                                                    data-caption="Tech Innovations Reshaping the Retail Landscape: AI Payments"></a>
-                                            </figure>
+                                    {{-- Previous Breaking News --}}
+                                    @if ($previousPost)
+                                        <div
+                                            class="new-post panel hstack
+            @if ($nextPost) w-100 sm:w-1/2
+            @else w-full @endif
+        ">
+                                            <div class="panel hstack justify-center w-100px h-100px">
+                                                <figure
+                                                    class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
+                                                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                        src="{{ asset('breakingnews_images/images/' . $previousPost->image) }}"
+                                                        data-src="{{ asset('breakingnews_images/images/' . $previousPost->image) }}"
+                                                        alt="{{ $previousPost->title }}" data-uc-img="loading: lazy">
+                                                    <a href="{{ route('single.breakingnews', $previousPost->breakingnews_slug) }}"
+                                                        class="position-cover"
+                                                        data-caption="{{ $previousPost->title }}"></a>
+                                                </figure>
+                                            </div>
+                                            <div class="panel vstack justify-center px-2 gap-1 w-1/3">
+                                                <span class="fs-7 opacity-60"><i class="unicon-arrow-left"></i> Prev
+                                                    Article</span>
+                                                <h6 class="h6 lg:h5 m-0 text-truncate-2">
+                                                    <a href="{{ route('single.breakingnews', $previousPost->breakingnews_slug) }}"
+                                                        class="text-none">
+                                                        {{ Str::limit($previousPost->title, 50) }}
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <a href="{{ route('single.breakingnews', $previousPost->breakingnews_slug) }}"
+                                                class="position-cover"></a>
                                         </div>
-                                        <div class="panel vstack justify-center px-2 gap-1 w-1/3">
-                                            <span class="fs-7 opacity-60">Prev Article</span>
-                                            <h6 class="h6 lg:h5 m-0">Tech Innovations Reshaping the Retail Landscape: AI
-                                                Payments</h6>
+                                    @endif
+
+                                    {{-- Next Breaking News --}}
+                                    @if ($nextPost)
+                                        <div
+                                            class="new-post panel hstack
+            @if ($previousPost) w-100 sm:w-1/2
+            @else w-full @endif
+        ">
+                                            <div class="panel vstack justify-center px-2 gap-1 w-1/3 text-end">
+                                                <span class="fs-7 opacity-60">Next Article <i
+                                                        class="unicon-arrow-right"></i></span>
+                                                <h6 class="h6 lg:h5 m-0 text-truncate-2">
+                                                    <a href="{{ route('single.breakingnews', $nextPost->breakingnews_slug) }}"
+                                                        class="text-none">
+                                                        {{ Str::limit($nextPost->title, 50) }} 
+                                                    </a>
+                                                </h6>
+                                            </div>
+                                            <div class="panel hstack justify-center w-100px h-100px">
+                                                <figure
+                                                    class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
+                                                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                        src="{{ asset('breakingnews_images/images/' . $nextPost->image) }}"
+                                                        data-src="{{ asset('breakingnews_images/images/' . $nextPost->image) }}"
+                                                        alt="{{ $nextPost->title }}" data-uc-img="loading: lazy">
+                                                    <a href="{{ route('single.breakingnews', $nextPost->breakingnews_slug) }}"
+                                                        class="position-cover" data-caption="{{ $nextPost->title }}"></a>
+                                                </figure>
+                                            </div>
+                                            <a href="{{ route('single.breakingnews', $nextPost->breakingnews_slug) }}"
+                                                class="position-cover"></a>
                                         </div>
-                                        <a href="blog-details.html" class="position-cover"></a>
-                                    </div>
-                                    <div class="new-post panel hstack w-100 sm:w-1/2">
-                                        <div class="panel vstack justify-center px-2 gap-1 w-1/3 text-end">
-                                            <span class="fs-7 opacity-60">Next Article</span>
-                                            <h6 class="h6 lg:h5 m-0">The Rise of AI-Powered Personal Assistants: How
-                                                They Manage</h6>
-                                        </div>
-                                        <div class="panel hstack justify-center w-100px h-100px">
-                                            <figure
-                                                class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
-                                                <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                    src="../assets/images/common/img-fallback.png"
-                                                    data-src="../assets/images/demo-two/posts/img-01.jpg"
-                                                    alt="The Rise of AI-Powered Personal Assistants: How They Manage"
-                                                    data-uc-img="loading: lazy">
-                                                <a href="blog-details.html" class="position-cover"
-                                                    data-caption="The Rise of AI-Powered Personal Assistants: How They Manage"></a>
-                                            </figure>
-                                        </div>
-                                        <a href="blog-details.html" class="position-cover"></a>
-                                    </div>
+                                    @endif
+
                                 </div>
 
                                 {{-- Comment section  --}}
@@ -291,58 +325,42 @@
                                 {{-- Comment section end --}}
                             </div>
                         </div>
+                        {{-- REcent breaking news  --}}
                         <div class="lg:col-4">
                             <div class="sidebar-wrap panel vstack gap-2" data-uc-sticky="end: true;">
                                 <div class="right-sidebar">
                                     <div class="recent-widget widget">
-                                        <h2 class="widget-title">Recent Posts</h2>
+                                        <h2 class="widget-title">Recent Breaking News</h2>
                                         <div class="recent-post-widget clearfix">
-                                            @foreach ($latestnews as $recentnews)
+                                            @foreach ($relatedNews as $item)
                                                 <div class="show-featured clearfix">
                                                     <div class="post-img">
-                                                        <a href="{{ route('single.news', $recentnews->news_slug) }}">
+                                                        <a
+                                                            href="{{ route('single.breakingnews', $item->breakingnews_slug) }}">
                                                             <img width="1200" height="700"
-                                                                src="{{ asset('news/news_images/' . $recentnews->news_image) }}"
+                                                                src="{{ asset('breakingnews_images/images/' . $item->image) }}"
                                                                 class="attachment-full size-full wp-post-image"
                                                                 alt="" decoding="async"
-                                                                srcset="{{ asset('news/news_images/' . $recentnews->news_image) }}"
+                                                                srcset="{{ asset('breakingnews_images/images/' . $item->image) }}"
                                                                 sizes="(max-width: 1200px) 100vw, 1200px"> </a>
                                                     </div>
                                                     <div class="post-item">
                                                         <div class="post-desc">
                                                             <div class="rt-site-mega">
                                                                 <span class="author-post">
-                                                                    {{ $recentnews->created_at->diffForHumans() }} </span>
-                                                              
+                                                                    {{ $item->created_at->diffForHumans() }} </span>
+
                                                                 </span>
                                                             </div>
-                                                            <a href="{{ route('single.news', $recentnews->news_slug) }}">
-                                                                {{ $recentnews->news_title }} </a>
+                                                            <a
+                                                                href="{{ route('single.breakingnews', $item->breakingnews_slug) }}">
+                                                                {{ $item->title }} </a>
                                                         </div>
                                                     </div>
                                                 </div>
                                             @endforeach
-
                                         </div>
                                     </div>
-                                    <div class="recent-widget widget">
-                                        <h2 class="widget-title">Category</h2>
-                                        <ul>
-                                            @foreach ($categories as $category)
-                                                <li><a href="{{ route('single.category', $category->category_slug) }}">{{ $category->category_name }}</a>
-                                                    <span>{{ $category->news_count }}</span>
-                                                </li>
-                                            @endforeach
-
-                                        </ul>
-                                    </div>
-                                    {{-- <section id="media_image-1" class="widget widget_media_image"><img width="600"
-                                            height="700"
-                                            src="https://reactheme.com/news5/news-magazine/wp-content/uploads/sites/26/2025/04/add__image.png"
-                                            class="image wp-image-10098 attachment-full size-full" alt=""
-                                            decoding="async"
-                                            srcset="https://reactheme.com/news5/news-magazine/wp-content/uploads/sites/26/2025/04/add__image.png 600w, https://reactheme.com/news5/news-magazine/wp-content/uploads/sites/26/2025/04/add__image-257x300.png 257w"
-                                            sizes="(max-width: 600px) 100vw, 600px"></section> --}}
                                 </div>
                             </div>
                         </div>
@@ -350,7 +368,6 @@
                 </div>
             </div>
         </article>
-
         <!-- Newsletter -->
     </div>
 

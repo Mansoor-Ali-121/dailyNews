@@ -7,3 +7,13 @@
         max-width: 100%;
         height: auto;
     }
+    @media (max-width: 768px) {
+      .uc-logo{
+        width: 65px !important;
+        height: 70px;
+        position: absolute;
+        top: 0;
+        right: 40%;
+      }
+        
+    }

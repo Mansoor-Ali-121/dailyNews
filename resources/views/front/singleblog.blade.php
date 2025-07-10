@@ -84,13 +84,21 @@
                                 {{-- Author section end --}}
 
                                 {{-- Previous Post and Next Post --}}
-                                <div class="post-navigation panel vstack sm:hstack justify-between gap-2 mt-8 xl:mt-9">
+                                <div
+                                    class="post-navigation panel vstack sm:hstack gap-2 mt-8 xl:mt-9
+    @if ($previousPost && $nextPost) justify-between
+    @elseif ($previousPost) justify-start
+    @elseif ($nextPost) justify-end @endif
+">
 
-                                    {{-- Previous Blog Post --}}
+                                    {{-- Previous Post Navigation --}}
                                     @if ($previousPost)
-                                        <div class="new-post panel hstack {{ $nextPost ? 'sm:w-1/2' : 'w-100' }}">
-                                            {{-- Increased image container size from w-100px h-100px to w-150px h-150px --}}
-                                            <div class="panel hstack justify-center w-150px h-150px">
+                                        <div
+                                            class="new-post panel hstack
+            @if ($nextPost) w-100 sm:w-1/2
+            @else w-full @endif
+        ">
+                                            <div class="panel hstack justify-center w-100px h-100px">
                                                 <figure
                                                     class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
                                                     <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
@@ -102,8 +110,9 @@
                                                         data-caption="{{ $previousPost->blog_title }}"></a>
                                                 </figure>
                                             </div>
-                                            <div class="panel vstack justify-center px-2 gap-1 flex-grow-1">
-                                                <span class="fs-7 opacity-60">Prev Article</span>
+                                            <div class="panel vstack justify-center px-2 gap-1 w-1/3">
+                                                <span class="fs-7 opacity-60"><i class="unicon-arrow-left"></i>Prev
+                                                    BLog</span>
                                                 <h6 class="h6 lg:h5 m-0 text-truncate-2">
                                                     <a href="{{ route('single.blog', $previousPost->blog_slug) }}"
                                                         class="text-none">
@@ -116,11 +125,17 @@
                                         </div>
                                     @endif
 
-                                    {{-- Next Blog Post --}}
+                                    {{-- Next Post Navigation --}}
                                     @if ($nextPost)
-                                        <div class="new-post panel hstack {{ $previousPost ? 'sm:w-1/2' : 'w-100' }}">
-                                            <div class="panel vstack justify-center px-2 gap-1 flex-grow-1 text-end">
-                                                <span class="fs-7 opacity-60">Next Article</span>
+                                        <div
+                                            class="new-post panel hstack
+            @if ($previousPost) w-100 sm:w-1/2
+            @else w-full {{-- Take full width when only next BLog is present --}} @endif
+        ">
+                                            {{-- This inner div for content and image needs to be reversed for the 'next' BLog --}}
+                                            <div class="panel vstack justify-center px-2 gap-1 w-1/3 text-end">
+                                                <span class="fs-7 opacity-60">Next BLog <i
+                                                        class="unicon-arrow-right"></i></span>
                                                 <h6 class="h6 lg:h5 m-0 text-truncate-2">
                                                     <a href="{{ route('single.blog', $nextPost->blog_slug) }}"
                                                         class="text-none">
@@ -128,8 +143,7 @@
                                                     </a>
                                                 </h6>
                                             </div>
-                                            {{-- Increased image container size from w-100px h-100px to w-150px h-150px --}}
-                                            <div class="panel hstack justify-center w-150px h-150px">
+                                            <div class="panel hstack justify-center w-100px h-100px">
                                                 <figure
                                                     class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
                                                     <img class="media-cover image uc-transition-scale-up uc-transition-opaque"

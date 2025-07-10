@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\News;
+use App\Models\User;
 use App\Models\Categories;
 use App\Models\liveVideos;
 use App\Models\BreakingNews;
@@ -179,17 +180,17 @@ class WebController extends Controller
 
         // Fetch the previous post within the SAME category
         $previousPost = News::where('news_status', 'active') // Ensure previous post is also active
-                            ->where('category_id', $currentCategoryId) // <-- ADDED: Filter by current news's category
-                            ->where('id', '<', $news->id)
-                            ->orderBy('id', 'desc')
-                            ->first();
+            ->where('category_id', $currentCategoryId) // <-- ADDED: Filter by current news's category
+            ->where('id', '<', $news->id)
+            ->orderBy('id', 'desc')
+            ->first();
 
         // Fetch the next post within the SAME category
         $nextPost = News::where('news_status', 'active') // Ensure next post is also active
-                        ->where('category_id', $currentCategoryId) // <-- ADDED: Filter by current news's category
-                        ->where('id', '>', $news->id)
-                        ->orderBy('id', 'asc')
-                        ->first();
+            ->where('category_id', $currentCategoryId) // <-- ADDED: Filter by current news's category
+            ->where('id', '>', $news->id)
+            ->orderBy('id', 'asc')
+            ->first();
 
 
         if ($news && $categories) {
@@ -202,20 +203,26 @@ class WebController extends Controller
 
     public function showsinglebreakingnews(string $slug)
     {
-        // live breaking news
-        // $livebreakingnews = BreakingNews::where('breakingnews_status', 'active')->latest()->take(4)->get();
-        // end
+    // Categories for news shows
         $categories = Categories::withCount('news')->get();
         // $latestnews = News::where('news_status', 'active')->latest()->take(4)->get();
         $breakingnews = BreakingNews::where([
             ['breakingnews_slug', '=', $slug],
             ['breakingnews_status', '=', 'active']
         ])->firstOrFail();
-        // Recent 
-        $latestnews = News::where('news_status', 'active')->latest()->take(4)->get();
 
+        // Recent breaking news 
+        $relatedNews = BreakingNews::where('breakingnews_status', 'active')
+            ->where('id', '!=', $breakingnews->id)
+            ->latest()                         
+            ->take(5)                      
+            ->get();
 
-        return view('front.singlebreakingnews', compact('breakingnews', 'latestnews', 'categories'));
+            // previos and next breaking news
+            $previousPost = BreakingNews::where('id', '<', $breakingnews->id)->orderBy('id', 'desc')->first();
+            $nextPost  = BreakingNews::where('id', '>', $breakingnews->id)->orderBy('id', 'asc')->first();
+
+        return view('front.singlebreakingnews', compact('breakingnews', 'relatedNews', 'categories', 'previousPost', 'nextPost'));
 
         // $authors = News::with('users')->get();
     }
@@ -261,9 +268,15 @@ class WebController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function showAuthorProfile($slug)
     {
-        //
+                // Find the author by their slug
+        $author = User::where('user_slug', $slug)->firstOrFail();
+     
+        $authorNews = $author->news()->latest()->paginate(3); // Get all, ordered by latest
+
+        return view('front/singleAuthor', compact('author', 'authorNews'));
+
     }
 
     /**
