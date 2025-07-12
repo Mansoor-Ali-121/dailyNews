@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\News;
+use App\Models\Categories;
 use App\Models\BreakingNews;
 use Illuminate\Support\ServiceProvider;
 
@@ -26,12 +28,30 @@ class AppServiceProvider extends ServiceProvider
         view()->share('singleLatestBreakingNews',BreakingNews::where('breakingnews_status', 'active')->latest()->first());
 
 // live breaking news variable for single latest breaking news homepage section 2 
-
            $secondLatestBreakingNews = BreakingNews::where('breakingnews_status', 'active')
                                     ->latest()
                                     ->skip(1) // Skip the first (latest) result
                                     ->first(); // Get the next (second latest) result
         view()->share('secondLatestBreakingNews', $secondLatestBreakingNews);
+
+        // All news categories in navbar 
+        view()->share('allcategories', Categories::all());
+        // Latest category name in navbar
+        view()->share('latestcategory', Categories::withCount('news')->orderBy('news_count', 'desc')->first());
+        // Latest news in navbar with category name
+        view()->share('newsItems', News::with('category')->where('news_status', 'active')->latest()->take(4)->get());
+
+        // Politics news fetching code start
+        $politicsnews = News::whereHas('category', function ($query) {
+            $query->where('category_name', 'Politics'); // Ensure 'category_name' is correct
+        })
+            ->where('news_status', 'active') // Only active news
+            ->latest() // Get the latest ones
+            ->take(4) // Limit to 4 articles
+            ->get();
+
+        view()->share('politicsnews', $politicsnews);
+        // Politics news fetching code end
 
     }
 }
