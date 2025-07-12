@@ -246,7 +246,7 @@ class WebController extends Controller
         $totalNewsCount = News::count();
         $news = News::where('category_id', $category->id)
             ->orderBy('created_at', 'desc') // Good practice to order your results
-            ->paginate(3);
+            ->paginate(9);
 
         return view('front.singlecategory', compact('news', 'categoryname', 'totalNewsCount'));
     }

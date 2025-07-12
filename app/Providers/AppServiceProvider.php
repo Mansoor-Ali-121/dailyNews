@@ -53,5 +53,29 @@ class AppServiceProvider extends ServiceProvider
         view()->share('politicsnews', $politicsnews);
         // Politics news fetching code end
 
+           // Sports news fetching code start
+        $sportsnews = News::whereHas('category', function ($query) {
+            $query->where('category_name', 'Sports'); // Ensure 'category_name' is correct
+        })
+            ->where('news_status', 'active') // Only active news
+            ->latest() // Get the latest ones
+            ->take(4) // Limit to 4 articles
+            ->get();
+
+        view()->share('sportsnews', $sportsnews);
+        // Politics news fetching code end
+
+        // Entertainment news fetching code start
+        $entertainmentnews = News::whereHas('category', function ($query) {
+            $query->where('category_name', 'Entertainment'); // Ensure 'category_name' is correct
+        })
+            ->where('news_status', 'active') // Only active news
+            ->latest() // Get the latest ones
+            ->take(4) // Limit to 4 articles
+            ->get();
+
+        view()->share('entertainmentnews', $entertainmentnews);
+        // Entertainment news fetching code end
+
     }
 }

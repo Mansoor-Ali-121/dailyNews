@@ -315,6 +315,7 @@
                                         </div>
                                     </div>
                                 </li>
+
                                 {{-- Latest news with categories --}}
                                 <li>
                                     <a href="#">Latest <span data-uc-navbar-parent-icon></span></a>
@@ -384,11 +385,21 @@
                                     </div>
                                 </li>
                                 {{-- Latest news with categories --}}
+
+                                {{-- Politics news --}}
                                 <li>
                                     {{-- Just politics category --}}
-                                    <a href="#">Politics <span data-uc-navbar-parent-icon></span></a>
+                                    @foreach ($allcategories as $politics )
+                                        @if ($politics->category_name == 'Politics')
+                                            
+                                    <a href="{{ route('single.category', $politics->category_slug) }}">{{ $politics->category_name }} <span data-uc-navbar-parent-icon></span></a>
+                                        @endif
+
+                                    @endforeach
+
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
+
                                         <div class="row child-cols col-match g-2">
 
                                             {{-- Post 1 --}}
@@ -406,13 +417,13 @@
                                                                 alt="The Importance of Sleep: Tips for Better Rest and Recovery"
                                                                 data-uc-img="loading: lazy">
                                                         </div>
-                                                        <a href="{{ asset('blog-details.html') }}"
+                                                        <a href="{{ route('single.news', $item->news_slug) }}"
                                                             class="position-cover"></a>
                                                     </div>
                                                     <div class="post-header panel vstack gap-narrow">
                                                         <h3 class="post-title h6 m-0 text-truncate-2">
                                                             <a class="text-none hover:text-primary duration-150"
-                                                                href="{{ asset('blog-details.html') }}">
+                                                                href="{{ route('single.news', $item->news_slug) }}">
                                                               {{$item->news_title}}
                                                             </a>
                                                         </h3>
@@ -436,13 +447,24 @@
                                         </div>
                                     </div>
                                 </li>
+                                {{-- Politics news --}}
+
+                                {{-- Sports news --}}
                                 <li>
-                                    <a href="#">Opinions <span data-uc-navbar-parent-icon></span></a>
+                                    @foreach ($allcategories as $sports )
+                                        @if ($sports->category_name == 'Sports')
+                                            
+                                    <a href="{{ route('single.category', $sports->category_slug) }}">{{ $sports->category_name }} <span data-uc-navbar-parent-icon></span></a>
+                                        @endif
+                                    @endforeach
+
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
                                         <div class="row child-cols col-match g-2">
 
                                             {{-- Post 1 --}}
+                                            @foreach ($sportsnews as $sports )
+                                                
                                             <div>
                                                 <article
                                                     class="post type-post panel uc-transition-toggle vstack gap-1">
@@ -450,24 +472,24 @@
                                                         <div
                                                             class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
                                                             <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="{{ asset('website/assets/images/common/img-fallback.png') }}"
-                                                                data-src="{{ asset('website/assets/images/demo-seven/posts/img-03.jpg') }}"
+                                                                src="{{ asset('news/news_images/'. $sports->news_image) }}"
+                                                                data-src="{{ asset('news/news_images/'. $sports->news_image) }}"
                                                                 alt="Balancing Work and Wellness: Tech Solutions for Healthy"
                                                                 data-uc-img="loading: lazy">
                                                         </div>
-                                                        <a href="{{ asset('blog-details.html') }}"
+                                                        <a href="{{ route('single.news', $sports->news_slug) }}"
                                                             class="position-cover"></a>
                                                     </div>
                                                     <div class="post-header panel vstack gap-narrow">
                                                         <h3 class="post-title h6 m-0 text-truncate-2">
                                                             <a class="text-none hover:text-primary duration-150"
-                                                                href="{{ asset('blog-details.html') }}">
-                                                                Balancing Work and Wellness: Tech Solutions for Healthy
+                                                                href="{{ route('single.news', $sports->news_slug) }}"">
+                                                             {{$sports->news_title}}
                                                             </a>
                                                         </h3>
                                                         <div
                                                             class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1">
-                                                            <div class="post-date hstack gap-narrow"><span>1h</span>
+                                                            <div class="post-date hstack gap-narrow"><span>{{ $sports->created_at->format('d M Y') }}</span>
                                                             </div>
                                                             <div>·</div>
                                                             <div>
@@ -481,179 +503,27 @@
                                                     </div>
                                                 </article>
                                             </div>
-
-                                            {{-- Post 2 --}}
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="{{ asset('website/assets/images/common/img-fallback.png') }}"
-                                                                data-src="{{ asset('website/assets/images/demo-seven/posts/img-06.jpg') }}"
-                                                                alt="Business Agility the Digital Age: Leveraging AI and Automation"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="{{ asset('blog-details.html') }}"
-                                                            class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="{{ asset('blog-details.html') }}">
-                                                                Business Agility the Digital Age: Leveraging AI and
-                                                                Automation
-                                                            </a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1">
-                                                            <div class="post-date hstack gap-narrow"><span>7d</span>
-                                                            </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i
-                                                                        class="icon-narrow unicon-chat"></i><span>23</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-
-                                            {{-- Post 3 --}}
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="{{ asset('website/assets/images/common/img-fallback.png') }}"
-                                                                data-src="{{ asset('website/assets/images/demo-seven/posts/img-14.jpg') }}"
-                                                                alt="A Guide to The Rise of Gourmet Street Food: Trends and Top Picks"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="{{ asset('blog-details.html') }}"
-                                                            class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="{{ asset('blog-details.html') }}">
-                                                                A Guide to The Rise of Gourmet Street Food: Trends and
-                                                                Top Picks
-                                                            </a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1">
-                                                            <div class="post-date hstack gap-narrow"><span>6mo</span>
-                                                            </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i
-                                                                        class="icon-narrow unicon-chat"></i><span>2</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-
-                                            {{-- Post 4 --}}
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="{{ asset('website/assets/images/common/img-fallback.png') }}"
-                                                                data-src="{{ asset('website/assets/images/demo-seven/posts/img-16.jpg') }}"
-                                                                alt="Top Independent Contractors to Invest in Best of Startups"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="{{ asset('blog-details.html') }}"
-                                                            class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="{{ asset('blog-details.html') }}">
-                                                                Top Independent Contractors to Invest in Best of
-                                                                Startups
-                                                            </a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1">
-                                                            <div class="post-date hstack gap-narrow"><span>1yr</span>
-                                                            </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i
-                                                                        class="icon-narrow unicon-chat"></i><span>12</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-
-                                            {{-- Post 5 --}}
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="{{ asset('website/assets/images/common/img-fallback.png') }}"
-                                                                data-src="{{ asset('website/assets/images/demo-seven/posts/img-19.jpg') }}"
-                                                                alt="The Future of Sustainable Living: Driving Eco-Friendly Lifestyles"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="{{ asset('blog-details.html') }}"
-                                                            class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="{{ asset('blog-details.html') }}">
-                                                                The Future of Sustainable Living: Driving Eco-Friendly
-                                                                Lifestyles
-                                                            </a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1">
-                                                            <div class="post-date hstack gap-narrow"><span>2mo</span>
-                                                            </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i
-                                                                        class="icon-narrow unicon-chat"></i><span>1</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-
+                                            @endforeach
                                         </div>
                                     </div>
                                 </li>
+                                {{-- Sports news --}}
+
+                                {{-- Entaertainment news --}}
                                 <li>
-                                    <a href="#">World <span data-uc-navbar-parent-icon></span></a>
+                                    @foreach ($allcategories as $entertainment )
+                                        @if ($entertainment->category_name == 'Entertainment')
+                                            
+                                    <a href="{{ route('single.category', $entertainment->category_slug) }}">{{ $entertainment->category_name }} <span data-uc-navbar-parent-icon></span></a>
+                                        @endif
+                                 
+                                    @endforeach
+
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
                                         <div class="row child-cols col-match g-2">
+                                            @foreach ($entertainmentnews as $entertainment )
+                                                
                                             <div>
                                                 <article
                                                     class="post type-post panel uc-transition-toggle vstack gap-1">
@@ -661,24 +531,23 @@
                                                         <div
                                                             class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
                                                             <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="../assets/images/common/img-fallback.png"
-                                                                data-src="../assets/images/demo-seven/posts/img-01.jpg"
+                                                                src="{{ asset('news/news_images/'. $entertainment->news_image) }}"
+                                                                data-src="{{ asset('news/news_images/'. $entertainment->news_image) }}"
                                                                 alt="The Rise of AI-Powered Personal Assistants: How They Manage"
                                                                 data-uc-img="loading: lazy">
                                                         </div>
-                                                        <a href="blog-details.html" class="position-cover"></a>
+                                                        <a href="{{ route('single.news', $entertainment->news_slug) }}" class="position-cover"></a>
                                                     </div>
                                                     <div class="post-header panel vstack gap-narrow">
                                                         <h3 class="post-title h6 m-0 text-truncate-2">
                                                             <a class="text-none hover:text-primary duration-150"
-                                                                href="blog-details.html">The Rise of AI-Powered
-                                                                Personal Assistants: How They Manage</a>
+                                                                href="{{ route('single.news', $entertainment->news_slug) }}">{{$entertainment->news_title}}</a>
                                                         </h3>
                                                         <div
                                                             class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
                                                             <div>
                                                                 <div class="post-date hstack gap-narrow">
-                                                                    <span>1min</span>
+                                                                    <span>{{ $entertainment->created_at->format('d M Y') }}</span>
                                                                 </div>
                                                             </div>
                                                             <div>·</div>
@@ -693,165 +562,13 @@
                                                     </div>
                                                 </article>
                                             </div>
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="../assets/images/common/img-fallback.png"
-                                                                data-src="../assets/images/demo-seven/posts/img-02.jpg"
-                                                                alt="Tech Innovations Reshaping the Retail Landscape: AI Payments"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="blog-details.html" class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="blog-details.html">Tech Innovations Reshaping
-                                                                the Retail Landscape: AI Payments</a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
-                                                            <div>
-                                                                <div class="post-date hstack gap-narrow">
-                                                                    <span>55min</span>
-                                                                </div>
-                                                            </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i class="icon-narrow unicon-chat"></i>
-                                                                    <span>100</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="../assets/images/common/img-fallback.png"
-                                                                data-src="../assets/images/demo-seven/posts/img-07.jpg"
-                                                                alt="The Art of Baking: From Classic Bread to Artisan Pastries"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="blog-details.html" class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="blog-details.html">The Art of Baking: From
-                                                                Classic Bread to Artisan Pastries</a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
-                                                            <div>
-                                                                <div class="post-date hstack gap-narrow">
-                                                                    <span>9d</span>
-                                                                </div>
-                                                            </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i class="icon-narrow unicon-chat"></i>
-                                                                    <span>112</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="../assets/images/common/img-fallback.png"
-                                                                data-src="../assets/images/demo-seven/posts/img-09.jpg"
-                                                                alt="Hidden Gems: Underrated Travel Destinations Around the World"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="blog-details.html" class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="blog-details.html">Hidden Gems: Underrated
-                                                                Travel Destinations Around the World</a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
-                                                            <div>
-                                                                <div class="post-date hstack gap-narrow">
-                                                                    <span>23d</span>
-                                                                </div>
-                                                            </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i class="icon-narrow unicon-chat"></i>
-                                                                    <span>15</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="../assets/images/common/img-fallback.png"
-                                                                data-src="../assets/images/demo-seven/posts/img-12.jpg"
-                                                                alt="AI-Powered Financial Planning: How Algorithms Revolutionizing"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="blog-details.html" class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="blog-details.html">AI-Powered Financial
-                                                                Planning: How Algorithms Revolutionizing</a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
-                                                            <div>
-                                                                <div class="post-date hstack gap-narrow">
-                                                                    <span>2mo</span>
-                                                                </div>
-                                                            </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i class="icon-narrow unicon-chat"></i>
-                                                                    <span>2</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
+                                            @endforeach
                                         </div>
                                     </div>
                                 </li>
+                                {{-- Entaertainment news --}}
+
+                                
                                 <li>
                                     <a href="#">Media <span data-uc-navbar-parent-icon></span></a>
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
