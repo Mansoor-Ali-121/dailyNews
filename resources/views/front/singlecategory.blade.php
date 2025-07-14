@@ -43,7 +43,7 @@
                                                 <div class="post-header panel vstack gap-1 lg:gap-2">
                                                     <h3 class="post-title h6 sm:h5 xl:h4 m-0 text-truncate-2 m-0">
                                                         <a class="text-none"
-                                                            href="{{ route('single.news', $item->news_slug) }}">{{ $item->news_title }}</a>
+                                                            href="{{ route('single.news', $item->news_slug) }}">{{ Str::limit($item->news_title, 25) }}</a>
                                                     </h3>
                                                     <div>
                                                         <div
@@ -53,7 +53,7 @@
                                                                     <div>
                                                                         @if ($item->author)
                                                                             <div class="post-author hstack gap-1">
-                                                                                <a href="page-author.html"
+                                                                                <a href="{{ route('author.profile', $item->author->user_slug) }}"
                                                                                     data-uc-tooltip="{{ $item->author->name }}">
                                                                                     <img src="{{ asset('images/users/' . $item->author->user_image) }}"
                                                                                         alt="{{ $item->author->name ?? 'Author' }}"

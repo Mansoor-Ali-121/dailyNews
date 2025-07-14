@@ -7,6 +7,9 @@
         max-width: 100%;
         height: auto;
     }
+    a{
+        text-decoration: none !important;
+    }
     @media (max-width: 768px) {
       .uc-logo{
         width: 65px !important;

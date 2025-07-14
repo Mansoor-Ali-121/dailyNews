@@ -172,6 +172,14 @@ Route::get('/blog/{id}', [WebController::class, 'singleblog'])->name('single.blo
 // End Websites Routes
 // Show Author profile with news
 Route::get('/author/{slug}', [WebController::class, 'showAuthorProfile'])->name('author.profile');
+// Show Author profile with news end
+
+// Privacy page
+Route::get('/privacy', [WebController::class, 'privacy'])->name('privacy');
+// Privacy page end
+
+// Terms page
+Route::get('/terms', [WebController::class, 'terms'])->name('terms');
 
 
 Route::redirect('/admin', '/admin/login');

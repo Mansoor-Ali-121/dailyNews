@@ -11,6 +11,17 @@
         </div>
     @endif
 
+    {{-- Dispaly errors --}}
+    @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+
     <script src="{{ asset('tinymce\tinymce.min.js') }}" referrerpolicy="origin"></script>
 
     <style>
@@ -328,7 +339,7 @@
                             <div class="col-md-12">
                                 <label for="news_content" class="form-label">News Content </label>
                                 <textarea type="text" id="news_content" name="news_content" class="form-control tinymce"
-                                    placeholder="Enter news content" value="{{ old('news_content') }}" rows="20"></textarea>
+                                    placeholder="Enter news content" value="{{ old('news_content') }}" rows="20">{{ old('news_content') }}</textarea>
                                 @error('news_content')
                                     <div class="invalid-feedback">
                                         {{ $message }}

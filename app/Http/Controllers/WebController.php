@@ -251,8 +251,6 @@ class WebController extends Controller
         return view('front.singlecategory', compact('news', 'categoryname', 'totalNewsCount'));
     }
 
-
-
     /**
      * Store a newly created resource in storage.
      */
@@ -273,18 +271,24 @@ class WebController extends Controller
                 // Find the author by their slug
         $author = User::where('user_slug', $slug)->firstOrFail();
      
-        $authorNews = $author->news()->latest()->paginate(3); // Get all, ordered by latest
+        $authorNews = $author->news()->latest()->paginate(9); // Get all, ordered by latest
 
-        return view('front/singleAuthor', compact('author', 'authorNews'));
+        return view('front.singleAuthor', compact('author', 'authorNews'));
 
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function privacy()
     {
-        //
+        return view('front.privacypage');
+    }
+
+// terms and conditions
+    public function terms()
+    {
+        return view('front.page-terms');
     }
 
     /**

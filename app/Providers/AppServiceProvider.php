@@ -77,5 +77,17 @@ class AppServiceProvider extends ServiceProvider
         view()->share('entertainmentnews', $entertainmentnews);
         // Entertainment news fetching code end
 
+        // Media news fetching code start
+        $worldnews = News::whereHas('category', function ($query) {
+            $query->where('category_name', 'World'); // Ensure 'category_name' is correct
+        })
+            ->where('news_status', 'active') // Only active news
+            ->latest() // Get the latest ones
+            ->take(4) // Limit to 4 articles
+            ->get();
+
+        view()->share('worldnews', $worldnews);
+        // Media news fetching code end
+
     }
 }

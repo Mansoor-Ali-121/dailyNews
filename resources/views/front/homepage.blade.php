@@ -181,8 +181,7 @@
                                                 </div>
                                                 <div class="widget-content">
                                                     <a class="cstack max-w-300px mx-auto text-none"
-                                                        href="{{ route('news.index') }}"
-                                                         rel="nofollow">
+                                                        href="{{ route('news.index') }}" rel="nofollow">
                                                         <img class="d-none sm:d-block"
                                                             src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
                                                             alt="Ad slot">
@@ -274,7 +273,7 @@
                                                                                 <div>
 
                                                                                     <div class="post-author hstack gap-1">
-                                                                                        <a href="page-author.html"
+                                                                                        <a href="{{ route('author.profile', $singleLatestBreakingNews->author->user_slug) }}"
                                                                                             data-uc-tooltip="{{ $singleLatestBreakingNews->author->name }}"><img
                                                                                                 src="{{ asset('images/users/' . $singleLatestBreakingNews->author->user_image) }}"
                                                                                                 alt="Sarah Eddrissi"
@@ -577,7 +576,7 @@
                                                                             <div class="hstack gap-2">
                                                                                 <div>
                                                                                     <div class="post-author hstack gap-1">
-                                                                                        <a href=""
+                                                                                        <a href="{{ route('author.profile', $secondLatestBreakingNews->author->user_slug) }}"
                                                                                             data-uc-tooltip="{{ $secondLatestBreakingNews->author->name }}"><img
                                                                                                 src="{{ asset('images/users/' . $secondLatestBreakingNews->author->user_image) }}"
                                                                                                 alt="David Peterson"
@@ -1240,13 +1239,13 @@
                                                                                 {{-- Author info --}}
                                                                                 @if ($livevideo->author)
                                                                                     <div class="post-author hstack gap-1">
-                                                                                        <a href="#"
+                                                                                        <a href="{{ route('author.profile', $livevideo->author->user_slug) }}"
                                                                                             data-uc-tooltip="{{ $livevideo->author->name }}">
                                                                                             <img src="{{ asset('images/users/' . $livevideo->author->user_image) }}"
                                                                                                 alt="{{ $livevideo->author->name }}"
                                                                                                 class="w-24px h-24px rounded-circle">
                                                                                         </a>
-                                                                                        <a href="#"
+                                                                                        <a href="{{ route('author.profile', $livevideo->author->user_slug) }}"
                                                                                             class="text-black dark:text-white text-none fw-bold">
                                                                                             {{ $livevideo->author->name }}
                                                                                         </a>
@@ -1302,8 +1301,8 @@
                                 watchSlidesVisibility: true;
                                 watchSlidesProgress: true;
                                 watchOverflow: true">
+                                            {{-- right side videos --}}
                                             <div class="swiper-wrapper md:flex-1">
-                                                {{-- right side videos --}}
                                                 @foreach ($livevideos as $livevideo)
                                                     <div
                                                         class="swiper-slide overflow-hidden rounded min-h-64px lg:min-h-100px">
@@ -1460,12 +1459,13 @@
                                     <div class="widget ad-widget vstack gap-2 text-center p-2 border">
                                         <div class="widgt-content">
                                             <a class="cstack max-w-300px mx-auto text-none"
-                                                href="{{ route('news.index') }}"
-                                                rel="nofollow">
+                                                href="{{ route('news.index') }}" rel="nofollow">
                                                 <img class="d-block dark:d-none"
-                                                    src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp')}}" alt="Ad slot">
+                                                    src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
+                                                    alt="Ad slot">
                                                 <img class="d-none dark:d-block"
-                                                    src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp')}}" alt="Ad slot">
+                                                    src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
+                                                    alt="Ad slot">
                                             </a>
                                         </div>
                                     </div>

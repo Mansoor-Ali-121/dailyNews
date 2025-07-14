@@ -34,7 +34,7 @@
 
     <link rel="preload" href="{{ asset('website/assets/css/unicons.min.css') }}" as="style">
     <link rel="preload" href="{{ asset('website/assets/css/swiper-bundle.min.css') }}" as="style">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="preload" href="{{ asset('website/assets/js/libs/jquery.min.js') }}" as="script">
     <link rel="preload" href="{{ asset('website/assets/js/libs/scrollmagic.min.js') }}" as="script">
     <link rel="preload" href="{{ asset('website/assets/js/libs/swiper-bundle.min.js') }}" as="script">
@@ -44,7 +44,7 @@
     <link rel="preload" href="{{ asset('website/assets/js/helpers/anime-helper.js') }}" as="script">
     <link rel="preload" href="{{ asset('website/assets/js/helpers/anime-helper-defined-timelines.js') }}"
         as="script">
-        <link rel="stylesheet" href="{{ asset('website/assets/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('website/assets/css/style.css') }}">
     <link rel="preload" href="{{ asset('website/assets/js/uikit-components-bs.js') }}" as="script">
     <link rel="preload" href="{{ asset('website/assets/js/app.js') }}" as="script">
 
@@ -215,47 +215,14 @@
                         <div class="swiper swiper-ticker swiper-ticker-sep px-2" style="--uc-ticker-gap: 32px"
                             data-uc-swiper="items: auto; gap: 32; center: true; center-bounds: true; autoplay: 10000; speed: 10000; autoplay-delay: 0.1; loop: true; allowTouchMove: false; freeMode: true; autoplay-disableOnInteraction: true;">
                             <div class="swiper-wrapper">
-                                @foreach ($livebreakingnews as $item )
-                                    
-                                <div class="swiper-slide text-white">
-                                    <div class="type-post post panel">
-                                        <a href="{{ route('single.breakingnews', $item->breakingnews_slug) }}" class="fs-7 fw-normal text-none text-inherit">{{ $item->title }}</a>
+                                @foreach ($livebreakingnews as $item)
+                                    <div class="swiper-slide text-white">
+                                        <div class="type-post post panel">
+                                            <a href="{{ route('single.breakingnews', $item->breakingnews_slug) }}"
+                                                class="fs-7 fw-normal text-none text-inherit">{{ $item->title }}</a>
+                                        </div>
                                     </div>
-                                </div>
                                 @endforeach
-
-                                {{-- <div class="swiper-slide text-white">
-                                    <div class="type-post post panel">
-                                        <a href="blog-details.html" class="fs-7 fw-normal text-none text-inherit">Tech
-                                            Innovations Reshaping the Retail Landscape: AI Payments</a>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide text-white">
-                                    <div class="type-post post panel">
-                                        <a href="blog-details.html"
-                                            class="fs-7 fw-normal text-none text-inherit">Balancing Work and Wellness:
-                                            Tech Solutions for Healthy</a>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide text-white">
-                                    <div class="type-post post panel">
-                                        <a href="blog-details.html" class="fs-7 fw-normal text-none text-inherit">The
-                                            Importance of Sleep: Tips for Better Rest and Recovery</a>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide text-white">
-                                    <div class="type-post post panel">
-                                        <a href="blog-details.html" class="fs-7 fw-normal text-none text-inherit">The
-                                            Future of Sustainable Living: Driving Eco-Friendly Lifestyles</a>
-                                    </div>
-                                </div>
-                                <div class="swiper-slide text-white">
-                                    <div class="type-post post panel">
-                                        <a href="blog-details.html"
-                                            class="fs-7 fw-normal text-none text-inherit">Business Agility the Digital
-                                            Age: Leveraging AI and Automation</a>
-                                    </div>
-                                </div> --}}
                             </div>
                         </div>
                     </div>
@@ -266,6 +233,7 @@
                 <div class="container max-w-xl">
                     <div class="navbar-container hstack border-bottom">
                         <div class="uc-navbar-center gap-2 lg:gap-3 flex-1">
+                            {{-- Navbar --}}
                             <ul class="uc-navbar-nav gap-3 justify-between flex-1 fs-6 fw-bold"
                                 style="--uc-nav-height: 48px">
                                 <li>
@@ -273,13 +241,14 @@
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
                                         <div class="row child-cols col-match g-2">
-                                            @foreach ($allcategories as $item )
-                                                
-                                            <div class="col-2">
-                                                <ul class="uc-nav uc-navbar-dropdown-nav">
-                                                    <li><a href="{{ route('single.category', $item->category_slug) }}">{{ $item->category_name }}</a></li>
-                                                </ul>
-                                            </div>
+                                            @foreach ($allcategories as $item)
+                                                <div class="col-2">
+                                                    <ul class="uc-nav uc-navbar-dropdown-nav">
+                                                        <li><a
+                                                                href="{{ route('single.category', $item->category_slug) }}">{{ $item->category_name }}</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
                                             @endforeach
                                             <div>
                                                 <div class="uc-navbar-newsletter panel vstack">
@@ -322,61 +291,65 @@
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
                                         <div class="row col-match g-2">
-                                            @foreach ($allcategories as $item )     
-                                            <div class="w-1/5">
-                                                <div class="uc-navbar-switcher-nav border-end">
-                                                    <ul class="uc-tab-left fs-6 text-end"
-                                                        data-uc-tab="connect: #uc-navbar-switcher-tending; animation: uc-animation-slide-right-small, uc-animation-slide-left-small">
-                                                        {{-- <li><a href="#">All</a></li> --}}
-                                                        <li><a href="{{ route('single.category', $item->category_slug) }}">{{ $item->category_name }}</a></li>
-                                                    </ul>
+                                            @foreach ($allcategories as $item)
+                                                <div class="w-1/5">
+                                                    <div class="uc-navbar-switcher-nav border-end">
+                                                        <ul class="uc-tab-left fs-6 text-end"
+                                                            data-uc-tab="connect: #uc-navbar-switcher-tending; animation: uc-animation-slide-right-small, uc-animation-slide-left-small">
+                                                            {{-- <li><a href="#">All</a></li> --}}
+                                                            <li><a
+                                                                    href="{{ route('single.category', $item->category_slug) }}">{{ $item->category_name }}</a>
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
                                             @endforeach
                                             <div class="w-4/5">
                                                 <div id="uc-navbar-switcher-tending"
                                                     class="uc-navbar-switcher uc-switcher">
                                                     <div class="row child-cols g-2">
-                                                        @foreach ($newsItems as $item )                               
-                                                        <div>
-                                                            <article
-                                                                class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                                <div class="post-media panel overflow-hidden">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="{{ asset('news/news_images/'. $item->news_image) }}"
-                                                                            data-src="{{ asset('news/news_images/'. $item->news_image) }}"
-                                                                            alt="The Importance of Sleep: Tips for Better Rest and Recovery"
-                                                                            data-uc-img="loading: lazy">
+                                                        @foreach ($newsItems as $item)
+                                                            <div>
+                                                                <article
+                                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
+                                                                    <div class="post-media panel overflow-hidden">
+                                                                        <div
+                                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
+                                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                                                src="{{ asset('news/news_images/' . $item->news_image) }}"
+                                                                                data-src="{{ asset('news/news_images/' . $item->news_image) }}"
+                                                                                alt="The Importance of Sleep: Tips for Better Rest and Recovery"
+                                                                                data-uc-img="loading: lazy">
+                                                                        </div>
+                                                                        <a href="blog-details.html"
+                                                                            class="position-cover"></a>
                                                                     </div>
-                                                                    <a href="blog-details.html"
-                                                                        class="position-cover"></a>
-                                                                </div>
-                                                                <div class="post-header panel vstack gap-narrow">
-                                                                    <h3 class="post-title h6 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="blog-details.html">{{$item->news_title}}</a>
-                                                                    </h3>
-                                                                    <div
-                                                                        class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
-                                                                        <div>
-                                                                            <div class="post-date hstack gap-narrow">
-                                                                                <span>2h</span>
+                                                                    <div class="post-header panel vstack gap-narrow">
+                                                                        <h3 class="post-title h6 m-0 text-truncate-2">
+                                                                            <a class="text-none hover:text-primary duration-150"
+                                                                                href="blog-details.html">{{ $item->news_title }}</a>
+                                                                        </h3>
+                                                                        <div
+                                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
+                                                                            <div>
+                                                                                <div
+                                                                                    class="post-date hstack gap-narrow">
+                                                                                    <span>2h</span>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div>·</div>
+                                                                            <div>
+                                                                                <a href="#post_comment"
+                                                                                    class="post-comments text-none hstack gap-narrow">
+                                                                                    <i
+                                                                                        class="icon-narrow unicon-chat"></i>
+                                                                                    <span>0</span>
+                                                                                </a>
                                                                             </div>
                                                                         </div>
-                                                                        <div>·</div>
-                                                                        <div>
-                                                                            <a href="#post_comment"
-                                                                                class="post-comments text-none hstack gap-narrow">
-                                                                                <i class="icon-narrow unicon-chat"></i>
-                                                                                <span>0</span>
-                                                                            </a>
-                                                                        </div>
                                                                     </div>
-                                                                </div>
-                                                            </article>
-                                                        </div>
+                                                                </article>
+                                                            </div>
                                                         @endforeach
                                                     </div>
                                                 </div>
@@ -389,12 +362,11 @@
                                 {{-- Politics news --}}
                                 <li>
                                     {{-- Just politics category --}}
-                                    @foreach ($allcategories as $politics )
+                                    @foreach ($allcategories as $politics)
                                         @if ($politics->category_name == 'Politics')
-                                            
-                                    <a href="{{ route('single.category', $politics->category_slug) }}">{{ $politics->category_name }} <span data-uc-navbar-parent-icon></span></a>
+                                            <a href="{{ route('single.category', $politics->category_slug) }}">{{ $politics->category_name }}
+                                                <span data-uc-navbar-parent-icon></span></a>
                                         @endif
-
                                     @endforeach
 
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
@@ -403,46 +375,46 @@
                                         <div class="row child-cols col-match g-2">
 
                                             {{-- Post 1 --}}
-                                            @foreach ($politicsnews as $item )
-                                                
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="{{ asset('news/news_images/'. $item->news_image) }}"
-                                                                data-src="{{ asset('news/news_images/'. $item->news_image) }}"
-                                                                alt="The Importance of Sleep: Tips for Better Rest and Recovery"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="{{ route('single.news', $item->news_slug) }}"
-                                                            class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="{{ route('single.news', $item->news_slug) }}">
-                                                              {{$item->news_title}}
-                                                            </a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1">
-                                                            <div class="post-date hstack gap-narrow"><span>{{ $item->created_at->format('d M Y') }}</span>
+                                            @foreach ($politicsnews as $item)
+                                                <div>
+                                                    <article
+                                                        class="post type-post panel uc-transition-toggle vstack gap-1">
+                                                        <div class="post-media panel overflow-hidden">
+                                                            <div
+                                                                class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
+                                                                <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                                    src="{{ asset('news/news_images/' . $item->news_image) }}"
+                                                                    data-src="{{ asset('news/news_images/' . $item->news_image) }}"
+                                                                    alt="The Importance of Sleep: Tips for Better Rest and Recovery"
+                                                                    data-uc-img="loading: lazy">
                                                             </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i
-                                                                        class="icon-narrow unicon-chat"></i><span>0</span>
+                                                            <a href="{{ route('single.news', $item->news_slug) }}"
+                                                                class="position-cover"></a>
+                                                        </div>
+                                                        <div class="post-header panel vstack gap-narrow">
+                                                            <h3 class="post-title h6 m-0 text-truncate-2">
+                                                                <a class="text-none hover:text-primary duration-150"
+                                                                    href="{{ route('single.news', $item->news_slug) }}">
+                                                                    {{ $item->news_title }}
                                                                 </a>
+                                                            </h3>
+                                                            <div
+                                                                class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1">
+                                                                <div class="post-date hstack gap-narrow">
+                                                                    <span>{{ $item->created_at->format('d M Y') }}</span>
+                                                                </div>
+                                                                <div>·</div>
+                                                                <div>
+                                                                    <a href="#post_comment"
+                                                                        class="post-comments text-none hstack gap-narrow">
+                                                                        <i
+                                                                            class="icon-narrow unicon-chat"></i><span>0</span>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </article>
-                                            </div>
+                                                    </article>
+                                                </div>
                                             @endforeach
                                         </div>
                                     </div>
@@ -451,10 +423,10 @@
 
                                 {{-- Sports news --}}
                                 <li>
-                                    @foreach ($allcategories as $sports )
+                                    @foreach ($allcategories as $sports)
                                         @if ($sports->category_name == 'Sports')
-                                            
-                                    <a href="{{ route('single.category', $sports->category_slug) }}">{{ $sports->category_name }} <span data-uc-navbar-parent-icon></span></a>
+                                            <a href="{{ route('single.category', $sports->category_slug) }}">{{ $sports->category_name }}
+                                                <span data-uc-navbar-parent-icon></span></a>
                                         @endif
                                     @endforeach
 
@@ -463,46 +435,46 @@
                                         <div class="row child-cols col-match g-2">
 
                                             {{-- Post 1 --}}
-                                            @foreach ($sportsnews as $sports )
-                                                
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="{{ asset('news/news_images/'. $sports->news_image) }}"
-                                                                data-src="{{ asset('news/news_images/'. $sports->news_image) }}"
-                                                                alt="Balancing Work and Wellness: Tech Solutions for Healthy"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="{{ route('single.news', $sports->news_slug) }}"
-                                                            class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="{{ route('single.news', $sports->news_slug) }}"">
-                                                             {{$sports->news_title}}
-                                                            </a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1">
-                                                            <div class="post-date hstack gap-narrow"><span>{{ $sports->created_at->format('d M Y') }}</span>
+                                            @foreach ($sportsnews as $sports)
+                                                <div>
+                                                    <article
+                                                        class="post type-post panel uc-transition-toggle vstack gap-1">
+                                                        <div class="post-media panel overflow-hidden">
+                                                            <div
+                                                                class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
+                                                                <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                                    src="{{ asset('news/news_images/' . $sports->news_image) }}"
+                                                                    data-src="{{ asset('news/news_images/' . $sports->news_image) }}"
+                                                                    alt="Balancing Work and Wellness: Tech Solutions for Healthy"
+                                                                    data-uc-img="loading: lazy">
                                                             </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i
-                                                                        class="icon-narrow unicon-chat"></i><span>0</span>
+                                                            <a href="{{ route('single.news', $sports->news_slug) }}"
+                                                                class="position-cover"></a>
+                                                        </div>
+                                                        <div class="post-header panel vstack gap-narrow">
+                                                            <h3 class="post-title h6 m-0 text-truncate-2">
+                                                                <a class="text-none hover:text-primary duration-150"
+                                                                    href="{{ route('single.news', $sports->news_slug) }}"">
+                                                                    {{ $sports->news_title }}
                                                                 </a>
+                                                            </h3>
+                                                            <div
+                                                                class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1">
+                                                                <div class="post-date hstack gap-narrow">
+                                                                    <span>{{ $sports->created_at->format('d M Y') }}</span>
+                                                                </div>
+                                                                <div>·</div>
+                                                                <div>
+                                                                    <a href="#post_comment"
+                                                                        class="post-comments text-none hstack gap-narrow">
+                                                                        <i
+                                                                            class="icon-narrow unicon-chat"></i><span>0</span>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </article>
-                                            </div>
+                                                    </article>
+                                                </div>
                                             @endforeach
                                         </div>
                                     </div>
@@ -511,109 +483,116 @@
 
                                 {{-- Entaertainment news --}}
                                 <li>
-                                    @foreach ($allcategories as $entertainment )
+                                    @foreach ($allcategories as $entertainment)
                                         @if ($entertainment->category_name == 'Entertainment')
-                                            
-                                    <a href="{{ route('single.category', $entertainment->category_slug) }}">{{ $entertainment->category_name }} <span data-uc-navbar-parent-icon></span></a>
+                                            <a href="{{ route('single.category', $entertainment->category_slug) }}">{{ $entertainment->category_name }}
+                                                <span data-uc-navbar-parent-icon></span></a>
                                         @endif
-                                 
                                     @endforeach
 
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
                                         <div class="row child-cols col-match g-2">
-                                            @foreach ($entertainmentnews as $entertainment )
-                                                
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="{{ asset('news/news_images/'. $entertainment->news_image) }}"
-                                                                data-src="{{ asset('news/news_images/'. $entertainment->news_image) }}"
-                                                                alt="The Rise of AI-Powered Personal Assistants: How They Manage"
-                                                                data-uc-img="loading: lazy">
+                                            @foreach ($entertainmentnews as $entertainment)
+                                                <div>
+                                                    <article
+                                                        class="post type-post panel uc-transition-toggle vstack gap-1">
+                                                        <div class="post-media panel overflow-hidden">
+                                                            <div
+                                                                class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
+                                                                <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                                    src="{{ asset('news/news_images/' . $entertainment->news_image) }}"
+                                                                    data-src="{{ asset('news/news_images/' . $entertainment->news_image) }}"
+                                                                    alt="The Rise of AI-Powered Personal Assistants: How They Manage"
+                                                                    data-uc-img="loading: lazy">
+                                                            </div>
+                                                            <a href="{{ route('single.news', $entertainment->news_slug) }}"
+                                                                class="position-cover"></a>
                                                         </div>
-                                                        <a href="{{ route('single.news', $entertainment->news_slug) }}" class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="{{ route('single.news', $entertainment->news_slug) }}">{{$entertainment->news_title}}</a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
-                                                            <div>
-                                                                <div class="post-date hstack gap-narrow">
-                                                                    <span>{{ $entertainment->created_at->format('d M Y') }}</span>
+                                                        <div class="post-header panel vstack gap-narrow">
+                                                            <h3 class="post-title h6 m-0 text-truncate-2">
+                                                                <a class="text-none hover:text-primary duration-150"
+                                                                    href="{{ route('single.news', $entertainment->news_slug) }}">{{ $entertainment->news_title }}</a>
+                                                            </h3>
+                                                            <div
+                                                                class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
+                                                                <div>
+                                                                    <div class="post-date hstack gap-narrow">
+                                                                        <span>{{ $entertainment->created_at->format('d M Y') }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div>·</div>
+                                                                <div>
+                                                                    <a href="#post_comment"
+                                                                        class="post-comments text-none hstack gap-narrow">
+                                                                        <i class="icon-narrow unicon-chat"></i>
+                                                                        <span>2</span>
+                                                                    </a>
                                                                 </div>
                                                             </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i class="icon-narrow unicon-chat"></i>
-                                                                    <span>2</span>
-                                                                </a>
-                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </article>
-                                            </div>
+                                                    </article>
+                                                </div>
                                             @endforeach
                                         </div>
                                     </div>
                                 </li>
                                 {{-- Entaertainment news --}}
 
-                                
+                                {{-- World news --}}
                                 <li>
-                                    <a href="#">Media <span data-uc-navbar-parent-icon></span></a>
+                                    @foreach ($allcategories as $world)
+                                        @if ($world->category_name == 'World')
+                                            <a href="{{ route('single.category', $world->category_slug) }}">{{ $world->category_name }}<span
+                                                    data-uc-navbar-parent-icon></span></a>
+                                        @endif
+                                    @endforeach
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
                                         <div class="row child-cols col-match g-2">
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="../assets/images/common/img-fallback.png"
-                                                                data-src="../assets/images/demo-seven/posts/img-08.jpg"
-                                                                alt="AI and Marketing: Unlocking Customer Insights"
-                                                                data-uc-img="loading: lazy">
+                                            @foreach ($worldnews as $world)
+                                                <div>
+                                                    <article
+                                                        class="post type-post panel uc-transition-toggle vstack gap-1">
+                                                        <div class="post-media panel overflow-hidden">
+                                                            <div
+                                                                class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
+                                                                <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                                    src="{{ asset('news/news_images/' . $world->news_image) }}"
+                                                                    data-src="{{ asset('news/news_images/' . $world->news_image) }}"
+                                                                    alt="AI and Marketing: Unlocking Customer Insights"
+                                                                    data-uc-img="loading: lazy">
+                                                            </div>
+                                                            <a href="{{ route('single.news', $world->news_slug) }}"
+                                                                class="position-cover"></a>
                                                         </div>
-                                                        <a href="blog-details.html" class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="blog-details.html">AI and Marketing: Unlocking
-                                                                Customer Insights</a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
-                                                            <div>
-                                                                <div class="post-date hstack gap-narrow">
-                                                                    <span>15d</span>
+                                                        <div class="post-header panel vstack gap-narrow">
+                                                            <h3 class="post-title h6 m-0 text-truncate-2">
+                                                                <a class="text-none hover:text-primary duration-150"
+                                                                    href="{{ route('single.news', $world->news_slug) }}">{{ $world->news_title }}</a>
+                                                            </h3>
+                                                            <div
+                                                                class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
+                                                                <div>
+                                                                    <div class="post-date hstack gap-narrow">
+                                                                        <span>{{ $world->created_at->format('d M Y') }}</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div>·</div>
+                                                                <div>
+                                                                    <a href="#post_comment"
+                                                                        class="post-comments text-none hstack gap-narrow">
+                                                                        <i class="icon-narrow unicon-chat"></i>
+                                                                        <span>2</span>
+                                                                    </a>
                                                                 </div>
                                                             </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i class="icon-narrow unicon-chat"></i>
-                                                                    <span>2</span>
-                                                                </a>
-                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                            <div>
+                                                    </article>
+                                                </div>
+                                            @endforeach
+
+                                            {{-- <div>
                                                 <article
                                                     class="post type-post panel uc-transition-toggle vstack gap-1">
                                                     <div class="post-media panel overflow-hidden">
@@ -768,29 +747,68 @@
                                                         </div>
                                                     </div>
                                                 </article>
-                                            </div>
+                                            </div> --}}
                                         </div>
                                     </div>
                                 </li>
+                                {{-- World News end --}}
+
+                                {{-- Tech News --}}
                                 <li>
-                                    <a href="blog-category.html">Tech</a>
+                                    @foreach ($allcategories as $tech)
+                                        @if ($tech->category_name == 'Tech')
+                                            <a
+                                                href="{{ route('single.category', $tech->category_slug) }}">{{ $tech->category_name }}</a>
+                                        @endif
+                                    @endforeach
                                 </li>
+                                {{-- Tech News end --}}
+
+                                {{-- Business News --}}
                                 <li>
-                                    <a href="blog-category.html">Business</a>
+                                    @foreach ($allcategories as $business)
+                                        @if ($business->category_name == 'Business')
+                                            <a
+                                                href="{{ route('single.category', $business->category_slug) }}">{{ $business->category_name }}</a>
+                                        @endif
+                                    @endforeach
                                 </li>
+                                {{-- Business News end --}}
+
+                                {{-- Health News --}}
                                 <li>
-                                    <a href="blog-category.html">Fashion</a>
+                                    @foreach ($allcategories as $health)
+                                        @if ($health->category_name == 'Health')
+                                            <a
+                                                href="{{ route('single.category', $health->category_slug) }}">{{ $health->category_name }}</a>
+                                        @endif
+                                    @endforeach
                                 </li>
+                                {{-- Health News end --}}
+
+                                {{-- Auto  --}}
                                 <li>
-                                    <a href="blog-category.html">Arts & Entertainments</a>
+                                    @foreach ($allcategories as $auto)
+                                        @if ($auto->category_name == 'Auto')
+                                            <a
+                                                href="{{ route('single.category', $auto->category_slug) }}">{{ $auto->category_name }} </a>
+                                        @endif
+                                    @endforeach
                                 </li>
+                                {{-- Auto end --}}
+
+                                {{-- Food  --}}
                                 <li>
-                                    <a href="blog-category.html">Food</a>
+                                    @foreach ($allcategories as $food)
+                                        @if ($food->category_name == 'Food')
+                                            <a
+                                                href="{{ route('single.category', $food->category_slug) }}">{{ $food->category_name }} </a>
+                                        @endif
+                                    @endforeach
                                 </li>
-                                <li>
-                                    <a href="blog-category.html">E-Books</a>
-                                </li>
+                                {{-- Food end --}}
                             </ul>
+                            {{-- Navbar end --}}
                         </div>
                     </div>
                 </div>
@@ -806,16 +824,15 @@
                             <div class="uc-navbar-item d-none lg:d-inline-flex">
                                 <a class="btn btn-xs gap-narrow ps-1 border rounded-pill fw-bold dark:text-white hover:bg-gray-25 dark:hover:bg-gray-900"
                                     href="#live_now" data-uc-scroll="offset: 128">
-                                    <i class="icon icon-narrow unicon-dot-mark text-red"
-                                        data-uc-animate="flash"></i>
+                                    <i class="icon icon-narrow unicon-dot-mark text-red" data-uc-animate="flash"></i>
                                     <span>Live</span>
                                 </a>
                             </div>
                             <div class="uc-logo d-block md:d-none">
                                 <a href="{{ route('news.index') }}">
                                     <img class="w-100px text-dark dark:text-white"
-                                        src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp')}}" alt="News5"
-                                        data-uc-svg>
+                                        src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
+                                        alt="News5" data-uc-svg>
                                 </a>
                             </div>
                         </div>
@@ -823,8 +840,8 @@
                             <div class="uc-logo d-none md:d-block">
                                 <a href="{{ route('news.index') }}">
                                     <img class="text-dark dark:text-white main-logo"
-                                        src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp')}}" alt="News5"
-                                        data-uc-svg>
+                                        src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
+                                        alt="News5" data-uc-svg>
                                 </a>
                             </div>
                         </div>
@@ -832,8 +849,7 @@
                             <div class="uc-navbar-item d-inline-flex lg:d-none">
                                 <a class="btn btn-xs gap-narrow ps-1 border rounded-pill fw-bold dark:text-white hover:bg-gray-25 dark:hover:bg-gray-900"
                                     href="#live_now" data-uc-scroll="offset: 128">
-                                    <i class="icon icon-narrow unicon-dot-mark text-red"
-                                        data-uc-animate="flash"></i>
+                                    <i class="icon icon-narrow unicon-dot-mark text-red" data-uc-animate="flash"></i>
                                     <span>Live</span>
                                 </a>
                             </div>
@@ -866,12 +882,11 @@
 
     <!-- Footer start -->
     <footer id="uc-footer" class="uc-footer panel uc-dark">
-        <div
-            class="footer-outer py-4 lg:py-6 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-opacity-50">
+        <div class="footer-outer py-4 lg:py-6 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-opacity-50">
             <div class="container max-w-xl">
                 <div class="footer-inner vstack gap-6 xl:gap-8">
                     <div class="uc-footer-bottom panel vstack gap-4 justify-center lg:fs-5">
-                        <nav class="footer-nav">
+                        {{-- <nav class="footer-nav">
                             <ul class="nav-x gap-2 lg:gap-4 justify-center text-center text-uppercase fw-medium">
                                 <li><a class="hover:text-gray-900 dark:hover:text-white duration-150"
                                         href="blog-category.html">Politics</a></li>
@@ -882,7 +897,23 @@
                                 <li><a class="hover:text-gray-900 dark:hover:text-white duration-150"
                                         href="blog-category.html">Media</a></li>
                             </ul>
-                        </nav>
+                        </nav> --}}
+                        
+                        <div class="footer-copyright vstack sm:hstack justify-center items-center gap-1 lg:gap-2">
+                            <p>DailyNews ©
+                                <script>
+                                    document.write(
+                                        new Date().getFullYear()
+                                    )
+                                </script>, All rights reserved.
+                            </p>
+                            <ul class="nav-x gap-2 fw-medium">
+                                <li><a class="uc-link text-underline hover:text-gray-900 dark:hover:text-white duration-150"
+                                        href="{{ route('privacy') }}">Privacy notice</a></li>
+                                <li><a class="uc-link text-underline hover:text-gray-900 dark:hover:text-white duration-150"
+                                        href="{{ route('terms') }}">Terms of condition</a></li>
+                            </ul>
+                        </div>
                         <div class="footer-social hstack justify-center gap-2 lg:gap-3">
                             <ul class="nav-x gap-2">
                                 <li>
@@ -923,21 +954,6 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="footer-copyright vstack sm:hstack justify-center items-center gap-1 lg:gap-2">
-                            <p>News5 ©
-                                <script>
-                                    document.write(
-                                        new Date().getFullYear()
-                                    )
-                                </script>, All rights reserved.
-                            </p>
-                            <ul class="nav-x gap-2 fw-medium">
-                                <li><a class="uc-link text-underline hover:text-gray-900 dark:hover:text-white duration-150"
-                                        href="page-privacy.html">Privacy notice</a></li>
-                                <li><a class="uc-link text-underline hover:text-gray-900 dark:hover:text-white duration-150"
-                                        href="page-terms.html">Terms of condition</a></li>
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -946,19 +962,19 @@
 
     <!-- Footer end -->
 
-<script defer src="{{ asset('website/assets/js/libs/jquery.min.js')}}"></script>
-<script defer src="{{ asset('website/assets/js/libs/bootstrap.min.js')}}"></script>
+    <script defer src="{{ asset('website/assets/js/libs/jquery.min.js') }}"></script>
+    <script defer src="{{ asset('website/assets/js/libs/bootstrap.min.js') }}"></script>
 
-<script defer src="{{ asset('website/assets/js/libs/anime.min.js')}}"></script>
-<script defer src="{{ asset('website/assets/js/libs/swiper-bundle.min.js')}}"></script>
-<script defer src="{{ asset('website/assets/js/libs/scrollmagic.min.js')}}"></script>
-<script defer src="{{ asset('website/assets/js/helpers/data-attr-helper.js')}}"></script>
-<script defer src="{{ asset('website/assets/js/helpers/swiper-helper.js')}}"></script>
-<script defer src="{{ asset('website/assets/js/helpers/anime-helper.js')}}"></script>
-<script defer src="{{ asset('website/assets/js/helpers/anime-helper-defined-timelines.js')}}"></script>
-<script defer src="{{ asset('website/assets/js/uikit-components-bs.js')}}"></script>
+    <script defer src="{{ asset('website/assets/js/libs/anime.min.js') }}"></script>
+    <script defer src="{{ asset('website/assets/js/libs/swiper-bundle.min.js') }}"></script>
+    <script defer src="{{ asset('website/assets/js/libs/scrollmagic.min.js') }}"></script>
+    <script defer src="{{ asset('website/assets/js/helpers/data-attr-helper.js') }}"></script>
+    <script defer src="{{ asset('website/assets/js/helpers/swiper-helper.js') }}"></script>
+    <script defer src="{{ asset('website/assets/js/helpers/anime-helper.js') }}"></script>
+    <script defer src="{{ asset('website/assets/js/helpers/anime-helper-defined-timelines.js') }}"></script>
+    <script defer src="{{ asset('website/assets/js/uikit-components-bs.js') }}"></script>
 
-<script defer src="{{ asset('website/assets/js/app.js')}}"></script>
+    <script defer src="{{ asset('website/assets/js/app.js') }}"></script>
 
     <script>
         // Schema toggle via URL

@@ -142,7 +142,8 @@
                                                 </figure>
                                             </div>
                                             <div class="panel vstack justify-center px-2 gap-1 w-1/3">
-                                                <span class="fs-7 opacity-60"><i class="unicon-arrow-left"></i> Prev Article</span>
+                                                <span class="fs-7 opacity-60"><i class="unicon-arrow-left"></i> Prev
+                                                    Article</span>
                                                 <h6 class="h6 lg:h5 m-0 text-truncate-2">
                                                     <a href="{{ route('single.news', $previousPost->news_slug) }}"
                                                         class="text-none">
@@ -163,7 +164,8 @@
             @else w-full @endif
         ">
                                             <div class="panel vstack justify-center px-2 gap-1 w-1/3 text-end">
-                                              <span class="fs-7 opacity-60">Next Article <i class="unicon-arrow-right"></i></span>
+                                                <span class="fs-7 opacity-60">Next Article <i
+                                                        class="unicon-arrow-right"></i></span>
                                                 <h6 class="h6 lg:h5 m-0 text-truncate-2">
                                                     <a href="{{ route('single.news', $nextPost->news_slug) }}"
                                                         class="text-none">
@@ -180,7 +182,7 @@
                                                         alt="{{ $nextPost->news_title }}" data-uc-img="loading: lazy">
                                                     <a href="{{ route('single.news', $nextPost->news_slug) }}"
                                                         class="position-cover"
-                                                        data-caption="{{$nextPost->news_title }}"></a>
+                                                        data-caption="{{ $nextPost->news_title }}"></a>
                                                 </figure>
                                             </div>
                                             <a href="{{ route('single.news', $nextPost->news_slug) }}"
@@ -381,7 +383,7 @@
                             <div class="sidebar-wrap panel vstack gap-2" data-uc-sticky="end: true;">
                                 <div class="right-sidebar">
                                     <div class="recent-widget widget">
-                                        <h2 class="widget-title">Recent Posts</h2>
+                                        <h2 class="widget-title">Recent News</h2>
                                         <div class="recent-post-widget clearfix">
                                             @foreach ($latestnews as $recentnews)
                                                 <div class="show-featured clearfix">
@@ -404,7 +406,7 @@
                                                                 </span>
                                                             </div>
                                                             <a href="{{ route('single.news', $recentnews->news_slug) }}">
-                                                                {{ $recentnews->news_title }} </a>
+                                                                {{ Str::limit($recentnews->news_title, 40) }}</a>
                                                         </div>
                                                     </div>
                                                 </div>
