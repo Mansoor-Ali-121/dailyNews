@@ -173,7 +173,7 @@
                                                 <h6 class="h6 lg:h5 m-0 text-truncate-2">
                                                     <a href="{{ route('single.breakingnews', $nextPost->breakingnews_slug) }}"
                                                         class="text-none">
-                                                        {{ Str::limit($nextPost->title, 50) }} 
+                                                        {{ Str::limit($nextPost->title, 50) }}
                                                     </a>
                                                 </h6>
                                             </div>
@@ -354,7 +354,7 @@
                                                             </div>
                                                             <a
                                                                 href="{{ route('single.breakingnews', $item->breakingnews_slug) }}">
-                                                                {{ $item->title }} </a>
+                                                                {{ Str::Limit($item->title, 50) }} </a>
                                                         </div>
                                                     </div>
                                                 </div>

@@ -180,6 +180,11 @@ Route::get('/privacy', [WebController::class, 'privacy'])->name('privacy');
 
 // Terms page
 Route::get('/terms', [WebController::class, 'terms'])->name('terms');
+// Terms page end
+
+//About page
+Route::get('/about', [WebController::class, 'about'])->name('about');
+//About page end
 
 
 Route::redirect('/admin', '/admin/login');

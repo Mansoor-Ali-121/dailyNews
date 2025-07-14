@@ -18,4 +18,9 @@ class Categories extends Model
     {
         return $this->hasMany(News::class, 'category_id');
     }
+    public function posts()
+{
+    return $this->hasMany(News::class, 'category_id');
+}
+
 }

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>News5</title>
+    <title>Daily News</title>
     <meta name="description"
         content="News5 a clean, modern and pixel-perfect multipurpose blogging HTML5 website template.">
     <meta name="keywords"
@@ -127,7 +127,6 @@
                         </ul>
                     </li>
                     <li><a href="#">Latest</a></li>
-                    <li><a href="#">Trending</a></li>
                     <li class="uc-parent">
                         <a href="#">Inner Pages</a>
                         <ul class="uc-nav-sub" data-uc-nav="">
@@ -250,37 +249,6 @@
                                                     </ul>
                                                 </div>
                                             @endforeach
-                                            <div>
-                                                <div class="uc-navbar-newsletter panel vstack">
-                                                    <h6 class="fs-6 ft-tertiary fw-medium">Newsletter</h6>
-                                                    <form class="hstack gap-1 bg-gray-300 bg-opacity-10">
-                                                        <input type="email"
-                                                            class="form-control-plaintext form-control-xs fs-6 dark:text-white"
-                                                            placeholder="Your email address..">
-                                                        <button type="submit"
-                                                            class="btn btn-sm btn-primary fs-6 rounded-0">Subscribe</button>
-                                                    </form>
-                                                    <p class="fs-7 mt-1">Do not worry, we don't spam!</p>
-                                                    <ul class="nav-x gap-2 mt-3">
-                                                        <li>
-                                                            <a href="#fb"><i
-                                                                    class="icon icon-2 unicon-logo-facebook"></i></a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#x"><i
-                                                                    class="icon icon-2 unicon-logo-x-filled"></i></a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#in"><i
-                                                                    class="icon icon-2 unicon-logo-instagram"></i></a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="#yt"><i
-                                                                    class="icon icon-2 unicon-logo-youtube"></i></a>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </li>
@@ -291,72 +259,132 @@
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
                                         <div class="row col-match g-2">
-                                            @foreach ($allcategories as $item)
-                                                <div class="w-1/5">
-                                                    <div class="uc-navbar-switcher-nav border-end">
-                                                        <ul class="uc-tab-left fs-6 text-end"
-                                                            data-uc-tab="connect: #uc-navbar-switcher-tending; animation: uc-animation-slide-right-small, uc-animation-slide-left-small">
-                                                            {{-- <li><a href="#">All</a></li> --}}
+                                            <div class="w-1/5">
+                                                <div class="uc-navbar-switcher-nav border-end">
+                                                    <ul class="uc-tab-left fs-6 text-end"
+                                                        data-uc-tab="connect: #uc-navbar-switcher-tending; animation: uc-animation-slide-right-small, uc-animation-slide-left-small">
+                                                        <li><a href="#category-all">All</a></li>
+                                                        @foreach ($latestnavnews as $index => $item)
                                                             <li><a
-                                                                    href="{{ route('single.category', $item->category_slug) }}">{{ $item->category_name }}</a>
+                                                                    href="#category-{{ $index }}">{{ $item->category_name }}</a>
                                                             </li>
-                                                        </ul>
-                                                    </div>
+                                                        @endforeach
+                                                    </ul>
                                                 </div>
-                                            @endforeach
+                                            </div>
+
                                             <div class="w-4/5">
                                                 <div id="uc-navbar-switcher-tending"
                                                     class="uc-navbar-switcher uc-switcher">
-                                                    <div class="row child-cols g-2">
-                                                        @foreach ($newsItems as $item)
-                                                            <div>
-                                                                <article
-                                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                                    <div class="post-media panel overflow-hidden">
-                                                                        <div
-                                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                                src="{{ asset('news/news_images/' . $item->news_image) }}"
-                                                                                data-src="{{ asset('news/news_images/' . $item->news_image) }}"
-                                                                                alt="The Importance of Sleep: Tips for Better Rest and Recovery"
-                                                                                data-uc-img="loading: lazy">
+                                                    {{-- All news  --}}
+                                                    <div id="category-all">
+                                                        <div class="row child-cols g-2">
+                                                            @foreach ($latestFourNews as $post)
+                                                                <div>
+                                                                    <article
+                                                                        class="post type-post panel uc-transition-toggle vstack gap-1">
+                                                                        <div class="post-media panel overflow-hidden">
+                                                                            <div
+                                                                                class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
+                                                                                <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                                                    src="{{ asset('news/news_images/' . $post->news_image) }}"
+                                                                                    data-src="{{ asset('news/news_images/' . $post->news_image) }}"
+                                                                                    alt="{{ $post->news_title }}"
+                                                                                    data-uc-img="loading: lazy">
+                                                                            </div>
+                                                                            <a href="{{ route('single.news', $post->news_slug) }}"
+                                                                                class="position-cover"></a>
                                                                         </div>
-                                                                        <a href="blog-details.html"
-                                                                            class="position-cover"></a>
-                                                                    </div>
-                                                                    <div class="post-header panel vstack gap-narrow">
-                                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                                            <a class="text-none hover:text-primary duration-150"
-                                                                                href="blog-details.html">{{ $item->news_title }}</a>
-                                                                        </h3>
                                                                         <div
-                                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
-                                                                            <div>
-                                                                                <div
-                                                                                    class="post-date hstack gap-narrow">
-                                                                                    <span>2h</span>
+                                                                            class="post-header panel vstack gap-narrow">
+                                                                            <h3
+                                                                                class="post-title h6 m-0 text-truncate-2">
+                                                                                <a class="text-none hover:text-primary duration-150"
+                                                                                    href="{{ route('single.news', $post->news_slug) }}">{{ $post->news_title }}</a>
+                                                                            </h3>
+                                                                            <div
+                                                                                class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60">
+                                                                                <div>
+                                                                                    <div
+                                                                                        class="post-date hstack gap-narrow">
+                                                                                        <span>{{ $post->created_at->diffForHumans() }}</span>
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div>·</div>
+                                                                                <div>
+                                                                                    <a href="#post_comment"
+                                                                                        class="post-comments text-none hstack gap-narrow">
+                                                                                        <i
+                                                                                            class="icon-narrow unicon-chat"></i>
+                                                                                        <span>{{ $post->comments_count ?? 0 }}</span>
+                                                                                    </a>
                                                                                 </div>
                                                                             </div>
-                                                                            <div>·</div>
-                                                                            <div>
-                                                                                <a href="#post_comment"
-                                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                                    <i
-                                                                                        class="icon-narrow unicon-chat"></i>
-                                                                                    <span>0</span>
-                                                                                </a>
-                                                                            </div>
                                                                         </div>
-                                                                    </div>
-                                                                </article>
-                                                            </div>
-                                                        @endforeach
+                                                                    </article>
+                                                                </div>
+                                                            @endforeach
+                                                        </div>
                                                     </div>
+                                                    @foreach ($latestnavnews as $index => $item)
+                                                        <div id="category-{{ $index }}">
+                                                            <div class="row child-cols g-2">
+                                                                @foreach ($item->posts as $post)
+                                                                    <div>
+                                                                        <article
+                                                                            class="post type-post panel uc-transition-toggle vstack gap-1">
+                                                                            <div
+                                                                                class="post-media panel overflow-hidden">
+                                                                                <div
+                                                                                    class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
+                                                                                    <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                                                        src="{{ asset('news/news_images/' . $post->news_image) }}"
+                                                                                        data-src="{{ asset('news/news_images/' . $post->news_image) }}"
+                                                                                        alt="{{ $post->news_title }}"
+                                                                                        data-uc-img="loading: lazy">
+                                                                                </div>
+                                                                                <a href="{{ route('single.news', $post->news_slug) }}"
+                                                                                    class="position-cover"></a>
+                                                                            </div>
+                                                                            <div
+                                                                                class="post-header panel vstack gap-narrow">
+                                                                                <h3
+                                                                                    class="post-title h6 m-0 text-truncate-2">
+                                                                                    <a class="text-none hover:text-primary duration-150"
+                                                                                        href="{{ route('single.news', $post->news_slug) }}">{{ $post->news_title }}</a>
+                                                                                </h3>
+                                                                                <div
+                                                                                    class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60">
+                                                                                    <div>
+                                                                                        <div
+                                                                                            class="post-date hstack gap-narrow">
+                                                                                            <span>{{ $post->created_at->diffForHumans() }}</span>
+                                                                                        </div>
+                                                                                    </div>
+                                                                                    <div>·</div>
+                                                                                    <div>
+                                                                                        <a href="#post_comment"
+                                                                                            class="post-comments text-none hstack gap-narrow">
+                                                                                            <i
+                                                                                                class="icon-narrow unicon-chat"></i>
+                                                                                            <span>{{ $post->comments_count ?? 0 }}</span>
+                                                                                        </a>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </article>
+                                                                    </div>
+                                                                @endforeach
+                                                            </div>
+                                                        </div>
+                                                    @endforeach
+
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
+
                                 {{-- Latest news with categories --}}
 
                                 {{-- Politics news --}}
@@ -790,8 +818,8 @@
                                 <li>
                                     @foreach ($allcategories as $auto)
                                         @if ($auto->category_name == 'Auto')
-                                            <a
-                                                href="{{ route('single.category', $auto->category_slug) }}">{{ $auto->category_name }} </a>
+                                            <a href="{{ route('single.category', $auto->category_slug) }}">{{ $auto->category_name }}
+                                            </a>
                                         @endif
                                     @endforeach
                                 </li>
@@ -801,12 +829,15 @@
                                 <li>
                                     @foreach ($allcategories as $food)
                                         @if ($food->category_name == 'Food')
-                                            <a
-                                                href="{{ route('single.category', $food->category_slug) }}">{{ $food->category_name }} </a>
+                                            <a href="{{ route('single.category', $food->category_slug) }}">{{ $food->category_name }}
+                                            </a>
                                         @endif
                                     @endforeach
                                 </li>
                                 {{-- Food end --}}
+
+                                {{-- About Us --}}
+                                <li><a href="{{ route('about') }}">About Us</a></li>
                             </ul>
                             {{-- Navbar end --}}
                         </div>
@@ -898,7 +929,7 @@
                                         href="blog-category.html">Media</a></li>
                             </ul>
                         </nav> --}}
-                        
+
                         <div class="footer-copyright vstack sm:hstack justify-center items-center gap-1 lg:gap-2">
                             <p>DailyNews ©
                                 <script>

@@ -189,7 +189,7 @@
                                                                 </span>
                                                             </div>
                                                             <a href="{{ route('single.news', $recentnews->news_slug) }}">
-                                                                {{ $recentnews->news_title }} </a>
+                                                                {{ Str::limit($recentnews->news_title, 50) }} </a>
                                                         </div>
                                                     </div>
                                                 </div>
