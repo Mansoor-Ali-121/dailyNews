@@ -31,6 +31,7 @@
                     <div class="card-body p-4">
                         @include('dashboard.includes.alerts') {{-- Keep your alerts here --}}
 
+                        {{-- Global Statistics --}}
                         <div class="global-stats">
                             @php
                                 $totalCities = count($cities);

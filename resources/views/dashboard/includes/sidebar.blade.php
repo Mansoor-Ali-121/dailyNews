@@ -243,6 +243,19 @@
             </li>
             {{-- Blogs end --}}
 
+            {{-- Contact Us --}}
+            <li class="sidebar-item dropdown">
+                <a class="sidebar-link dropdown-toggle" href="#" id="contactDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="align-middle" data-feather="mail"></i> <span class="align-middle">Contact Us</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="contactDropdown">
+                    <li><a class="dropdown-item" href="{{ route('contact.show') }}">View Contacts</a></li>
+                    <li><a class="dropdown-item" href="{{ route('contact.add') }}">Add Contact</a></li>
+                </ul>
+            </li>
+            {{-- Contact Us end --}}
+
             <li class="sidebar-item">
                 <a class="sidebar-link text-danger" href="{{ route('logout') }}">
                     <i class="align-middle" data-feather="power"></i> <span class="align-middle">Logout</span>

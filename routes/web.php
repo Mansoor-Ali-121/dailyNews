@@ -13,9 +13,8 @@ use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\LiveVideosController;
 use App\Http\Controllers\BreakingNewsController;
-
-
-
+use App\Http\Controllers\ContactController;
+use App\Models\ContactUs;
 
 // Admin Routes
 // Route to display the login form
@@ -186,6 +185,22 @@ Route::get('/terms', [WebController::class, 'terms'])->name('terms');
 Route::get('/about', [WebController::class, 'about'])->name('about');
 //About page end
 
+// Contact routes 
+Route::prefix('contact')->group(function () {
+
+        Route::get('/add', [ContactController::class, 'index'])->name('contact.add');
+        Route::post('/add', [ContactController::class, 'store']);
+        Route::get('/show', [ContactController::class, 'show'])->name('contact.show');
+        // Route::get('/view/{id}', [ContactController::class, 'view'])->name('contact.view');
+        Route::get('/edit/{id}', [ContactController::class, 'edit'])->name('contact.edit');
+        Route::patch('/update/{id}', [ContactController::class, 'update'])->name('contact.update');
+        Route::delete('/delete/{id}', [ContactController::class, 'destroy'])->name('contact.delete');
+
+    });
+
+
+
+// Route::get('/contact', [WebController::class,''])->name('');
 
 Route::redirect('/admin', '/admin/login');
 

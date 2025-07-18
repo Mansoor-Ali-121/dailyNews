@@ -111,6 +111,7 @@
                     </span>
                 </form>
                 <ul class="nav-y gap-narrow fw-bold fs-5" data-uc-nav>
+                    {{-- Categories --}}
                     <li class="uc-parent">
                         <a href="#">Homepages</a>
                         <ul class="uc-nav-sub" data-uc-nav="">
@@ -126,24 +127,15 @@
                             <li><a href="../demo-ten/index.html">Food</a></li>
                         </ul>
                     </li>
-                    <li><a href="#">Latest</a></li>
+                    {{-- Categories end --}}
+                    <li><a href="{{ route('about') }}">About Us</a></li>
+                    <li><a href="{{ route('contact.add') }}">Contact Us</a></li>
                     <li class="uc-parent">
-                        <a href="#">Inner Pages</a>
-                        <ul class="uc-nav-sub" data-uc-nav="">
-                            <li class="uc-parent">
-                                <a href="blog-details.html">Blog - detail</a>
-                                <ul class="uc-nav-sub">
-                                    <li><a href="blog-details.html">Blog detail</a></li>
-                                </ul>
-                            </li>
-                            <li class="uc-parent">
-                                <a href="#">Other pages</a>
-                                <ul class="uc-nav-sub">
-                                    <li><a href="page-faq.html">FAQ</a></li>
-                                    <li><a href="page-terms.html">Terms of use</a></li>
-                                    <li><a href="page-privacy.html">Privacy policy</a></li>
-                                </ul>
-                            </li>
+                        <a href="#">Other pages</a>
+                        <ul class="uc-nav-sub">
+                            <li><a href="page-faq.html">FAQ</a></li>
+                            <li><a href="page-terms.html">Terms of use</a></li>
+                            <li><a href="page-privacy.html">Privacy policy</a></li>
                         </ul>
                     </li>
                 </ul>

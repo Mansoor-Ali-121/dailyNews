@@ -24,11 +24,12 @@ class AuthController extends Controller
     }
 
     //Admin Profile page
-    public function profile(){
+    public function profile()
+    {
         return view('dashboard.users.profile');
     }
 
-  // Authentication _ Login
+    // Authentication _ Login
     public function authentication(Request $request)
     {
         $credentials = $request->validate([
@@ -43,22 +44,22 @@ class AuthController extends Controller
         }
 
         return back()->withErrors([
-            'email' => 'Invalid credentials',  
+            'email' => 'Invalid credentials',
         ])->onlyInput('email');
     }
-// Authentication _ Logout
-  
-  // In AuthController.php
-// App/Http/Controllers/AuthController.php
+    // Authentication _ Logout
 
-public function logout(Request $request)
-{
-    Auth::guard('web')->logout(); // Logout the user
+    // In AuthController.php
+    // App/Http/Controllers/AuthController.php
 
-    $request->session()->invalidate(); // Invalidate the session
-    $request->session()->regenerateToken(); // Regenerate CSRF token
+    public function logout(Request $request)
+    {
+        Auth::guard('web')->logout(); // Logout the user
 
-    // This is the line causing the issue:
-    return redirect()->route('login.form'); // <-- Change this if your route name is different
-}
+        $request->session()->invalidate(); // Invalidate the session
+        $request->session()->regenerateToken(); // Regenerate CSRF token
+
+        // This is the line causing the issue:
+        return redirect()->route('login.form'); // <-- Change this if your route name is different
+    }
 }
