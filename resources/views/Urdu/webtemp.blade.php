@@ -827,6 +827,9 @@
                                     @endforeach
                                 </li>
                                 {{-- Food end --}}
+
+                                {{-- About Us --}}
+                                <li><a href="{{ route('about') }}">About Us</a></li>
                             </ul>
                             {{-- Navbar end --}}
                         </div>
@@ -841,13 +844,13 @@
                             <div>
                                 <a class="uc-menu-trigger icon-2" href="#uc-menu-panel" data-uc-toggle></a>
                             </div>
-                            {{-- <div class="uc-navbar-item d-none lg:d-inline-flex">
+                            <div class="uc-navbar-item d-none lg:d-inline-flex">
                                 <a class="btn btn-xs gap-narrow ps-1 border rounded-pill fw-bold dark:text-white hover:bg-gray-25 dark:hover:bg-gray-900"
                                     href="#live_now" data-uc-scroll="offset: 128">
                                     <i class="icon icon-narrow unicon-dot-mark text-red" data-uc-animate="flash"></i>
                                     <span>Live</span>
                                 </a>
-                            </div> --}}
+                            </div>
                             <div class="uc-logo d-block md:d-none">
                                 <a href="{{ route('news.index') }}">
                                     <img class="w-100px text-dark dark:text-white"
@@ -866,13 +869,13 @@
                             </div>
                         </div>
                         <div class="uc-navbar-right gap-2 lg:gap-3">
-                            {{-- <div class="uc-navbar-item d-inline-flex lg:d-none">
+                            <div class="uc-navbar-item d-inline-flex lg:d-none">
                                 <a class="btn btn-xs gap-narrow ps-1 border rounded-pill fw-bold dark:text-white hover:bg-gray-25 dark:hover:bg-gray-900"
                                     href="#live_now" data-uc-scroll="offset: 128">
                                     <i class="icon icon-narrow unicon-dot-mark text-red" data-uc-animate="flash"></i>
                                     <span>Live</span>
                                 </a>
-                            </div> --}}
+                            </div>
                             <div class="uc-navbar-item d-none lg:d-inline-flex">
                                 <a class="uc-search-trigger cstack text-none text-dark dark:text-white"
                                     href="#uc-search-modal" data-uc-toggle>

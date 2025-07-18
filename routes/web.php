@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\ContactUs;
 use App\Http\Middleware\ValidUser;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WebController;
@@ -9,12 +10,12 @@ use App\Http\Controllers\BlogController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CitiesController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\UrduWebController;
 use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\LiveVideosController;
 use App\Http\Controllers\BreakingNewsController;
-use App\Http\Controllers\ContactController;
-use App\Models\ContactUs;
 
 // Admin Routes
 // Route to display the login form
@@ -145,6 +146,10 @@ Route::middleware(ValidUser::class)->group(function () {
         Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
     });
 
+// Contact show
+        Route::get('/contact/show', [ContactController::class, 'show'])->name('contact.show');
+
+
     // MIddleware end
 });
 
@@ -186,17 +191,10 @@ Route::get('/about', [WebController::class, 'about'])->name('about');
 //About page end
 
 // Contact routes 
-Route::prefix('contact')->group(function () {
 
-        Route::get('/add', [ContactController::class, 'index'])->name('contact.add');
-        Route::post('/add', [ContactController::class, 'store']);
-        Route::get('/show', [ContactController::class, 'show'])->name('contact.show');
-        // Route::get('/view/{id}', [ContactController::class, 'view'])->name('contact.view');
-        Route::get('/edit/{id}', [ContactController::class, 'edit'])->name('contact.edit');
-        Route::patch('/update/{id}', [ContactController::class, 'update'])->name('contact.update');
-        Route::delete('/delete/{id}', [ContactController::class, 'destroy'])->name('contact.delete');
+        Route::get('/contact/add', [ContactController::class, 'index'])->name('contact.add');
+        Route::post('/contact/add', [ContactController::class, 'store']);
 
-    });
 
 
 
@@ -208,3 +206,6 @@ Route::redirect('/admin', '/admin/login');
 Route::fallback(function () {
     return view('404');
 });
+
+
+// Urdu Website Routes Start
