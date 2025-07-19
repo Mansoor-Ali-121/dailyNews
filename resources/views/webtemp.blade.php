@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html lang="zxx" dir="ltr">
+<html lang="{{ App::getLocale() }}" dir="{{ App::getLocale() == 'ur' ? 'rtl' : 'ltr' }}">
+
 
 <head>
     <meta charset="UTF-8">
@@ -967,9 +968,9 @@
                                 <div class="p-2 bg-white dark:bg-gray-800 shadow-xs w-150px"
                                     data-uc-drop="mode: click; boundary: !.uc-footer-bottom; animation: uc-animation-slide-top-small; duration: 150;">
                                     <ul class="nav-y gap-1 fw-medium items-end">
-                                        <li><a href="#en">English</a></li>
-                                        <li><a href="#ar">العربية</a></li>
-                                        <li><a href="#ch">中文</a></li>
+                                        <li><a href="{{ url('/') }}">English</a></li>
+                                     <li><a href="{{ url('/ur') }}">Urdu</a></li>
+                                     
                                     </ul>
                                 </div>
                             </div>

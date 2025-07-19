@@ -40,6 +40,7 @@ class BreakingNewsController extends Controller
             'breakingnews_status' => 'required|string|in:active,inactive',
             'title' => 'required|string',
             'breakingnews_slug' => 'required|string',
+            'language'=> 'required|string|in:en,ur', // Ensure language is either 'en' or 'ur'
         ]);
 
         if ($request->hasFile('image')) {
@@ -85,6 +86,7 @@ class BreakingNewsController extends Controller
             'breakingnews_status' => 'required|string|in:active,inactive',
             'title' => 'required|string',
             'breakingnews_slug' => 'required|string',
+            'language'=> 'required|string|in:en,ur', // Ensure language is either 'en' or 'ur'
         ]);
 
         $breakingNews = BreakingNews::findOrFail($id);

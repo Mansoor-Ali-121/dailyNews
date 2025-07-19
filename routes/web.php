@@ -4,7 +4,6 @@ use App\Models\User;
 use App\Models\ContactUs;
 use App\Http\Middleware\ValidUser;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\WebController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\NewsController;
@@ -16,6 +15,7 @@ use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\LiveVideosController;
 use App\Http\Controllers\BreakingNewsController;
+use App\Http\Controllers\WebController;
 
 // Admin Routes
 // Route to display the login form
@@ -146,25 +146,20 @@ Route::middleware(ValidUser::class)->group(function () {
         Route::delete('/delete/{id}', [BlogController::class, 'destroy'])->name('blog.delete');
     });
 
-// Contact show
-        Route::get('/contact/show', [ContactController::class, 'show'])->name('contact.show');
+    // Contact show
+    Route::get('/contact/show', [ContactController::class, 'show'])->name('contact.show');
 
 
     // MIddleware end
 });
 
 // Websites Routes Start
-
 Route::get('/', [WebController::class, 'index'])->name('news.index');
 Route::get('/website/news', [WebController::class, 'view'])->name('Webnews.view');
-Route::get('/category', [WebController::class, 'category'])->name('news.category');
-Route::get('/country', [WebController::class, 'country'])->name('news.country');
-Route::get('/city', [WebController::class, 'city'])->name('news.city');
-Route::get('/shownews', [WebController::class, 'shownews'])->name('show.news');
-Route::get('/search', [WebController::class, 'search'])->name('news.search');
-
-
-
+// Route::get('/category', [WebController::class, 'category'])->name('news.category');
+// Route::get('/country', [WebController::class, 'country'])->name('news.country');
+// Route::get('/city', [WebController::class, 'city'])->name('news.city');
+// Route::get('/shownews', [WebController::class, 'shownews'])->name('show.news');
 // Single News show in website 
 Route::get('/news/{id}', [WebController::class, 'showsinglenews'])->name('single.news');
 // Single Breaking news show in website
@@ -177,27 +172,19 @@ Route::get('/blog/{id}', [WebController::class, 'singleblog'])->name('single.blo
 // Show Author profile with news
 Route::get('/author/{slug}', [WebController::class, 'showAuthorProfile'])->name('author.profile');
 // Show Author profile with news end
-
 // Privacy page
 Route::get('/privacy', [WebController::class, 'privacy'])->name('privacy');
 // Privacy page end
-
 // Terms page
 Route::get('/terms', [WebController::class, 'terms'])->name('terms');
 // Terms page end
-
 //About page
 Route::get('/about', [WebController::class, 'about'])->name('about');
 //About page end
-
-// Contact routes 
-
-        Route::get('/contact/add', [ContactController::class, 'index'])->name('contact.add');
-        Route::post('/contact/add', [ContactController::class, 'store']);
-
-
-
-
+// Contact routes in website
+Route::post('/contact/add', [ContactController::class, 'store']);
+Route::get('/contact/add', [ContactController::class, 'index'])->name('contact.add');
+//  Website routes end
 // Route::get('/contact', [WebController::class,''])->name('');
 
 Route::redirect('/admin', '/admin/login');
@@ -209,3 +196,40 @@ Route::fallback(function () {
 
 
 // Urdu Website Routes Start
+
+// Urdu Website Routes Start
+// Urdu Website Routes Start
+Route::get('/ur', [UrduWebController::class, 'index'])->name('urdu.news.index');
+Route::get('/ur/website/news', [UrduWebController::class, 'view'])->name('urdu.Webnews.view');
+// Route::get('/ur/category', [UrduWebController::class, 'category'])->name('urdu.news.category');
+// Route::get('/ur/country', [UrduWebController::class, 'country'])->name('urdu.news.country');
+// Route::get('/ur/city', [UrduWebController::class, 'city'])->name('urdu.news.city');
+// Route::get('/ur/shownews', [UrduWebController::class, 'shownews'])->name('urdu.show.news');
+// Route::get('/ur/search', [UrduWebController::class, 'search'])->name('urdu.news.search');
+
+// Single News show in Urdu website
+Route::get('/ur/news/{id}', [UrduWebController::class, 'showsinglenews'])->name('urdu.single.news');
+
+// Single Breaking news
+Route::get('/ur/breakingnews/{id}', [UrduWebController::class, 'showsinglebreakingnews'])->name('urdu.single.breakingnews');
+
+// Single category show
+Route::get('/ur/news/category/{id}', [UrduWebController::class, 'singlecategoryview'])->name('urdu.single.category');
+
+// Blogs
+Route::get('/ur/blog/{id}', [UrduWebController::class, 'singleblog'])->name('urdu.single.blog');
+
+// Author
+Route::get('/ur/author/{slug}', [UrduWebController::class, 'showAuthorProfile'])->name('urdu.author.profile');
+
+// Static pages
+Route::get('/ur/privacy', [UrduWebController::class, 'privacy'])->name('urdu.privacy');
+Route::get('/ur/terms', [UrduWebController::class, 'terms'])->name('urdu.terms');
+Route::get('/ur/about', [UrduWebController::class, 'about'])->name('urdu.about');
+
+// Contact (same controller for form)
+Route::post('/ur/contact/add', [ContactController::class, 'store']);
+Route::get('/ur/contact/add', [ContactController::class, 'index'])->name('urdu.contact.add');
+// Urdu Website Routes End
+
+// Urdu Website Routes End

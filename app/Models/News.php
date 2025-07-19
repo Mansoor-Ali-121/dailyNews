@@ -17,6 +17,7 @@ class News extends Model
         'news_description',
         'news_content',
         'news_image',
+        'language',
         'news_status'
 
     ];

@@ -5,7 +5,9 @@ namespace App\Providers;
 use App\Models\News;
 use App\Models\Categories;
 use App\Models\BreakingNews;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -100,5 +102,20 @@ class AppServiceProvider extends ServiceProvider
     ]);
         // Latest news fetching code end
 
+
+// Set the locale based on the request for urdu or english
+
+       // Locale based on first URL segment
+        $locale = request()->segment(1);
+        if (in_array($locale, ['ur', 'en'])) {
+            App::setLocale($locale);
+        } else {
+            App::setLocale('en');
+        }
+
+        Route::middleware('web')
+            ->group(base_path('routes/web.php'));
+        // Share the locale with all views
+        View::share('locale', App::getLocale());
     }
 }

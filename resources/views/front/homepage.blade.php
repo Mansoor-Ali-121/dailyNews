@@ -10,7 +10,7 @@
                     <div class="section-inner panel vstack gap-2">
                         <div class="block-layout carousel-layout vstack gap-2 lg:gap-3 panel">
                             <div class="block-content panel">
-                                <h3 class="text-center">Breaking News</h3>
+                             <h3 class="text-center">{{ __('messages.breaking_news') }}</h3>
 
                                 <div class="swiper"
                                     data-uc-swiper="items: 1; gap: 16; dots: .dot-nav; next: .nav-next; prev: .nav-prev; disable-class: d-none;"

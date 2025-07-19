@@ -224,6 +224,29 @@
                         <h5 class="section-title">Basic Information</h5>
                         <div class="row g-4">
 
+
+                            {{-- Language Selection in radio btn --}}
+                            <div class="col-md-6">
+                                <label class="form-label">Language <span class="required-star">*</span></label>
+                                <div class="form-check">
+                                    <input class="form-check-input @error('language') is-invalid @enderror"
+                                        type="radio" name="language" id="language" value="en"
+                                        {{ old('language', $news->language) == 'en' ? 'checked' : '' }} required>
+                                    <label class="form-check-label" for="language">English</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input @error('language') is-invalid @enderror"
+                                        type="radio" name="language" id="language" value="ur"
+                                        {{ old('language', $news->language) == 'ur' ? 'checked' : '' }} required>
+                                    <label class="form-check-label" for="language">Urdu</label>
+                                </div>
+                                @error('language')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror                               
+                            </div>
+    
                             {{-- Country from database --}}
                             <div class="col-md-6">
                                 <label for="country_id" class="form-label">Country</label>

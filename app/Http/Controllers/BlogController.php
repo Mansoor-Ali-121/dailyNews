@@ -52,6 +52,7 @@ class BlogController extends Controller
             'blog_status' => 'required|in:active,inactive',
             'blog_slug' => 'required|string|max:255',
             'blog_content' => 'required|string',
+            'language' => 'required|in:en,ur', // Assuming you want to restrict to English and Urdu
         ]);
         // file upload
         if ($request->hasFile('blog_image')) {
@@ -114,6 +115,7 @@ class BlogController extends Controller
             'blog_status' => 'required|in:active,inactive',
             'blog_slug' => 'required|string|max:255',
             'blog_content' => 'required|string',
+            'language' => 'required|in:en,ur', // Assuming you want to restrict to English and Urdu
         ]);
         if ($request->hasFile('blog_image')) {
             // Delete the old image if it exists

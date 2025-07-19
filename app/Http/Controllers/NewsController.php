@@ -55,6 +55,7 @@ class NewsController extends Controller
             'news_image' => 'required|image|mimes:jpeg,png,webp,gif|max:5120',
             'category_id' => 'required|exists:categories,id',
             'city_id' => 'required|exists:cities,id',
+            'language'=> 'required|in:en,ur', // Assuming 'en' for English and 'ur' for Urdu
         ]);
         // file upload
         if ($request->hasFile('news_image')) {
@@ -123,6 +124,7 @@ class NewsController extends Controller
             'news_image' => 'nullable|image|mimes:jpeg,png,webp,gif|max:5120', // This is correct
             'category_id' => 'required|exists:categories,id',
             'city_id' => 'required|exists:cities,id',
+            'language'=> 'required|in:en,ur', // Assuming 'en' for English and 'ur' for Urdu
         ]);
 
         if ($request->hasFile('news_image')) {

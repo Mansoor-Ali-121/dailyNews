@@ -17,6 +17,7 @@ class Blog extends Model
         'blog_image',
         'blog_status',
         'blog_content',
+        'language'
     ];
 
      public function city()

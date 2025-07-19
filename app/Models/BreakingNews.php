@@ -17,7 +17,8 @@ class BreakingNews extends Model
         'title',
         'image',
         'breakingnews_slug',
-        'breakingnews_status'
+        'breakingnews_status',
+        'language'
 
     ];
 

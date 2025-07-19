@@ -59,6 +59,29 @@
                             @method('PATCh')
                             <div class="row g-4">
 
+                                {{-- Language Selection form radio btn --}}
+                                <div class="col-12">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-language floating-icon breaking-news-icon"></i>
+                                        <select class="form-select border-2 ps-5 py-3" id="language" name="language"
+                                            required>
+                                            <option value="" disabled>Select Language</option>
+                                            <option value="en"
+                                                {{ old('language', $breakingNews->language) == 'en' ? 'selected' : '' }}>
+                                                English</option>
+                                            <option value="ur"
+                                                {{ old('language', $breakingNews->language) == 'ur' ? 'selected' : '' }}>
+                                                Urdu</option>
+                                        </select>
+                                        <label for="language" class="form-label text-muted ms-4">Language</label>
+                                    </div>
+                                    @error('language')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
                                 {{-- Related News --}}
                                 <div class="col-12">
                                     <div class="form-floating position-relative">

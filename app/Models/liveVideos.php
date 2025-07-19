@@ -13,6 +13,7 @@ class liveVideos extends Model
         'video_status',
         'video_slug',
         'category_id',
+        'language',
         'author_id'
     ];
     public function category()

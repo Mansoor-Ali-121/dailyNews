@@ -246,6 +246,28 @@
                     <div class="mb-5">
                         <div class="row g-4">
 
+                               {{-- Language Selector in radio btn--}}
+                            <div class="col-md-12">
+                                <label class="form-label">Language <span class="required-star">*</span></label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
+                                        name="language" id="language" value="en"
+                                        {{ old('language', 'en') == 'en' ? 'checked' : '' }} required>
+                                    <label class="form-check-label" for="language">English</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
+                                        name="language" id="language" value="ur"
+                                        {{ old('language', 'en') == 'ur' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="language">Urdu</label>
+                                </div>
+                                @error('language')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <p class="form-note">Select the language for the news content.</p>
+                            </div>
                             {{-- Country from database --}}
                             <div class="col-md-6">
                                 <label for="country_id" class="form-label">Country </label>

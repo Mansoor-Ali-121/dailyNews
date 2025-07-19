@@ -243,6 +243,29 @@
                     <div class="mb-5">
                         <div class="row g-4">
 
+
+                            {{-- Language Selection in radio btn --}}
+                            <div class="col-md-6">
+                                <label class="form-label">Language <span class="required-star">*</span></label>
+                                <div class="form-check">
+                                    <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
+                                        name="language" id="language" value="en"
+                                        {{ old('language', $news->language) == 'en' ? 'checked' : '' }} required>
+                                    <label class="form-check-label" for="language">English</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
+                                        name="language" id="language" value="ur"
+                                        {{ old('language', $news->language) == 'ur' ? 'checked' : '' }} required>
+                                    <label class="form-check-label" for="language">Urdu</label>
+                                </div>
+                                @error('language')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                             {{-- Country from database --}}
                             <div class="col-md-6">
                                 <label for="country_id" class="form-label">Country </label>
@@ -268,8 +291,12 @@
                             <div class="col-md-6">
                                 <label for="blog_status" class="form-label">Status</label>
                                 <select class="form-select" id="blog_status" name="blog_status" required>
-                                    <option value="active" {{ old('blog_status', $blog->blog_status) == 'active' ? 'selected' : '' }}>Active</option>
-                                    <option value="inactive" {{ old('blog_status', $blog->blog_status) == 'inactive' ? 'selected' : '' }}>Inactive</option>
+                                    <option value="active"
+                                        {{ old('blog_status', $blog->blog_status) == 'active' ? 'selected' : '' }}>Active
+                                    </option>
+                                    <option value="inactive"
+                                        {{ old('blog_status', $blog->blog_status) == 'inactive' ? 'selected' : '' }}>
+                                        Inactive</option>
                                 </select>
                                 @error('blog_status')
                                     <div class="invalid-feedback">
@@ -303,7 +330,9 @@
                                 <label for="category_id" class="form-label">Category</label>
                                 <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
                                     name="category_id">
-                                    <option value="" {{ old('category_id', $blog->category_id) == '' ? 'selected' : '' }}>Select a Category</option>
+                                    <option value=""
+                                        {{ old('category_id', $blog->category_id) == '' ? 'selected' : '' }}>Select a
+                                        Category</option>
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
                                             {{ old('category_id', $blog->category_id) == $category->id ? 'selected' : '' }}>
@@ -322,7 +351,8 @@
                             <div class="col-md-12">
                                 <label for="blog_title" class="form-label">Blog Title </label>
                                 <input type="text" class="form-control" id="blog_title" name="blog_title"
-                                    placeholder="Enter news title" value="{{ old('blog_title', $blog->blog_title) }}" required>
+                                    placeholder="Enter news title" value="{{ old('blog_title', $blog->blog_title) }}"
+                                    required>
                                 @error('blog_title')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -358,7 +388,8 @@
                             <div class="col-md-12">
                                 <label for="slug" class="form-label">Blog Slug</label>
                                 <input type="text" class="form-control" id="slug" name="slug"
-                                    placeholder="Write a slug" value="{{ old('slug', $blog->slug) }}" onkeyup="generateSlug()">
+                                    placeholder="Write a slug" value="{{ old('slug', $blog->slug) }}"
+                                    onkeyup="generateSlug()">
                                 @error('slug')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -371,7 +402,8 @@
                             <div class="col-md-12">
                                 <label for="blog_slug" class="form-label">System Generated Slug</label>
                                 <input type="text" class="form-control" id="blog_slug" name="blog_slug"
-                                    placeholder="Auto-generated from title" value="{{ old('blog_slug', $blog->blog_slug) }}" readonly>
+                                    placeholder="Auto-generated from title"
+                                    value="{{ old('blog_slug', $blog->blog_slug) }}" readonly>
                                 @error('blog_slug')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -388,20 +420,28 @@
                         <div class="row g-4">
                             <div class="col-12">
                                 <div class="image-upload-container" id="image-upload-area">
-                                    <div class="upload-icon" style="{{ $blog->blog_image ? 'display: none;' : 'display: block;' }}">
+                                    <div class="upload-icon"
+                                        style="{{ $blog->blog_image ? 'display: none;' : 'display: block;' }}">
                                         <i class="fas fa-cloud-upload-alt"></i>
                                     </div>
-                                    <h5 style="{{ $blog->blog_image ? 'display: none;' : 'display: block;' }}">Drag & Drop or Click to Upload</h5>
-                                    <p class="text-muted" style="{{ $blog->blog_image ? 'display: none;' : 'display: block;' }}">Recommended size: 1200x630 pixels (JPG, PNG, or GIF)</p>
-                                    <p class="text-muted" style="{{ $blog->blog_image ? 'display: none;' : 'display: block;' }}">Max file size: 5MB</p>
+                                    <h5 style="{{ $blog->blog_image ? 'display: none;' : 'display: block;' }}">Drag & Drop
+                                        or Click to Upload</h5>
+                                    <p class="text-muted"
+                                        style="{{ $blog->blog_image ? 'display: none;' : 'display: block;' }}">Recommended
+                                        size: 1200x630 pixels (JPG, PNG, or GIF)</p>
+                                    <p class="text-muted"
+                                        style="{{ $blog->blog_image ? 'display: none;' : 'display: block;' }}">Max file
+                                        size: 5MB</p>
                                     <input type="file" id="blog_image" name="blog_image" accept="image/*"
                                         style="display: none;">
 
                                     {{-- Image preview --}}
-                                    <img id="image-preview" src="{{ asset('Blogs/blog_images/' . $blog->blog_image) }}" alt="Image Preview"
+                                    <img id="image-preview" src="{{ asset('Blogs/blog_images/' . $blog->blog_image) }}"
+                                        alt="Image Preview"
                                         style="max-width: 200px; height: auto; border-radius: 8px; margin-top: 15px; {{ $blog->blog_image ? 'display: block;' : 'display: none;' }}">
                                     @if ($blog->blog_image)
-                                        <small class="text-muted mt-2">Current Image: {{ basename($blog->blog_image) }}</small>
+                                        <small class="text-muted mt-2">Current Image:
+                                            {{ basename($blog->blog_image) }}</small>
                                     @endif
                                 </div>
                                 @error('blog_image')
@@ -473,7 +513,8 @@
                     reader.readAsDataURL(file);
                 } else {
                     // If no file is selected (e.g., dialog cancelled), hide preview if no current image
-                    if (!imagePreview.src || imagePreview.src.includes('http')) { // Check if it's not a local file path
+                    if (!imagePreview.src || imagePreview.src.includes(
+                        'http')) { // Check if it's not a local file path
                         imagePreview.src = '';
                         imagePreview.style.display = 'none';
                         toggleUploadInstructions(true); // Show original text/icon
@@ -484,7 +525,8 @@
             // Basic Drag & Drop visual feedback and file handling
             imageUploadArea.addEventListener('dragover', function(e) {
                 e.preventDefault(); // Allow drop
-                imageUploadArea.style.borderColor = 'var(--primary-color)'; // Use primary color on drag over
+                imageUploadArea.style.borderColor =
+                'var(--primary-color)'; // Use primary color on drag over
             });
 
             imageUploadArea.addEventListener('dragleave', function(e) {
@@ -543,7 +585,8 @@
 
                 // Loop through all cities data to find matches for the selected country
                 allCitiesData.forEach(city => {
-                    if (String(city.country_id) === String(selectedCountryId)) { // Ensure comparison type matches
+                    if (String(city.country_id) === String(
+                        selectedCountryId)) { // Ensure comparison type matches
                         const option = document.createElement('option');
                         option.value = city.id;
                         option.textContent = city.city_name;
