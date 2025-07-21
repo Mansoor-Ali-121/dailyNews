@@ -32,6 +32,7 @@ class CategoriesController extends Controller
             'category_name' => 'required|string|max:255',
             'category_slug' => 'required|string|unique:categories,category_slug|max:255',
             'category_status' => 'required|string|in:active,inactive',
+            'language'=> 'required|in:ur,en',
         ]);
 
         Categories::create($validated);
@@ -65,6 +66,8 @@ class CategoriesController extends Controller
             'category_name' => 'required|string|max:255',
             'category_slug' => 'required|string|max:255',
             'category_status' => 'required|string|in:active,inactive',
+            'language'=> 'required|in:ur,en',
+
         ]);
 
         $category = Categories::findOrFail($id);

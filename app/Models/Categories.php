@@ -10,7 +10,8 @@ class Categories extends Model
 
         'category_name',
         'category_slug',
-        'category_status'
+        'category_status',
+        'language',
 
     ];
 

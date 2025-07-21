@@ -191,6 +191,17 @@
                                 <th>Description</th>
                                 <td>{{ $item->news_description ?? 'N/A' }}</td>
                             </tr>
+                            {{-- Language --}}
+                            <tr>
+                                <th>Language</th>
+                                <td>
+                                    @if ($item->language)
+                                        <span class="badge bg-secondary">{{ $item->language }}</span>
+                                    @else
+                                        <span class="text-muted">N/A</span>
+                                    @endif
+                                </td>
+                            </tr>
                             <tr>
                                 <th>Status</th>
                                 <td>

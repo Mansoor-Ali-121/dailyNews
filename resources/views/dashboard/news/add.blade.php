@@ -222,23 +222,23 @@
 
     <div class="form-container">
         <div class="card">
-           <div class="card-header d-flex justify-content-between align-items-center">
-    <h4 class="mb-0">
-        <i class="fas fa-newspaper me-2"></i> Add New News
-    </h4>
-    <div class="d-flex align-items-center">
-    @if (Auth::check())
-        <div class="me-3 text-end">
-            <small class="text-light d-block">Logged in as:</small>
-            <span class="fw-bold">{{ Auth::user()->name }}</span>
-            <div class="fw-bold">User ID: {{ Auth::user()->id }}</div>
-        </div>
-    @endif
-    <a href="{{ route('news.show') }}" class="btn btn-light btn-sm rounded-pill px-4 py-2 shadow-sm ms-3">
-        <i class="fas fa-arrow-left me-2"></i> Back to News
-    </a>
-</div>
-</div>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h4 class="mb-0">
+                    <i class="fas fa-newspaper me-2"></i> Add New News
+                </h4>
+                <div class="d-flex align-items-center">
+                    @if (Auth::check())
+                        <div class="me-3 text-end">
+                            <small class="text-light d-block">Logged in as:</small>
+                            <span class="fw-bold">{{ Auth::user()->name }}</span>
+                            <div class="fw-bold">User ID: {{ Auth::user()->id }}</div>
+                        </div>
+                    @endif
+                    <a href="{{ route('news.show') }}" class="btn btn-light btn-sm rounded-pill px-4 py-2 shadow-sm ms-3">
+                        <i class="fas fa-arrow-left me-2"></i> Back to News
+                    </a>
+                </div>
+            </div>
 
             <div class="card-body">
                 <form action="{{ route('news.add') }}" method="POST" enctype="multipart/form-data">
@@ -247,8 +247,8 @@
                         <h5 class="section-title">Basic Information</h5>
                         <div class="row g-4">
 
-                            {{-- Language Selector in radio btn--}}
-                            <div class="col-md-12">
+                            {{-- Language Selector in radio btn --}}
+                            {{-- <div class="col-md-12">
                                 <label class="form-label">Language <span class="required-star">*</span></label>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
@@ -268,6 +268,54 @@
                                     </div>
                                 @enderror
                                 <p class="form-note">Select the language for the news content.</p>
+                            </div> --}}
+
+                            {{-- Language Selector in radio btn --}}
+                            <div class="col-md-12">
+                                <label class="form-label">Language <span class="required-star">*</span></label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
+                                        name="language" id="language_en" value="en"
+                                        {{ old('language', 'en') == 'en' ? 'checked' : '' }} required
+                                        onchange="filterAndPopulateCategories(this.value)">
+                                    <label class="form-check-label" for="language_en">English</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
+                                        name="language" id="language_ur" value="ur"
+                                        {{ old('language', 'en') == 'ur' ? 'checked' : '' }}
+                                        onchange="filterAndPopulateCategories(this.value)">
+                                    <label class="form-check-label" for="language_ur">Urdu</label>
+                                </div>
+                                @error('language')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <p class="form-note">Select the language for the news content.</p>
+                            </div>
+
+                            <hr>
+
+                            {{-- Your Categories Dropdown --}}
+                            <div class="col-md-12">
+                                <label for="category_id" class="form-label">Select a Category <span
+                                        class="required-star">*</span></label>
+                                <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
+                                    name="category_id" required>
+                                    <option value="">Select Category</option>
+                                    {{-- THIS LOOP IS CRITICAL. It MUST populate all categories on page load. --}}
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" data-language="{{ $category->language }}">
+                                            {{ $category->category_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('category_id')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
                             </div>
 
                             {{-- Country from database --}}
@@ -304,6 +352,7 @@
                                     </div>
                                 @enderror
                             </div>
+
                             {{-- City Dropdown (Dynamic based on Country) --}}
                             <div class="col-md-6">
                                 <label for="city_id" class="form-label">City</label>
@@ -323,16 +372,17 @@
                                     </div>
                                 @enderror
                             </div>
+
                             {{-- Category from database (now a dropdown) --}}
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <label for="category_id" class="form-label">Category</label>
                                 <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
                                     name="category_id">
-                                    {{-- Default "Select a Category" option (optional, you can make it required instead) --}}
+
                                     <option value="" {{ old('category_id') == '' ? 'selected' : '' }}>Select a
                                         Category</option>
 
-                                    {{-- Loop through your categories --}}
+
                                     @foreach ($categories as $category)
                                         <option value="{{ $category->id }}"
                                             {{ old('category_id') == $category->id ? 'selected' : '' }}>
@@ -345,7 +395,8 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div>
+                            </div> --}}
+
                             {{-- News title --}}
                             <div class="col-md-12">
                                 <label for="news_title" class="form-label">News Title </label>
@@ -357,6 +408,7 @@
                                     </div>
                                 @enderror
                             </div>
+
                             {{-- News Content --}}
                             <div class="col-md-12">
                                 <label for="news_content" class="form-label">News Content </label>
@@ -381,6 +433,7 @@
                                     </div>
                                 @enderror
                             </div>
+
                             {{-- Custom Slug --}}
                             <div class="col-md-12">
                                 <label for="slug" class="form-label">News Slug</label>
@@ -392,8 +445,8 @@
                                     </div>
                                 @enderror
                             </div>
-                            {{-- Slug which stored in database --}}
 
+                            {{-- Slug which stored in database --}}
                             <div class="col-md-12">
                                 <label for="news_slug" class="form-label">System Generated Slug</label>
                                 <input type="text" class="form-control" id="news_slug" name="news_slug"
@@ -761,5 +814,62 @@
             };
             img.src = base64Image;
         }
+    </script>
+
+    {{-- categories filter by language --}}
+    <script>
+        let allCategoriesOptions = []; // This will store the actual HTML option elements
+
+        // Function to filter and populate the dropdown based on selected language
+        function filterAndPopulateCategories(selectedLanguage) {
+            const categoryDropdown = document.getElementById('category_id');
+            if (!categoryDropdown) {
+                console.error("Category dropdown with ID 'category_id' not found.");
+                return;
+            }
+
+            // Clear existing options, but keep the "Select Category" option
+            categoryDropdown.innerHTML = '<option value="">Select Category</option>';
+
+            let foundCategories = false;
+
+            // Iterate through all stored options and append only those matching the language
+            allCategoriesOptions.forEach(option => {
+                if (option.dataset.language === selectedLanguage) {
+                    categoryDropdown.appendChild(option.cloneNode(true)); // Append a clone
+                    foundCategories = true;
+                }
+            });
+
+            if (!foundCategories) {
+                const noCategoriesOption = document.createElement('option');
+                noCategoriesOption.value = '';
+                noCategoriesOption.textContent = 'No categories found for this language.';
+                categoryDropdown.appendChild(noCategoriesOption);
+            }
+        }
+
+        // Initial load: When the DOM is fully loaded, read all category options
+        // and then filter based on the initially checked language radio button.
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryDropdown = document.getElementById('category_id');
+            if (categoryDropdown) {
+                // Store all options (except the first "Select Category" one)
+                // Note: categoryDropdown.options is a live HTMLCollection, so convert to array
+                for (let i = 1; i < categoryDropdown.options.length; i++) {
+                    allCategoriesOptions.push(categoryDropdown.options[i].cloneNode(true));
+                }
+            } else {
+                console.error("Category dropdown with ID 'category_id' not found on DOMContentLoaded.");
+            }
+
+            const initialLanguageInput = document.querySelector('input[name="language"]:checked');
+            if (initialLanguageInput) {
+                filterAndPopulateCategories(initialLanguageInput.value);
+            }
+        });
+    </script>
+    <script>
+        const allCategoriesData = @json($categories ?? []);
     </script>
 @endsection

@@ -226,7 +226,7 @@
 
 
                             {{-- Language Selection in radio btn --}}
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <label class="form-label">Language <span class="required-star">*</span></label>
                                 <div class="form-check">
                                     <input class="form-check-input @error('language') is-invalid @enderror"
@@ -245,8 +245,58 @@
                                         {{ $message }}
                                     </div>
                                 @enderror                               
+                            </div> --}}
+
+                            {{-- Language Selector in radio btn --}}
+                            <div class="col-md-12">
+                                <label class="form-label">Language <span class="required-star">*</span></label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
+                                        name="language" id="language_en" value="en"
+                                        {{ old('language', $news->language) == 'en' ? 'checked' : '' }} required
+                                        onchange="filterAndPopulateCategories(this.value)">
+                                    <label class="form-check-label" for="language_en">English</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
+                                        name="language" id="language_ur" value="ur"
+                                        {{ old('language', $news->language) == 'ur' ? 'checked' : '' }}
+                                        onchange="filterAndPopulateCategories(this.value)">
+                                    <label class="form-check-label" for="language_ur">Urdu</label>
+                                </div>
+                                @error('language')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <p class="form-note">Select the language for the news content.</p>
                             </div>
-    
+
+                            <hr>
+
+
+                            {{-- Your Categories Dropdown --}}
+                            <div class="col-md-12">
+                                <label for="category_id" class="form-label">Select a Category <span
+                                        class="required-star">*</span></label>
+                                <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
+                                    name="category_id" required>
+                                    <option value="">Select Category</option>
+                                    {{-- Loop through ALL categories passed from the controller --}}
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" data-language="{{ $category->language }}"
+                                            {{ old('category_id', $news->category_id) == $category->id ? 'selected' : '' }}>
+                                            {{ $category->category_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('category_id')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                             {{-- Country from database --}}
                             <div class="col-md-6">
                                 <label for="country_id" class="form-label">Country</label>
@@ -307,7 +357,7 @@
                             </div>
 
                             {{-- Category from database --}}
-                            <div class="col-md-6">
+                            {{-- <div class="col-md-6">
                                 <label for="category_id" class="form-label">Category</label>
                                 <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
                                     name="category_id">
@@ -324,7 +374,7 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-                            </div>
+                            </div> --}}
 
                             {{-- News title --}}
                             <div class="col-md-12">
@@ -342,8 +392,9 @@
                             {{-- News Content --}}
                             <div class="col-md-12">
                                 <label for="news_content" class="form-label">News Content </label>
-                                <textarea id="news_content" name="news_content" class="form-control tinymce @error('news_content') is-invalid @enderror"
-                                    placeholder="Enter news content" rows="20">{{ old('news_content', $news->news_content) }}</textarea>
+                                <textarea id="news_content" name="news_content"
+                                    class="form-control tinymce @error('news_content') is-invalid @enderror" placeholder="Enter news content"
+                                    rows="20">{{ old('news_content', $news->news_content) }}</textarea>
                                 @error('news_content')
                                     <div class="invalid-feedback">
                                         {{ $message }}
@@ -391,40 +442,41 @@
                         </div>
                     </div>
 
-                   {{-- Image Upload --}}
-<div class="mb-5">
-    <h5 class="section-title">Featured Image</h5>
-    <div class="row g-4">
-        <div class="col-12">
-            <div class="image-upload-container" id="image-upload-area">
-                <input type="file" id="news_image" name="news_image" accept="image/*" style="display: none;">
+                    {{-- Image Upload --}}
+                    <div class="mb-5">
+                        <h5 class="section-title">Featured Image</h5>
+                        <div class="row g-4">
+                            <div class="col-12">
+                                <div class="image-upload-container" id="image-upload-area">
+                                    <input type="file" id="news_image" name="news_image" accept="image/*"
+                                        style="display: none;">
 
-                {{-- This is where the image preview will appear --}}
-                <img id="image-preview"
-                    {{-- **CORRECTION HERE: Added '/' before $news->news_image** --}}
-                    src="{{ $news->news_image ? asset('news/news_images/' . $news->news_image) : '' }}"
-                    alt="Image Preview"
-                    style="max-width: 200px; height: auto; border-radius: 8px; margin-top: 15px; {{ $news->news_image ? 'display: block;' : 'display: none;' }}">
+                                    {{-- This is where the image preview will appear --}}
+                                    <img id="image-preview" {{-- **CORRECTION HERE: Added '/' before $news->news_image** --}}
+                                        src="{{ $news->news_image ? asset('news/news_images/' . $news->news_image) : '' }}"
+                                        alt="Image Preview"
+                                        style="max-width: 200px; height: auto; border-radius: 8px; margin-top: 15px; {{ $news->news_image ? 'display: block;' : 'display: none;' }}">
 
-                {{-- Show upload area text/icon only if no image is present initially --}}
-                <div id="upload-prompt" style="{{ $news->news_image ? 'display: none;' : 'display: block;' }}">
-                    <div class="upload-icon">
-                        <i class="fas fa-cloud-upload-alt"></i>
+                                    {{-- Show upload area text/icon only if no image is present initially --}}
+                                    <div id="upload-prompt"
+                                        style="{{ $news->news_image ? 'display: none;' : 'display: block;' }}">
+                                        <div class="upload-icon">
+                                            <i class="fas fa-cloud-upload-alt"></i>
+                                        </div>
+                                        <h5>Drag & Drop or Click to Upload</h5>
+                                        <p class="text-muted">Recommended size: 1200x630 pixels (JPG, PNG, or GIF)</p>
+                                        <p class="text-muted">Max file size: 5MB</p>
+                                    </div>
+                                </div>
+                            </div>
+                            @error('news_image')
+                                <div class="invalid-feedback d-block">
+                                    {{ $message }}
+                                </div>
+                            @enderror
+                            <p class="form-note">Leave blank to keep the current image.</p>
+                        </div>
                     </div>
-                    <h5>Drag & Drop or Click to Upload</h5>
-                    <p class="text-muted">Recommended size: 1200x630 pixels (JPG, PNG, or GIF)</p>
-                    <p class="text-muted">Max file size: 5MB</p>
-                </div>
-            </div>
-        </div>
-        @error('news_image')
-            <div class="invalid-feedback d-block">
-                {{ $message }}
-            </div>
-        @enderror
-        <p class="form-note">Leave blank to keep the current image.</p>
-    </div>
-</div>
 
                     <div class="mt-5">
                         <button type="submit" class="btn-submit">
@@ -563,7 +615,7 @@
                 // Loop through all cities data to find matches for the selected country
                 allCitiesData.forEach(city => {
                     if (String(city.country_id) === String(
-                        selectedCountryId)) { // Ensure comparison type matches
+                            selectedCountryId)) { // Ensure comparison type matches
                         const option = document.createElement('option');
                         option.value = city.id;
                         option.textContent = city.city_name;
@@ -763,5 +815,82 @@
             };
             img.src = base64Image;
         }
+    </script>
+
+
+    {{-- JavaScript for client-side filtering  categories by language --}}
+    <script>
+        let allCategoriesOptions = []; // This will store clones of all initial HTML option elements
+
+        // Function to populate the category dropdown with filtered options
+        function populateCategoryDropdown(optionsToDisplay, selectedCategoryId = null) {
+            const categoryDropdown = document.getElementById('category_id');
+            if (!categoryDropdown) {
+                console.error("populateCategoryDropdown: Category dropdown with ID 'category_id' not found.");
+                return;
+            }
+
+            // Clear existing options, but keep the "Select Category" option
+            categoryDropdown.innerHTML = '<option value="">Select Category</option>';
+
+            let foundCategories = false;
+            optionsToDisplay.forEach(option => {
+                const clonedOption = option.cloneNode(true); // Always append a clone
+                // If a selectedCategoryId is provided, mark the corresponding option as selected
+                if (selectedCategoryId !== null && clonedOption.value == selectedCategoryId) {
+                    clonedOption.selected = true;
+                }
+                categoryDropdown.appendChild(clonedOption);
+                foundCategories = true;
+            });
+
+            if (!foundCategories) {
+                const noCategoriesOption = document.createElement('option');
+                noCategoriesOption.value = '';
+                noCategoriesOption.textContent = 'No categories found for this language.';
+                categoryDropdown.appendChild(noCategoriesOption);
+            }
+        }
+
+        // Function to filter categories based on selected language and update dropdown
+        function filterAndPopulateCategories(selectedLanguage, selectedCategoryId = null) {
+            // Filter the stored original options based on the data-language attribute
+            const filteredOptions = allCategoriesOptions.filter(option => {
+                return option.dataset.language === selectedLanguage;
+            });
+
+            // Populate the dropdown with the filtered options, also passing the pre-selected category ID
+            populateCategoryDropdown(filteredOptions, selectedCategoryId);
+        }
+
+        // Initial load: When the DOM is fully loaded, read all category options
+        // and then filter based on the initially checked language radio button,
+        // also setting the pre-selected category.
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryDropdown = document.getElementById('category_id');
+            if (categoryDropdown) {
+                // Read and store all options (except the first "Select Category" one)
+                const currentOptions = Array.from(categoryDropdown.options);
+                for (let i = 1; i < currentOptions.length; i++) { // Start from 1 to skip "Select Category"
+                    allCategoriesOptions.push(currentOptions[i].cloneNode(true));
+                }
+            } else {
+                console.error("DOMContentLoaded: Category dropdown with ID 'category_id' not found.");
+            }
+
+            // Determine the initially checked language
+            const initialLanguageInput = document.querySelector('input[name="language"]:checked');
+            let initialLanguage = initialLanguageInput ? initialLanguageInput.value :
+            'en'; // Default to 'en' if none checked
+
+            // Get the ID of the category that was previously selected for this news item
+            // This value is passed from Laravel via the $news object
+            const preSelectedCategoryId = "{{ old('category_id', $news->category_id ?? '') }}";
+            // Convert to null if empty string to match populateDropdown signature
+            const finalSelectedCategoryId = preSelectedCategoryId ? preSelectedCategoryId : null;
+
+            // Trigger initial filtering and population, including setting the pre-selected category
+            filterAndPopulateCategories(initialLanguage, finalSelectedCategoryId);
+        });
     </script>
 @endsection

@@ -212,6 +212,28 @@
                             @csrf
                             @method('PATCH')
 
+                             {{-- Language Selection in radio btn --}}
+                            <div class="col-md-6">
+                                <label class="form-label">Language <span class="required-star">*</span></label>
+                                <div class="form-check">
+                                    <input class="form-check-input @error('language') is-invalid @enderror"
+                                        type="radio" name="language" id="language" value="en"
+                                        {{ old('language', $category->language) == 'en' ? 'checked' : '' }} required>
+                                    <label class="form-check-label" for="language">English</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input @error('language') is-invalid @enderror"
+                                        type="radio" name="language" id="language" value="ur"
+                                        {{ old('language', $category->language) == 'ur' ? 'checked' : '' }} required>
+                                    <label class="form-check-label" for="language">Urdu</label>
+                                </div>
+                                @error('language')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror                               
+                            </div>
+
                             <div class="row g-4">
                                 {{-- Category Name Field with Floating Icon --}}
                                 <div class="col-12">

@@ -10,7 +10,7 @@
                     <div class="section-inner panel vstack gap-2">
                         <div class="block-layout carousel-layout vstack gap-2 lg:gap-3 panel">
                             <div class="block-content panel">
-                             <h3 class="text-center">{{ __('messages.breaking_news') }}</h3>
+                                <h3 class="text-center">{{ __('messages.breaking_news') }}</h3>
 
                                 <div class="swiper"
                                     data-uc-swiper="items: 1; gap: 16; dots: .dot-nav; next: .nav-next; prev: .nav-prev; disable-class: d-none;"
@@ -218,11 +218,15 @@
                                                 @if ($category->category_name === 'Sports')
                                                     <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
                                                         href="{{ route('single.category', $category->category_slug) }}">
-                                                        <span>{{ $category->category_name }}</span>
-                                                        <i class="icon-1 fw-bold unicon-chevron-right"></i>
+                                                        <span>
+                                                            {{ app()->getLocale() == 'ur' ? 'کھیل' : $category->category_name }}
+                                                        </span>
+                                                        <i
+                                                            class="icon-1 fw-bold {{ app()->getLocale() == 'ur' ? 'unicon-chevron-left' : 'unicon-chevron-right' }}"></i>
                                                     </a>
                                                 @endif
                                             @endforeach
+
                                         </h2>
                                     </div>
                                     <div class="block-content">
@@ -315,17 +319,16 @@
                                                                             class="post-header panel vstack justify-between gap-1">
                                                                             <h3 class="post-title h6 m-0 text-truncate-2">
                                                                                 <a class="text-none hover:text-primary duration-150"
-                                                                                    href="{{ route('single.news', $sports->news_slug) }}">{{ $sports->news_title }}</a>
+                                                                                    href="{{ route('single.news', $sports->news_slug) }}">
+                                                                                    {{ $sports->news_title }}
+                                                                                </a>
                                                                             </h3>
                                                                             <div
                                                                                 class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
                                                                                 <span data-bs-toggle="tooltip"
-                                                                                    title=" {{ $sports->created_at->format('d M Y') }}">
-                                                                                    {{-- You might want to display a short, static value here if the tooltip provides the dynamic one --}}
-
+                                                                                    title="{{ $sports->created_at->format('d M Y') }}">
                                                                                     {{ $sports->created_at->diffForHumans() }}
                                                                                     <i class="bi bi-info-circle-fill"></i>
-
                                                                                 </span>
                                                                             </div>
                                                                         </div>
@@ -337,7 +340,7 @@
                                                                                 class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-1x1">
                                                                                 <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
                                                                                     src="{{ asset('news/news_images/' . $sports->news_image) }}"
-                                                                                    alt="The Future of Sustainable Living: Driving Eco-Friendly Lifestyles"
+                                                                                    alt="{{ $sports->news_title }}"
                                                                                     data-uc-img="loading: lazy">
                                                                             </div>
                                                                             <a href="{{ route('single.news', $sports->news_slug) }}"
@@ -349,12 +352,19 @@
                                                         </div>
                                                     @empty
                                                         <div class="col-12 text-center py-5">
-                                                            <p>No news available for this category at the moment.</p>
+                                                            <p class="text-muted">
+                                                                @if ($language === 'ur')
+                                                                    کوئی خبر دستیاب نہیں۔
+                                                                @else
+                                                                    No news available for this category at the moment.
+                                                                @endif
+                                                            </p>
                                                         </div>
                                                     @endforelse
                                                 </div>
                                             </div>
                                             {{-- End sports news --}}
+
                                         </div>
                                     </div>
                                 </div>
@@ -366,9 +376,9 @@
                                         <h2
                                             class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
                                             @foreach ($categories as $category)
-                                                @if ($category->category_name == 'Business')
+                                                @if ($category->category_name == 'Business' || $category->category_name == 'کاروبار')
                                                     <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
-                                                        href="{{ route('single.category', $category->category_slug) }}">
+                                                        href="{{ route($category->category_name == 'Business' ? 'single.category' : 'urdu.single.category', $category->category_slug) }}">
                                                         <span>{{ $category->category_name }}</span>
                                                         <i class="icon-1 fw-bold unicon-chevron-right"></i>
                                                     </a>
@@ -376,6 +386,7 @@
                                             @endforeach
                                         </h2>
                                     </div>
+
                                     <div class="block-content">
                                         <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
                                             @forelse ($businessnews as $business)
@@ -386,18 +397,17 @@
                                                                 <div
                                                                     class="post-header panel vstack justify-between gap-1">
                                                                     <h3 class="post-title h6 m-0 text-truncate-2">
-                                                                        <a class="text-none hover:text-primary duration-150"
-                                                                            href="{{ route('single.news', $business->news_slug) }}">{{ $business->news_title }}</a>
+                                                                        {{-- <a class="text-none hover:text-primary duration-150"
+                                                                            href="{{ route($business->language == 'en' ? 'single.news' : 'urdu.news', $business->news_slug) }}">
+                                                                            {{ $business->news_title }}
+                                                                        </a> --}}
                                                                     </h3>
                                                                     <div
                                                                         class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
                                                                         <span data-bs-toggle="tooltip"
-                                                                            title=" {{ $business->created_at->format('d M Y') }}">
-                                                                            {{-- You might want to display a short, static value here if the tooltip provides the dynamic one --}}
-
+                                                                            title="{{ $business->created_at->format('d M Y') }}">
                                                                             {{ $business->created_at->diffForHumans() }}
                                                                             <i class="bi bi-info-circle-fill"></i>
-
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -409,11 +419,11 @@
                                                                         class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-1x1">
                                                                         <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
                                                                             src="{{ asset('news/news_images/' . $business->news_image) }}"
-                                                                            alt="Solo Travel: Some Tips and Destinations for the Adventurous Explorer"
+                                                                            alt="{{ $business->news_title }}"
                                                                             data-uc-img="loading: lazy">
                                                                     </div>
-                                                                    <a href="{{ route('single.news', $business->news_slug) }}"
-                                                                        class="position-cover"></a>
+                                                                    {{-- <a href="{{ route($business->language == 'en' ? 'single.news' : 'urdu.news', $business->news_slug) }}"
+                                                                        class="position-cover"></a> --}}
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -428,6 +438,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>

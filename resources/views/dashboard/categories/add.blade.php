@@ -56,6 +56,29 @@
                         <form method="POST" action="{{ route('category.add') }}" class="needs-validation" novalidate>
                             @csrf
 
+                            {{-- Language Selector in radio btn --}}
+                            <div class="col-md-12">
+                                <label class="form-label">Language <span class="required-star">*</span></label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
+                                        name="language" id="language" value="en"
+                                        {{ old('language', 'en') == 'en' ? 'checked' : '' }} required>
+                                    <label class="form-check-label" for="language">English</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
+                                        name="language" id="language" value="ur"
+                                        {{ old('language', 'en') == 'ur' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="language">Urdu</label>
+                                </div>
+                                @error('language')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <p class="form-note">Select the language for the news content.</p>
+                            </div>
+
                             <div class="row g-4">
                                 {{-- Category Name Field with Floating Icon --}}
                                 <div class="col-12">
@@ -79,8 +102,7 @@
                                         <select name="category_status" id="category_status"
                                             class="form-select border-2 ps-5 py-3 @error('category_status') is-invalid @enderror"
                                             required>
-                                            <option value=""
-                                                disabled>Select Status</option>
+                                            <option value="" disabled>Select Status</option>
                                             <option value="active"
                                                 {{ old('category_status') == 'active' ? 'selected' : '' }}>Active</option>
                                             <option value="inactive"
@@ -95,6 +117,21 @@
                                     </div>
                                 </div>
 
+                                {{-- Custom slug field --}}
+                                <div class="col-12">
+                                    <div class="form-floating position-relative">
+                                        <i class="fas fa-link floating-icon"></i>
+                                        <input type="text" class="form-control border-2 ps-5 py-3 bg-light"
+                                            id="actual_slug" name="actual_slug" value="{{ old('actual_slug') }}"
+                                            placeholder="Custom Slug" onkeyup="generateSlug()">
+                                        <label for="actual_slug" class="form-label text-muted ms-4">Custom Slug (Optional)</label>
+                                        @error('actual_slug')
+                                            <div class="invalid-feedback d-block">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <p class="form-note">You can provide a custom slug, or leave it blank
+                                        to generate one automatically based on the category name.</p>
+                                </div>
 
                                 {{-- Generated Category Slug (Read-only) --}}
                                 <div class="col-12">
@@ -358,24 +395,45 @@
     </style>
 
     <script>
-        function generateSlug() {
-            // Get value from the user-editable 'actual_slug' field (or category_name if you want to use that for initial slug)
-            var inputslug = document.getElementById('category_name')
-            .value; // Using category_name for initial slug generation
-            if (document.getElementById('category_name').value !== '') { // Prioritize category_name if user types there
-                inputslug = document.getElementById('category_name').value;
-            }
+       function generateSlug() {
+    // 'actual_slug' فیلڈ سے ویلیو لیں، اگر صارف نے فراہم کی ہو
+    // ورنہ 'category_name' سے ویلیو لیں
+    var inputslug = '';
 
-            // Generate a clean slug
-            var generatedSlug = inputslug
-                .trim()
-                .toLowerCase()
-                .replace(/[^a-z0-9äöüß]+/g, '-') // Allow ÄäÖöÜüß and replace non-alphanumeric with hyphens
-                .replace(/^-|-$/g, ''); // Remove leading/trailing hyphens
-
-            // Set the generated slug to the read-only 'category_slug' field
-            document.getElementById('category_slug').value = generatedSlug;
+    // اگر 'actual_slug' میں ویلیو ہے تو اسے استعمال کریں
+    if (document.getElementById('actual_slug') && document.getElementById('actual_slug').value.trim() !== '') {
+        inputslug = document.getElementById('actual_slug').value.trim();
+    }
+    // ورنہ، اگر 'category_name' میں ویلیو ہے تو اسے استعمال کریں
+    else if (document.getElementById('category_name') && document.getElementById('category_name').value.trim() !== '') {
+        inputslug = document.getElementById('category_name').value.trim();
+    }
+    // اگر دونوں خالی ہیں تو inputslug خالی ہی رہے گا
+    
+    // اگر inputslug خالی ہے تو مزید پراسیسنگ کی ضرورت نہیں
+    if (inputslug === '') {
+        if (document.getElementById('category_slug')) {
+            document.getElementById('category_slug').value = ''; // slug کو خالی کر دیں
         }
+        return; 
+    }
+
+    // ایک صاف ستھرا slug بنائیں
+    // اس میں انگریزی حروف، اردو حروف، نمبرز، اور ہائفن شامل ہو سکتے ہیں
+    var generatedSlug = inputslug
+        .toLowerCase() // تمام حروف کو چھوٹا کر دیں (اردو پر اثر نہیں پڑے گا)
+        // ہائفن کے علاوہ تمام اسپیشل کریکٹرز کو ہٹا دیں اور جگہ کو ہائفن سے بدل دیں
+        // یہ ریگولر ایکسپریشن انگریزی، اردو اور نمبرز کو اجازت دیتا ہے
+        .replace(/[^a-z0-9\u0600-\u06FF\s-]/g, '') 
+        .replace(/\s+/g, '-') // اسپیس کو ہائفن سے بدل دیں
+        .replace(/--+/g, '-') // ایک سے زیادہ ہائفن کو ایک ہائفن میں بدل دیں
+        .replace(/^-+|-+$/g, ''); // شروع اور آخر سے ہائفن ہٹا دیں
+
+    // تیار کردہ slug کو 'category_slug' فیلڈ میں سیٹ کریں
+    if (document.getElementById('category_slug')) {
+        document.getElementById('category_slug').value = generatedSlug;
+    }
+}
 
         // Call generateSlug on page load to ensure the read-only slug field is populated if old input exists
         window.onload = function() {
@@ -383,30 +441,30 @@
         };
 
         // Form Validation 
-        (function() {
-            'use strict';
-            const forms = document.querySelectorAll('.needs-validation');
+        // (function() {
+        //     'use strict';
+        //     const forms = document.querySelectorAll('.needs-validation');
 
-            Array.from(forms).forEach(form => {
-                form.addEventListener('submit', event => {
-                    if (!form.checkValidity()) {
-                        event.preventDefault();
-                        event.stopPropagation();
+        //     Array.from(forms).forEach(form => {
+        //         form.addEventListener('submit', event => {
+        //             if (!form.checkValidity()) {
+        //                 event.preventDefault();
+        //                 event.stopPropagation();
 
-                        // Scroll to first invalid field
-                        const firstInvalid = form.querySelector(':invalid');
-                        if (firstInvalid) {
-                            firstInvalid.scrollIntoView({
-                                behavior: 'smooth',
-                                block: 'center'
-                            });
-                            firstInvalid.focus();
-                        }
-                    }
+        //                 // Scroll to first invalid field
+        //                 const firstInvalid = form.querySelector(':invalid');
+        //                 if (firstInvalid) {
+        //                     firstInvalid.scrollIntoView({
+        //                         behavior: 'smooth',
+        //                         block: 'center'
+        //                     });
+        //                     firstInvalid.focus();
+        //                 }
+        //             }
 
-                    form.classList.add('was-validated');
-                }, false);
-            });
-        })();
+        //             form.classList.add('was-validated');
+        //         }, false);
+        //     });
+        // })();
     </script>
 @endsection

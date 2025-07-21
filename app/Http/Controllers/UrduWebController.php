@@ -30,11 +30,12 @@ class UrduWebController extends Controller
         $query->where('language', 'ur');
     }])->get();
 
+    $sportsCategory = Categories::where('category_name', 'کھیل')->first();
+
     $sportsNews = News::whereHas('category', function ($query) {
-            $query->where('category_name', 'Sports');
+            $query->where('category_name', 'کھیل');
         })
         ->where('news_status', 'active')
-        ->where('language', 'ur')
         ->latest()
         ->take(4)
         ->get();
@@ -49,7 +50,7 @@ class UrduWebController extends Controller
         ->get();
 
     $businessnews = News::whereHas('category', function ($query) {
-            $query->where('category_name', 'Business');
+            $query->where('category_name', 'کاروبار');
         })
         ->where('news_status', 'active')
         ->where('language', 'ur')
@@ -111,6 +112,7 @@ class UrduWebController extends Controller
         'activeNews',
         'categories',
         'sportsNews',
+        'sportsCategory',
         'businessnews',
         'autonews',
         'entertainmentnews',
@@ -121,5 +123,26 @@ class UrduWebController extends Controller
         'blogs'
     ));
 }
+
+public function singlecategoryview($slug)
+{
+    // Get the category by slug
+    $category = Categories::where('category_slug', $slug)->firstOrFail();
+
+    // Get the Urdu category name
+    $categoryname = $category->category_name;
+
+    // Count total Urdu news only (optional)
+    $totalNewsCount = News::where('language', 'ur')->count();
+
+    // Fetch only Urdu news for this category
+    $news = News::where('category_id', $category->id)
+        ->where('language', 'ur') // Only Urdu news
+        ->orderBy('created_at', 'desc')
+        ->paginate(9);
+
+    return view('front.singlecategory', compact('news', 'categoryname', 'totalNewsCount'));
+}
+
 
 }
