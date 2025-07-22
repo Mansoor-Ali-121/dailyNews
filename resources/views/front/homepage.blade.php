@@ -211,24 +211,28 @@
                         <div class="row child-cols-12 lg:child-cols g-4 lg:g-6 col-match" data-uc-grid>
                             <div class="lg:col-8">
                                 <div class="block-layout grid-layout vstack gap-2 lg:gap-3 panel overflow-hidden">
-                                    <div class="block-header panel pt-1 border-top">
-                                        <h2
-                                            class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
-                                            @foreach ($categories as $category)
-                                                @if ($category->category_name === 'Sports')
-                                                    <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
-                                                        href="{{ route('single.category', $category->category_slug) }}">
-                                                        <span>
-                                                            {{ app()->getLocale() == 'ur' ? 'کھیل' : $category->category_name }}
-                                                        </span>
-                                                        <i
-                                                            class="icon-1 fw-bold {{ app()->getLocale() == 'ur' ? 'unicon-chevron-left' : 'unicon-chevron-right' }}"></i>
-                                                    </a>
-                                                @endif
-                                            @endforeach
+                                    @php
+                                        $sportsCategory = $categories->firstWhere(
+                                            'category_name',
+                                            app()->getLocale() === 'ur' ? 'کھیل' : 'Sports',
+                                        );
+                                    @endphp
 
-                                        </h2>
-                                    </div>
+
+                                    @if ($sportsCategory)
+                                        <div class="block-header panel pt-1 border-top">
+                                            <h2
+                                                class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
+                                                <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
+                                                    href="{{ route('urdu.single.category', app()->getLocale() == 'ur' ? $sportsCategory->category_slug : $sportsCategory->category_slug) }}">
+                                                    <span>{{ app()->getLocale() == 'ur' ? 'کھیل' : $sportsCategory->category_name }}</span>
+                                                    <i
+                                                        class="icon-1 fw-bold {{ app()->getLocale() == 'ur' ? 'unicon-chevron-left' : 'unicon-chevron-right' }}"></i>
+                                                </a>
+                                            </h2>
+                                        </div>
+                                    @endif
+
                                     <div class="block-content">
                                         <div class="panel row child-cols-12 md:child-cols g-2 lg:g-4 col-match sep-y"
                                             data-uc-grid>
@@ -319,7 +323,7 @@
                                                                             class="post-header panel vstack justify-between gap-1">
                                                                             <h3 class="post-title h6 m-0 text-truncate-2">
                                                                                 <a class="text-none hover:text-primary duration-150"
-                                                                                    href="{{ route('single.news', $sports->news_slug) }}">
+                                                                                    href="{{ route($sports->language === 'ur' ? 'urdu.single.news' : 'single.news', $sports->news_slug) }}">
                                                                                     {{ $sports->news_title }}
                                                                                 </a>
                                                                             </h3>
@@ -370,74 +374,84 @@
                                 </div>
                             </div>
                             {{-- Upper news category Business News --}}
-                            <div class="lg:col-4">
-                                <div class="block-layout grid-layout vstack gap-2 lg:gap-3 panel overflow-hidden">
-                                    <div class="block-header panel pt-1 border-top">
-                                        <h2
-                                            class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
-                                            @foreach ($categories as $category)
-                                                @if ($category->category_name == 'Business' || $category->category_name == 'کاروبار')
-                                                    <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
-                                                        href="{{ route($category->category_name == 'Business' ? 'single.category' : 'urdu.single.category', $category->category_slug) }}">
-                                                        <span>{{ $category->category_name }}</span>
-                                                        <i class="icon-1 fw-bold unicon-chevron-right"></i>
-                                                    </a>
-                                                @endif
-                                            @endforeach
-                                        </h2>
-                                    </div>
+                            @php
+                                $businessCategory = $categories->firstWhere(
+                                    'category_name',
+                                    app()->getLocale() === 'ur' ? 'کاروبار' : 'Business',
+                                );
+                            @endphp
 
-                                    <div class="block-content">
-                                        <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
-                                            @forelse ($businessnews as $business)
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div>
-                                                                <div
-                                                                    class="post-header panel vstack justify-between gap-1">
-                                                                    <h3 class="post-title h6 m-0 text-truncate-2">
-                                                                        {{-- <a class="text-none hover:text-primary duration-150"
-                                                                            href="{{ route($business->language == 'en' ? 'single.news' : 'urdu.news', $business->news_slug) }}">
-                                                                            {{ $business->news_title }}
-                                                                        </a> --}}
-                                                                    </h3>
+                            @if ($businessCategory)
+                                <div class="lg:col-4">
+                                    <div class="block-layout grid-layout vstack gap-2 lg:gap-3 panel overflow-hidden">
+                                        <div class="block-header panel pt-1 border-top">
+                                            <h2
+                                                class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
+                                                <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
+                                                    href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.category' : 'single.category', $businessCategory->category_slug) }}">
+                                                    <span>{{ app()->getLocale() === 'ur' ? 'کاروبار' : $businessCategory->category_name }}</span>
+                                                    <i
+                                                        class="icon-1 fw-bold {{ app()->getLocale() === 'ur' ? 'unicon-chevron-left' : 'unicon-chevron-right' }}"></i>
+                                                </a>
+                                            </h2>
+                                        </div>
+
+                                        <div class="block-content">
+                                            <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
+                                                @forelse ($businessnews as $business)
+                                                    <div>
+                                                        <article class="post type-post panel uc-transition-toggle">
+                                                            <div class="row child-cols g-2 lg:g-3" data-uc-grid>
+                                                                <div>
                                                                     <div
-                                                                        class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                        <span data-bs-toggle="tooltip"
-                                                                            title="{{ $business->created_at->format('d M Y') }}">
-                                                                            {{ $business->created_at->diffForHumans() }}
-                                                                            <i class="bi bi-info-circle-fill"></i>
-                                                                        </span>
+                                                                        class="post-header panel vstack justify-between gap-1">
+                                                                        <h3 class="post-title h6 m-0 text-truncate-2">
+                                                                            <a class="text-none hover:text-primary duration-150"
+                                                                                href="{{ route($business->language === 'ur' ? 'urdu.single.news' : 'single.news', $business->news_slug) }}">
+                                                                                {{ $business->news_title }}
+                                                                            </a>
+                                                                        </h3>
+                                                                        <div
+                                                                            class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
+                                                                            <span data-bs-toggle="tooltip"
+                                                                                title="{{ $business->created_at->format('d M Y') }}">
+                                                                                {{ $business->created_at->diffForHumans() }}
+                                                                                <i class="bi bi-info-circle-fill"></i>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-auto">
+                                                                    <div
+                                                                        class="post-media panel overflow-hidden max-w-72px min-w-72px">
+                                                                        <div
+                                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-1x1">
+                                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
+                                                                                src="{{ asset('news/news_images/' . $business->news_image) }}"
+                                                                                alt="{{ $business->news_title }}"
+                                                                                data-uc-img="loading: lazy">
+                                                                        </div>
+                                                                        <a href="{{ route($business->language === 'ur' ? 'urdu.single.news' : 'single.news', $business->news_slug) }}"
+                                                                            class="position-cover"></a>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            <div class="col-auto">
-                                                                <div
-                                                                    class="post-media panel overflow-hidden max-w-72px min-w-72px">
-                                                                    <div
-                                                                        class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-1x1">
-                                                                        <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                            src="{{ asset('news/news_images/' . $business->news_image) }}"
-                                                                            alt="{{ $business->news_title }}"
-                                                                            data-uc-img="loading: lazy">
-                                                                    </div>
-                                                                    {{-- <a href="{{ route($business->language == 'en' ? 'single.news' : 'urdu.news', $business->news_slug) }}"
-                                                                        class="position-cover"></a> --}}
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                            @empty
-                                                <div class="col-12 text-center py-5">
-                                                    <p>No news available for this category at the moment.</p>
-                                                </div>
-                                            @endforelse
+                                                        </article>
+                                                    </div>
+                                                @empty
+                                                    <div class="col-12 text-center py-5">
+                                                        <p class="text-muted">
+                                                            {{ app()->getLocale() === 'ur' ? 'اس زمرے کی کوئی خبر دستیاب نہیں۔' : 'No news available for this category at the moment.' }}
+                                                        </p>
+                                                    </div>
+                                                @endforelse
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            @endif
+
+
 
                         </div>
                     </div>

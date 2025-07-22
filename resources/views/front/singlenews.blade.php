@@ -192,7 +192,7 @@
                                 </div>
                                 {{-- Related to this topic: --}}
                                 <div class="post-related panel border-top pt-2 mt-8 xl:mt-9">
-                                    <h4 class="h5 xl:h4 mb-5 xl:mb-6">Related to this News:</h4>
+                                    <h4 class="h5 xl:h4 mb-5 xl:mb-6">{{__('messages.Related to this News')}}</h4>
                                     <div class="row child-cols-6 md:child-cols-4 gx-2 gy-4 sm:gx-3 sm:gy-6">
 
                                         {{-- Loop through each related news item. Ensure $relatedNews (capital 'N') is passed from controller. --}}

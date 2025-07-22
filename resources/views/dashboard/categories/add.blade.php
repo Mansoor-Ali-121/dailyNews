@@ -124,7 +124,8 @@
                                         <input type="text" class="form-control border-2 ps-5 py-3 bg-light"
                                             id="actual_slug" name="actual_slug" value="{{ old('actual_slug') }}"
                                             placeholder="Custom Slug" onkeyup="generateSlug()">
-                                        <label for="actual_slug" class="form-label text-muted ms-4">Custom Slug (Optional)</label>
+                                        <label for="actual_slug" class="form-label text-muted ms-4">Custom Slug
+                                            (Optional)</label>
                                         @error('actual_slug')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
@@ -395,76 +396,41 @@
     </style>
 
     <script>
-       function generateSlug() {
-    // 'actual_slug' فیلڈ سے ویلیو لیں، اگر صارف نے فراہم کی ہو
-    // ورنہ 'category_name' سے ویلیو لیں
-    var inputslug = '';
+        function generateSlug() {
 
-    // اگر 'actual_slug' میں ویلیو ہے تو اسے استعمال کریں
-    if (document.getElementById('actual_slug') && document.getElementById('actual_slug').value.trim() !== '') {
-        inputslug = document.getElementById('actual_slug').value.trim();
-    }
-    // ورنہ، اگر 'category_name' میں ویلیو ہے تو اسے استعمال کریں
-    else if (document.getElementById('category_name') && document.getElementById('category_name').value.trim() !== '') {
-        inputslug = document.getElementById('category_name').value.trim();
-    }
-    // اگر دونوں خالی ہیں تو inputslug خالی ہی رہے گا
-    
-    // اگر inputslug خالی ہے تو مزید پراسیسنگ کی ضرورت نہیں
-    if (inputslug === '') {
-        if (document.getElementById('category_slug')) {
-            document.getElementById('category_slug').value = ''; // slug کو خالی کر دیں
+            var inputslug = '';
+
+
+            if (document.getElementById('actual_slug') && document.getElementById('actual_slug').value.trim() !== '') {
+                inputslug = document.getElementById('actual_slug').value.trim();
+            } else if (document.getElementById('category_name') && document.getElementById('category_name').value.trim() !==
+                '') {
+                inputslug = document.getElementById('category_name').value.trim();
+            }
+
+            if (inputslug === '') {
+                if (document.getElementById('category_slug')) {
+                    document.getElementById('category_slug').value = '';
+                }
+                return;
+            }
+
+            var generatedSlug = inputslug
+                .toLowerCase()
+                .replace(/[^a-z0-9\u0600-\u06FF\s-]/g, '')
+                .replace(/\s+/g, '-')
+                .replace(/--+/g, '-')
+                .replace(/^-+|-+$/g, '');
+
+
+            if (document.getElementById('category_slug')) {
+                document.getElementById('category_slug').value = generatedSlug;
+            }
         }
-        return; 
-    }
 
-    // ایک صاف ستھرا slug بنائیں
-    // اس میں انگریزی حروف، اردو حروف، نمبرز، اور ہائفن شامل ہو سکتے ہیں
-    var generatedSlug = inputslug
-        .toLowerCase() // تمام حروف کو چھوٹا کر دیں (اردو پر اثر نہیں پڑے گا)
-        // ہائفن کے علاوہ تمام اسپیشل کریکٹرز کو ہٹا دیں اور جگہ کو ہائفن سے بدل دیں
-        // یہ ریگولر ایکسپریشن انگریزی، اردو اور نمبرز کو اجازت دیتا ہے
-        .replace(/[^a-z0-9\u0600-\u06FF\s-]/g, '') 
-        .replace(/\s+/g, '-') // اسپیس کو ہائفن سے بدل دیں
-        .replace(/--+/g, '-') // ایک سے زیادہ ہائفن کو ایک ہائفن میں بدل دیں
-        .replace(/^-+|-+$/g, ''); // شروع اور آخر سے ہائفن ہٹا دیں
 
-    // تیار کردہ slug کو 'category_slug' فیلڈ میں سیٹ کریں
-    if (document.getElementById('category_slug')) {
-        document.getElementById('category_slug').value = generatedSlug;
-    }
-}
-
-        // Call generateSlug on page load to ensure the read-only slug field is populated if old input exists
         window.onload = function() {
             generateSlug();
         };
-
-        // Form Validation 
-        // (function() {
-        //     'use strict';
-        //     const forms = document.querySelectorAll('.needs-validation');
-
-        //     Array.from(forms).forEach(form => {
-        //         form.addEventListener('submit', event => {
-        //             if (!form.checkValidity()) {
-        //                 event.preventDefault();
-        //                 event.stopPropagation();
-
-        //                 // Scroll to first invalid field
-        //                 const firstInvalid = form.querySelector(':invalid');
-        //                 if (firstInvalid) {
-        //                     firstInvalid.scrollIntoView({
-        //                         behavior: 'smooth',
-        //                         block: 'center'
-        //                     });
-        //                     firstInvalid.focus();
-        //                 }
-        //             }
-
-        //             form.classList.add('was-validated');
-        //         }, false);
-        //     });
-        // })();
     </script>
 @endsection

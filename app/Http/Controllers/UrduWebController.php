@@ -144,5 +144,57 @@ public function singlecategoryview($slug)
     return view('front.singlecategory', compact('news', 'categoryname', 'totalNewsCount'));
 }
 
+public function showsinglenews(string $slug)
+{
+    // Urdu categories
+    $categories = Categories::withCount('news')->get();
+
+    // Show single Urdu news
+    $news = News::with('author')->where([
+        ['news_slug', '=', $slug],
+        ['news_status', '=', 'active'],
+        ['language', '=', 'ur'], // <-- Sirf Urdu news fetch hogi
+    ])->firstOrFail();
+
+    // Latest Urdu news
+    $latestnews = News::where([
+        ['news_status', '=', 'active'],
+        ['language', '=', 'ur'],
+    ])->latest()->take(4)->get();
+
+    // Related Urdu news
+    $relatedNews = News::where([
+        ['news_status', '=', 'active'],
+        ['language', '=', 'ur'],
+        ['category_id', '=', $news->category_id],
+        ['id', '!=', $news->id],
+    ])->latest()->take(3)->get();
+
+    $currentCategoryId = $news->category_id;
+
+    // Previous Urdu post
+    $previousPost = News::where([
+        ['news_status', '=', 'active'],
+        ['language', '=', 'ur'],
+        ['category_id', '=', $currentCategoryId],
+        ['id', '<', $news->id],
+    ])->orderBy('id', 'desc')->first();
+
+    // Next Urdu post
+    $nextPost = News::where([
+        ['news_status', '=', 'active'],
+        ['language', '=', 'ur'],
+        ['category_id', '=', $currentCategoryId],
+        ['id', '>', $news->id],
+    ])->orderBy('id', 'asc')->first();
+
+    if ($news && $categories) {
+        return view('front.singlenews', compact('news', 'categories', 'latestnews', 'relatedNews', 'previousPost', 'nextPost'));
+    } else {
+        return view('404');
+    }
+}
+
+
 
 }

@@ -5,14 +5,21 @@
             <div class="container max-w-xl">
                 <div class="panel vstack gap-3 sm:gap-6 lg:gap-9">
                     <header class="page-header panel vstack text-center">
-                        <h1 class="h3 lg:h1">
-                            {{__('messages.category')}}:
-                            @if (request()->is('urdu/*'))
-                                {{ __('messages.categories.' . Str::slug($categoryname)) ?? $categoryname }}
-                            @else
-                                {{ $categoryname }}
-                            @endif
-                        </h1>
+                        @php
+    use Illuminate\Support\Str;
+    $slug = Str::slug($categoryname);
+    $translatedCategory = __('messages.categories.' . $slug);
+@endphp
+
+<h1 class="h3 lg:h1">
+    {{ __('messages.category') }}:
+    @if (app()->getLocale() === 'ur' && $translatedCategory !== 'messages.categories.' . $slug)
+        {{ $translatedCategory }}
+    @else
+        {{ $categoryname }}
+    @endif
+</h1>
+
                         <span class="m-0 opacity-60">
                             Showing {{ $news->firstItem() }} to {{ $news->lastItem() }} of {{ $news->total() }} total News
                         </span>

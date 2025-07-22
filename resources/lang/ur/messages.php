@@ -3,6 +3,7 @@
 return [
     'breaking_news' => 'تازہ ترین خبریں',
     'category'=> 'زمرہ',
+    'Related to this News'=> ' اس خبر سے متعلق',
 ];
 return [
     'categories' => [
