@@ -347,7 +347,7 @@
                                                                                     alt="{{ $sports->news_title }}"
                                                                                     data-uc-img="loading: lazy">
                                                                             </div>
-                                                                            <a href="{{ route('single.news', $sports->news_slug) }}"
+                                                                            <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $sports->news_slug) }}"
                                                                                 class="position-cover"></a>
                                                                         </div>
                                                                     </div>
@@ -651,7 +651,9 @@
                                                                             class="post-header panel vstack justify-between gap-1">
                                                                             <h3 class="post-title h6 m-0 text-truncate-2">
                                                                                 <a class="text-none hover:text-primary duration-150"
-                                                                                    href={{ route('single.news', $item->news_slug) }}>{{ $item->news_title }}</a>
+                                                                                    href="{{ route($item->language === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}">
+                                                                                    {{ $item->news_title }}
+                                                                                </a>
                                                                             </h3>
                                                                             <div
                                                                                 class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
@@ -677,7 +679,7 @@
                                                                                     alt="Business Agility the Digital Age: Leveraging AI and Automation"
                                                                                     data-uc-img="loading: lazy">
                                                                             </div>
-                                                                            <a href="{{ route('single.news', $item->news_slug) }}"
+                                                                            <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}"
                                                                                 class="position-cover"></a>
                                                                         </div>
                                                                     </div>
@@ -696,18 +698,27 @@
                             <div class="lg:col-4 order-1">
                                 <div class="block-layout grid-layout vstack gap-2 lg:gap-3 panel overflow-hidden">
                                     <div class="block-header panel pt-1 border-top">
-                                        <h2
-                                            class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
-                                            @foreach ($categories as $category)
-                                                @if ($category->category_name == 'Auto')
+                                        @php
+                                            $autoCategory = $categories->firstWhere(
+                                                'category_name',
+                                                app()->getLocale() === 'ur' ? 'آٹو' : 'Auto',
+                                            );
+                                        @endphp
+
+                                        @if ($autoCategory)
+                                            <div class="block-header panel pt-1 border-top">
+                                                <h2
+                                                    class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
                                                     <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
-                                                        href="{{ route('single.category', $category->category_slug) }}">
-                                                        <span>{{ $category->category_name }}</span>
-                                                        <i class="icon-1 fw-bold unicon-chevron-right"></i>
+                                                        href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $autoCategory->category_slug) }}">
+                                                        <span>{{ $autoCategory->category_name }}</span>
+                                                        <i
+                                                            class="icon-1 fw-bold {{ app()->getLocale() == 'ur' ? 'unicon-chevron-left' : 'unicon-chevron-right' }}"></i>
                                                     </a>
-                                                @endif
-                                            @endforeach
-                                        </h2>
+                                                </h2>
+                                            </div>
+                                        @endif
+
                                     </div>
                                     <div class="block-content">
                                         <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
@@ -720,17 +731,16 @@
                                                                     class="post-header panel vstack justify-between gap-1">
                                                                     <h3 class="post-title h6 m-0 text-truncate-2">
                                                                         <a class="text-none hover:text-primary duration-150"
-                                                                            href={{ route('single.news', $auto->news_slug) }}>{{ $auto->news_title }}</a>
+                                                                            href="{{ route($auto->language === 'ur' ? 'urdu.single.news' : 'single.news', $auto->news_slug) }}">
+                                                                            {{ $auto->news_title }}
+                                                                        </a>
                                                                     </h3>
                                                                     <div
                                                                         class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
                                                                         <span data-bs-toggle="tooltip"
-                                                                            title=" {{ $auto->created_at->format('d M Y') }}">
-                                                                            {{-- You might want to display a short, static value here if the tooltip provides the dynamic one --}}
-
+                                                                            title="{{ $auto->created_at->format('d M Y') }}">
                                                                             {{ $auto->created_at->diffForHumans() }}
                                                                             <i class="bi bi-info-circle-fill"></i>
-
                                                                         </span>
                                                                     </div>
                                                                 </div>
@@ -743,10 +753,10 @@
                                                                         <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
                                                                             src="{{ asset('news/news_images/' . $auto->news_image) }}"
                                                                             data-src="{{ asset('news/news_images/' . $auto->news_image) }}"
-                                                                            alt="Tech Innovations Reshaping the Retail Landscape: AI Payments"
+                                                                            alt="{{ $auto->news_title }}"
                                                                             data-uc-img="loading: lazy">
                                                                     </div>
-                                                                    <a href="{{ route('single.news', $auto->news_slug) }}"
+                                                                    <a href="{{ route($auto->language === 'ur' ? 'urdu.single.news' : 'single.news', $auto->news_slug) }}"
                                                                         class="position-cover"></a>
                                                                 </div>
                                                             </div>
@@ -756,6 +766,7 @@
                                             @endforeach
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
                             {{-- left side Automobile news end --}}
@@ -776,18 +787,26 @@
                             <div class="lg:col-4">
                                 <div class="block-layout list-layout vstack gap-2 lg:gap-3 panel overflow-hidden">
                                     <div class="block-header panel pt-1 border-top">
-                                        <h2
-                                            class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
-                                            @foreach ($categories as $category)
-                                                @if ($category->category_name == 'Politics')
+                                        @php
+                                            $politicsCategory = $categories->firstWhere(
+                                                'category_name',
+                                                app()->getLocale() === 'ur' ? 'سیاست' : 'Politics',
+                                            );
+                                        @endphp
+
+                                        @if ($politicsCategory)
+                                            <div class="block-header panel pt-1 border-top">
+                                                <h2
+                                                    class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
                                                     <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
-                                                        href="{{ route('single.category', $category->category_slug) }}">
-                                                        <span>{{ $category->category_name }}</span>
-                                                        <i class="icon-1 fw-bold unicon-chevron-right"></i>
+                                                        href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $politicsCategory->category_slug) }}">
+                                                        <span>{{ $politicsCategory->category_name }}</span>
+                                                        <i
+                                                            class="icon-1 fw-bold {{ app()->getLocale() == 'ur' ? 'unicon-chevron-left' : 'unicon-chevron-right' }}"></i>
                                                     </a>
-                                                @endif
-                                            @endforeach
-                                        </h2>
+                                                </h2>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="block-content">
                                         <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
@@ -847,14 +866,14 @@
                                                             <h3
                                                                 class="post-title h6 lg:h5 m-0 m-0 max-w-600px text-white text-truncate-2">
                                                                 <a class="text-none text-white"
-                                                                    href="{{ route('single.news', $latestPoliticsNews->news_slug) }}">{{ $latestPoliticsNews->news_title }}</a>
+                                                                    href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $latestPoliticsNews->news_slug) }}">{{ $latestPoliticsNews->news_title }}</a>
                                                             </h3>
                                                             <div
                                                                 class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
                                                                 <span>{{ $latestPoliticsNews->created_at->format('d M Y') }}</span>
                                                             </div>
                                                         </div>
-                                                        <a href="{{ route('single.news', $latestPoliticsNews->news_slug) }}"
+                                                        <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $latestPoliticsNews->news_slug) }}"
                                                             class="position-cover"></a>
                                                     </article>
                                                 </div>
@@ -871,7 +890,7 @@
                                                                         class="post-header panel vstack justify-between gap-1">
                                                                         <h3 class="post-title h6 m-0 text-truncate-2">
                                                                             <a class="text-none hover:text-primary duration-150"
-                                                                                href="{{ route('single.news', $politics->news_slug) }}">{{ $politics->news_title }}</a>
+                                                                                href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $politics->news_slug) }}">{{ $politics->news_title }}</a>
                                                                         </h3>
                                                                         <div
                                                                             class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
@@ -897,7 +916,7 @@
                                                                                 alt="{{ $politics->news_title }}"
                                                                                 data-uc-img="loading: lazy">
                                                                         </div>
-                                                                        <a href="{{ route('single.news', $politics->news_slug) }}"
+                                                                        <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $politics->news_slug) }}"
                                                                             class="position-cover"></a>
                                                                     </div>
                                                                 </div>
@@ -918,18 +937,26 @@
                             <div class="lg:col-4">
                                 <div class="block-layout list-layout vstack gap-2 lg:gap-3 panel overflow-hidden">
                                     <div class="block-header panel pt-1 border-top">
-                                        <h2
-                                            class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
-                                            @foreach ($categories as $category)
-                                                @if ($category->category_name == 'World')
+                                        @php
+                                            $worldCategory = $categories->firstWhere(
+                                                'category_name',
+                                                app()->getLocale() === 'ur' ? 'دنیا' : 'World',
+                                            );
+                                        @endphp
+
+                                        @if ($worldCategory)
+                                            <div class="block-header panel pt-1 border-top">
+                                                <h2
+                                                    class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
                                                     <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
-                                                        href="{{ route('single.category', $category->category_slug) }}">
-                                                        <span>{{ $category->category_name }}</span>
-                                                        <i class="icon-1 fw-bold unicon-chevron-right"></i>
+                                                        href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $worldCategory->category_slug) }}">
+                                                        <span>{{ $worldCategory->category_name }}</span>
+                                                        <i
+                                                            class="icon-1 fw-bold {{ app()->getLocale() == 'ur' ? 'unicon-chevron-left' : 'unicon-chevron-right' }}"></i>
                                                     </a>
-                                                @endif
-                                            @endforeach
-                                        </h2>
+                                                </h2>
+                                            </div>
+                                        @endif
                                     </div>
                                     <div class="block-content">
                                         <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
@@ -996,7 +1023,7 @@
                                                                 <span>{{ $latestWorldnews->created_at->format('d M Y') }}</span>
                                                             </div>
                                                         </div>
-                                                        <a href="{{ route('single.news', $latestWorldnews->news_slug) }}"
+                                                        <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $latestWorldnews->news_slug) }}"
                                                             class="position-cover"></a>
                                                     </article>
                                                 </div>
@@ -1013,7 +1040,7 @@
                                                                         class="post-header panel vstack justify-between gap-1">
                                                                         <h3 class="post-title h6 m-0 text-truncate-2">
                                                                             <a class="text-none hover:text-primary duration-150"
-                                                                                href="{{ route('single.news', $world->news_slug) }}">{{ $world->news_title }}</a>
+                                                                                href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $world->news_slug) }}">{{ $world->news_title }}</a>
                                                                         </h3>
                                                                         <div
                                                                             class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
@@ -1039,7 +1066,7 @@
                                                                                 alt="{{ $world->news_title }}"
                                                                                 data-uc-img="loading: lazy">
                                                                         </div>
-                                                                        <a href="{{ route('single.news', $world->news_slug) }}"
+                                                                        <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $world->news_slug) }}"
                                                                             class="position-cover"></a>
                                                                     </div>
                                                                 </div>
@@ -1055,31 +1082,40 @@
                             </div>
                             {{-- World news Section end --}}
 
-                            {{-- Health news Section --}}
+                            {{-- Health Category Section --}}
                             <div class="lg:col-4">
                                 <div class="block-layout list-layout vstack gap-2 lg:gap-3 panel overflow-hidden">
                                     <div class="block-header panel pt-1 border-top">
-                                        <h2
-                                            class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
-                                            @foreach ($categories as $category)
-                                                @if ($category->category_name == 'Health')
+                                        @php
+                                            $healthCategory = $categories->firstWhere(
+                                                'category_name',
+                                                app()->getLocale() === 'ur' ? 'صحت' : 'Health',
+                                            );
+                                        @endphp
+
+                                        @if ($healthCategory)
+                                            <div class="block-header panel pt-1 border-top">
+                                                <h2
+                                                    class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
                                                     <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
-                                                        href="{{ route('single.category', $category->category_slug) }}">
-                                                        <span>{{ $category->category_name }}</span>
-                                                        <i class="icon-1 fw-bold unicon-chevron-right"></i>
+                                                        href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $healthCategory->category_slug) }}">
+                                                        <span>{{ $healthCategory->category_name }}</span>
+                                                        <i
+                                                            class="icon-1 fw-bold {{ app()->getLocale() == 'ur' ? 'unicon-chevron-left' : 'unicon-chevron-right' }}"></i>
                                                     </a>
-                                                @endif
-                                            @endforeach
-                                        </h2>
+                                                </h2>
+                                            </div>
+                                        @endif
                                     </div>
+                                    {{-- Health news --}}
                                     <div class="block-content">
                                         <div class="row child-cols-12 g-2 lg:g-4 sep-x" data-uc-grid>
-
-                                            {{-- Display the LATEST World news in one element --}}
+                                            {{-- Show the latest health news --}}
                                             @if ($healthnews->isNotEmpty())
                                                 @php
                                                     $latestHealthnews = $healthnews->first();
                                                 @endphp
+
                                                 <div>
                                                     <article
                                                         class="post type-post panel uc-transition-toggle vstack gap-2 lg:gap-3 overflow-hidden uc-dark">
@@ -1088,31 +1124,32 @@
                                                                 class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-4x3">
                                                                 <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
                                                                     src="{{ asset('news/news_images/' . $latestHealthnews->news_image) }}"
-                                                                    data-src="{{ asset('news/news_images/' . $latestHealthnews->news_image) }}"
                                                                     alt="{{ $latestHealthnews->news_title }}"
-                                                                    data-uc-img="loading: lazy">
+                                                                    loading="lazy">
                                                             </div>
                                                         </div>
+
                                                         <div
                                                             class="position-cover bg-gradient-to-t from-black to-transparent opacity-90">
                                                         </div>
+
                                                         <div
                                                             class="post-header panel vstack justify-start items-start flex-column-reverse gap-1 p-2 position-cover text-white">
                                                             <div
                                                                 class="post-meta panel hstack justify-between fs-7 text-white text-opacity-60 mt-1">
                                                                 <div class="meta">
                                                                     <div class="hstack gap-2">
-                                                                        <div>
-                                                                            <div class="post-author hstack gap-1">
-                                                                                <a href="page-author.html"
-                                                                                    data-uc-tooltip="{{ $latestHealthnews->author->name ?? 'Author' }}">
-                                                                                    <img src="{{ asset('images/users/' . ($latestHealthnews->author->user_image ?? 'default_user.png')) }}"
-                                                                                        alt="{{ $latestHealthnews->author->name ?? 'Author' }}"
-                                                                                        class="w-24px h-24px rounded-circle">
-                                                                                </a>
-                                                                                <a href="page-author.html"
-                                                                                    class="text-black dark:text-white text-none fw-bold">{{ $latestHealthnews->author->name ?? 'Unknown Author' }}</a>
-                                                                            </div>
+                                                                        <div class="post-author hstack gap-1">
+                                                                            <a href="#"
+                                                                                data-uc-tooltip="{{ $latestHealthnews->author->name ?? 'Author' }}">
+                                                                                <img src="{{ asset('images/users/' . ($latestHealthnews->author->user_image ?? 'default_user.png')) }}"
+                                                                                    alt="{{ $latestHealthnews->author->name ?? 'Author' }}"
+                                                                                    class="w-24px h-24px rounded-circle">
+                                                                            </a>
+                                                                            <a href="#"
+                                                                                class="text-black dark:text-white text-none fw-bold">
+                                                                                {{ $latestHealthnews->author->name ?? 'Unknown Author' }}
+                                                                            </a>
                                                                         </div>
                                                                         <div>
                                                                             <a href="#post_comment"
@@ -1123,29 +1160,31 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
-                                                                <div class="actions">
-                                                                    <div class="hstack gap-1"></div>
-                                                                </div>
                                                             </div>
+
                                                             <h3
-                                                                class="post-title h6 lg:h5 m-0 m-0 max-w-600px text-white text-truncate-2">
+                                                                class="post-title h6 lg:h5 m-0 max-w-600px text-white text-truncate-2">
                                                                 <a class="text-none text-white"
-                                                                    href="{{ route('single.news', $latestHealthnews->news_slug) }}">{{ $latestHealthnews->news_title }}</a>
+                                                                    href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $latestHealthnews->news_slug) }}">
+                                                                    {{ $latestHealthnews->news_title }}
+                                                                </a>
                                                             </h3>
+
                                                             <div
                                                                 class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
                                                                 <span>{{ $latestHealthnews->created_at->format('d M Y') }}</span>
                                                             </div>
                                                         </div>
-                                                        <a href="{{ route('single.news', $latestHealthnews->news_slug) }}"
+
+                                                        <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $latestHealthnews->news_slug) }}"
                                                             class="position-cover"></a>
                                                     </article>
                                                 </div>
                                             @endif
 
-                                            {{-- Display the OTHER THREE Politics news in down 3 --}}
+                                            {{-- Display the remaining health news --}}
                                             @if ($healthnews->count() > 1)
-                                                @foreach ($healthnews->skip(1) as $health)
+                                                @foreach ($healthnews->skip(1)->take(3) as $health)
                                                     <div>
                                                         <article class="post type-post panel uc-transition-toggle">
                                                             <div class="row child-cols g-2 lg:g-3" data-uc-grid>
@@ -1154,17 +1193,16 @@
                                                                         class="post-header panel vstack justify-between gap-1">
                                                                         <h3 class="post-title h6 m-0 text-truncate-2">
                                                                             <a class="text-none hover:text-primary duration-150"
-                                                                                href="{{ route('single.news', $health->news_slug) }}">{{ $health->news_title }}</a>
+                                                                                href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $health->news_slug) }}">
+                                                                                {{ $health->news_title }}
+                                                                            </a>
                                                                         </h3>
                                                                         <div
                                                                             class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                            <span data-bs-toggle="tooltip"
-                                                                                title=" {{ $health->created_at->format('d M Y') }}">
-                                                                                {{-- You might want to display a short, static value here if the tooltip provides the dynamic one --}}
-
+                                                                            <span
+                                                                                title="{{ $health->created_at->format('d M Y') }}">
                                                                                 {{ $health->created_at->diffForHumans() }}
                                                                                 <i class="bi bi-info-circle-fill"></i>
-
                                                                             </span>
                                                                         </div>
                                                                     </div>
@@ -1176,11 +1214,10 @@
                                                                             class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-1x1">
                                                                             <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
                                                                                 src="{{ asset('news/news_images/' . $health->news_image) }}"
-                                                                                data-src="{{ asset('news/news_images/' . $health->news_image) }}"
                                                                                 alt="{{ $health->news_title }}"
-                                                                                data-uc-img="loading: lazy">
+                                                                                loading="lazy">
                                                                         </div>
-                                                                        <a href="{{ route('single.news', $health->news_slug) }}"
+                                                                        <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $health->news_slug) }}"
                                                                             class="position-cover"></a>
                                                                     </div>
                                                                 </div>
@@ -1189,12 +1226,12 @@
                                                     </div>
                                                 @endforeach
                                             @endif
-
                                         </div>
+
                                     </div>
+                                    {{-- Health news Section end --}}
                                 </div>
                             </div>
-                            {{-- Health news Section end --}}
                         </div>
                     </div>
                 </div>
@@ -1424,7 +1461,7 @@
                                         <div class="block-header panel pt-1 border-top">
                                             <h2
                                                 class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
-                                                Latest Blogs
+                                               {{ __('messages.latest_blogs') }}
                                             </h2>
                                         </div>
                                         <div class="block-content">

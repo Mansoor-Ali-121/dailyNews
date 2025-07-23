@@ -764,4 +764,61 @@
             img.src = base64Image;
         }
     </script>
+
+     {{-- categories filter by language --}}
+    <script>
+        let allCategoriesOptions = []; // This will store the actual HTML option elements
+
+        // Function to filter and populate the dropdown based on selected language
+        function filterAndPopulateCategories(selectedLanguage) {
+            const categoryDropdown = document.getElementById('category_id');
+            if (!categoryDropdown) {
+                console.error("Category dropdown with ID 'category_id' not found.");
+                return;
+            }
+
+            // Clear existing options, but keep the "Select Category" option
+            categoryDropdown.innerHTML = '<option value="">Select Category</option>';
+
+            let foundCategories = false;
+
+            // Iterate through all stored options and append only those matching the language
+            allCategoriesOptions.forEach(option => {
+                if (option.dataset.language === selectedLanguage) {
+                    categoryDropdown.appendChild(option.cloneNode(true)); // Append a clone
+                    foundCategories = true;
+                }
+            });
+
+            if (!foundCategories) {
+                const noCategoriesOption = document.createElement('option');
+                noCategoriesOption.value = '';
+                noCategoriesOption.textContent = 'No categories found for this language.';
+                categoryDropdown.appendChild(noCategoriesOption);
+            }
+        }
+
+        // Initial load: When the DOM is fully loaded, read all category options
+        // and then filter based on the initially checked language radio button.
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryDropdown = document.getElementById('category_id');
+            if (categoryDropdown) {
+                // Store all options (except the first "Select Category" one)
+                // Note: categoryDropdown.options is a live HTMLCollection, so convert to array
+                for (let i = 1; i < categoryDropdown.options.length; i++) {
+                    allCategoriesOptions.push(categoryDropdown.options[i].cloneNode(true));
+                }
+            } else {
+                console.error("Category dropdown with ID 'category_id' not found on DOMContentLoaded.");
+            }
+
+            const initialLanguageInput = document.querySelector('input[name="language"]:checked');
+            if (initialLanguageInput) {
+                filterAndPopulateCategories(initialLanguageInput.value);
+            }
+        });
+    </script>
+    <script>
+        const allCategoriesData = @json($categories ?? []);
+    </script>
 @endsection
