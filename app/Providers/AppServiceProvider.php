@@ -103,6 +103,11 @@ class AppServiceProvider extends ServiceProvider
         // Latest news fetching code end
 
 
+
+        // Urdu Website Routes Start
+        
+
+
 // Set the locale based on the request for urdu or english
 
        // Locale based on first URL segment

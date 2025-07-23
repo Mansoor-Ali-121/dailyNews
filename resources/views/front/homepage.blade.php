@@ -216,16 +216,16 @@
                                             'category_name',
                                             app()->getLocale() === 'ur' ? 'کھیل' : 'Sports',
                                         );
+
                                     @endphp
-
-
                                     @if ($sportsCategory)
                                         <div class="block-header panel pt-1 border-top">
                                             <h2
                                                 class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
                                                 <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
-                                                    href="{{ route('urdu.single.category', app()->getLocale() == 'ur' ? $sportsCategory->category_slug : $sportsCategory->category_slug) }}">
-                                                    <span>{{ app()->getLocale() == 'ur' ? 'کھیل' : $sportsCategory->category_name }}</span>
+                                                    href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $sportsCategory->category_slug) }}">
+                                                    <span>{{ $sportsCategory->category_name }}</span>
+
                                                     <i
                                                         class="icon-1 fw-bold {{ app()->getLocale() == 'ur' ? 'unicon-chevron-left' : 'unicon-chevron-right' }}"></i>
                                                 </a>
@@ -388,7 +388,7 @@
                                             <h2
                                                 class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
                                                 <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
-                                                    href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.category' : 'single.category', $businessCategory->category_slug) }}">
+                                                    href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $businessCategory->category_slug) }}">
                                                     <span>{{ app()->getLocale() === 'ur' ? 'کاروبار' : $businessCategory->category_name }}</span>
                                                     <i
                                                         class="icon-1 fw-bold {{ app()->getLocale() === 'ur' ? 'unicon-chevron-left' : 'unicon-chevron-right' }}"></i>
@@ -546,20 +546,27 @@
                         <div class="row child-cols-12 lg:child-cols g-4 lg:g-6 col-match" data-uc-grid>
                             <div class="lg:col-8 order-0 lg:order-2">
                                 <div class="block-layout grid-layout vstack gap-2 lg:gap-3 panel overflow-hidden">
-                                    <div class="block-header panel pt-1 border-top">
-                                        <h2
-                                            class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
-                                            @foreach ($categories as $category)
-                                                @if ($category->category_name == 'Entertainment')
-                                                    <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
-                                                        href="{{ route('single.category', $category->category_slug) }}">
-                                                        <span>{{ $category->category_name }}</span>
-                                                        <i class="icon-1 fw-bold unicon-chevron-right"></i>
-                                                    </a>
-                                                @endif
-                                            @endforeach
-                                        </h2>
-                                    </div>
+                                    @php
+                                        $entertainmentCategory = $categories->firstWhere(
+                                            'category_name',
+                                            app()->getLocale() === 'ur' ? 'تفریح' : 'Entertainment',
+                                        );
+                                    @endphp
+
+                                    @if ($entertainmentCategory)
+                                        <div class="block-header panel pt-1 border-top">
+                                            <h2
+                                                class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
+                                                <a class="hstack d-inline-flex gap-0 text-none hover:text-primary duration-150"
+                                                    href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $entertainmentCategory->category_slug) }}">
+                                                    <span>{{ $entertainmentCategory->category_name }}</span>
+                                                    <i
+                                                        class="icon-1 fw-bold {{ app()->getLocale() == 'ur' ? 'unicon-chevron-left' : 'unicon-chevron-right' }}"></i>
+                                                </a>
+                                            </h2>
+                                        </div>
+                                    @endif
+
                                     <div class="block-content">
                                         <div class="panel row child-cols-12 md:child-cols g-2 lg:g-4 col-match sep-y"
                                             data-uc-grid>

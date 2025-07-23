@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categories;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class CategoriesController extends Controller
 {
@@ -26,18 +27,29 @@ class CategoriesController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'category_name' => 'required|string|max:255',
-            'category_slug' => 'required|string|unique:categories,category_slug|max:255',
-            'category_status' => 'required|string|in:active,inactive',
-            'language'=> 'required|in:ur,en',
-        ]);
+//   use Illuminate\Validation\Rule;
 
-        Categories::create($validated);
-        return redirect()->route('category.show')->with('success', 'Category added successfully');
-    }
+public function store(Request $request)
+{
+    $validated = $request->validate([
+        'category_name' => 'required|string|max:255',
+        'category_slug' => [
+            'required',
+            'string',
+            'max:255',
+            Rule::unique('categories')->where(function ($query) use ($request) {
+                return $query->where('language', $request->language);
+            }),
+        ],
+        'category_status' => 'required|string|in:active,inactive',
+        'language' => 'required|in:ur,en',
+    ]);
+
+    Categories::create($validated);
+
+    return redirect()->route('category.show')->with('success', 'Category added successfully');
+}
+
 
     /**
      * Display the specified resource.

@@ -11,190 +11,211 @@ use App\Models\liveVideos;
 class UrduWebController extends Controller
 {
     public function index()
-{
-    $breakingNews = BreakingNews::where('breakingnews_status', 'active')
-        ->where('language', 'ur')
-        ->get();
+    {
+        $breakingNews = BreakingNews::where('breakingnews_status', 'active')
+            ->where('language', 'ur')
+            ->get();
 
-    $activeNews = BreakingNews::where('breakingnews_status', 'active')
-        ->where('language', 'ur')
-        ->latest()
-        ->take(4)
-        ->get();
+        $activeNews = BreakingNews::where('breakingnews_status', 'active')
+            ->where('language', 'ur')
+            ->latest()
+            ->take(4)
+            ->get();
 
-    $news = News::where('news_status', 'active')
-        ->where('language', 'ur')
-        ->get();
+        $news = News::where('news_status', 'active')
+            ->where('language', 'ur')
+            ->get();
 
-    $categories = Categories::withCount(['news' => function ($query) {
-        $query->where('language', 'ur');
-    }])->get();
+        $categories = Categories::withCount(['news' => function ($query) {
+            $query->where('language', 'ur');
+        }])->get();
 
-    $sportsCategory = Categories::where('category_name', 'کھیل')->first();
+        $sportsCategory = Categories::where('category_name', 'کھیل')->first();
 
-    $sportsNews = News::whereHas('category', function ($query) {
+        $sportsNews = News::whereHas('category', function ($query) {
             $query->where('category_name', 'کھیل');
         })
-        ->where('news_status', 'active')
-        ->latest()
-        ->take(4)
-        ->get();
+            ->where('news_status', 'active')
+            ->latest()
+            ->take(4)
+            ->get();
 
-    $entertainmentnews = News::whereHas('category', function ($query) {
+        $entertainmentnews = News::whereHas('category', function ($query) {
             $query->where('category_name', 'Entertainment');
         })
-        ->where('news_status', 'active')
-        ->where('language', 'ur')
-        ->latest()
-        ->take(4)
-        ->get();
+            ->where('news_status', 'active')
+            ->where('language', 'ur')
+            ->latest()
+            ->take(4)
+            ->get();
 
-    $businessnews = News::whereHas('category', function ($query) {
+        $businessnews = News::whereHas('category', function ($query) {
             $query->where('category_name', 'کاروبار');
         })
-        ->where('news_status', 'active')
-        ->where('language', 'ur')
-        ->latest()
-        ->take(4)
-        ->get();
+            ->where('news_status', 'active')
+            ->where('language', 'ur')
+            ->latest()
+            ->take(4)
+            ->get();
 
-    $autonews = News::whereHas('category', function ($query) {
+        $autonews = News::whereHas('category', function ($query) {
             $query->where('category_name', 'Auto');
         })
-        ->where('news_status', 'active')
-        ->where('language', 'ur')
-        ->latest()
-        ->take(4)
-        ->get();
+            ->where('news_status', 'active')
+            ->where('language', 'ur')
+            ->latest()
+            ->take(4)
+            ->get();
 
-    $politicsnews = News::whereHas('category', function ($query) {
+        $politicsnews = News::whereHas('category', function ($query) {
             $query->where('category_name', 'Politics');
         })
-        ->where('news_status', 'active')
-        ->where('language', 'ur')
-        ->latest()
-        ->take(4)
-        ->get();
+            ->where('news_status', 'active')
+            ->where('language', 'ur')
+            ->latest()
+            ->take(4)
+            ->get();
 
-    $worldnews = News::whereHas('category', function ($query) {
+        $worldnews = News::whereHas('category', function ($query) {
             $query->where('category_name', 'World');
         })
-        ->where('news_status', 'active')
-        ->where('language', 'ur')
-        ->latest()
-        ->take(4)
-        ->get();
+            ->where('news_status', 'active')
+            ->where('language', 'ur')
+            ->latest()
+            ->take(4)
+            ->get();
 
-    $healthnews = News::whereHas('category', function ($query) {
+        $healthnews = News::whereHas('category', function ($query) {
             $query->where('category_name', 'Health');
         })
-        ->where('news_status', 'active')
-        ->where('language', 'ur')
-        ->latest()
-        ->take(4)
-        ->get();
+            ->where('news_status', 'active')
+            ->where('language', 'ur')
+            ->latest()
+            ->take(4)
+            ->get();
 
-    $livevideos = liveVideos::where('video_status', 'active')
-        ->where('language', 'ur')
-        ->latest()
-        ->take(4)
-        ->get();
+        $livevideos = liveVideos::where('video_status', 'active')
+            ->where('language', 'ur')
+            ->latest()
+            ->take(4)
+            ->get();
 
-    $blogs = Blog::where('blog_status', 'active')
-        ->where('language', 'ur')
-        ->latest()
-        ->take(4)
-        ->get();
+        $blogs = Blog::where('blog_status', 'active')
+            ->where('language', 'ur')
+            ->latest()
+            ->take(4)
+            ->get();
 
-    return view('front.homepage', compact(
-        'news',
-        'breakingNews',
-        'activeNews',
-        'categories',
-        'sportsNews',
-        'sportsCategory',
-        'businessnews',
-        'autonews',
-        'entertainmentnews',
-        'politicsnews',
-        'worldnews',
-        'healthnews',
-        'livevideos',
-        'blogs'
-    ));
-}
+        return view('front.homepage', compact(
+            'news',
+            'breakingNews',
+            'activeNews',
+            'categories',
+            'sportsNews',
+            'sportsCategory',
+            'businessnews',
+            'autonews',
+            'entertainmentnews',
+            'politicsnews',
+            'worldnews',
+            'healthnews',
+            'livevideos',
+            'blogs'
+        ));
+    }
 
-public function singlecategoryview($slug)
+    // public function singlecategoryview($slug)
+    // {
+    //     // Get the category by slug
+    //     $category = Categories::where('category_slug', $slug)->firstOrFail();
+
+    //     // Get the Urdu category name
+    //     $categoryname = $category->category_name;
+
+    //     // Count total Urdu news only (optional)
+    //     $totalNewsCount = News::where('language', 'ur')->count();
+
+    //     // Fetch only Urdu news for this category
+    //     $news = News::where('category_id', $category->id)
+    //         ->where('language', 'ur') // Only Urdu news
+    //         ->orderBy('created_at', 'desc')
+    //         ->paginate(9);
+
+    //     return view('front.singlecategory', compact('news', 'categoryname', 'totalNewsCount'));
+    // }
+
+
+    public function singlecategoryview($slug)
 {
-    // Get the category by slug
-    $category = Categories::where('category_slug', $slug)->firstOrFail();
+    // Get the Urdu category by slug and language
+    $category = Categories::where('category_slug', $slug)
+        ->where('language', 'ur') // Ensure category is also Urdu
+        ->firstOrFail();
 
     // Get the Urdu category name
     $categoryname = $category->category_name;
 
-    // Count total Urdu news only (optional)
+    // Count total Urdu news (optional)
     $totalNewsCount = News::where('language', 'ur')->count();
 
-    // Fetch only Urdu news for this category
+    // Fetch Urdu news for this category only
     $news = News::where('category_id', $category->id)
-        ->where('language', 'ur') // Only Urdu news
+        ->where('language', 'ur')
         ->orderBy('created_at', 'desc')
         ->paginate(9);
 
     return view('front.singlecategory', compact('news', 'categoryname', 'totalNewsCount'));
 }
 
-public function showsinglenews(string $slug)
-{
-    // Urdu categories
-    $categories = Categories::withCount('news')->get();
 
-    // Show single Urdu news
-    $news = News::with('author')->where([
-        ['news_slug', '=', $slug],
-        ['news_status', '=', 'active'],
-        ['language', '=', 'ur'], // <-- Sirf Urdu news fetch hogi
-    ])->firstOrFail();
+    public function showsinglenews(string $slug)
+    {
+        // Urdu categories
+        $categories = Categories::withCount('news')->get();
 
-    // Latest Urdu news
-    $latestnews = News::where([
-        ['news_status', '=', 'active'],
-        ['language', '=', 'ur'],
-    ])->latest()->take(4)->get();
+        // Show single Urdu news
+        $news = News::with('author')->where([
+            ['news_slug', '=', $slug],
+            ['news_status', '=', 'active'],
+            ['language', '=', 'ur'], // <-- Sirf Urdu news fetch hogi
+        ])->firstOrFail();
 
-    // Related Urdu news
-    $relatedNews = News::where([
-        ['news_status', '=', 'active'],
-        ['language', '=', 'ur'],
-        ['category_id', '=', $news->category_id],
-        ['id', '!=', $news->id],
-    ])->latest()->take(3)->get();
+        // Latest Urdu news
+        $latestnews = News::where([
+            ['news_status', '=', 'active'],
+            ['language', '=', 'ur'],
+        ])->latest()->take(4)->get();
 
-    $currentCategoryId = $news->category_id;
+        // Related Urdu news
+        $relatedNews = News::where([
+            ['news_status', '=', 'active'],
+            ['language', '=', 'ur'],
+            ['category_id', '=', $news->category_id],
+            ['id', '!=', $news->id],
+        ])->latest()->take(3)->get();
 
-    // Previous Urdu post
-    $previousPost = News::where([
-        ['news_status', '=', 'active'],
-        ['language', '=', 'ur'],
-        ['category_id', '=', $currentCategoryId],
-        ['id', '<', $news->id],
-    ])->orderBy('id', 'desc')->first();
+        $currentCategoryId = $news->category_id;
 
-    // Next Urdu post
-    $nextPost = News::where([
-        ['news_status', '=', 'active'],
-        ['language', '=', 'ur'],
-        ['category_id', '=', $currentCategoryId],
-        ['id', '>', $news->id],
-    ])->orderBy('id', 'asc')->first();
+        // Previous Urdu post
+        $previousPost = News::where([
+            ['news_status', '=', 'active'],
+            ['language', '=', 'ur'],
+            ['category_id', '=', $currentCategoryId],
+            ['id', '<', $news->id],
+        ])->orderBy('id', 'desc')->first();
 
-    if ($news && $categories) {
-        return view('front.singlenews', compact('news', 'categories', 'latestnews', 'relatedNews', 'previousPost', 'nextPost'));
-    } else {
-        return view('404');
+        // Next Urdu post
+        $nextPost = News::where([
+            ['news_status', '=', 'active'],
+            ['language', '=', 'ur'],
+            ['category_id', '=', $currentCategoryId],
+            ['id', '>', $news->id],
+        ])->orderBy('id', 'asc')->first();
+
+        if ($news && $categories) {
+            return view('front.singlenews', compact('news', 'categories', 'latestnews', 'relatedNews', 'previousPost', 'nextPost'));
+        } else {
+            return view('404');
+        }
     }
-}
-
-
-
 }
