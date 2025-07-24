@@ -108,6 +108,7 @@ class WebController extends Controller
 
         // Live videos fethcing code start
         $livevideos = liveVideos::where('video_status', 'active') // Only active news
+            ->where('language', 'en')
             ->latest() // Get the latest ones
             ->take(4) // Limit to 4 videos
             ->get();
@@ -115,6 +116,7 @@ class WebController extends Controller
 
         // Blogs fethcing code start
         $blogs = Blog::where('blog_status', 'active') // Only active news
+            ->where('language', 'en')
             ->latest() // Get the latest ones
             ->take(4) // Limit to 4 videos
             ->get();
@@ -141,7 +143,9 @@ class WebController extends Controller
             ->get();
 
         // Categories
-        $categories = Categories::withCount('news')->get();
+        $categories = Categories::withCount('news')
+        
+        ->get();
         // recent news
         $latestnews = News::where('news_status', 'active')->latest()->take(4)->get();
 

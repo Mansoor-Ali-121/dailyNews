@@ -76,7 +76,14 @@ public function store(Request $request)
     {
         $validated = $request->validate([
             'category_name' => 'required|string|max:255',
-            'category_slug' => 'required|string|max:255',
+             'category_slug' => [
+            'required',
+            'string',
+            'max:255',
+            Rule::unique('categories')->where(function ($query) use ($request) {
+                return $query->where('language', $request->language);
+            }),
+        ],
             'category_status' => 'required|string|in:active,inactive',
             'language'=> 'required|in:ur,en',
 

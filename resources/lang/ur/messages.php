@@ -5,6 +5,10 @@ return [
     'category'=> 'زمرہ',
     'Related to this News'=> ' اس خبر سے متعلق',
     'latest_blogs' => 'تازہ ترین بلاگز',
+    'live_news'=> 'لائیو خبریں',
+    'prev'=> 'پچھلا',
+    'next'=> 'اگلا',
+    'recent_news'=> 'حالیہ خبریں',
 ];
 return [
     'categories' => [

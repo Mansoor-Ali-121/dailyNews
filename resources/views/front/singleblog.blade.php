@@ -167,12 +167,12 @@
                             <div class="sidebar-wrap panel vstack gap-2" data-uc-sticky="end: true;">
                                 <div class="right-sidebar">
                                     <div class="recent-widget widget">
-                                        <h2 class="widget-title">Recent Posts</h2>
+                                        <h2 class="widget-title">{{__('messages.recent_news')}}</h2>
                                         <div class="recent-post-widget clearfix">
                                             @foreach ($latestnews as $recentnews)
                                                 <div class="show-featured clearfix">
                                                     <div class="post-img">
-                                                        <a href="{{ route('single.news', $recentnews->news_slug) }}">
+                                                        <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $recentnews->news_slug) }}">
                                                             <img width="1200" height="700"
                                                                 src="{{ asset('news/news_images/' . $recentnews->news_image) }}"
                                                                 class="attachment-full size-full wp-post-image"
@@ -188,7 +188,7 @@
 
                                                                 </span>
                                                             </div>
-                                                            <a href="{{ route('single.news', $recentnews->news_slug) }}">
+                                                            <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $recentnews->news_slug) }}">
                                                                 {{ Str::limit($recentnews->news_title, 50) }} </a>
                                                         </div>
                                                     </div>
@@ -198,11 +198,11 @@
                                         </div>
                                     </div>
                                     <div class="recent-widget widget">
-                                        <h2 class="widget-title">Category</h2>
+                                        <h2 class="widget-title">{{__('messages.category')}}</h2>
                                         <ul>
                                             @foreach ($categories as $category)
                                                 <li><a
-                                                        href="{{ route('single.category', $category->category_slug) }}">{{ $category->category_name }}</a>
+                                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.category' : 'single.category', $category->category_slug) }}">{{ $category->category_name }}</a>
                                                     <span>{{ $category->news_count }}</span>
                                                 </li>
                                             @endforeach

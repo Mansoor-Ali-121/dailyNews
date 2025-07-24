@@ -8,6 +8,7 @@ use App\Models\Cities;
 use App\Models\Country;
 use App\Models\Categories;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -50,7 +51,15 @@ class BlogController extends Controller
             'blog_description' => 'required|string',
             'blog_image' => 'required|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
             'blog_status' => 'required|in:active,inactive',
-            'blog_slug' => 'required|string|max:255',
+            'blog_slug' => [
+                'required', // or 'nullable' if you generate it yourself later and it could be empty
+                'string',
+                'max:255',
+                // Apply the unique rule conditionally based on language
+                Rule::unique('blogs')->where(function ($query) use ($request) {
+                    return $query->where('language', $request->language);
+                }),
+            ],
             'blog_content' => 'required|string',
             'language' => 'required|in:en,ur', // Assuming you want to restrict to English and Urdu
         ]);
@@ -113,16 +122,24 @@ class BlogController extends Controller
             'blog_description' => 'required|string',
             'blog_image' => 'nullable|image|mimes:jpeg,png,jpg,webp,gif|max:2048',
             'blog_status' => 'required|in:active,inactive',
-            'blog_slug' => 'required|string|max:255',
+            'blog_slug' => [
+                'required', // or 'nullable' if you generate it yourself later and it could be empty
+                'string',
+                'max:255',
+                // Apply the unique rule conditionally based on language
+                Rule::unique('blogs')->where(function ($query) use ($request) {
+                    return $query->where('language', $request->language);
+                }),
+            ],
             'blog_content' => 'required|string',
             'language' => 'required|in:en,ur', // Assuming you want to restrict to English and Urdu
         ]);
         if ($request->hasFile('blog_image')) {
             // Delete the old image if it exists
-            if ($blog->blog_image) 
-            { $oldImagePath = public_path('Blogs/blog_images/' . $blog->blog_image);
-                if (File::exists($oldImagePath)) { 
-                    File::delete($oldImagePath); 
+            if ($blog->blog_image) {
+                $oldImagePath = public_path('Blogs/blog_images/' . $blog->blog_image);
+                if (File::exists($oldImagePath)) {
+                    File::delete($oldImagePath);
                 }
             }
 

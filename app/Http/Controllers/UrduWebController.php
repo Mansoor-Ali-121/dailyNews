@@ -218,4 +218,58 @@ class UrduWebController extends Controller
             return view('404');
         }
     }
+
+     public function singleblog(string $slug)
+    {
+        // Show single Urdu blog with slug
+        $blog = Blog::with('author')->where([
+            ['blog_slug', '=', $slug],
+            ['blog_status', '=', 'active'],
+            ['language', '=', 'ur'] 
+        ])->firstOrFail();
+
+        // Show related Urdu news
+        $relatedNews = News::where('news_status', 'active')
+            ->where('language', 'ur') 
+            ->where('category_id', $blog->category_id)
+            ->where('id', '!=', $blog->id)
+            ->latest()
+            ->take(3)
+            ->get();
+
+        // Categories in Urdu
+        $categories = Categories::withCount(['news' => function ($query) {
+
+        }])->get()->where('language', 'ur'); 
+
+        // Latest Urdu news
+        $latestnews = News::where('news_status', 'active')
+            ->where('language', 'ur')
+            ->latest()
+            ->take(4)
+            ->get();
+
+        // Previous and next Urdu blog
+        $previousPost = Blog::where('id', '<', $blog->id)
+            ->where('language', 'ur')
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $nextPost = Blog::where('id', '>', $blog->id)
+            ->where('language', 'ur')
+            ->orderBy('id', 'asc')
+            ->first();
+
+        return view('front.singleblog', compact(
+            'blog',
+            'relatedNews',
+            'categories',
+            'latestnews',
+            'previousPost',
+            'nextPost'
+        ));
+    }
+
+
+
 }

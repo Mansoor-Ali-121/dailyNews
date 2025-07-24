@@ -58,6 +58,55 @@
                             @csrf
 
                             <div class="row g-4">
+                                
+
+                                 {{-- Language Selector in radio btn --}}
+                            <div class="col-md-12">
+                                <label class="form-label">Language <span class="required-star">*</span></label>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
+                                        name="language" id="language_en" value="en"
+                                        {{ old('language', 'en') == 'en' ? 'checked' : '' }} required
+                                        onchange="filterAndPopulateCategories(this.value)">
+                                    <label class="form-check-label" for="language_en">English</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
+                                        name="language" id="language_ur" value="ur"
+                                        {{ old('language', 'en') == 'ur' ? 'checked' : '' }}
+                                        onchange="filterAndPopulateCategories(this.value)">
+                                    <label class="form-check-label" for="language_ur">Urdu</label>
+                                </div>
+                                @error('language')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                                <p class="form-note">Select the language for the news content.</p>
+                            </div>
+
+                            {{-- Your Categories Dropdown --}}
+                            <div class="col-md-12">
+                                <label for="category_id" class="form-label">Select a Category <span
+                                        class="required-star">*</span></label>
+                                <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
+                                    name="category_id" required>
+                                    <option value="">Select Category</option>
+                                    {{-- THIS LOOP IS CRITICAL. It MUST populate all categories on page load. --}}
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" data-language="{{ $category->language }}">
+                                            {{ $category->category_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('category_id')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
+
                                 {{-- YouTube Video URL --}}
                                 <div class="col-12">
                                     <div class="form-floating position-relative">
@@ -66,34 +115,12 @@
                                             class="form-control border-2 ps-5 py-3 @error('video_id') is-invalid @enderror"
                                             id="video_url" name="video_url" value="{{ old('video_url') }}" required
                                             placeholder="YouTube Video ID">
-                                        <label for="video_url" class="form-label text-muted ms-4">YouTube Video ID</label>
+                                        <label for="video_url" class="form-label text-muted ms-4">YouTube Video URL</label>
                                         @error('video_url')
                                             <div class="invalid-feedback d-block">{{ $message }}</div>
                                         @enderror
                                         <small class="text-muted ms-5">Example: dQw4w9WgXcQ from
                                             youtube.com/watch?v=dQw4w9WgXcQ</small>
-                                    </div>
-                                </div>
-
-                                {{-- Category Selection --}}
-                                <div class="col-12">
-                                    <div class="form-floating position-relative">
-                                        <i class="fas fa-tag floating-icon"></i>
-                                        <select id="category_id"
-                                            class="form-select @error('category_id') is-invalid @enderror"
-                                            name="category_id" required>
-                                            <option value="" disabled selected>Select a Category</option>
-                                            @foreach ($categories as $category)
-                                                <option value="{{ $category->id }}"
-                                                    {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                                    {{ $category->category_name }}
-                                                </option>
-                                            @endforeach
-                                        </select>
-                                        <label for="category_id" class="form-label text-muted ms-4">Category</label>
-                                        @error('category_id')
-                                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                                        @enderror
                                     </div>
                                 </div>
 
@@ -349,6 +376,7 @@
         }
     </style>
 
+{{-- slug --}}
     <script>
         function generateSlug() {
             var packageName = document.getElementById('slug').value;
@@ -360,5 +388,63 @@
 
             document.getElementById('video_slug').value = packageSlug;
         }
+    </script>
+
+
+{{-- categories filter by language --}}
+    <script>
+        let allCategoriesOptions = []; // This will store the actual HTML option elements
+
+        // Function to filter and populate the dropdown based on selected language
+        function filterAndPopulateCategories(selectedLanguage) {
+            const categoryDropdown = document.getElementById('category_id');
+            if (!categoryDropdown) {
+                console.error("Category dropdown with ID 'category_id' not found.");
+                return;
+            }
+
+            // Clear existing options, but keep the "Select Category" option
+            categoryDropdown.innerHTML = '<option value="">Select Category</option>';
+
+            let foundCategories = false;
+
+            // Iterate through all stored options and append only those matching the language
+            allCategoriesOptions.forEach(option => {
+                if (option.dataset.language === selectedLanguage) {
+                    categoryDropdown.appendChild(option.cloneNode(true)); // Append a clone
+                    foundCategories = true;
+                }
+            });
+
+            if (!foundCategories) {
+                const noCategoriesOption = document.createElement('option');
+                noCategoriesOption.value = '';
+                noCategoriesOption.textContent = 'No categories found for this language.';
+                categoryDropdown.appendChild(noCategoriesOption);
+            }
+        }
+
+        // Initial load: When the DOM is fully loaded, read all category options
+        // and then filter based on the initially checked language radio button.
+        document.addEventListener('DOMContentLoaded', function() {
+            const categoryDropdown = document.getElementById('category_id');
+            if (categoryDropdown) {
+                // Store all options (except the first "Select Category" one)
+                // Note: categoryDropdown.options is a live HTMLCollection, so convert to array
+                for (let i = 1; i < categoryDropdown.options.length; i++) {
+                    allCategoriesOptions.push(categoryDropdown.options[i].cloneNode(true));
+                }
+            } else {
+                console.error("Category dropdown with ID 'category_id' not found on DOMContentLoaded.");
+            }
+
+            const initialLanguageInput = document.querySelector('input[name="language"]:checked');
+            if (initialLanguageInput) {
+                filterAndPopulateCategories(initialLanguageInput.value);
+            }
+        });
+    </script>
+    <script>
+        const allCategoriesData = @json($categories ?? []);
     </script>
 @endsection

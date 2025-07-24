@@ -246,19 +246,21 @@
                     <div class="mb-5">
                         <div class="row g-4">
 
-                               {{-- Language Selector in radio btn--}}
+                            {{-- Language Selector in radio btn --}}
                             <div class="col-md-12">
                                 <label class="form-label">Language <span class="required-star">*</span></label>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
                                         name="language" id="language" value="en"
-                                        {{ old('language', 'en') == 'en' ? 'checked' : '' }} required>
+                                        {{ old('language', 'en') == 'en' ? 'checked' : '' }} required
+                                        onchange="filterAndPopulateCategories(this.value)">
                                     <label class="form-check-label" for="language">English</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
                                         name="language" id="language" value="ur"
-                                        {{ old('language', 'en') == 'ur' ? 'checked' : '' }}>
+                                        {{ old('language', 'en') == 'ur' ? 'checked' : '' }}
+                                        onchange="filterAndPopulateCategories(this.value)">
                                     <label class="form-check-label" for="language">Urdu</label>
                                 </div>
                                 @error('language')
@@ -268,6 +270,28 @@
                                 @enderror
                                 <p class="form-note">Select the language for the news content.</p>
                             </div>
+
+                            {{-- Your Categories Dropdown --}}
+                            <div class="col-md-12">
+                                <label for="category_id" class="form-label">Select a Category <span
+                                        class="required-star">*</span></label>
+                                <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
+                                    name="category_id" required>
+                                    <option value="">Select Category</option>
+                                    {{-- THIS LOOP IS CRITICAL. It MUST populate all categories on page load. --}}
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}" data-language="{{ $category->language }}">
+                                            {{ $category->category_name }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('category_id')
+                                    <div class="invalid-feedback d-block">
+                                        {{ $message }}
+                                    </div>
+                                @enderror
+                            </div>
+
                             {{-- Country from database --}}
                             <div class="col-md-6">
                                 <label for="country_id" class="form-label">Country </label>
@@ -319,30 +343,6 @@
                                     see available cities.</p>
 
                                 @error('city_id')
-                                    <div class="invalid-feedback d-block">
-                                        {{ $message }}
-                                    </div>
-                                @enderror
-                            </div>
-
-                            {{-- Category from database (now a dropdown) --}}
-                            <div class="col-md-6">
-                                <label for="category_id" class="form-label">Category</label>
-                                <select class="form-select @error('category_id') is-invalid @enderror" id="category_id"
-                                    name="category_id">
-                                    {{-- Default "Select a Category" option (optional, you can make it required instead) --}}
-                                    <option value="" {{ old('category_id') == '' ? 'selected' : '' }}>Select a
-                                        Category</option>
-
-                                    {{-- Loop through your categories --}}
-                                    @foreach ($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                            {{ old('category_id') == $category->id ? 'selected' : '' }}>
-                                            {{ $category->category_name }}
-                                        </option>
-                                    @endforeach
-                                </select>
-                                @error('category_id')
                                     <div class="invalid-feedback d-block">
                                         {{ $message }}
                                     </div>
@@ -765,7 +765,7 @@
         }
     </script>
 
-     {{-- categories filter by language --}}
+    {{-- categories filter by language --}}
     <script>
         let allCategoriesOptions = []; // This will store the actual HTML option elements
 

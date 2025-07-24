@@ -37,6 +37,7 @@ class LiveVideosController extends Controller
             'category_id' => 'required',
             'video_status' => 'required|string|in:active,inactive',
             'video_slug' => 'string|max:255',
+            'language'=> 'required|in:ur,en',
         ]);
         $validated['author_id'] = Auth::id();
 
@@ -75,6 +76,7 @@ class LiveVideosController extends Controller
             'category_id' => 'required',
             'video_status' => 'required|string|in:active,inactive',
             'video_slug' => 'string|max:255',
+            'language'=> 'required|in:ur,en',
         ]);
         $video = liveVideos::findOrFail($id);
         $video->update($validated);

@@ -1249,7 +1249,7 @@
                             <h2
                                 class="h6 ft-tertiary fw-bold ls-0 text-uppercase hstack gap-narrow m-0 text-black dark:text-white">
                                 <i class="icon-1 fw-bold unicon-dot-mark text-red" data-uc-animate="flash"></i>
-                                <span>Live now</span>
+                                <span>{{ __('messages.live_news') }}</span>
                             </h2>
                         </div>
                         <div class="block-content">
@@ -1434,10 +1434,10 @@
 
                                         <div
                                             class="swiper-prev btn btn-2xs lg:btn-xs btn-primary w-100 d-none md:d-flex order-1">
-                                            Prev</div>
+                                            {{ __('messages.prev') }}</div>
                                         <div
                                             class="swiper-next btn btn-2xs lg:btn-xs btn-primary w-100 d-none md:d-flex order-3">
-                                            Next</div>
+                                            {{ __('messages.next') }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -1449,21 +1449,26 @@
         <!-- Section end -->
 
         <!-- Section start 8 -->
-        <div id="latest_news" class="latest-news section panel">
+        <div id="latest_blogs" class="latest-news section panel">
             <div class="section-outer panel py-4 lg:py-6">
                 <div class="container max-w-xl">
                     <div class="section-inner">
                         <div class="content-wrap row child-cols-12 g-4 lg:g-6" data-uc-grid>
+
                             {{-- Left side blog --}}
                             <div class="md:col-9">
                                 <div class="main-wrap panel vstack gap-3 lg:gap-6">
                                     <div class="block-layout grid-layout vstack gap-2 panel overflow-hidden">
+
+                                        {{-- Section Header --}}
                                         <div class="block-header panel pt-1 border-top">
                                             <h2
                                                 class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
-                                               {{ __('messages.latest_blogs') }}
+                                                {{ __('messages.latest_blogs') }}
                                             </h2>
                                         </div>
+
+                                        {{-- Blogs --}}
                                         <div class="block-content">
                                             <div class="row child-cols-12 g-2 lg:g-4 sep-x">
                                                 @foreach ($blogs as $item)
@@ -1477,21 +1482,23 @@
                                                                             class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-3x2">
                                                                             <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
                                                                                 src="{{ asset('Blogs/blog_images/' . $item->blog_image) }}"
-                                                                                data-src="{{ asset('Blogs/blog_images/' . $item->blog_image) }}"
-                                                                                alt="The Rise of AI-Powered Personal Assistants: How They Manage"
-                                                                                data-uc-img="loading: lazy">
+                                                                                alt="{{ $item->blog_title }}"
+                                                                                loading="lazy">
                                                                         </div>
-                                                                        <a href="{{ route('single.blog', $item->blog_slug) }}"
+                                                                        <a href="{{route(app()->getLocale()  == 'ur' ? 'urdu.single.blog' : 'single.blog', $item->blog_slug)}}"
                                                                             class="position-cover"></a>
                                                                     </div>
                                                                 </div>
+                                                                {{-- {{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $entertainmentCategory->category_slug) }} --}}
                                                                 <div>
                                                                     <div
                                                                         class="post-header panel vstack justify-between gap-1">
                                                                         <h3
                                                                             class="post-title h5 lg:h4 m-0 text-truncate-2">
                                                                             <a class="text-none hover:text-primary duration-150"
-                                                                                href={{ route('single.blog', $item->blog_slug) }}>{{ $item->blog_title }}</a>
+                                                                                href="{{route(app()->getLocale()  == 'ur' ? 'urdu.single.blog' : 'single.blog', $item->blog_slug)}}">
+                                                                                {{ $item->blog_title }}
+                                                                            </a>
                                                                         </h3>
                                                                     </div>
                                                                     <p
@@ -1499,7 +1506,7 @@
                                                                         {{ $item->blog_description }}
                                                                     </p>
                                                                     <div class="post-link">
-                                                                        <a href="{{ route('single.blog', $item->blog_slug) }}"
+                                                                        <a href="{{route(app()->getLocale()  == 'ur' ? 'urdu.single.blog' : 'single.blog', $item->blog_slug)}}"
                                                                             class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
                                                                             <span>Read more</span>
                                                                         </a>
@@ -1511,20 +1518,26 @@
                                                 @endforeach
                                             </div>
                                         </div>
+
+                                        {{-- Load More --}}
                                         <div class="block-footer cstack lg:mt-2">
-                                            <a href="   " {{-- Assuming you have a route named 'all.blogs' for the main blog listing page --}}
+                                            <a href=""
                                                 class="animate-btn gap-0 btn btn-sm btn-alt-primary bg-transparent text-black dark:text-white border w-100">
                                                 <span>Load more posts</span>
                                                 <i class="icon icon-1 unicon-chevron-right"></i>
                                             </a>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
-                            {{-- Left side blog --}}
+
+                            {{-- Right side / Sidebar --}}
                             <div class="md:col-3">
                                 <div class="sidebar-wrap panel vstack gap-2 pb-2"
                                     data-uc-sticky="end: .content-wrap; offset: 150; media: @m;">
+
+                                    {{-- Ad --}}
                                     <div class="widget ad-widget vstack gap-2 text-center p-2 border">
                                         <div class="widgt-content">
                                             <a class="cstack max-w-300px mx-auto text-none"
@@ -1538,238 +1551,80 @@
                                             </a>
                                         </div>
                                     </div>
+
+                                    {{-- Popular Now --}}
                                     <div class="widget popular-widget vstack gap-2 p-2 border">
                                         <div class="widget-title text-center">
                                             <h5 class="fs-7 ft-tertiary text-uppercase m-0">Popular now</h5>
                                         </div>
                                         <div class="widget-content">
                                             <div class="row child-cols-12 gx-4 gy-3 sep-x" data-uc-grid>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div>
-                                                                <div class="hstack items-start gap-3">
-                                                                    <span
-                                                                        class="h3 lg:h2 ft-tertiary fst-italic text-center text-primary m-0 min-w-24px">1</span>
-                                                                    <div
-                                                                        class="post-header panel vstack justify-between gap-1">
-                                                                        <h3 class="post-title h6 m-0">
-                                                                            <a class="text-none hover:text-primary duration-150"
-                                                                                href="blog-details.html">Virtual Reality
-                                                                                and Mental Health: Exploring the
-                                                                                Therapeutic</a>
-                                                                        </h3>
+                                                {{-- You can loop dynamic popular posts here. This is currently static. --}}
+                                                @for ($i = 1; $i <= 4; $i++)
+                                                    <div>
+                                                        <article class="post type-post panel uc-transition-toggle">
+                                                            <div class="row child-cols g-2 lg:g-3" data-uc-grid>
+                                                                <div>
+                                                                    <div class="hstack items-start gap-3">
+                                                                        <span
+                                                                            class="h3 lg:h2 ft-tertiary fst-italic text-center text-primary m-0 min-w-24px">{{ $i }}</span>
                                                                         <div
-                                                                            class="post-meta panel hstack justify-between fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                            <div class="meta">
-                                                                                <div class="hstack gap-2">
-                                                                                    <div>
+                                                                            class="post-header panel vstack justify-between gap-1">
+                                                                            <h3 class="post-title h6 m-0">
+                                                                                <a class="text-none hover:text-primary duration-150"
+                                                                                    href="blog-details.html">Sample popular
+                                                                                    post title {{ $i }}</a>
+                                                                            </h3>
+                                                                            <div
+                                                                                class="post-meta panel hstack justify-between fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
+                                                                                <div class="meta">
+                                                                                    <div class="hstack gap-2">
                                                                                         <div
                                                                                             class="post-date hstack gap-narrow">
-                                                                                            <span>2mo ago</span>
+                                                                                            <span>{{ rand(1, 30) }}d
+                                                                                                ago</span>
+                                                                                        </div>
+                                                                                        <div>
+                                                                                            <a href="#post_comment"
+                                                                                                class="post-comments text-none hstack gap-narrow">
+                                                                                                <i
+                                                                                                    class="icon-narrow unicon-chat"></i>
+                                                                                                <span>{{ rand(1, 300) }}</span>
+                                                                                            </a>
                                                                                         </div>
                                                                                     </div>
-                                                                                    <div>
-                                                                                        <a href="#post_comment"
-                                                                                            class="post-comments text-none hstack gap-narrow">
-                                                                                            <i
-                                                                                                class="icon-narrow unicon-chat"></i>
-                                                                                            <span>290</span>
-                                                                                        </a>
-                                                                                    </div>
                                                                                 </div>
-                                                                            </div>
-                                                                            <div class="actions">
-                                                                                <div class="hstack gap-1"></div>
+                                                                                <div class="actions hstack gap-1"></div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div>
-                                                                <div class="hstack items-start gap-3">
-                                                                    <span
-                                                                        class="h3 lg:h2 ft-tertiary fst-italic text-center text-primary m-0 min-w-24px">2</span>
-                                                                    <div
-                                                                        class="post-header panel vstack justify-between gap-1">
-                                                                        <h3 class="post-title h6 m-0">
-                                                                            <a class="text-none hover:text-primary duration-150"
-                                                                                href="blog-details.html">The Future of
-                                                                                Sustainable Living: Driving Eco-Friendly
-                                                                                Lifestyles</a>
-                                                                        </h3>
-                                                                        <div
-                                                                            class="post-meta panel hstack justify-between fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                            <div class="meta">
-                                                                                <div class="hstack gap-2">
-                                                                                    <div>
-                                                                                        <div
-                                                                                            class="post-date hstack gap-narrow">
-                                                                                            <span>2mo ago</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <a href="#post_comment"
-                                                                                            class="post-comments text-none hstack gap-narrow">
-                                                                                            <i
-                                                                                                class="icon-narrow unicon-chat"></i>
-                                                                                            <span>1</span>
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="actions">
-                                                                                <div class="hstack gap-1"></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div>
-                                                                <div class="hstack items-start gap-3">
-                                                                    <span
-                                                                        class="h3 lg:h2 ft-tertiary fst-italic text-center text-primary m-0 min-w-24px">3</span>
-                                                                    <div
-                                                                        class="post-header panel vstack justify-between gap-1">
-                                                                        <h3 class="post-title h6 m-0">
-                                                                            <a class="text-none hover:text-primary duration-150"
-                                                                                href="blog-details.html">Smart Homes,
-                                                                                Smarter Living: Exploring IoT and AI</a>
-                                                                        </h3>
-                                                                        <div
-                                                                            class="post-meta panel hstack justify-between fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                            <div class="meta">
-                                                                                <div class="hstack gap-2">
-                                                                                    <div>
-                                                                                        <div
-                                                                                            class="post-date hstack gap-narrow">
-                                                                                            <span>23d ago</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <a href="#post_comment"
-                                                                                            class="post-comments text-none hstack gap-narrow">
-                                                                                            <i
-                                                                                                class="icon-narrow unicon-chat"></i>
-                                                                                            <span>15</span>
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="actions">
-                                                                                <div class="hstack gap-1"></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
-                                                <div>
-                                                    <article class="post type-post panel uc-transition-toggle">
-                                                        <div class="row child-cols g-2 lg:g-3" data-uc-grid>
-                                                            <div>
-                                                                <div class="hstack items-start gap-3">
-                                                                    <span
-                                                                        class="h3 lg:h2 ft-tertiary fst-italic text-center text-primary m-0 min-w-24px">4</span>
-                                                                    <div
-                                                                        class="post-header panel vstack justify-between gap-1">
-                                                                        <h3 class="post-title h6 m-0">
-                                                                            <a class="text-none hover:text-primary duration-150"
-                                                                                href="blog-details.html">How Businesses
-                                                                                Are Adapting to E-Commerce and AI
-                                                                                Integration</a>
-                                                                        </h3>
-                                                                        <div
-                                                                            class="post-meta panel hstack justify-between fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                            <div class="meta">
-                                                                                <div class="hstack gap-2">
-                                                                                    <div>
-                                                                                        <div
-                                                                                            class="post-date hstack gap-narrow">
-                                                                                            <span>29d ago</span>
-                                                                                        </div>
-                                                                                    </div>
-                                                                                    <div>
-                                                                                        <a href="#post_comment"
-                                                                                            class="post-comments text-none hstack gap-narrow">
-                                                                                            <i
-                                                                                                class="icon-narrow unicon-chat"></i>
-                                                                                            <span>20</span>
-                                                                                        </a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                            <div class="actions">
-                                                                                <div class="hstack gap-1"></div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </article>
-                                                </div>
+                                                        </article>
+                                                    </div>
+                                                @endfor
                                             </div>
                                         </div>
                                     </div>
-                                    {{-- User mail --}}
-                                    {{-- <div class="widget social-widget vstack gap-2 text-center p-2 border">
-                                        <div class="widgt-title">
-                                            <h4 class="fs-7 ft-tertiary text-uppercase m-0">Follow @News5</h4>
-                                        </div>
-                                        <div class="widgt-content">
-                                            <form class="vstack gap-1">
-                                                <input
-                                                    class="form-control form-control-sm fs-6 fw-medium h-40px w-full bg-white dark:bg-gray-800 dark:bg-gray-800 dark:border-white dark:border-opacity-15 dark:border-opacity-15"
-                                                    type="email" placeholder="Your email" required="">
-                                                <button class="btn btn-sm btn-primary" type="submit">Sign up</button>
-                                            </form>
-                                            <ul class="nav-x justify-center gap-1 mt-3">
-                                                <li>
-                                                    <a href="#fb"
-                                                        class="cstack w-32px h-32px border rounded-circle hover:text-black dark:hover:text-white hover:scale-110 transition-all duration-150"><i
-                                                            class="icon icon-1 unicon-logo-facebook"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#x"
-                                                        class="cstack w-32px h-32px border rounded-circle hover:text-black dark:hover:text-white hover:scale-110 transition-all duration-150"><i
-                                                            class="icon icon-1 unicon-logo-x-filled"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#in"
-                                                        class="cstack w-32px h-32px border rounded-circle hover:text-black dark:hover:text-white hover:scale-110 transition-all duration-150"><i
-                                                            class="icon icon-1 unicon-logo-instagram"></i></a>
-                                                </li>
-                                                <li>
-                                                    <a href="#yt"
-                                                        class="cstack w-32px h-32px border rounded-circle hover:text-black dark:hover:text-white hover:scale-110 transition-all duration-150"><i
-                                                            class="icon icon-1 unicon-logo-youtube"></i></a>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div> --}}
+
+                                    {{-- Uncomment if needed --}}
+                                    {{--
+                            <div class="widget social-widget vstack gap-2 text-center p-2 border">
+                                ...
+                            </div>
+                            --}}
+
                                 </div>
                             </div>
+                            {{-- End Right Sidebar --}}
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Section end -->
+
 
     </div>
     <!-- Wrapper end -->
