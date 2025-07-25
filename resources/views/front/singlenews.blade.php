@@ -61,14 +61,16 @@
                                 <div
                                     class="post-footer panel vstack sm:hstack gap-3 justify-between justifybetween border-top py-4 mt-4 xl:py-9 xl:mt-9">
                                     <ul class="nav-x gap-narrow text-primary">
-                                        <li><span class="text-black dark:text-white me-narrow">Category of this news:</span>
+                                        <li><span
+                                                class="text-black dark:text-white me-narrow">{{ __('messages.category_of_this_news') }}:</span>
                                         </li>
                                         <li><a href="{{ route('single.category', $news->category->category_slug) }}"
                                                 class="uc-link gap-0 dark:text-white">{{ $news->category->category_name }}</a>
                                         </li>
                                     </ul>
                                     <ul class="post-share-icons nav-x gap-narrow">
-                                        <li class="me-1"><span class="text-black dark:text-white">Share:</span></li>
+                                        <li class="me-1"><span
+                                                class="text-black dark:text-white">{{ __('messages.share') }}:</span></li>
                                         <li>
                                             <a class="btn btn-md btn-outline-gray-100 p-0 w-32px lg:w-40px h-32px lg:h-40px text-dark dark:text-white dark:border-gray-600 hover:bg-primary hover:border-primary hover:text-white rounded-circle"
                                                 href="#"><i class="unicon-logo-facebook icon-1"></i></a>
@@ -142,8 +144,8 @@
                                                 </figure>
                                             </div>
                                             <div class="panel vstack justify-center px-2 gap-1 w-1/3">
-                                                <span class="fs-7 opacity-60"><i class="unicon-arrow-left"></i> Prev
-                                                    Article</span>
+                                                <span class="fs-7 opacity-60"><i class="unicon-arrow-left"></i>
+                                                    {{ __('messages.prev_article') }}</span>
                                                 <h6 class="h6 lg:h5 m-0 text-truncate-2">
                                                     <a href="{{ route('single.news', $previousPost->news_slug) }}"
                                                         class="text-none">
@@ -164,15 +166,22 @@
             @else w-full @endif
         ">
                                             <div class="panel vstack justify-center px-2 gap-1 w-1/3 text-end">
-                                                <span class="fs-7 opacity-60">Next Article <i
-                                                        class="unicon-arrow-right"></i></span>
+                                                <span class="fs-7 opacity-60">
+                                                    @if (app()->getLocale() === 'ur')
+                                                        {{ __('messages.next_article') }} <i class="unicon-arrow-left"></i>
+                                                    @else
+                                                        {{ __('messages.next_article') }} <i
+                                                            class="unicon-arrow-right"></i>
+                                                    @endif
+                                                </span>
                                                 <h6 class="h6 lg:h5 m-0 text-truncate-2">
-                                                    <a href="{{ route('single.news', $nextPost->news_slug) }}"
+                                                    <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $nextPost->news_slug) }}"
                                                         class="text-none">
                                                         {{ Str::limit($nextPost->news_title, 50) }}
                                                     </a>
                                                 </h6>
                                             </div>
+
                                             <div class="panel hstack justify-center w-100px h-100px">
                                                 <figure
                                                     class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
@@ -192,7 +201,7 @@
                                 </div>
                                 {{-- Related to this topic: --}}
                                 <div class="post-related panel border-top pt-2 mt-8 xl:mt-9">
-                                    <h4 class="h5 xl:h4 mb-5 xl:mb-6">{{__('messages.Related to this News')}}</h4>
+                                    <h4 class="h5 xl:h4 mb-5 xl:mb-6">{{ __('messages.Related to this News') }}</h4>
                                     <div class="row child-cols-6 md:child-cols-4 gx-2 gy-4 sm:gx-3 sm:gy-6">
 
                                         {{-- Loop through each related news item. Ensure $relatedNews (capital 'N') is passed from controller. --}}
@@ -241,7 +250,7 @@
                                         @empty
                                             {{-- This block runs if no related news articles are found --}}
                                             <div class="col-12">
-                                                <p>No related news found for this topic.</p>
+                                                <p>{{ __('messages.no_related_news_found_for_this_topic') }}.</p>
                                             </div>
                                         @endforelse {{-- Correct: no arguments here --}}
 
@@ -383,7 +392,7 @@
                             <div class="sidebar-wrap panel vstack gap-2" data-uc-sticky="end: true;">
                                 <div class="right-sidebar">
                                     <div class="recent-widget widget">
-                                        <h2 class="widget-title">Recent News</h2>
+                                        <h2 class="widget-title">{{ __('messages.recent_news') }}</h2>
                                         <div class="recent-post-widget clearfix">
                                             @foreach ($latestnews as $recentnews)
                                                 <div class="show-featured clearfix">
@@ -415,11 +424,11 @@
                                         </div>
                                     </div>
                                     <div class="recent-widget widget">
-                                        <h2 class="widget-title">Category</h2>
+                                        <h2 class="widget-title">{{ __('messages.category') }}</h2>
                                         <ul>
                                             @foreach ($categories as $category)
                                                 <li><a
-                                                        href="{{ route('single.category', $category->category_slug) }}">{{ $category->category_name }}</a>
+                                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.category' : 'single.category', $category->category_slug) }}">{{ $category->category_name }}</a>
                                                     <span>{{ $category->news_count }}</span>
                                                 </li>
                                             @endforeach

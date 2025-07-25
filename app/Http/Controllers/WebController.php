@@ -136,18 +136,22 @@ class WebController extends Controller
 
         // show related news
         $relatedNews = News::where('news_status', 'active')
-            ->where('category_id', $blog->category_id) // <--- Filter by current blog's category
             ->where('id', '!=', $blog->id)           // <--- Exclude the current news article itself
-            ->latest()                               // Order by latest (you can change this to random() if preferred)
-            ->take(3)                                // Limit to 4 related articles as per your layout's structure
+            ->where('language', 'en')
+            ->latest()
+            ->take(3)
             ->get();
 
         // Categories
         $categories = Categories::withCount('news')
-        
-        ->get();
+            ->where('language', 'en')
+            ->get();
         // recent news
-        $latestnews = News::where('news_status', 'active')->latest()->take(4)->get();
+        $latestnews = News::where('news_status', 'active')
+            ->where('language', 'en')
+            ->latest()
+            ->take(4)
+            ->get();
 
         // previous and next blog
         $previousPost = Blog::where('id', '<', $blog->id)->orderBy('id', 'desc')->first();
@@ -164,18 +168,25 @@ class WebController extends Controller
         // $livebreakingnews = BreakingNews::where('breakingnews_status', 'active')->latest()->take(4)->get();
 
         // show categories in single news
-        $categories = Categories::withCount('news')->get();
+        $categories = Categories::withCount('news')
+            ->where('language', 'en')
+            ->get();
         // show single news
         $news = News::with('author')->where([
             ['news_slug', '=', $slug],
             ['news_status', '=', 'active']
         ])->firstOrFail();
-        $latestnews = News::where('news_status', 'active')->latest()->take(4)->get();
+        $latestnews = News::where('news_status', 'active')
+            ->where('language', 'en')
+            ->latest()
+            ->take(4)
+            ->get();
 
         // show related news
         $relatedNews = News::where('news_status', 'active')
             ->where('category_id', $news->category_id) // <--- Filter by current news's category
             ->where('id', '!=', $news->id)           // <--- Exclude the current news article itself
+            ->where('language', 'en')
             ->latest()                               // Order by latest (you can change this to random() if preferred)
             ->take(3)                                // Limit to 4 related articles as per your layout's structure
             ->get();
@@ -186,6 +197,7 @@ class WebController extends Controller
         $previousPost = News::where('news_status', 'active') // Ensure previous post is also active
             ->where('category_id', $currentCategoryId) // <-- ADDED: Filter by current news's category
             ->where('id', '<', $news->id)
+            ->where('language', 'en')
             ->orderBy('id', 'desc')
             ->first();
 
@@ -193,6 +205,7 @@ class WebController extends Controller
         $nextPost = News::where('news_status', 'active') // Ensure next post is also active
             ->where('category_id', $currentCategoryId) // <-- ADDED: Filter by current news's category
             ->where('id', '>', $news->id)
+            ->where('language', 'en')
             ->orderBy('id', 'asc')
             ->first();
 
@@ -207,7 +220,7 @@ class WebController extends Controller
 
     public function showsinglebreakingnews(string $slug)
     {
-    // Categories for news shows
+        // Categories for news shows
         $categories = Categories::withCount('news')->get();
         // $latestnews = News::where('news_status', 'active')->latest()->take(4)->get();
         $breakingnews = BreakingNews::where([
@@ -218,13 +231,13 @@ class WebController extends Controller
         // Recent breaking news 
         $relatedNews = BreakingNews::where('breakingnews_status', 'active')
             ->where('id', '!=', $breakingnews->id)
-            ->latest()                         
-            ->take(5)                      
+            ->latest()
+            ->take(5)
             ->get();
 
-            // previos and next breaking news
-            $previousPost = BreakingNews::where('id', '<', $breakingnews->id)->orderBy('id', 'desc')->first();
-            $nextPost  = BreakingNews::where('id', '>', $breakingnews->id)->orderBy('id', 'asc')->first();
+        // previos and next breaking news
+        $previousPost = BreakingNews::where('id', '<', $breakingnews->id)->orderBy('id', 'desc')->first();
+        $nextPost  = BreakingNews::where('id', '>', $breakingnews->id)->orderBy('id', 'asc')->first();
 
         return view('front.singlebreakingnews', compact('breakingnews', 'relatedNews', 'categories', 'previousPost', 'nextPost'));
 
@@ -272,13 +285,12 @@ class WebController extends Controller
      */
     public function showAuthorProfile($slug)
     {
-                // Find the author by their slug
+        // Find the author by their slug
         $author = User::where('user_slug', $slug)->firstOrFail();
-     
+
         $authorNews = $author->news()->latest()->paginate(9); // Get all, ordered by latest
 
         return view('front.singleAuthor', compact('author', 'authorNews'));
-
     }
 
     /**
@@ -289,7 +301,7 @@ class WebController extends Controller
         return view('front.privacypage');
     }
 
-// terms and conditions
+    // terms and conditions
     public function terms()
     {
         return view('front.page-terms');

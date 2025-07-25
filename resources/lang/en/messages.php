@@ -9,5 +9,10 @@ return [
     'prev'=> 'Prev',
     'next'=> 'Next',
     'recent_news'=> 'Recent News',
+    'category_of_this_news'=> 'Category of this news',
+    'share'=> 'Share',
+    'no_related_news_found_for_this_topic'=> 'No related news found for this topic',
+    'prev_article'=>' Prev Article',
+    'next_article'=> 'Next Article',
     
 ];

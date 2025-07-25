@@ -171,7 +171,9 @@ class UrduWebController extends Controller
     public function showsinglenews(string $slug)
     {
         // Urdu categories
-        $categories = Categories::withCount('news')->get();
+        $categories = Categories::withCount('news')
+        ->where('language', 'ur')
+        ->get();
 
         // Show single Urdu news
         $news = News::with('author')->where([

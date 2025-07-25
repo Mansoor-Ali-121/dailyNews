@@ -7,6 +7,7 @@ use App\Models\Cities;
 use App\Models\Country;
 use App\Models\Categories;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -49,13 +50,23 @@ class NewsController extends Controller
             'country_id' => ['required', 'exists:countries,id'],
             'news_status' => ['required', 'in:active,inactive'],
             'news_content' => ['required', 'string'],
-            'news_slug' => ['nullable', 'string', 'max:255'],
+            'news_slug' => [
+                'required',
+                'string',
+                'max:255',
+
+                // Apply the unique rule conditionally based on language
+                Rule::unique('news')->where(function ($query) use ($request) {
+                    return $query->where('language', $request->language);
+                }),
+
+            ],
             'news_title' => ['required', 'string', 'max:255'],
             'news_description' => ['required', 'string'],
             'news_image' => 'required|image|mimes:jpeg,png,webp,gif|max:5120',
             'category_id' => 'required|exists:categories,id',
             'city_id' => 'required|exists:cities,id',
-            'language'=> 'required|in:en,ur', // Assuming 'en' for English and 'ur' for Urdu
+            'language' => 'required|in:en,ur', // Assuming 'en' for English and 'ur' for Urdu
         ]);
         // file upload
         if ($request->hasFile('news_image')) {
@@ -65,7 +76,7 @@ class NewsController extends Controller
             $validatedData['news_image'] = $imageName;
         }
 
-          if (Auth::check()) {
+        if (Auth::check()) {
             $validatedData['author_id'] = Auth::id(); // Add the logged-in user's ID
         } else {
             $validatedData['author_id'] = null; // Set to null if allowed by DB schema
@@ -106,7 +117,7 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-   
+
     public function update(Request $request, string $id)
     {
         // 1. Find the existing news item FIRST
@@ -118,13 +129,18 @@ class NewsController extends Controller
             'country_id' => ['required', 'exists:countries,id'],
             'news_status' => ['required', 'in:active,inactive'],
             'news_content' => ['required', 'string'],
-            'news_slug' => ['nullable', 'string', 'max:255'],
+            'news_slug' => ['nullable', 'string', 'max:255',
+               // Apply the unique rule conditionally based on language
+                Rule::unique('news')->where(function ($query) use ($request) {
+                    return $query->where('language', $request->language);
+                }),
+            ],
             'news_title' => ['required', 'string', 'max:255'],
             'news_description' => ['required', 'string', 'max:255'],
             'news_image' => 'nullable|image|mimes:jpeg,png,webp,gif|max:5120', // This is correct
             'category_id' => 'required|exists:categories,id',
             'city_id' => 'required|exists:cities,id',
-            'language'=> 'required|in:en,ur', // Assuming 'en' for English and 'ur' for Urdu
+            'language' => 'required|in:en,ur', // Assuming 'en' for English and 'ur' for Urdu
         ]);
 
         if ($request->hasFile('news_image')) {
@@ -138,7 +154,7 @@ class NewsController extends Controller
             $image = $request->file('news_image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('news/news_images'), $imageName);
-            $validatedData['news_image'] = $imageName; 
+            $validatedData['news_image'] = $imageName;
         } else {
             // No new image was uploaded.
             unset($validatedData['news_image']);

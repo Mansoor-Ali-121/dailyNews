@@ -38,7 +38,7 @@
                                                             src="{{ asset('news/news_images/' . $item->news_image) }}"
                                                             alt="{{ $item->news_title }}"
                                                             data-uc-img="loading: lazy">
-                                                        <a href="{{ route('single.news', $item->news_slug) }}"
+                                                        <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}"
                                                             class="position-cover"></a>
                                                     </figure>
                                                     <div class="post-category hstack gap-narrow position-absolute top-0 start-0 m-1 fs-7 fw-bold h-24px px-1 rounded-1 shadow-xs bg-white text-primary">
@@ -57,7 +57,7 @@
                                                 <div class="post-header panel vstack gap-1 lg:gap-2">
                                                     <h3 class="post-title h6 sm:h5 xl:h4 m-0 text-truncate-2 m-0">
                                                         <a class="text-none"
-                                                            href="{{ route('single.news', $item->news_slug) }}">
+                                                            href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}">
                                                             {{ Str::limit($item->news_title, 25) }}
                                                         </a>
                                                     </h3>
