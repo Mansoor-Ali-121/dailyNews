@@ -82,11 +82,10 @@
                                         <tr class="text-center">
                                             <th class="ps-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0">ID</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">News Category</th>
-                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Slug</th>
+                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Language</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Country</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Status</th>
-                                            <th class="pe-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0">
-                                                Actions</th>
+                                            <th class="pe-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0"> Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -104,7 +103,7 @@
                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div>
-                                                            <h6 class="mb-1 fw-bold fs-5">{{ $item->news_slug }}</h6>
+                                                            <h6 class="mb-1 fw-bold fs-5">{{ $item->language }}</h6>
                                                         </div>
                                                     </div>
                                                 </td>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\News;
 use App\Models\BreakingNews;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 
@@ -13,12 +14,17 @@ class BreakingNewsController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        // Fetch all news
-        $news = News::orderBy('news_slug')->get();
-        return view('dashboard.breakingnews.add', compact('news'));
-    }
+ public function index(Request $request)
+{
+    $selectedLang = $request->language ?? 'en'; // Default to 'en' if not selected
+
+    $news = News::where('language', $selectedLang)
+                ->where('news_status', 'active')
+                ->get();
+
+    return view('dashboard.breakingnews.add', compact('news', 'selectedLang'));
+}
+
 
     /**
      * Show the form for creating a new resource.
@@ -39,8 +45,14 @@ class BreakingNewsController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
             'breakingnews_status' => 'required|string|in:active,inactive',
             'title' => 'required|string',
-            'breakingnews_slug' => 'required|string',
-            'language'=> 'required|string|in:en,ur', // Ensure language is either 'en' or 'ur'
+            'breakingnews_slug' => [ // Array of rules for this field
+                'required',
+                'string',
+                Rule::unique('breakingnews')->where(function ($query) use ($request) {
+                    return $query->where('language', $request->language);
+                }),
+            ],
+            'language' => 'required|string|in:en,ur', // Ensure language is either 'en' or 'ur'
         ]);
 
         if ($request->hasFile('image')) {
@@ -49,7 +61,7 @@ class BreakingNewsController extends Controller
             $image->move(public_path('breakingnews_images/images'), $imageName);
             $validated['image'] = $imageName;
         }
-      // Add the authenticated user's ID to the validated data array
+        // Add the authenticated user's ID to the validated data array
         $validated['author_id'] = Auth::id(); // <--- Corrected line
         BreakingNews::create($validated);
         return redirect()->route('breakingnews.show')->with('success', 'Breaking news added successfully');
@@ -60,7 +72,7 @@ class BreakingNewsController extends Controller
      */
     public function show()
     {
-        $breakingNews = BreakingNews::paginate(5);
+        $breakingNews = BreakingNews::paginate(10);
         return view('dashboard.breakingnews.show', compact('breakingNews'));
     }
 
@@ -80,13 +92,19 @@ class BreakingNewsController extends Controller
     public function update(Request $request, string $id)
     {
         $validated = $request->validate([
-            'news_id' => 'required|exists:news,id',
+            'news_id' => 'required|exists:news,id,',
             'description' => 'required|string',
             'image' => 'image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
             'breakingnews_status' => 'required|string|in:active,inactive',
             'title' => 'required|string',
-            'breakingnews_slug' => 'required|string',
-            'language'=> 'required|string|in:en,ur', // Ensure language is either 'en' or 'ur'
+            'breakingnews_slug' => [ // Array of rules for this field
+                'required',
+                'string',
+                Rule::unique('breakingnews')->where(function ($query) use ($request) {
+                    return $query->where('language', $request->language);
+                }),
+            ],
+            'language' => 'required|string|in:en,ur', // Ensure language is either 'en' or 'ur'
         ]);
 
         $breakingNews = BreakingNews::findOrFail($id);

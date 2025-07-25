@@ -14,5 +14,6 @@ return [
     'no_related_news_found_for_this_topic'=> 'No related news found for this topic',
     'prev_article'=>' Prev Article',
     'next_article'=> 'Next Article',
+    'latest_news'=> 'Latest News',
     
 ];

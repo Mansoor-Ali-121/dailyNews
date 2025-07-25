@@ -64,7 +64,7 @@
                                         <li><span
                                                 class="text-black dark:text-white me-narrow">{{ __('messages.category_of_this_news') }}:</span>
                                         </li>
-                                        <li><a href="{{ route('single.category', $news->category->category_slug) }}"
+                                        <li><a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.category' : 'single.category', $news->category->category_slug) }}"
                                                 class="uc-link gap-0 dark:text-white">{{ $news->category->category_name }}</a>
                                         </li>
                                     </ul>
@@ -138,7 +138,7 @@
                                                         src="{{ asset('news/news_images/' . $previousPost->news_image) }}"
                                                         data-src="{{ asset('news/news_images/' . $previousPost->news_image) }}"
                                                         alt="{{ $previousPost->news_title }}" data-uc-img="loading: lazy">
-                                                    <a href="{{ route('single.news', $previousPost->news_slug) }}"
+                                                    <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $previousPost->news_slug) }}"
                                                         class="position-cover"
                                                         data-caption="{{ $previousPost->news_title }}"></a>
                                                 </figure>
@@ -147,13 +147,13 @@
                                                 <span class="fs-7 opacity-60"><i class="unicon-arrow-left"></i>
                                                     {{ __('messages.prev_article') }}</span>
                                                 <h6 class="h6 lg:h5 m-0 text-truncate-2">
-                                                    <a href="{{ route('single.news', $previousPost->news_slug) }}"
+                                                    <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $previousPost->news_slug) }}"
                                                         class="text-none">
                                                         {{ Str::limit($previousPost->news_title, 50) }}
                                                     </a>
                                                 </h6>
                                             </div>
-                                            <a href="{{ route('single.news', $previousPost->news_slug) }}"
+                                            <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $previousPost->news_slug) }}"
                                                 class="position-cover"></a>
                                         </div>
                                     @endif
@@ -189,12 +189,12 @@
                                                         src="{{ asset('news/news_images/' . $nextPost->news_image) }}"
                                                         data-src="{{ asset('news/news_images/' . $nextPost->news_image) }}"
                                                         alt="{{ $nextPost->news_title }}" data-uc-img="loading: lazy">
-                                                    <a href="{{ route('single.news', $nextPost->news_slug) }}"
+                                                    <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $nextPost->news_slug) }}"
                                                         class="position-cover"
                                                         data-caption="{{ $nextPost->news_title }}"></a>
                                                 </figure>
                                             </div>
-                                            <a href="{{ route('single.news', $nextPost->news_slug) }}"
+                                            <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $nextPost->news_slug) }}"
                                                 class="position-cover"></a>
                                         </div>
                                     @endif

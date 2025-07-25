@@ -323,7 +323,7 @@
                                                                             class="post-header panel vstack justify-between gap-1">
                                                                             <h3 class="post-title h6 m-0 text-truncate-2">
                                                                                 <a class="text-none hover:text-primary duration-150"
-                                                                                    href="{{ route($sports->language === 'ur' ? 'urdu.single.news' : 'single.news', $sports->news_slug) }}">
+                                                                                    href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $sports->news_slug) }}">
                                                                                     {{ $sports->news_title }}
                                                                                 </a>
                                                                             </h3>
@@ -469,7 +469,7 @@
                         <div class="block-layout carousel-layout vstack gap-2 lg:gap-3 panel">
                             <div class="block-header panel pt-1 border-top">
                                 <h2 class="h6 ft-tertiary fw-bold ls-0 text-uppercase m-0 text-black dark:text-white">
-                                    Latest News</h2>
+                                    {{ __('messages.latest_news') }}</h2>
                             </div>
                             <div class="block-content panel">
                                 <div class="swiper"
@@ -490,19 +490,26 @@
                                                                     alt="Hidden Gems: Underrated Travel Destinations Around the World"
                                                                     data-uc-img="loading: lazy">
                                                             </div>
-                                                            <a href="{{ route('single.news', $item->news_slug) }}"
+                                                            <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}"
                                                                 class="position-cover"></a>
                                                         </div>
                                                         <div class="post-header panel vstack gap-1">
                                                             <h3 class="post-title h6 m-0 text-truncate-2">
                                                                 <a class="text-none hover:text-primary duration-150"
-                                                                    href="{{ route('single.news', $item->news_slug) }}">{{ $item->news_title }}</a>
+                                                                    href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}">{{ $item->news_title }}</a>
                                                             </h3>
                                                             <div
                                                                 class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
                                                                 <div>
                                                                     <div class="post-date hstack gap-narrow">
-                                                                        <span>23d</span>
+                                                                        <span data-bs-toggle="tooltip"
+                                                                            title=" {{ $item->created_at->format('d M Y') }}">
+                                                                            {{-- You might want to display a short, static value here if the tooltip provides the dynamic one --}}
+
+                                                                            {{ $item->created_at->diffForHumans() }}
+                                                                            <i class="bi bi-info-circle-fill"></i>
+
+                                                                        </span>
                                                                     </div>
                                                                 </div>
                                                                 <div>·</div>
@@ -1485,7 +1492,7 @@
                                                                                 alt="{{ $item->blog_title }}"
                                                                                 loading="lazy">
                                                                         </div>
-                                                                        <a href="{{route(app()->getLocale()  == 'ur' ? 'urdu.single.blog' : 'single.blog', $item->blog_slug)}}"
+                                                                        <a href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.blog' : 'single.blog', $item->blog_slug) }}"
                                                                             class="position-cover"></a>
                                                                     </div>
                                                                 </div>
@@ -1496,7 +1503,7 @@
                                                                         <h3
                                                                             class="post-title h5 lg:h4 m-0 text-truncate-2">
                                                                             <a class="text-none hover:text-primary duration-150"
-                                                                                href="{{route(app()->getLocale()  == 'ur' ? 'urdu.single.blog' : 'single.blog', $item->blog_slug)}}">
+                                                                                href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.blog' : 'single.blog', $item->blog_slug) }}">
                                                                                 {{ $item->blog_title }}
                                                                             </a>
                                                                         </h3>
@@ -1506,7 +1513,7 @@
                                                                         {{ $item->blog_description }}
                                                                     </p>
                                                                     <div class="post-link">
-                                                                        <a href="{{route(app()->getLocale()  == 'ur' ? 'urdu.single.blog' : 'single.blog', $item->blog_slug)}}"
+                                                                        <a href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.blog' : 'single.blog', $item->blog_slug) }}"
                                                                             class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
                                                                             <span>Read more</span>
                                                                         </a>

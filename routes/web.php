@@ -113,6 +113,7 @@ Route::middleware(ValidUser::class)->group(function () {
 
         Route::get('/add', [BreakingNewsController::class, 'index'])->name('breakingnews.add');
         Route::post('/add', [BreakingNewsController::class, 'store']);
+        Route::get('/get-news-by-language', [BreakingNewsController::class, 'getNewsByLanguage']);
         Route::get('/show', [BreakingNewsController::class, 'show'])->name('breakingnews.show');
         Route::get('/edit/{id}', [BreakingNewsController::class, 'edit'])->name('breakingnews.edit');
         Route::patch('/update/{id}', [BreakingNewsController::class, 'update'])->name('breakingnews.update');

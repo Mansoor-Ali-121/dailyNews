@@ -27,7 +27,7 @@
                         </div>
                     </div>
 
-                    <div class="card-body p-4">
+                    <div class="card-body">
 
                         {{-- Counter --}}
                         <div class="global-stats">
@@ -86,13 +86,14 @@
                                 <table class="table align-middle mb-0 display" id="breakingNewsTable">
                                     <thead class="bg-light">
                                         <tr class="text-center">
-                                            <th class="ps-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0">ID</th>
-                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Title</th>
-                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Related News
+                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">ID</th>
+                                            <th class="text-uppercase fw-bold text-muted fs-5 border-0">Title</th>
+                                            <th class="text-uppercase fw-bold text-muted fs-5 border-0">Related News
                                             </th> {{-- Renamed for clarity --}}
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Image</th>
                                             {{-- <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Description
                                             </th> --}}
+                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Lang</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Slug</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Status</th>
                                             <th class="pe-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0">Actions
@@ -143,6 +144,15 @@
                                                     </div>
                                                 </td> --}}
                                                 <td>
+                                                    <div class="d-flex align-items-center">
+                                                        <div>
+                                                            <h6 class="mb-1 fw-bold fs-5">{{ $item->language }}
+                                                            </h6>
+                                                        </div>
+                                                    </div>
+                                                </td>
+
+                                                 <td>
                                                     <div class="d-flex align-items-center">
                                                         <div>
                                                             <h6 class="mb-1 fw-bold fs-5">{{ $item->breakingnews_slug }}
@@ -311,14 +321,13 @@
             border-top: none;
             font-weight: 700;
             letter-spacing: 0.5px;
-            padding: 1.25rem 1.5rem !important;
             background-color: #f8fafc;
             color: #0f4c81;
             border-bottom: 2px solid #dee2e6;
         }
 
         .table td {
-            padding: 1.25rem 1.5rem !important;
+
             vertical-align: middle;
             background-color: white;
             border-top: none;

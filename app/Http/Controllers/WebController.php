@@ -30,7 +30,10 @@ class WebController extends Controller
         // Crousel
 
         // Active news
-        $news = News::all()->where('news_status', 'active');
+        $news = News::where('news_status', 'active')
+            ->where('language', 'en')
+            ->latest('id')
+            ->get();
 
         // Single Category with only four news if category name politics then show only politics news
         $categories = Categories::withCount('news')->get();

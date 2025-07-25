@@ -24,6 +24,7 @@ class UrduWebController extends Controller
 
         $news = News::where('news_status', 'active')
             ->where('language', 'ur')
+            ->latest('id')
             ->get();
 
         $categories = Categories::withCount(['news' => function ($query) {

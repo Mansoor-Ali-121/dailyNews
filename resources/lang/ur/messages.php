@@ -14,6 +14,7 @@ return [
     'no_related_news_found_for_this_topic'=> 'اس موضوع سے متعلق کوئی خبر نہیں ملی',
     'prev_article'=> 'پچھلا مضمون',
     'next_article'=> 'اگلا مضمون',
+    'latest_news'=> 'تازہ ترین خبریں',
 
 ];
 return [
