@@ -1515,7 +1515,7 @@
                                                                     <div class="post-link">
                                                                         <a href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.blog' : 'single.blog', $item->blog_slug) }}"
                                                                             class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                            <span>Read more</span>
+                                                                            <span>{{__('messages.read_more')}}</span>
                                                                         </a>
                                                                     </div>
                                                                 </div>
@@ -1530,7 +1530,7 @@
                                         <div class="block-footer cstack lg:mt-2">
                                             <a href=""
                                                 class="animate-btn gap-0 btn btn-sm btn-alt-primary bg-transparent text-black dark:text-white border w-100">
-                                                <span>Load more posts</span>
+                                                <span>{{__('messages.load_more_posts')}}</span>
                                                 <i class="icon icon-1 unicon-chevron-right"></i>
                                             </a>
                                         </div>
@@ -1544,7 +1544,7 @@
                                 <div class="sidebar-wrap panel vstack gap-2 pb-2"
                                     data-uc-sticky="end: .content-wrap; offset: 150; media: @m;">
 
-                                    {{-- Ad --}}
+                                    {{-- Daily News index --}}
                                     <div class="widget ad-widget vstack gap-2 text-center p-2 border">
                                         <div class="widgt-content">
                                             <a class="cstack max-w-300px mx-auto text-none"
@@ -1579,8 +1579,7 @@
                                                                             class="post-header panel vstack justify-between gap-1">
                                                                             <h3 class="post-title h6 m-0">
                                                                                 <a class="text-none hover:text-primary duration-150"
-                                                                                    href="blog-details.html">Sample popular
-                                                                                    post title {{ $i }}</a>
+                                                                                    href="blog-details.html">{{__('messages.sample_popular_post_title')}}</a>
                                                                             </h3>
                                                                             <div
                                                                                 class="post-meta panel hstack justify-between fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">

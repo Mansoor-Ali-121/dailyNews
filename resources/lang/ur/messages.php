@@ -19,6 +19,10 @@ return [
     'recent_breaking_news'=> 'حالیہ بریکنگ نیوز',
     'latest'=> 'تازہ ترین',
     'all'=> 'تمام',
+    'read_more'=> 'مزید پڑھیں',
+    'load_more_posts'=> 'مزید پوسٹس لوڈ کریں۔',
+    'sample_popular_post_title'=> 'نمونہ مقبول پوسٹ کا عنوان',
+
 
 ];
 return [

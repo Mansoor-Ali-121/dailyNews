@@ -19,5 +19,8 @@ return [
     'Recent_breaking_news'=> 'Recent Breaking News',
     'latest'=> 'Latest',
     'all'=> 'All',
+    'read_more'=> 'Read More',
+    'load_more_posts'=> 'Load more posts',
+    'sample_popular_post_title'=> 'Sample popular post title',
     
 ];
