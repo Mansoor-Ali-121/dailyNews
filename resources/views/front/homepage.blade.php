@@ -181,7 +181,7 @@
                                                 </div>
                                                 <div class="widget-content">
                                                     <a class="cstack max-w-300px mx-auto text-none"
-                                                        href="{{ route('news.index') }}" rel="nofollow">
+                                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}" rel="nofollow">
                                                         <img class="d-none sm:d-block"
                                                             src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
                                                             alt="Ad slot">
@@ -1548,7 +1548,7 @@
                                     <div class="widget ad-widget vstack gap-2 text-center p-2 border">
                                         <div class="widgt-content">
                                             <a class="cstack max-w-300px mx-auto text-none"
-                                                href="{{ route('news.index') }}" rel="nofollow">
+                                                href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}" rel="nofollow">
                                                 <img class="d-block dark:d-none"
                                                     src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
                                                     alt="Ad slot">
