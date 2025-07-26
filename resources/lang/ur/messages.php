@@ -15,6 +15,10 @@ return [
     'prev_article'=> 'پچھلا مضمون',
     'next_article'=> 'اگلا مضمون',
     'latest_news'=> 'تازہ ترین خبریں',
+    'related_news'=> 'متعلقہ خبریں',
+    'recent_breaking_news'=> 'حالیہ بریکنگ نیوز',
+    'latest'=> 'تازہ ترین',
+    'all'=> 'تمام',
 
 ];
 return [

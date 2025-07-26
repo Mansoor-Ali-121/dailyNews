@@ -14,24 +14,36 @@ class BreakingNewsController extends Controller
     /**
      * Display a listing of the resource.
      */
- public function index(Request $request)
-{
-    $selectedLang = $request->language ?? 'en'; // Default to 'en' if not selected
+    public function index(Request $request)
+    {
+        $selectedLang = $request->language ?? 'en';
 
-    $news = News::where('language', $selectedLang)
+        if ($request->ajax()) {
+            $news = News::where('language', $selectedLang)
                 ->where('news_status', 'active')
+                ->select('id', 'news_slug')
                 ->get();
+            return response()->json($news);
+        }
 
-    return view('dashboard.breakingnews.add', compact('news', 'selectedLang'));
-}
+        $news = News::where('language', $selectedLang)
+            ->where('news_status', 'active')
+            ->get();
 
+        return view('dashboard.breakingnews.add', compact('news', 'selectedLang'));
+    }
 
     /**
-     * Show the form for creating a new resource.
+     * Return news based on language via AJAX.
      */
-    public function create()
+    public function getNewsByLanguage($lang)
     {
-        //
+        $news = News::where('news_status', 'active')
+            ->where('language', $lang)
+            ->select('id', 'news_slug')
+            ->get();
+
+        return response()->json($news);
     }
 
     /**
@@ -45,14 +57,14 @@ class BreakingNewsController extends Controller
             'image' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
             'breakingnews_status' => 'required|string|in:active,inactive',
             'title' => 'required|string',
-            'breakingnews_slug' => [ // Array of rules for this field
+            'breakingnews_slug' => [
                 'required',
                 'string',
-                Rule::unique('breakingnews')->where(function ($query) use ($request) {
+                Rule::unique('breaking_news')->where(function ($query) use ($request) {
                     return $query->where('language', $request->language);
                 }),
             ],
-            'language' => 'required|string|in:en,ur', // Ensure language is either 'en' or 'ur'
+            'language' => 'required|string|in:en,ur',
         ]);
 
         if ($request->hasFile('image')) {
@@ -61,14 +73,15 @@ class BreakingNewsController extends Controller
             $image->move(public_path('breakingnews_images/images'), $imageName);
             $validated['image'] = $imageName;
         }
-        // Add the authenticated user's ID to the validated data array
-        $validated['author_id'] = Auth::id(); // <--- Corrected line
+
+        $validated['author_id'] = Auth::id();
         BreakingNews::create($validated);
+
         return redirect()->route('breakingnews.show')->with('success', 'Breaking news added successfully');
     }
 
     /**
-     * Display the specified resource.
+     * Display the list of breaking news.
      */
     public function show()
     {
@@ -83,44 +96,43 @@ class BreakingNewsController extends Controller
     {
         $news = News::all();
         $breakingNews = BreakingNews::findOrFail($id);
-        return view('dashboard.breakingnews.edit', compact('breakingNews', 'news'));
+        $selectedLang = $breakingNews->language; // assuming 'language' column exists in DB
+
+        return view('dashboard.breakingnews.edit', compact('breakingNews', 'news', 'selectedLang'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
+        $breakingNews = BreakingNews::findOrFail($id);
+
         $validated = $request->validate([
-            'news_id' => 'required|exists:news,id,',
+            'news_id' => 'required|exists:news,id',
             'description' => 'required|string',
-            'image' => 'image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
             'breakingnews_status' => 'required|string|in:active,inactive',
             'title' => 'required|string',
-            'breakingnews_slug' => [ // Array of rules for this field
+            'breakingnews_slug' => [
                 'required',
                 'string',
-                Rule::unique('breakingnews')->where(function ($query) use ($request) {
+                Rule::unique('breaking_news')->ignore($breakingNews->id)->where(function ($query) use ($request) {
                     return $query->where('language', $request->language);
                 }),
             ],
-            'language' => 'required|string|in:en,ur', // Ensure language is either 'en' or 'ur'
+            'language' => 'required|string|in:en,ur',
         ]);
 
-        $breakingNews = BreakingNews::findOrFail($id);
-
-        // Delete the old image if a new image is uploaded
         if ($request->hasFile('image')) {
             if ($breakingNews->image) {
                 $oldImagePath = public_path('breakingnews_images/images/' . $breakingNews->image);
-                if (File::exists($oldImagePath)) { // Use File::exists to check if the file actually exists
-                    File::delete($oldImagePath); // Use File::delete or unlink()
+                if (File::exists($oldImagePath)) {
+                    File::delete($oldImagePath);
                 }
             }
-        }
 
-        // Handle Image Upload
-        if ($request->hasFile('image')) {
             $image = $request->file('image');
             $imageName = time() . '.' . $image->getClientOriginalExtension();
             $image->move(public_path('breakingnews_images/images'), $imageName);
@@ -132,13 +144,20 @@ class BreakingNewsController extends Controller
         return redirect()->route('breakingnews.show')->with('success', 'Breaking news updated successfully');
     }
 
-
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
         $breakingNews = BreakingNews::findOrFail($id);
+
+        if ($breakingNews->image) {
+            $imagePath = public_path('breakingnews_images/images/' . $breakingNews->image);
+            if (File::exists($imagePath)) {
+                File::delete($imagePath);
+            }
+        }
+
         $breakingNews->delete();
         return redirect()->route('breakingnews.show')->with('success', 'Breaking news deleted successfully');
     }

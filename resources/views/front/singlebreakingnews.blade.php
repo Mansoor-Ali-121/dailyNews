@@ -56,13 +56,13 @@
                                 <div class="post-content panel fs-6 md:fs-5" data-uc-lightbox="animation: scale">
                                     {!! $breakingnews->description !!}
                                 </div>
-
                                 {{-- Tags --}}
                                 <div
                                     class="post-footer panel vstack sm:hstack gap-3 justify-between justifybetween border-top py-4 mt-4 xl:py-9 xl:mt-9">
                                     <ul class="nav-x gap-narrow text-primary">
-                                        <li><span class="text-black dark:text-white me-narrow">Related News:</span>
-                                        <li><a href="{{ route('single.news', $breakingnews->news->news_slug) }}"
+                                        <li><span
+                                                class="text-black dark:text-white me-narrow">{{ __('messages.related_news') }}:</span>
+                                        <li><a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $breakingnews->news->news_slug) }}"
                                                 class="uc-link gap-0 dark:text-white">{{ $breakingnews->news->news_slug }}</a>
                                         </li>
                                         </li>
@@ -76,10 +76,10 @@
                                             <a class="btn btn-md btn-outline-gray-100 p-0 w-32px lg:w-40px h-32px lg:h-40px text-dark dark:text-white dark:border-gray-600 hover:bg-primary hover:border-primary hover:text-white rounded-circle"
                                                 href="#"><i class="unicon-logo-facebook icon-1"></i></a>
                                         </li>
-                                        <li>
+                                        {{-- <li>
                                             <a class="btn btn-md btn-outline-gray-100 p-0 w-32px lg:w-40px h-32px lg:h-40px text-dark dark:text-white dark:border-gray-600 hover:bg-primary hover:border-primary hover:text-white rounded-circle"
                                                 href="#"><i class="unicon-logo-x-filled icon-1"></i></a>
-                                        </li>
+                                        </li> --}}
                                         <li>
                                             <a class="btn btn-md btn-outline-gray-100 p-0 w-32px lg:w-40px h-32px lg:h-40px text-dark dark:text-white dark:border-gray-600 hover:bg-primary hover:border-primary hover:text-white rounded-circle"
                                                 href="#"><i class="unicon-email icon-1"></i></a>
@@ -122,57 +122,60 @@
                                 <div
                                     class="post-navigation panel vstack sm:hstack gap-2 mt-8 xl:mt-9
     @if ($previousPost && $nextPost) justify-between
-    @elseif ($previousPost) justify-start
-    @elseif ($nextPost) justify-end @endif
+    @elseif ($previousPost)
+        justify-start
+    @elseif ($nextPost)
+        justify-end @endif
 ">
 
                                     {{-- Previous Breaking News --}}
                                     @if ($previousPost)
-                                        <div
-                                            class="new-post panel hstack
-            @if ($nextPost) w-100 sm:w-1/2
-            @else w-full @endif
-        ">
+                                        <div class="new-post panel hstack {{ $nextPost ? 'w-100 sm:w-1/2' : 'w-full' }}">
                                             <div class="panel hstack justify-center w-100px h-100px">
                                                 <figure
                                                     class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
                                                     <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
                                                         src="{{ asset('breakingnews_images/images/' . $previousPost->image) }}"
-                                                        data-src="{{ asset('breakingnews_images/images/' . $previousPost->image) }}"
-                                                        alt="{{ $previousPost->title }}" data-uc-img="loading: lazy">
-                                                    <a href="{{ route('single.breakingnews', $previousPost->breakingnews_slug) }}"
-                                                        class="position-cover"
-                                                        data-caption="{{ $previousPost->title }}"></a>
+                                                        alt="{{ $previousPost->title }}" loading="lazy">
+                                                    <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $previousPost->breakingnews_slug) }}"
+                                                        class="position-cover"></a>
                                                 </figure>
                                             </div>
                                             <div class="panel vstack justify-center px-2 gap-1 w-1/3">
-                                                <span class="fs-7 opacity-60"><i class="unicon-arrow-left"></i> Prev
-                                                    Article</span>
+                                                <span class="fs-7 opacity-60">
+                                                    @if (app()->getLocale() === 'ur')
+                                                        {{ __('messages.prev_article') }} <i
+                                                            class="unicon-arrow-right"></i>
+                                                    @else
+                                                        <i class="unicon-arrow-left"></i> {{ __('messages.prev_article') }}
+                                                    @endif
+                                                </span>
                                                 <h6 class="h6 lg:h5 m-0 text-truncate-2">
-                                                    <a href="{{ route('single.breakingnews', $previousPost->breakingnews_slug) }}"
-                                                        class="text-none">
+                                                    <a
+                                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $previousPost->breakingnews_slug) }}">
                                                         {{ Str::limit($previousPost->title, 50) }}
                                                     </a>
                                                 </h6>
                                             </div>
-                                            <a href="{{ route('single.breakingnews', $previousPost->breakingnews_slug) }}"
-                                                class="position-cover"></a>
                                         </div>
                                     @endif
 
                                     {{-- Next Breaking News --}}
                                     @if ($nextPost)
                                         <div
-                                            class="new-post panel hstack
-            @if ($previousPost) w-100 sm:w-1/2
-            @else w-full @endif
-        ">
+                                            class="new-post panel hstack {{ $previousPost ? 'w-100 sm:w-1/2' : 'w-full' }}">
                                             <div class="panel vstack justify-center px-2 gap-1 w-1/3 text-end">
-                                                <span class="fs-7 opacity-60">Next Article <i
-                                                        class="unicon-arrow-right"></i></span>
+                                                <span class="fs-7 opacity-60">
+                                                    @if (app()->getLocale() === 'ur')
+                                                        <i class="unicon-arrow-left"></i> {{ __('messages.next_article') }}
+                                                    @else
+                                                        {{ __('messages.next_article') }} <i
+                                                            class="unicon-arrow-right"></i>
+                                                    @endif
+                                                </span>
                                                 <h6 class="h6 lg:h5 m-0 text-truncate-2">
-                                                    <a href="{{ route('single.breakingnews', $nextPost->breakingnews_slug) }}"
-                                                        class="text-none">
+                                                    <a
+                                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $nextPost->breakingnews_slug) }}">
                                                         {{ Str::limit($nextPost->title, 50) }}
                                                     </a>
                                                 </h6>
@@ -182,18 +185,16 @@
                                                     class="featured-image m-0 ratio ratio-1x1 rounded uc-transition-toggle overflow-hidden bg-gray-25 dark:bg-gray-800">
                                                     <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
                                                         src="{{ asset('breakingnews_images/images/' . $nextPost->image) }}"
-                                                        data-src="{{ asset('breakingnews_images/images/' . $nextPost->image) }}"
-                                                        alt="{{ $nextPost->title }}" data-uc-img="loading: lazy">
-                                                    <a href="{{ route('single.breakingnews', $nextPost->breakingnews_slug) }}"
-                                                        class="position-cover" data-caption="{{ $nextPost->title }}"></a>
+                                                        alt="{{ $nextPost->title }}" loading="lazy">
+                                                    <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $nextPost->breakingnews_slug) }}"
+                                                        class="position-cover"></a>
                                                 </figure>
                                             </div>
-                                            <a href="{{ route('single.breakingnews', $nextPost->breakingnews_slug) }}"
-                                                class="position-cover"></a>
                                         </div>
                                     @endif
 
                                 </div>
+
 
                                 {{-- Comment section  --}}
                                 {{-- <div id="blog-comment" class="panel border-top pt-2 mt-8 xl:mt-9">
@@ -330,7 +331,7 @@
                             <div class="sidebar-wrap panel vstack gap-2" data-uc-sticky="end: true;">
                                 <div class="right-sidebar">
                                     <div class="recent-widget widget">
-                                        <h2 class="widget-title">Recent Breaking News</h2>
+                                        <h2 class="widget-title">{{__('messages.recent_breaking_news')}}</h2>
                                         <div class="recent-post-widget clearfix">
                                             @foreach ($relatedNews as $item)
                                                 <div class="show-featured clearfix">

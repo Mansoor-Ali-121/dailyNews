@@ -15,5 +15,9 @@ return [
     'prev_article'=>' Prev Article',
     'next_article'=> 'Next Article',
     'latest_news'=> 'Latest News',
+    'related_news'=> 'Related News',
+    'Recent_breaking_news'=> 'Recent Breaking News',
+    'latest'=> 'Latest',
+    'all'=> 'All',
     
 ];

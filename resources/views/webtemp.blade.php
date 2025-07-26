@@ -199,6 +199,7 @@
     <header class="uc-header header-seven uc-navbar-sticky-wrap z-999"
         data-uc-sticky="sel-target: .uc-navbar-container; cls-active: uc-navbar-sticky; cls-inactive: uc-navbar-transparent; end: !*;">
         <nav class="uc-navbar-container text-gray-900 dark:text-white fs-6 z-1">
+            {{-- live breaking news --}}
             <div class="uc-top-navbar panel z-3 overflow-hidden bg-primary-600 swiper-parent"
                 style="--uc-nav-height: 32px"
                 data-uc-navbar=" animation: uc-animation-slide-top-small; duration: 150;">
@@ -210,7 +211,7 @@
                                 @foreach ($livebreakingnews as $item)
                                     <div class="swiper-slide text-white">
                                         <div class="type-post post panel">
-                                            <a href="{{ route('single.breakingnews', $item->breakingnews_slug) }}"
+                                            <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $item->breakingnews_slug) }}"
                                                 class="fs-7 fw-normal text-none text-inherit">{{ $item->title }}</a>
                                         </div>
                                     </div>
@@ -220,6 +221,8 @@
                     </div>
                 </div>
             </div>
+            {{-- live breaking news end --}}
+
             <div class="uc-center-navbar panel hstack z-2 min-h-48px d-none lg:d-flex"
                 data-uc-navbar=" animation: uc-animation-slide-top-small; duration: 150;">
                 <div class="container max-w-xl">
@@ -228,6 +231,7 @@
                             {{-- Navbar --}}
                             <ul class="uc-navbar-nav gap-3 justify-between flex-1 fs-6 fw-bold"
                                 style="--uc-nav-height: 48px">
+                                {{-- nav icon --}}
                                 <li>
                                     <a href="{{ url('/') }}"><span class="icon-1 unicon-finance"></span></a>
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
@@ -237,7 +241,7 @@
                                                 <div class="col-2">
                                                     <ul class="uc-nav uc-navbar-dropdown-nav">
                                                         <li><a
-                                                                href="{{ route('single.category', $item->category_slug) }}">{{ $item->category_name }}</a>
+                                                                href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.category' : 'single.category', $item->category_slug) }}">{{ $item->category_name }}</a>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -246,9 +250,9 @@
                                     </div>
                                 </li>
 
-                                {{-- Latest news with categories --}}
+                                {{-- All Latest news with categories --}}
                                 <li>
-                                    <a href="#">Latest <span data-uc-navbar-parent-icon></span></a>
+                                    <a href="#">{{__('messages.latest')}} <span data-uc-navbar-parent-icon></span></a>
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
                                         <div class="row col-match g-2">
@@ -256,7 +260,7 @@
                                                 <div class="uc-navbar-switcher-nav border-end">
                                                     <ul class="uc-tab-left fs-6 text-end"
                                                         data-uc-tab="connect: #uc-navbar-switcher-tending; animation: uc-animation-slide-right-small, uc-animation-slide-left-small">
-                                                        <li><a href="#category-all">All</a></li>
+                                                        <li><a href="#category-all">{{__('messages.all')}}</a></li>
                                                         @foreach ($latestnavnews as $index => $item)
                                                             <li><a
                                                                     href="#category-{{ $index }}">{{ $item->category_name }}</a>
@@ -384,11 +388,17 @@
                                 <li>
                                     {{-- Just politics category --}}
                                     @foreach ($allcategories as $politics)
-                                        @if ($politics->category_name == 'Politics')
-                                            <a href="{{ route('single.category', $politics->category_slug) }}">{{ $politics->category_name }}
-                                                <span data-uc-navbar-parent-icon></span></a>
+                                        @if (
+                                            (app()->getLocale() == 'ur' && $politics->language == 'ur' && $politics->category_name == 'سیاست') ||
+                                                (app()->getLocale() != 'ur' && $politics->category_name == 'Politics'))
+                                            <a
+                                                href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $politics->category_slug) }}">
+                                                {{ $politics->category_name }}
+                                                <span data-uc-navbar-parent-icon></span>
+                                            </a>
                                         @endif
                                     @endforeach
+
 
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
@@ -409,13 +419,13 @@
                                                                     alt="The Importance of Sleep: Tips for Better Rest and Recovery"
                                                                     data-uc-img="loading: lazy">
                                                             </div>
-                                                            <a href="{{ route('single.news', $item->news_slug) }}"
+                                                            <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}"
                                                                 class="position-cover"></a>
                                                         </div>
                                                         <div class="post-header panel vstack gap-narrow">
                                                             <h3 class="post-title h6 m-0 text-truncate-2">
                                                                 <a class="text-none hover:text-primary duration-150"
-                                                                    href="{{ route('single.news', $item->news_slug) }}">
+                                                                    href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}">
                                                                     {{ $item->news_title }}
                                                                 </a>
                                                             </h3>
@@ -445,9 +455,14 @@
                                 {{-- Sports news --}}
                                 <li>
                                     @foreach ($allcategories as $sports)
-                                        @if ($sports->category_name == 'Sports')
-                                            <a href="{{ route('single.category', $sports->category_slug) }}">{{ $sports->category_name }}
-                                                <span data-uc-navbar-parent-icon></span></a>
+                                        @if (
+                                            (app()->getLocale() == 'ur' && $sports->language == 'ur' && $sports->category_name == 'کھیل') ||
+                                                (app()->getLocale() != 'ur' && $sports->category_name == 'Sports'))
+                                            <a
+                                                href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $sports->category_slug) }}">
+                                                {{ $sports->category_name }}
+                                                <span data-uc-navbar-parent-icon></span>
+                                            </a>
                                         @endif
                                     @endforeach
 
@@ -469,13 +484,13 @@
                                                                     alt="Balancing Work and Wellness: Tech Solutions for Healthy"
                                                                     data-uc-img="loading: lazy">
                                                             </div>
-                                                            <a href="{{ route('single.news', $sports->news_slug) }}"
+                                                            <a href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.news' : 'single.news', $sports->news_slug) }}"
                                                                 class="position-cover"></a>
                                                         </div>
                                                         <div class="post-header panel vstack gap-narrow">
                                                             <h3 class="post-title h6 m-0 text-truncate-2">
                                                                 <a class="text-none hover:text-primary duration-150"
-                                                                    href="{{ route('single.news', $sports->news_slug) }}"">
+                                                                    href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.news' : 'single.news', $sports->news_slug) }}">
                                                                     {{ $sports->news_title }}
                                                                 </a>
                                                             </h3>
@@ -505,9 +520,14 @@
                                 {{-- Entaertainment news --}}
                                 <li>
                                     @foreach ($allcategories as $entertainment)
-                                        @if ($entertainment->category_name == 'Entertainment')
-                                            <a href="{{ route('single.category', $entertainment->category_slug) }}">{{ $entertainment->category_name }}
-                                                <span data-uc-navbar-parent-icon></span></a>
+                                        @if (
+                                            (app()->getLocale() == 'ur' && $entertainment->language == 'ur' && $entertainment->category_name == 'تفریح') ||
+                                                (app()->getLocale() != 'ur' && $entertainment->category_name == 'Entertainment'))
+                                            <a
+                                                href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $entertainment->category_slug) }}">
+                                                {{ $entertainment->category_name }}
+                                                <span data-uc-navbar-parent-icon></span>
+                                            </a>
                                         @endif
                                     @endforeach
 
@@ -527,13 +547,13 @@
                                                                     alt="The Rise of AI-Powered Personal Assistants: How They Manage"
                                                                     data-uc-img="loading: lazy">
                                                             </div>
-                                                            <a href="{{ route('single.news', $entertainment->news_slug) }}"
+                                                            <a href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.news' : 'single.news', $entertainment->news_slug) }}"
                                                                 class="position-cover"></a>
                                                         </div>
                                                         <div class="post-header panel vstack gap-narrow">
                                                             <h3 class="post-title h6 m-0 text-truncate-2">
                                                                 <a class="text-none hover:text-primary duration-150"
-                                                                    href="{{ route('single.news', $entertainment->news_slug) }}">{{ $entertainment->news_title }}</a>
+                                                                    href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.news' : 'single.news', $entertainment->news_slug) }}">{{ $entertainment->news_title }}</a>
                                                             </h3>
                                                             <div
                                                                 class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
@@ -563,9 +583,14 @@
                                 {{-- World news --}}
                                 <li>
                                     @foreach ($allcategories as $world)
-                                        @if ($world->category_name == 'World')
-                                            <a href="{{ route('single.category', $world->category_slug) }}">{{ $world->category_name }}<span
-                                                    data-uc-navbar-parent-icon></span></a>
+                                        @if (
+                                            (app()->getLocale() == 'ur' && $world->language == 'ur' && $world->category_name == 'دنیا') ||
+                                                (app()->getLocale() != 'ur' && $world->category_name == 'World'))
+                                            <a
+                                                href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $world->category_slug) }}">
+                                                {{ $world->category_name }}
+                                                <span data-uc-navbar-parent-icon></span>
+                                            </a>
                                         @endif
                                     @endforeach
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
@@ -584,13 +609,13 @@
                                                                     alt="AI and Marketing: Unlocking Customer Insights"
                                                                     data-uc-img="loading: lazy">
                                                             </div>
-                                                            <a href="{{ route('single.news', $world->news_slug) }}"
+                                                            <a href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.news' : 'single.news', $world->news_slug) }}"
                                                                 class="position-cover"></a>
                                                         </div>
                                                         <div class="post-header panel vstack gap-narrow">
                                                             <h3 class="post-title h6 m-0 text-truncate-2">
                                                                 <a class="text-none hover:text-primary duration-150"
-                                                                    href="{{ route('single.news', $world->news_slug) }}">{{ $world->news_title }}</a>
+                                                                    href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.news' : 'single.news', $world->news_slug) }}">{{ $world->news_title }}</a>
                                                             </h3>
                                                             <div
                                                                 class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
@@ -612,163 +637,6 @@
                                                     </article>
                                                 </div>
                                             @endforeach
-
-                                            {{-- <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="../assets/images/common/img-fallback.png"
-                                                                data-src="../assets/images/demo-seven/posts/img-11.jpg"
-                                                                alt="Solo Travel: Some Tips and Destinations for the Adventurous Explorer"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="blog-details.html" class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="blog-details.html">Solo Travel: Some Tips and
-                                                                Destinations for the Adventurous Explorer</a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
-                                                            <div>
-                                                                <div class="post-date hstack gap-narrow">
-                                                                    <span>2mo</span>
-                                                                </div>
-                                                            </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i class="icon-narrow unicon-chat"></i>
-                                                                    <span>5</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="../assets/images/common/img-fallback.png"
-                                                                data-src="../assets/images/demo-seven/posts/img-15.jpg"
-                                                                alt="Gaming in the Age of AI: Strategies for Startups"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="blog-details.html" class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="blog-details.html">Gaming in the Age of AI:
-                                                                Strategies for Startups</a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
-                                                            <div>
-                                                                <div class="post-date hstack gap-narrow">
-                                                                    <span>9mo</span>
-                                                                </div>
-                                                            </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i class="icon-narrow unicon-chat"></i>
-                                                                    <span>19</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="../assets/images/common/img-fallback.png"
-                                                                data-src="../assets/images/demo-seven/posts/img-18.jpg"
-                                                                alt="Virtual Reality and Mental Health: Exploring the Therapeutic"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="blog-details.html" class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="blog-details.html">Virtual Reality and Mental
-                                                                Health: Exploring the Therapeutic</a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
-                                                            <div>
-                                                                <div class="post-date hstack gap-narrow">
-                                                                    <span>2mo</span>
-                                                                </div>
-                                                            </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i class="icon-narrow unicon-chat"></i>
-                                                                    <span>290</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div>
-                                            <div>
-                                                <article
-                                                    class="post type-post panel uc-transition-toggle vstack gap-1">
-                                                    <div class="post-media panel overflow-hidden">
-                                                        <div
-                                                            class="featured-image bg-gray-25 dark:bg-gray-800 ratio ratio-16x9">
-                                                            <img class="media-cover image uc-transition-scale-up uc-transition-opaque"
-                                                                src="../assets/images/common/img-fallback.png"
-                                                                data-src="../assets/images/demo-seven/posts/img-20.jpg"
-                                                                alt="Smart Homes, Smarter Living: Exploring IoT and AI"
-                                                                data-uc-img="loading: lazy">
-                                                        </div>
-                                                        <a href="blog-details.html" class="position-cover"></a>
-                                                    </div>
-                                                    <div class="post-header panel vstack gap-narrow">
-                                                        <h3 class="post-title h6 m-0 text-truncate-2">
-                                                            <a class="text-none hover:text-primary duration-150"
-                                                                href="blog-details.html">Smart Homes, Smarter Living:
-                                                                Exploring IoT and AI</a>
-                                                        </h3>
-                                                        <div
-                                                            class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex z-1 d-none md:d-block">
-                                                            <div>
-                                                                <div class="post-date hstack gap-narrow">
-                                                                    <span>23d</span>
-                                                                </div>
-                                                            </div>
-                                                            <div>·</div>
-                                                            <div>
-                                                                <a href="#post_comment"
-                                                                    class="post-comments text-none hstack gap-narrow">
-                                                                    <i class="icon-narrow unicon-chat"></i>
-                                                                    <span>15</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </article>
-                                            </div> --}}
                                         </div>
                                     </div>
                                 </li>
@@ -777,9 +645,13 @@
                                 {{-- Tech News --}}
                                 <li>
                                     @foreach ($allcategories as $tech)
-                                        @if ($tech->category_name == 'Tech')
+                                        @if (
+                                            (app()->getLocale() == 'ur' && $tech->language == 'ur' && $tech->category_name == 'ٹیکنالوجی') ||
+                                                (app()->getLocale() != 'ur' && $tech->category_name == 'Tech'))
                                             <a
-                                                href="{{ route('single.category', $tech->category_slug) }}">{{ $tech->category_name }}</a>
+                                                href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $tech->category_slug) }}">
+                                                {{ $tech->category_name }}
+                                            </a>
                                         @endif
                                     @endforeach
                                 </li>
@@ -788,9 +660,13 @@
                                 {{-- Business News --}}
                                 <li>
                                     @foreach ($allcategories as $business)
-                                        @if ($business->category_name == 'Business')
+                                        @if (
+                                            (app()->getLocale() == 'ur' && $business->language == 'ur' && $business->category_name == 'کاروبار') ||
+                                                (app()->getLocale() != 'ur' && $business->category_name == 'Business'))
                                             <a
-                                                href="{{ route('single.category', $business->category_slug) }}">{{ $business->category_name }}</a>
+                                                href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $business->category_slug) }}">
+                                                {{ $business->category_name }}
+                                            </a>
                                         @endif
                                     @endforeach
                                 </li>
@@ -799,9 +675,13 @@
                                 {{-- Health News --}}
                                 <li>
                                     @foreach ($allcategories as $health)
-                                        @if ($health->category_name == 'Health')
+                                        @if (
+                                            (app()->getLocale() == 'ur' && $health->language == 'ur' && $health->category_name == 'صحت') ||
+                                                (app()->getLocale() != 'ur' && $health->category_name == 'Health'))
                                             <a
-                                                href="{{ route('single.category', $health->category_slug) }}">{{ $health->category_name }}</a>
+                                                href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $health->category_slug) }}">
+                                                {{ $health->category_name }}
+                                            </a>
                                         @endif
                                     @endforeach
                                 </li>
@@ -810,8 +690,12 @@
                                 {{-- Auto  --}}
                                 <li>
                                     @foreach ($allcategories as $auto)
-                                        @if ($auto->category_name == 'Auto')
-                                            <a href="{{ route('single.category', $auto->category_slug) }}">{{ $auto->category_name }}
+                                        @if (
+                                            (app()->getLocale() == 'ur' && $auto->language == 'ur' && $auto->category_name == 'آٹو') ||
+                                                (app()->getLocale() != 'ur' && $auto->category_name == 'Auto'))
+                                            <a
+                                                href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $auto->category_slug) }}">
+                                                {{ $auto->category_name }}
                                             </a>
                                         @endif
                                     @endforeach
@@ -821,8 +705,12 @@
                                 {{-- Food  --}}
                                 <li>
                                     @foreach ($allcategories as $food)
-                                        @if ($food->category_name == 'Food')
-                                            <a href="{{ route('single.category', $food->category_slug) }}">{{ $food->category_name }}
+                                        @if (
+                                            (app()->getLocale() == 'ur' && $food->language == 'ur' && $food->category_name == 'کھانا') ||
+                                                (app()->getLocale() != 'ur' && $food->category_name == 'food'))
+                                            <a
+                                                href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $food->category_slug) }}">
+                                                {{ $food->category_name }}
                                             </a>
                                         @endif
                                     @endforeach
@@ -850,7 +738,7 @@
                                 </a>
                             </div> --}}
                             <div class="uc-logo d-block md:d-none">
-                                <a href="{{ route('news.index') }}">
+                                <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}">
                                     <img class="w-100px text-dark dark:text-white"
                                         src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
                                         alt="News5" data-uc-svg>
@@ -859,7 +747,7 @@
                         </div>
                         <div class="uc-navbar-center">
                             <div class="uc-logo d-none md:d-block">
-                                <a href="{{ route('news.index') }}">
+                                <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}">
                                     <img class="text-dark dark:text-white main-logo"
                                         src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
                                         alt="News5" data-uc-svg>
@@ -969,8 +857,8 @@
                                     data-uc-drop="mode: click; boundary: !.uc-footer-bottom; animation: uc-animation-slide-top-small; duration: 150;">
                                     <ul class="nav-y gap-1 fw-medium items-end">
                                         <li><a href="{{ url('/') }}">English</a></li>
-                                     <li><a href="{{ url('/ur') }}">Urdu</a></li>
-                                     
+                                        <li><a href="{{ url('/ur') }}">Urdu</a></li>
+
                                     </ul>
                                 </div>
                             </div>

@@ -14,11 +14,12 @@ class UrduWebController extends Controller
     {
         $breakingNews = BreakingNews::where('breakingnews_status', 'active')
             ->where('language', 'ur')
+            ->latest('id')
             ->get();
 
         $activeNews = BreakingNews::where('breakingnews_status', 'active')
             ->where('language', 'ur')
-            ->latest()
+            ->latest('id')
             ->take(4)
             ->get();
 
@@ -124,27 +125,6 @@ class UrduWebController extends Controller
             'blogs'
         ));
     }
-
-    // public function singlecategoryview($slug)
-    // {
-    //     // Get the category by slug
-    //     $category = Categories::where('category_slug', $slug)->firstOrFail();
-
-    //     // Get the Urdu category name
-    //     $categoryname = $category->category_name;
-
-    //     // Count total Urdu news only (optional)
-    //     $totalNewsCount = News::where('language', 'ur')->count();
-
-    //     // Fetch only Urdu news for this category
-    //     $news = News::where('category_id', $category->id)
-    //         ->where('language', 'ur') // Only Urdu news
-    //         ->orderBy('created_at', 'desc')
-    //         ->paginate(9);
-
-    //     return view('front.singlecategory', compact('news', 'categoryname', 'totalNewsCount'));
-    // }
-
 
     public function singlecategoryview($slug)
     {
@@ -271,6 +251,39 @@ class UrduWebController extends Controller
             'previousPost',
             'nextPost'
         ));
+    }
+
+       public function showsinglebreakingnews(string $slug)
+    {
+        // Categories for news shows
+        $categories = Categories::withCount('news')
+        ->where('language', 'ur')
+        ->get();
+        // $latestnews = News::where('news_status', 'active')->latest()->take(4)->get();
+        $breakingnews = BreakingNews::where([
+            ['breakingnews_slug', '=', $slug],
+            ['breakingnews_status', '=', 'active']
+        ])->firstOrFail();
+
+        // Recent breaking news 
+        $relatedNews = BreakingNews::where('breakingnews_status', 'active')
+            ->where('id', '!=', $breakingnews->id)
+            ->where('language', 'ur')
+            ->latest()
+            ->take(5)
+            ->get();
+
+        // previos and next breaking news
+        $previousPost = BreakingNews::where('id', '<', $breakingnews->id)->orderBy('id', 'desc')
+        ->where('language', 'ur')
+        ->first();
+        $nextPost  = BreakingNews::where('id', '>', $breakingnews->id)->orderBy('id', 'asc')
+        ->where('language', 'ur')
+        ->first();
+
+        return view('front.singlebreakingnews', compact('breakingnews', 'relatedNews', 'categories', 'previousPost', 'nextPost'));
+
+        // $authors = News::with('users')->get();
     }
 
 

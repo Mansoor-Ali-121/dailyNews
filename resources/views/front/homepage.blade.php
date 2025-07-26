@@ -32,7 +32,7 @@
                                                                             alt="Hidden Gems: Underrated Travel Destinations Around the World"
                                                                             data-uc-img="loading: lazy">
                                                                     </div>
-                                                                    <a href="{{ route('single.breakingnews', $item->breakingnews_slug) }}"
+                                                                    <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $item->breakingnews_slug) }}"
                                                                         class="position-cover"></a>
                                                                 </div>
                                                             </div>
@@ -40,7 +40,7 @@
                                                                 <div class="post-header panel vstack justify-between gap-1">
                                                                     <h3 class="post-title h6 m-0 text-truncate-2">
                                                                         <a class="text-none hover:text-primary duration-150"
-                                                                            href="{{ route('single.breakingnews', $item->breakingnews_slug) }}">{{ $item->title }}</a>
+                                                                            href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $item->breakingnews_slug) }}">{{ $item->title }}</a>
                                                                     </h3>
                                                                 </div>
                                                             </div>
@@ -116,7 +116,7 @@
                                                                     <h3
                                                                         class="post-title h5 lg:h4 xl:h3 m-0 max-w-600px text-white text-truncate-2">
                                                                         <a class="text-none text-white"
-                                                                            href="{{ route('single.breakingnews', $item->breakingnews_slug) }}">{{ $item->title }}</a>
+                                                                            href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $item->breakingnews_slug) }}">{{ $item->title }}</a>
                                                                     </h3>
                                                                     {{-- Author --}}
                                                                     <div>
@@ -265,12 +265,12 @@
                                                             class="post-header panel vstack justify-end items-start gap-1 p-2 sm:p-4 position-cover text-white">
                                                             <div
                                                                 class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                <span>{{ $singleLatestBreakingNews->created_at->format('d M Y') }}</span>
+                                                                <span>{{ $singleLatestBreakingNews->created_at->diffForHumans() }}</span>
                                                             </div>
                                                             <h3
                                                                 class="post-title h5 lg:h4 m-0 max-w-600px text-white text-truncate-2">
                                                                 <a class="text-none text-white"
-                                                                    href="{{ route('single.breakingnews', $singleLatestBreakingNews->breakingnews_slug) }}">{{ $singleLatestBreakingNews->title }}</a>
+                                                                    href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $singleLatestBreakingNews->breakingnews_slug) }}">{{ $singleLatestBreakingNews->title }}</a>
                                                             </h3>
                                                             <div>
                                                                 <div
@@ -601,12 +601,12 @@
                                                                 class="post-header panel vstack justify-end items-start gap-1 p-2 sm:p-4 position-cover text-white">
                                                                 <div
                                                                     class="post-date hstack gap-narrow fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
-                                                                    <span>{{ $secondLatestBreakingNews->created_at->format('M d Y') }}</span>
+                                                                    <span>{{ $secondLatestBreakingNews->created_at->diffForHumans() }}</span>
                                                                 </div>
                                                                 <h3
                                                                     class="post-title h5 lg:h4 m-0 max-w-600px text-white text-truncate-2">
                                                                     <a class="text-none text-white"
-                                                                        href="{{ route('single.breakingnews', $secondLatestBreakingNews->breakingnews_slug) }}">{{ $secondLatestBreakingNews->title }}</a>
+                                                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $secondLatestBreakingNews->breakingnews_slug) }}">{{ $secondLatestBreakingNews->title }}</a>
                                                                 </h3>
                                                                 <div>
                                                                     <div

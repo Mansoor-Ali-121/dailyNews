@@ -226,7 +226,7 @@
                                                                 alt="Placeholder Image" data-uc-img="loading: lazy">
                                                         @endif
                                                         {{-- Link to the single news page for this related item --}}
-                                                        <a href="{{ route('single.news', $item->news_slug) }}"
+                                                        <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}"
                                                             class="position-cover"
                                                             data-caption="{{ $item->news_title }}"></a>
                                                         {{-- Make data-caption dynamic --}}
@@ -234,14 +234,14 @@
                                                     <div class="post-header panel vstack gap-1">
                                                         <h5 class="h6 md:h5 m-0">
                                                             <a class="text-none"
-                                                                href="{{ route('single.news', $item->news_slug) }}">
-                                                                {{ \Illuminate\Support\Str::limit($item->news_title, 50) }}
+                                                                href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}">
+                                                                {{ Str::limit($item->news_title, 50) }}
                                                                 {{-- Dynamically display and limit title length --}}
                                                             </a>
                                                         </h5>
                                                         <div class="post-date hstack gap-narrow fs-7 opacity-60">
                                                             {{-- Display the creation date of the news item --}}
-                                                            <span>{{ $item->created_at->format('M d, Y') }}</span>
+                                                            <span>{{ $item->created_at->diffForHumans() }}</span>
                                                             {{-- Dynamic date --}}
                                                         </div>
                                                     </div>
@@ -388,6 +388,7 @@
                                 {{-- Comment section end --}}
                             </div>
                         </div>
+                        {{-- Recent news --}}
                         <div class="lg:col-4">
                             <div class="sidebar-wrap panel vstack gap-2" data-uc-sticky="end: true;">
                                 <div class="right-sidebar">
@@ -397,7 +398,7 @@
                                             @foreach ($latestnews as $recentnews)
                                                 <div class="show-featured clearfix">
                                                     <div class="post-img">
-                                                        <a href="{{ route('single.news', $recentnews->news_slug) }}">
+                                                        <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $recentnews->news_slug) }}">
                                                             <img width="1200" height="700"
                                                                 src="{{ asset('news/news_images/' . $recentnews->news_image) }}"
                                                                 class="attachment-full size-full wp-post-image"
@@ -414,7 +415,7 @@
                                                                     By <a href="#">Anna</a> --}}
                                                                 </span>
                                                             </div>
-                                                            <a href="{{ route('single.news', $recentnews->news_slug) }}">
+                                                            <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $recentnews->news_slug) }}">
                                                                 {{ Str::limit($recentnews->news_title, 40) }}</a>
                                                         </div>
                                                     </div>

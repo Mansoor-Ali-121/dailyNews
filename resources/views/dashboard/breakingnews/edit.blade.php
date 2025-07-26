@@ -59,51 +59,34 @@
                             @method('PATCh')
                             <div class="row g-4">
 
-                                {{-- Language Selection form radio btn --}}
-                                <div class="col-12">
-                                    <div class="form-floating position-relative">
-                                        <i class="fas fa-language floating-icon breaking-news-icon"></i>
-                                        <select class="form-select border-2 ps-5 py-3" id="language" name="language"
-                                            required>
-                                            <option value="" disabled>Select Language</option>
-                                            <option value="en"
-                                                {{ old('language', $breakingNews->language) == 'en' ? 'selected' : '' }}>
-                                                English</option>
-                                            <option value="ur"
-                                                {{ old('language', $breakingNews->language) == 'ur' ? 'selected' : '' }}>
-                                                Urdu</option>
-                                        </select>
-                                        <label for="language" class="form-label text-muted ms-4">Language</label>
+                                <!-- Language Selector -->
+                                <div class="col-md-12">
+                                    <label class="form-label">Language <span class="required-star">*</span></label>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="language" value="en"
+                                            {{ $breakingNews->language == 'en' ? 'checked' : '' }}>
+                                        <label class="form-check-label">English</label>
                                     </div>
-                                    @error('language')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="language" value="ur"
+                                            {{ $breakingNews->language == 'ur' ? 'checked' : '' }}>
+                                        <label class="form-check-label">Urdu</label>
+                                    </div>
+                                    <p class="form-note">Select the language for the news content.</p>
                                 </div>
 
-                                {{-- Related News --}}
+                                <!-- Related News Dropdown -->
                                 <div class="col-12">
                                     <div class="form-floating position-relative">
-                                        <i class="fas fa-newspaper floating-icon breaking-news-icon"></i>
                                         <select class="form-select border-2 ps-5 py-3" id="news_id" name="news_id"
                                             required>
-                                            <option value="" disabled>Select Related News</option>
-                                            @foreach ($news as $item)
-                                                <option value="{{ $item->id }}"
-                                                    {{ old('news_id', $breakingNews->news_id) == $item->id ? 'selected' : '' }}>
-                                                    {{ $item->news_slug }}
-                                                </option>
-                                            @endforeach
+                                            <option value="" selected disabled>Select Related News</option>
+                                            {{-- JS will populate --}}
                                         </select>
-                                        <label for="news_id" class="form-label text-muted ms-4">Related News</label>
                                     </div>
-                                    @error('news_id')
-                                        <span class="invalid-feedback" role="alert">
-                                            <strong>{{ $message }}</strong>
-                                        </span>
-                                    @enderror
                                 </div>
+
+
                                 {{-- Title --}}
                                 <div class="col-12">
                                     <div class="form-floating position-relative">
@@ -451,6 +434,8 @@
         }
     </style>
 
+
+    {{-- Slug --}}
     <script>
         function generateSlug() {
             const title = document.getElementById('slug').value;
@@ -471,4 +456,51 @@
             }
         });
     </script>
+
+
+    {{-- Related News Filter by Language (Edit File Version) --}}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const radios = document.querySelectorAll('input[name="language"]');
+            const newsDropdown = document.getElementById('news_id');
+            const selectedNewsId = "{{ $breakingNews->news_id }}";
+            const currentLang = "{{ $breakingNews->language }}";
+
+            // Function to fetch and populate related news
+            function fetchNewsByLanguage(lang, selectedId = null) {
+                fetch(`/breakingnews/get-news-by-language/${lang}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        newsDropdown.innerHTML =
+                            '<option value="" disabled selected>Select Related News</option>';
+                        data.forEach(item => {
+                            let option = document.createElement('option');
+                            option.value = item.id;
+                            option.text = item.news_slug;
+
+                            if (item.id == selectedId) {
+                                option.selected = true;
+                            }
+
+                            newsDropdown.appendChild(option);
+                        });
+                    })
+                    .catch(error => {
+                        console.error('Error fetching news:', error);
+                    });
+            }
+
+            // Initial population on page load
+            fetchNewsByLanguage(currentLang, selectedNewsId);
+
+            // Re-fetch news when language changes
+            radios.forEach(radio => {
+                radio.addEventListener('change', function() {
+                    fetchNewsByLanguage(this.value);
+                });
+            });
+        });
+    </script>
+
+
 @endsection
