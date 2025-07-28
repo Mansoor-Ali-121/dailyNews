@@ -1,4 +1,11 @@
 @extends('webtemp')
+@if (app()->getLocale() === 'ur')
+@push('urdustyle')
+    <link rel="stylesheet" href="{{ asset('website/assets/css/urdustyle.css') }}">
+@endpush
+    
+@endif
+
 @section('content')
 
     <div id="wrapper" class="wrap overflow-hidden-x">
@@ -50,7 +57,7 @@
                                                                 src="{{ asset('news/news_images/' . $newsItem->news_image) }}"
                                                                 alt="{{ $newsItem->news_title }}"
                                                                 data-uc-img="loading: lazy">
-                                                            <a href="{{ route('single.news', $newsItem->news_slug) }}"
+                                                            <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $newsItem->news_slug) }}"
                                                                 class="position-cover"
                                                                 data-caption="{{ $newsItem->news_title }}"></a>
                                                         </figure>
@@ -68,7 +75,7 @@
                                                     <div class="post-header panel vstack gap-1 lg:gap-2">
                                                         <h3 class="post-title h6 sm:h5 xl:h4 m-0 text-truncate-2 m-0">
                                                             <a class="text-none"
-                                                                href="{{ route('single.news', $newsItem->news_slug) }}">{{ $newsItem->news_title }}</a>
+                                                                href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $newsItem->news_slug) }}">{{ $newsItem->news_title }}</a>
                                                         </h3>
                                                         <div>
                                                             <div
@@ -78,10 +85,9 @@
                                                                         <div>
                                                                             @if ($newsItem->author)
                                                                                 <div class="post-author hstack gap-1">
-                                                                                    <a href="{{ route('author.profile', $newsItem->author->user_slug) }}"
+                                                                                    <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.author.profile' : 'author.profile', $newsItem->author->user_slug) }}"
                                                                                         data-uc-tooltip="{{ $newsItem->author->name }}">
-                                                                                        <img src="{{ asset('images/users/' . $newsItem->author->user_image) }}"
-                                                                                            onerror="this.onerror=null;this.src='[https://placehold.co/24x24/cccccc/333333?text=A](https://placehold.co/24x24/cccccc/333333?text=A)';"
+                                                                                        <img src="{{ asset('images/users/' . $newsItem->author->user_image) }}"    
                                                                                             alt="{{ $newsItem->author->name ?? 'Author' }}"
                                                                                             class="w-24px h-24px rounded-circle">
                                                                                     </a>

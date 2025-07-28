@@ -129,12 +129,12 @@
                                                                                             <div
                                                                                                 class="post-author hstack gap-1">
 
-                                                                                                <a href="{{ route('author.profile', $item->author->user_slug) }}"
+                                                                                                <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.author.profile' : 'author.profile', $item->author->user_slug) }}"
                                                                                                     data-uc-tooltip={{ $item->author->name }}><img
                                                                                                         src="{{ asset('images/users/' . $item->author->user_image) }}"
                                                                                                         alt="Peter Sawyer"
                                                                                                         class="w-24px h-24px rounded-circle"></a>
-                                                                                                <a href="page-author.html"
+                                                                                                <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.author.profile' : 'author.profile', $item->author->user_slug) }}"
                                                                                                     class="text-black dark:text-white text-none fw-bold">{{ $item->author->name }}</a>
                                                                                             </div>
                                                                                         @endif
@@ -181,7 +181,8 @@
                                                 </div>
                                                 <div class="widget-content">
                                                     <a class="cstack max-w-300px mx-auto text-none"
-                                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}" rel="nofollow">
+                                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}"
+                                                        rel="nofollow">
                                                         <img class="d-none sm:d-block"
                                                             src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
                                                             alt="Ad slot">
@@ -276,12 +277,13 @@
                                                                 <div
                                                                     class="post-meta panel hstack justify-between fs-7 text-white text-opacity-60 mt-1">
                                                                     <div class="meta">
+                                                                        {{-- Author info --}}
                                                                         <div class="hstack gap-2">
                                                                             @if ($singleLatestBreakingNews->author)
                                                                                 <div>
 
                                                                                     <div class="post-author hstack gap-1">
-                                                                                        <a href="{{ route('author.profile', $singleLatestBreakingNews->author->user_slug) }}"
+                                                                                        <a href="{{ route(app()->getLocale() == 'ur' ? 'urdu.author.profile' : 'author.profile', $singleLatestBreakingNews->author->user_slug) }}"
                                                                                             data-uc-tooltip="{{ $singleLatestBreakingNews->author->name }}"><img
                                                                                                 src="{{ asset('images/users/' . $singleLatestBreakingNews->author->user_image) }}"
                                                                                                 alt="Sarah Eddrissi"
@@ -546,6 +548,7 @@
 
         <!-- Section start 5 -->
         {{-- Lower news category --}}
+
         <div class="section panel overflow-hidden">
             <div class="section-outer panel">
                 <div class="container max-w-xl">
@@ -615,7 +618,7 @@
                                                                             <div class="hstack gap-2">
                                                                                 <div>
                                                                                     <div class="post-author hstack gap-1">
-                                                                                        <a href="{{ route('author.profile', $secondLatestBreakingNews->author->user_slug) }}"
+                                                                                        <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.author.profile' : 'author.profile', $secondLatestBreakingNews->author->user_slug) }}"
                                                                                             data-uc-tooltip="{{ $secondLatestBreakingNews->author->name }}"><img
                                                                                                 src="{{ asset('images/users/' . $secondLatestBreakingNews->author->user_image) }}"
                                                                                                 alt="David Peterson"
@@ -847,8 +850,8 @@
                                                                     <div class="hstack gap-2">
                                                                         <div>
                                                                             <div class="post-author hstack gap-1">
-                                                                                <a href="page-author.html"
-                                                                                    data-uc-tooltip="{{ $latestPoliticsNews->author->name ?? 'Author' }}">
+                                                                                <a href="{{ route(app()->getLocale() == 'ur' ? 'urdu.author.profile' : 'author.profile', $latestPoliticsNews->author->user_slug) }}"
+                                                                                    data-uc-tooltip="{{ $latestPoliticsNews->author->name ?? 'author' }}">
                                                                                     <img src="{{ asset('images/users/' . ($latestPoliticsNews->author->user_image ?? 'default_user.png')) }}"
                                                                                         alt="{{ $latestPoliticsNews->author->name ?? 'Author' }}"
                                                                                         class="w-24px h-24px rounded-circle">
@@ -1087,6 +1090,7 @@
                                     </div>
                                 </div>
                             </div>
+
                             {{-- World news Section end --}}
 
                             {{-- Health Category Section --}}
@@ -1239,6 +1243,7 @@
                                     {{-- Health news Section end --}}
                                 </div>
                             </div>
+                            {{-- Health Category Section end --}}
                         </div>
                     </div>
                 </div>
@@ -1287,7 +1292,7 @@
                                                                         {{-- Fallback for when no video ID is present --}}
                                                                         <div
                                                                             class="d-flex align-items-center justify-content-center h-100 text-white-50">
-                                                                            Video not available. Please check the URL.
+                                                                            {{ __('messages.Video_not_available_Please_check_the_URL') }}
                                                                         </div>
                                                                     @endif
                                                                 </div>
@@ -1515,7 +1520,7 @@
                                                                     <div class="post-link">
                                                                         <a href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.blog' : 'single.blog', $item->blog_slug) }}"
                                                                             class="link fs-7 fw-bold text-uppercase text-none mt-1 pb-narrow p-0 border-bottom dark:text-white">
-                                                                            <span>{{__('messages.read_more')}}</span>
+                                                                            <span>{{ __('messages.read_more') }}</span>
                                                                         </a>
                                                                     </div>
                                                                 </div>
@@ -1528,11 +1533,12 @@
 
                                         {{-- Load More --}}
                                         <div class="block-footer cstack lg:mt-2">
-                                            <a href=""
+                                            <a href="{{ route(app()->getLocale() == 'ur' ? 'urdu.all.blogs' : 'all.blogs') }}"
                                                 class="animate-btn gap-0 btn btn-sm btn-alt-primary bg-transparent text-black dark:text-white border w-100">
-                                                <span>{{__('messages.load_more_posts')}}</span>
+                                                <span>{{ __('messages.load_more_posts') }}</span>
                                                 <i class="icon icon-1 unicon-chevron-right"></i>
                                             </a>
+
                                         </div>
 
                                     </div>
@@ -1548,7 +1554,8 @@
                                     <div class="widget ad-widget vstack gap-2 text-center p-2 border">
                                         <div class="widgt-content">
                                             <a class="cstack max-w-300px mx-auto text-none"
-                                                href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}" rel="nofollow">
+                                                href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}"
+                                                rel="nofollow">
                                                 <img class="d-block dark:d-none"
                                                     src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
                                                     alt="Ad slot">
@@ -1579,7 +1586,7 @@
                                                                             class="post-header panel vstack justify-between gap-1">
                                                                             <h3 class="post-title h6 m-0">
                                                                                 <a class="text-none hover:text-primary duration-150"
-                                                                                    href="blog-details.html">{{__('messages.sample_popular_post_title')}}</a>
+                                                                                    href="blog-details.html">{{ __('messages.sample_popular_post_title') }}</a>
                                                                             </h3>
                                                                             <div
                                                                                 class="post-meta panel hstack justify-between fs-7 text-gray-900 dark:text-white text-opacity-60 d-none md:d-flex">
@@ -1634,4 +1641,5 @@
 
     </div>
     <!-- Wrapper end -->
+
 @endsection

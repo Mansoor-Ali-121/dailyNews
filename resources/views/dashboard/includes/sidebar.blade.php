@@ -256,6 +256,33 @@
             </li>
             {{-- Contact Us end --}}
 
+            {{-- Privacy Policy --}}
+            <li class="sidebar-item dropdown">
+                <a class="sidebar-link dropdown-toggle" href="#" id="privacyDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="align-middle" data-feather="lock"></i> <span class="align-middle">Privacy Policy</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="privacyDropdown">
+                    <li><a class="dropdown-item" href="{{ route('privacy.show') }}">View Privacy Policy</a></li>
+                    <li><a class="dropdown-item" href="{{ route('privacy.add') }}">Add Privacy Policy</a></li>
+                </ul>
+            </li>
+            {{-- Privacy Policy end --}}
+
+            {{-- Terms and Conditions --}}
+            <li class="sidebar-item dropdown">
+                <a class="sidebar-link dropdown-toggle" href="#" id="termsDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="align-middle" data-feather="lock"></i> <span class="align-middle">Terms and
+                        Conditions</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="termsDropdown">
+                    <li><a class="dropdown-item" href="{{ route('terms.show') }}">View Terms and Conditions</a></li>
+                    <li><a class="dropdown-item" href="{{ route('terms.add') }}">Add Terms and Conditions</a></li>
+                </ul>
+            </li>
+            {{-- Terms and Conditions end --}}
+
             <li class="sidebar-item">
                 <a class="sidebar-link text-danger" href="{{ route('logout') }}">
                     <i class="align-middle" data-feather="power"></i> <span class="align-middle">Logout</span>

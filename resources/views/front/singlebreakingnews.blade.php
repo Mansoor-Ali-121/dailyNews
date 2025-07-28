@@ -1,4 +1,10 @@
 @extends('webtemp')
+
+@if (App::getLocale() == 'ur')
+    @push('urdustyle')
+        <link rel="stylesheet" href="{{ asset('website/assets/css/urdustyle.css') }}">
+    @endpush
+@endif
 @section('content')
     <!-- Wrapper start -->
     <div id="wrapper" class="wrap overflow-hidden-x">
@@ -337,7 +343,7 @@
                                                 <div class="show-featured clearfix">
                                                     <div class="post-img">
                                                         <a
-                                                            href="{{ route('single.breakingnews', $item->breakingnews_slug) }}">
+                                                            href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $item->breakingnews_slug) }}">
                                                             <img width="1200" height="700"
                                                                 src="{{ asset('breakingnews_images/images/' . $item->image) }}"
                                                                 class="attachment-full size-full wp-post-image"
@@ -354,7 +360,7 @@
                                                                 </span>
                                                             </div>
                                                             <a
-                                                                href="{{ route('single.breakingnews', $item->breakingnews_slug) }}">
+                                                                href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $item->breakingnews_slug) }}">
                                                                 {{ Str::Limit($item->title, 50) }} </a>
                                                         </div>
                                                     </div>

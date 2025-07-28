@@ -1,4 +1,9 @@
 @extends('webtemp')
+@if (App::getLocale() == 'ur')
+    @push('urdustyle')
+        <link rel="stylesheet" href="{{ asset('website/assets/css/urdustyle.css') }}">
+    @endpush
+@endif
 @section('content')
     <!-- Wrapper start -->
     <div id="wrapper" class="wrap overflow-hidden-x">
@@ -204,7 +209,7 @@
                                     <h4 class="h5 xl:h4 mb-5 xl:mb-6">{{ __('messages.Related to this News') }}</h4>
                                     <div class="row child-cols-6 md:child-cols-4 gx-2 gy-4 sm:gx-3 sm:gy-6">
 
-                                        {{-- Loop through each related news item. Ensure $relatedNews (capital 'N') is passed from controller. --}}
+                                        {{-- Loop through each related news item $relatedNews  --}}
                                         @forelse ($relatedNews as $item)
                                             <div> {{-- This div wraps each individual related news article --}}
                                                 <article class="post type-post panel vstack gap-2">

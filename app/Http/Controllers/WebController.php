@@ -163,6 +163,15 @@ class WebController extends Controller
         return view('front.singleblog', compact('blog', 'relatedNews', 'categories', 'latestnews', 'previousPost', 'nextPost'));
     }
 
+    public function allblogs()
+    {
+        $blogs = Blog::orderBy('id','desc')
+        ->where('blog_status', 'active')
+        ->where('language', 'en')
+        ->paginate(9);
+        return view('front.allblogs', compact('blogs'));
+        
+    }
 
     public function showsinglenews(string $slug)
     {
@@ -291,7 +300,9 @@ class WebController extends Controller
         // Find the author by their slug
         $author = User::where('user_slug', $slug)->firstOrFail();
 
-        $authorNews = $author->news()->latest()->paginate(9); // Get all, ordered by latest
+        $authorNews = $author->news()
+        ->where('language', 'en')
+        ->latest('id')->paginate(9); // Get all, ordered by latest
 
         return view('front.singleAuthor', compact('author', 'authorNews'));
     }

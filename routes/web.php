@@ -4,18 +4,21 @@ use App\Models\User;
 use App\Models\ContactUs;
 use App\Http\Middleware\ValidUser;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WebController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\PrivacyController;
 use App\Http\Controllers\UrduWebController;
 use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\LiveVideosController;
 use App\Http\Controllers\BreakingNewsController;
-use App\Http\Controllers\WebController;
+use App\Http\Controllers\TermsController;
+use App\Models\Terms;
 
 // Admin Routes
 // Route to display the login form
@@ -113,10 +116,7 @@ Route::middleware(ValidUser::class)->group(function () {
 
         Route::get('/add', [BreakingNewsController::class, 'index'])->name('breakingnews.add');
         Route::post('/add', [BreakingNewsController::class, 'store']);
-    //    Route::get('/get-news-by-language/{lang}', [BreakingNewsController::class, 'getNewsByLanguage']);
-    Route::get('/get-news-by-language/{lang}', [BreakingNewsController::class, 'getNewsByLanguage'])->name('get.news.by.language');
-
-
+        Route::get('/get-news-by-language/{lang}', [BreakingNewsController::class, 'getNewsByLanguage'])->name('get.news.by.language');
         Route::get('/show', [BreakingNewsController::class, 'show'])->name('breakingnews.show');
         Route::get('/edit/{id}', [BreakingNewsController::class, 'edit'])->name('breakingnews.edit');
         Route::patch('/update/{id}', [BreakingNewsController::class, 'update'])->name('breakingnews.update');
@@ -153,6 +153,32 @@ Route::middleware(ValidUser::class)->group(function () {
     // Contact show
     Route::get('/contact/show', [ContactController::class, 'show'])->name('contact.show');
 
+    // Privacy Crud
+    Route::prefix('privacy')->group(function () {
+
+        Route::get('/add', [PrivacyController::class, 'index'])->name('privacy.add');
+        Route::post('/add', [PrivacyController::class, 'store']);
+        Route::get('/show', [PrivacyController::class, 'show'])->name('privacy.show');
+        Route::get('/view/{id}', [PrivacyController::class,'view'])->name('privacy.view');
+        Route::get('/edit/{id}', [PrivacyController::class, 'edit'])->name('privacy.edit');
+        Route::patch('/update/{id}', [PrivacyController::class, 'update'])->name('privacy.update');
+        Route::delete('/delete/{id}', [PrivacyController::class, 'destroy'])->name('privacy.delete');
+    });
+
+    // End Privacy Crud
+
+    // Terms and COnditions
+    Route::prefix('terms')->group(function () {
+
+        Route::get('/add', [TermsController::class, 'index'])->name('terms.add');
+        Route::post('/add', [TermsController::class, 'store']);
+        Route::get('/show', [TermsController::class, 'show'])->name('terms.show');
+        Route::get('/view/{id}', [TermsController::class,'view'])->name('terms.view');
+        Route::get('/edit/{id}', [TermsController::class, 'edit'])->name('terms.edit');
+        Route::patch('/update/{id}', [TermsController::class, 'update'])->name('terms.update');
+        Route::delete('/delete/{id}', [TermsController::class, 'destroy'])->name('terms.delete');
+    });
+
 
     // MIddleware end
 });
@@ -172,12 +198,16 @@ Route::get('/breakingnews/{id}', [WebController::class, 'showsinglebreakingnews'
 Route::get('/news/category/{id}', [WebController::class, 'singlecategoryview'])->name('single.category');
 // Single blogs show in website
 Route::get('/blog/{id}', [WebController::class, 'singleblog'])->name('single.blog');
+Route::get('/blog', [WebController::class, 'allblogs'])->name('all.blogs');
+
+
 // End Websites Routes
 // Show Author profile with news
 Route::get('/author/{slug}', [WebController::class, 'showAuthorProfile'])->name('author.profile');
 // Show Author profile with news end
 // Privacy page
-Route::get('/privacy', [WebController::class, 'privacy'])->name('privacy');
+Route::get('/ur/privacy', [WebController::class, 'privacy'])->name('urdu.privacy');
+Route::get('privacy', [WebController::class, 'privacy'])->name('privacy');
 // Privacy page end
 // Terms page
 Route::get('/terms', [WebController::class, 'terms'])->name('terms');
@@ -205,7 +235,6 @@ Route::fallback(function () {
 // Urdu Website Routes Start
 Route::get('/ur', [UrduWebController::class, 'index'])->name('urdu.news.index');
 Route::get('/ur/website/news', [UrduWebController::class, 'view'])->name('urdu.Webnews.view');
-// Route::get('/ur/category', [UrduWebController::class, 'category'])->name('urdu.news.category');
 // Route::get('/ur/country', [UrduWebController::class, 'country'])->name('urdu.news.country');
 // Route::get('/ur/city', [UrduWebController::class, 'city'])->name('urdu.news.city');
 // Route::get('/ur/shownews', [UrduWebController::class, 'shownews'])->name('urdu.show.news');
@@ -222,6 +251,7 @@ Route::get('/ur/news/category/{id}', [UrduWebController::class, 'singlecategoryv
 
 // Blogs
 Route::get('/ur/blog/{id}', [UrduWebController::class, 'singleblog'])->name('urdu.single.blog');
+Route::get('/ur/blogs', [UrduWebController::class, 'allblogs'])->name('urdu.all.blogs');
 
 // Author
 Route::get('/ur/author/{slug}', [UrduWebController::class, 'showAuthorProfile'])->name('urdu.author.profile');

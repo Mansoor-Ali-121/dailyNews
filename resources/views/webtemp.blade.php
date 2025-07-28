@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="{{ asset('website/assets/css/style.css') }}">
     <link rel="preload" href="{{ asset('website/assets/js/uikit-components-bs.js') }}" as="script">
     <link rel="preload" href="{{ asset('website/assets/js/app.js') }}" as="script">
-
+@stack('urdustyle')
     <script src="{{ asset('website/assets/js/app-head-bs.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('website/assets/js/uni-core/css/uni-core.min.css') }}">
@@ -707,7 +707,7 @@
                                     @foreach ($allcategories as $food)
                                         @if (
                                             (app()->getLocale() == 'ur' && $food->language == 'ur' && $food->category_name == 'کھانا') ||
-                                                (app()->getLocale() != 'ur' && $food->category_name == 'food'))
+                                                (app()->getLocale() != 'ur' && $food->category_name == 'Food'))
                                             <a
                                                 href="{{ route(app()->getLocale() == 'ur' ? 'urdu.single.category' : 'single.category', $food->category_slug) }}">
                                                 {{ $food->category_name }}
@@ -818,7 +818,7 @@
                             </p>
                             <ul class="nav-x gap-2 fw-medium">
                                 <li><a class="uc-link text-underline hover:text-gray-900 dark:hover:text-white duration-150"
-                                        href="{{ route('privacy') }}">Privacy notice</a></li>
+                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.privacy' : 'privacy') }}">Privacy notice</a></li>
                                 <li><a class="uc-link text-underline hover:text-gray-900 dark:hover:text-white duration-150"
                                         href="{{ route('terms') }}">Terms of condition</a></li>
                             </ul>

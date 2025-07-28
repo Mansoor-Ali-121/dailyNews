@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\News;
-use App\Models\BreakingNews;
-use App\Models\Categories;
 use App\Models\Blog;
+use App\Models\News;
+use App\Models\User;
+use App\Models\Categories;
 use App\Models\liveVideos;
+use App\Models\BreakingNews;
 
 class UrduWebController extends Controller
 {
@@ -43,7 +44,7 @@ class UrduWebController extends Controller
             ->get();
 
         $entertainmentnews = News::whereHas('category', function ($query) {
-            $query->where('category_name', 'تفریح'); 
+            $query->where('category_name', 'تفریح');
         })
             ->where('news_status', 'active')
             ->where('language', 'ur')
@@ -153,8 +154,8 @@ class UrduWebController extends Controller
     {
         // Urdu categories
         $categories = Categories::withCount('news')
-        ->where('language', 'ur')
-        ->get();
+            ->where('language', 'ur')
+            ->get();
 
         // Show single Urdu news
         $news = News::with('author')->where([
@@ -202,18 +203,18 @@ class UrduWebController extends Controller
         }
     }
 
-     public function singleblog(string $slug)
+    public function singleblog(string $slug)
     {
         // Show single Urdu blog with slug
         $blog = Blog::with('author')->where([
             ['blog_slug', '=', $slug],
             ['blog_status', '=', 'active'],
-            ['language', '=', 'ur'] 
+            ['language', '=', 'ur']
         ])->firstOrFail();
 
         // Show related Urdu news
         $relatedNews = News::where('news_status', 'active')
-            ->where('language', 'ur') 
+            ->where('language', 'ur')
             ->where('category_id', $blog->category_id)
             ->where('id', '!=', $blog->id)
             ->latest()
@@ -221,9 +222,7 @@ class UrduWebController extends Controller
             ->get();
 
         // Categories in Urdu
-        $categories = Categories::withCount(['news' => function ($query) {
-
-        }])->get()->where('language', 'ur'); 
+        $categories = Categories::withCount(['news' => function ($query) {}])->get()->where('language', 'ur');
 
         // Latest Urdu news
         $latestnews = News::where('news_status', 'active')
@@ -253,12 +252,12 @@ class UrduWebController extends Controller
         ));
     }
 
-       public function showsinglebreakingnews(string $slug)
+    public function showsinglebreakingnews(string $slug)
     {
         // Categories for news shows
         $categories = Categories::withCount('news')
-        ->where('language', 'ur')
-        ->get();
+            ->where('language', 'ur')
+            ->get();
         // $latestnews = News::where('news_status', 'active')->latest()->take(4)->get();
         $breakingnews = BreakingNews::where([
             ['breakingnews_slug', '=', $slug],
@@ -275,17 +274,42 @@ class UrduWebController extends Controller
 
         // previos and next breaking news
         $previousPost = BreakingNews::where('id', '<', $breakingnews->id)->orderBy('id', 'desc')
-        ->where('language', 'ur')
-        ->first();
+            ->where('language', 'ur')
+            ->first();
         $nextPost  = BreakingNews::where('id', '>', $breakingnews->id)->orderBy('id', 'asc')
-        ->where('language', 'ur')
-        ->first();
+            ->where('language', 'ur')
+            ->first();
 
         return view('front.singlebreakingnews', compact('breakingnews', 'relatedNews', 'categories', 'previousPost', 'nextPost'));
 
         // $authors = News::with('users')->get();
     }
 
+    public function showAuthorProfile($slug)
+    {
+        $author = User::where('user_slug', $slug)->firstOrFail();
 
+        $authorNews = $author->news()
+            ->where('language', 'ur') // Urdu news only
+            ->latest()
+            ->paginate(9);
+
+        return view('front.singleAuthor', compact('author', 'authorNews'));
+    }
+
+  public function allblogs()
+{
+    $blogs = Blog::where('blog_status', 'active')
+                  ->where('language', 'ur')
+                  ->latest('id')
+                  ->paginate(10);
+
+    return view('front.allblogs', compact('blogs'));
+}
+
+public function privacy()
+    {
+        return view('front.privacypage');
+    }
 
 }
