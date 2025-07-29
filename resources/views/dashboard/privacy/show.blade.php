@@ -139,7 +139,7 @@
                                                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                                                 title="Delete Video"
                                                                 aria-label="Delete Video {{ $privacy->title }}"
-                                                                onclick="return confirm('Are you sure you want to delete this video?')">
+                                                                onclick="return confirm('Are you sure you want to delete this policy?')">
                                                                 <i class="fas fa-trash-alt me-1" aria-hidden="true"></i>
                                                                 Delete
                                                             </button>

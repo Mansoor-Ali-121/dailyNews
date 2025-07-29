@@ -311,5 +311,9 @@ public function privacy()
     {
         return view('front.privacypage');
     }
+    public function terms()
+    {
+        return view('front.page-terms');
+    }
 
 }

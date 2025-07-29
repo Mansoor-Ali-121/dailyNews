@@ -21,9 +21,9 @@ class TermsController extends Controller
      */
     public function view(string $id)
     {
-        $privacies =PrivacyPolicy::find($id);
+        $terms =Terms::find($id);
         
-        return view("dashboard.privacy.view", compact("privacies"));
+        return view("dashboard.terms.view", compact("terms"));
     }
 
     /**
@@ -37,7 +37,7 @@ class TermsController extends Controller
             "status" => "required|in:active,inactive",
         ]);
         Terms::create($validate);
-        return redirect()->route("terms.add")->with("success", "Terms and Conditions Added Successfully");
+        return redirect()->route("terms.show")->with("success", "Terms and Conditions Added Successfully");
     }
 
     /**
@@ -54,8 +54,8 @@ class TermsController extends Controller
      */
     public function edit(string $id)
     {
-        $terms = PrivacyPolicy::find($id);
-        return view("dashboard.privacy.edit", compact("terms"));
+        $terms = Terms::find($id);
+        return view("dashboard.terms.edit", compact("terms"));
     }
 
     /**
@@ -68,9 +68,9 @@ class TermsController extends Controller
             "content" => "required|string",
             "status" => "required|in:active,inactive",
         ]);
-       $privacyPolicy = PrivacyPolicy::find($id);
-       $privacyPolicy->update($validate);
-        return redirect()->route("privacy.show")->with("success", "Privacy Policy Updated Successfully");
+       $terms = Terms::find($id);
+       $terms->update($validate);
+        return redirect()->route("terms.show")->with("success", "Terms and Conditions Updated Successfully");
     }
 
     /**
@@ -78,8 +78,8 @@ class TermsController extends Controller
      */
     public function destroy(string $id)
     {
-        $privacy = PrivacyPolicy::find($id);
-        $privacy->delete();
-        return redirect()->route("privacy.show")->with("success", "Privacy Policy Deleted Successfully");
+        $terms = Terms::find($id);
+        $terms->delete();
+        return redirect()->route("terms.show")->with("success", "Terms and Conditions Deleted Successfully");
     }
 }

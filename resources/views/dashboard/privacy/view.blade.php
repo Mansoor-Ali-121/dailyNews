@@ -166,7 +166,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h1><i class="fas fa-newspaper me-2"></i>Policy Details</h1>
+                    <h1><i class="fas fa-user-secret me-2"></i>Policy Details</h1>
                     <p class="lead">Complete information about the Policy</p>
                 </div>
             </div>

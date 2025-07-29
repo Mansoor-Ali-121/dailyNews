@@ -1,5 +1,4 @@
 @extends('template')
-
 @section('main_section')
     {{-- Display Success/Error Messages from Session --}}
     @if (session()->has('success'))
@@ -221,18 +220,18 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">
-                    <i class="fas fa-newspaper me-2"></i> Edit Policy {{-- Changed "Add New" to "Edit" --}}
+                    <i class="fas fa-newspaper me-2"></i> Edit Terms {{-- Changed "Add New" to "Edit" --}}
                 </h4>
                 <div class="d-flex align-items-center">
-                    {{-- Assuming 'privacy.show_all' is the route to list all policies --}}
-                    <a href="{{ route('privacy.show') }}" class="btn btn-light btn-sm rounded-pill px-4 py-2 shadow-sm ms-3">
-                        <i class="fas fa-arrow-left me-2"></i> Back to Policies
+                    {{-- Assuming 'terms.show_all' is the route to list all policies --}}
+                    <a href="{{ route('terms.show') }}" class="btn btn-light btn-sm rounded-pill px-4 py-2 shadow-sm ms-3">
+                        <i class="fas fa-arrow-left me-2"></i> Back to Terms
                     </a>
                 </div>
             </div>
 
             <div class="card-body">
-                <form action="{{ route('privacy.update', $privacy->id) }}" method="POST">
+                <form action="{{ route('terms.update', $terms->id) }}" method="POST">
                     @method('PATCH') {{-- Use PATCH method for updates --}}
                     @csrf
                     <div class="mb-5">
@@ -244,13 +243,13 @@
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
                                         name="language" id="language_en" value="en"
-                                        {{ old('language', $privacy->language) == 'en' ? 'checked' : '' }} required>
+                                        {{ old('language', $terms->language) == 'en' ? 'checked' : '' }} required>
                                     <label class="form-check-label" for="language_en">English</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
                                         name="language" id="language_ur" value="ur"
-                                        {{ old('language', $privacy->language) == 'ur' ? 'checked' : '' }}>
+                                        {{ old('language', $terms->language) == 'ur' ? 'checked' : '' }}>
                                     <label class="form-check-label" for="language_ur">Urdu</label>
                                 </div>
                                 @error('language')
@@ -258,7 +257,7 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-                                <p class="form-note">Select the language for the privacy content.</p>
+                                <p class="form-note">Select the language for the terms content.</p>
                             </div>
 
                             {{-- Policy Status dropdown --}}
@@ -266,11 +265,11 @@
                                 <label for="status" class="form-label">Status</label>
                                 <select class="form-select @error('status') is-invalid @enderror" id="status"
                                     name="status" required>
-                                    {{-- Correctly set 'selected' based on old input or current $privacy->status --}}
+                                    {{-- Correctly set 'selected' based on old input or current $terms->status --}}
                                     <option value="active"
-                                        {{ old('status', $privacy->status) == 'active' ? 'selected' : '' }}>Active</option>
+                                        {{ old('status', $terms->status) == 'active' ? 'selected' : '' }}>Active</option>
                                     <option value="inactive"
-                                        {{ old('status', $privacy->status) == 'inactive' ? 'selected' : '' }}>Inactive
+                                        {{ old('status', $terms->status) == 'inactive' ? 'selected' : '' }}>Inactive
                                     </option>
                                 </select>
                                 {{-- This div will only be displayed if there is a validation error for 'status' --}}
@@ -283,18 +282,18 @@
                                 {{-- <p class="form-note">Set the active status for the policy.</p> --}}
                             </div>
 
-                            {{-- Privacy Content using TinyMCE --}}
+                            {{-- terms Content using TinyMCE --}}
                             <div class="col-md-12">
                                 <label for="content" class="form-label">Policy Content </label>
                                 <textarea id="content" name="content" class="form-control tinymce @error('content') is-invalid @enderror"
-                                    placeholder="Enter policy content" rows="20">{{ old('content', $privacy->content) }}</textarea> {{-- Uses old input or $privacy->content --}}
+                                    placeholder="Enter policy content" rows="20">{{ old('content', $terms->content) }}</textarea> {{-- Uses old input or $terms->content --}}
                                 @error('content')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
-                            {{-- Privacy Content end --}}
+                            {{-- terms Content end --}}
 
                             <div class="mt-5">
                                 <button type="submit" class="btn-submit">

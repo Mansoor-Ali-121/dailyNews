@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Models\News;
+use App\Models\Terms;
 use App\Models\Categories;
 use App\Models\BreakingNews;
+use App\Models\PrivacyPolicy;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
@@ -102,6 +104,20 @@ class AppServiceProvider extends ServiceProvider
             ->take(4)
             ->get();
         view()->share('worldnews', $worldnews);
+
+        // Privacy Policy
+        $privacypolicy = PrivacyPolicy::where('status', 'active')
+            ->where('language', $locale)
+            ->latest('id')
+            ->first();
+        view()->share('privacypolicy', $privacypolicy);
+
+        // Terms
+        $terms = Terms::where('status', 'active')
+            ->where('language', $locale)
+            ->latest('id')
+            ->first();
+        view()->share('terms', $terms);
 
         // 📌 Latest 4 news per category
         $latestnavnews = Categories::with(['posts' => function ($query) use ($locale) {

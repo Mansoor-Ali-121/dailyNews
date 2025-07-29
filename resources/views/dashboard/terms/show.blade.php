@@ -11,8 +11,8 @@
                         <div class="d-flex justify-content-between align-items-center flex-wrap">
                             <div>
                                 <h2 class="h3 mb-2 text-white"><i class="fas fa-user-secret me-3" aria-hidden="true"></i>
-                                    Terms and Conditions Management Dashboard</h2>
-                                <p class="mb-0 text-white-50 fs-5">Manage all Terms information</p>
+                                    Manage all Terms information</h2>
+                                {{-- <p class="mb-0 text-white-50 fs-5">Manage all Terms information</p> --}}
                             </div>
                             <div class="d-flex gap-3 mt-3 mt-md-0">
                                 <a href="{{ route('terms.add') }}"
@@ -45,7 +45,7 @@
                                     <thead class="bg-light">
                                         <tr class="text-center">
                                             <th class="ps-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0">ID</th>
-                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">LanguageL</th>
+                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Language</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Status</th>
                                             <th
                                                 class="pe-4 py-3 text-uppercase fw-bold text-muted fs-5 border-0 text-center">
@@ -110,7 +110,7 @@
                                                                 data-bs-toggle="tooltip" data-bs-placement="top"
                                                                 title="Delete Video"
                                                                 aria-label="Delete Video {{ $term->title }}"
-                                                                onclick="return confirm('Are you sure you want to delete this video?')">
+                                                                onclick="return confirm('Are you sure you want to delete this Term?')">
                                                                 <i class="fas fa-trash-alt me-1" aria-hidden="true"></i>
                                                                 Delete
                                                             </button>

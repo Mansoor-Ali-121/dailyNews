@@ -273,7 +273,7 @@
             <li class="sidebar-item dropdown">
                 <a class="sidebar-link dropdown-toggle" href="#" id="termsDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <i class="align-middle" data-feather="lock"></i> <span class="align-middle">Terms and
+                    <i class="align-middle" data-feather="book-open"></i> <span class="align-middle">Terms and
                         Conditions</span>
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="termsDropdown">

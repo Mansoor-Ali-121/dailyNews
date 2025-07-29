@@ -166,14 +166,14 @@
         <div class="container">
             <div class="row">
                 <div class="col-12 text-center">
-                    <h1><i class="fas fa-newspaper me-2"></i>Policy Details</h1>
-                    <p class="lead">Complete information about the Policy</p>
+                    <h1><i class="fas fa-newspaper me-2"></i>Terms Details</h1>
+                    <p class="lead">Complete information about the Terms</p>
                 </div>
             </div>
         </div>
     </header>
     @php
-        $item = $privacies;
+        $item = $terms;
     @endphp
     <div class="container">
         <div class="row">
@@ -225,7 +225,7 @@
                 </div>
 
                 <div class="content-section">
-                    <h3>Policy Content</h3>
+                    <h3>Terms Content</h3>
                     {{-- Use {!! $item->news_content !!} for HTML content --}}
                     <p class="content-section-image"> {!! $item->content !!}
                     </p>

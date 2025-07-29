@@ -820,7 +820,7 @@
                                 <li><a class="uc-link text-underline hover:text-gray-900 dark:hover:text-white duration-150"
                                         href="{{ route(app()->getLocale() === 'ur' ? 'urdu.privacy' : 'privacy') }}">Privacy notice</a></li>
                                 <li><a class="uc-link text-underline hover:text-gray-900 dark:hover:text-white duration-150"
-                                        href="{{ route('terms') }}">Terms of condition</a></li>
+                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.terms' : 'terms') }}">Terms of condition</a></li>
                             </ul>
                         </div>
                         <div class="footer-social hstack justify-center gap-2 lg:gap-3">
