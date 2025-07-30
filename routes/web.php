@@ -264,7 +264,7 @@ Route::get('/ur/news/category/{id}', [UrduWebController::class, 'singlecategoryv
 
 // Blogs
 Route::get('/ur/blog/{id}', [UrduWebController::class, 'singleblog'])->name('urdu.single.blog');
-Route::get('/ur/blogs', [UrduWebController::class, 'allblogs'])->name('urdu.all.blogs');
+Route::get('/ur/blog', [UrduWebController::class, 'allblogs'])->name('urdu.all.blogs');
 
 // Author
 Route::get('/ur/author/{slug}', [UrduWebController::class, 'showAuthorProfile'])->name('urdu.author.profile');

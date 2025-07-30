@@ -873,22 +873,32 @@
                                 </li>
                             </ul>
                             <div class="vr"></div>
-                            {{-- Lanaguage --}}
-                            <div class="d-inline-block">
-                                <a href="#" class="hstack gap-1 text-none fw-medium">
-                                    <i class="icon icon-1 unicon-earth-filled"></i>
-                                    <span>English</span>
-                                    <span data-uc-drop-parent-icon=""></span>
-                                </a>
-                                <div class="p-2 bg-white dark:bg-gray-800 shadow-xs w-150px"
-                                    data-uc-drop="mode: click; boundary: !.uc-footer-bottom; animation: uc-animation-slide-top-small; duration: 150;">
-                                    <ul class="nav-y gap-1 fw-medium items-end">
-                                        <li><a href="{{ url('/') }}">English</a></li>
-                                        <li><a href="{{ url('/ur') }}">Urdu</a></li>
+                                {{-- Language --}}
+                                <div class="d-inline-block">
+                                    <a href="#" class="hstack gap-1 text-none fw-medium" data-uc-drop-toggle>
+                                        <i class="icon icon-1 unicon-earth-filled"></i>
+                                        <span>{{ app()->getLocale() === 'ur' ? 'اردو' : 'English' }}</span>
+                                        <span data-uc-drop-parent-icon=""></span>
+                                    </a>
+                                    <div class="p-2 bg-white dark:bg-gray-800 shadow-xs w-150px"
+                                        data-uc-drop="mode: click; boundary: !.uc-footer-bottom; animation: uc-animation-slide-top-small; duration: 150;">
+                                        <ul class="nav-y gap-1 fw-medium items-end">
+                                            {{-- Switch to English --}}
+                                            @if (app()->getLocale() !== 'en')
+                                                <li>
+                                                    <a href="{{ route('switch.language', 'en') }}">English</a>
+                                                </li>
+                                            @endif
 
-                                    </ul>
+                                            {{-- Switch to Urdu --}}
+                                            @if (app()->getLocale() !== 'ur')
+                                                <li>
+                                                    <a href="{{ route('switch.language', 'ur') }}">اردو</a>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </div>
                                 </div>
-                            </div>
                         </div>
                     </div>
                 </div>
