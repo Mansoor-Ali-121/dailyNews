@@ -260,7 +260,7 @@
                                 <p class="form-note">Select the language for the terms content.</p>
                             </div>
 
-                            {{-- Policy Status dropdown --}}
+                            {{-- About Status dropdown --}}
                             <div class="col-md-6">
                                 <label for="status" class="form-label">Status</label>
                                 <select class="form-select @error('status') is-invalid @enderror" id="status"
@@ -284,7 +284,7 @@
 
                             {{-- terms Content using TinyMCE --}}
                             <div class="col-md-12">
-                                <label for="content" class="form-label">Policy Content </label>
+                                <label for="content" class="form-label">Terms Content </label>
                                 <textarea id="content" name="content" class="form-control tinymce @error('content') is-invalid @enderror"
                                     placeholder="Enter policy content" rows="20">{{ old('content', $terms->content) }}</textarea> {{-- Uses old input or $terms->content --}}
                                 @error('content')
@@ -297,7 +297,7 @@
 
                             <div class="mt-5">
                                 <button type="submit" class="btn-submit">
-                                    <i class="fas fa-save me-2"></i> Update Policy {{-- Changed button text to "Update" --}}
+                                    <i class="fas fa-save me-2"></i> Update Terms {{-- Changed button text to "Update" --}}
                                 </button>
                             </div>
                         </div>

@@ -1,17 +1,17 @@
 @extends('template')
 @section('main_section')
+    {{-- Display Success/Error Messages from Session --}}
     @if (session()->has('success'))
         <div class="alert alert-success">
             {{ session()->get('success') }}
         </div>
     @elseif (session()->has('error'))
-        {{-- Use @elseif for another condition --}}
         <div class="alert alert-danger">
             {{ session()->get('error') }}
         </div>
     @endif
 
-    {{-- Dispaly errors --}}
+    {{-- Display Validation Errors --}}
     @if ($errors->any())
         <div class="alert alert-danger">
             <ul>
@@ -24,6 +24,7 @@
 
     <script src="{{ asset('tinymce\tinymce.min.js') }}" referrerpolicy="origin"></script>
 
+    {{-- Custom CSS for styling the form --}}
     <style>
         :root {
             --primary-color: #0f4c81;
@@ -104,15 +105,10 @@
             cursor: pointer;
             transition: all 0.3s ease;
             display: flex;
-            /* Added for vertical centering of content */
             flex-direction: column;
-            /* Added for vertical centering of content */
             align-items: center;
-            /* Added for horizontal centering of content */
             justify-content: center;
-            /* Added for vertical centering of content */
             min-height: 150px;
-            /* Ensure a minimum height */
         }
 
         .image-upload-container:hover {
@@ -224,95 +220,104 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">
-                    <i class="fas fa-newspaper me-2"></i> Add New Term
+                    <i class="fas fa-newspaper me-2"></i> Edit About {{-- Changed "Add New" to "Edit" --}}
                 </h4>
                 <div class="d-flex align-items-center">
-                    <a href="{{ route('terms.show') }}" class="btn btn-light btn-sm rounded-pill px-4 py-2 shadow-sm ms-3">
-                        <i class="fas fa-arrow-left me-2"></i> Back to Terms and Conditions
+                    {{-- Assuming 'terms.show_all' is the route to list all policies --}}
+                    <a href="{{ route('about.show') }}" class="btn btn-light btn-sm rounded-pill px-4 py-2 shadow-sm ms-3">
+                        <i class="fas fa-arrow-left me-2"></i> Back to About
                     </a>
                 </div>
             </div>
 
             <div class="card-body">
-                <form action="{{ route('terms.add') }}" method="POST">
+                <form action="{{ route('about.update', $about->id) }}" method="POST">
+                    @method('PATCH') {{-- Use PATCH method for updates --}}
                     @csrf
                     <div class="mb-5">
                         <div class="row g-4">
 
-                            {{-- Language Selector in radio btn --}}
+                            {{-- Language Selector using radio buttons --}}
                             <div class="col-md-12">
                                 <label class="form-label">Language <span class="required-star">*</span></label>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
-                                        name="language" id="language" value="en"
-                                        {{ old('language', 'en') == 'en' ? 'checked' : '' }} required>
-                                    <label class="form-check-label" for="language">English</label>
+                                        name="language" id="language_en" value="en"
+                                        {{ old('language', $about->language) == 'en' ? 'checked' : '' }} required>
+                                    <label class="form-check-label" for="language_en">English</label>
                                 </div>
                                 <div class="form-check form-check-inline">
                                     <input class="form-check-input @error('language') is-invalid @enderror" type="radio"
-                                        name="language" id="language" value="ur"
-                                        {{ old('language', 'en') == 'ur' ? 'checked' : '' }}>
-                                    <label class="form-check-label" for="language">Urdu</label>
+                                        name="language" id="language_ur" value="ur"
+                                        {{ old('language', $about->language) == 'ur' ? 'checked' : '' }}>
+                                    <label class="form-check-label" for="language_ur">Urdu</label>
                                 </div>
                                 @error('language')
                                     <div class="invalid-feedback d-block">
                                         {{ $message }}
                                     </div>
                                 @enderror
-                                <p class="form-note">Select the language for the privacy content.</p>
+                                <p class="form-note">Select the language for the About content.</p>
                             </div>
 
-                            {{-- News Status --}}
+                            {{-- About Status dropdown --}}
                             <div class="col-md-6">
                                 <label for="status" class="form-label">Status</label>
-                                <select class="form-select" id="status" name="status" required>
-                                    <option value="active" selected>Active</option>
-                                    <option value="inactive">Inactive</option>
+                                <select class="form-select @error('status') is-invalid @enderror" id="status"
+                                    name="status" required>
+                                    {{-- Correctly set 'selected' based on old input or current $about->status --}}
+                                    <option value="active"
+                                        {{ old('status', $about->status) == 'active' ? 'selected' : '' }}>Active</option>
+                                    <option value="inactive"
+                                        {{ old('status', $about->status) == 'inactive' ? 'selected' : '' }}>Inactive
+                                    </option>
                                 </select>
+                                {{-- This div will only be displayed if there is a validation error for 'status' --}}
                                 @error('status')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
+                                {{-- Optional: Add a small help text if needed --}}
+                                {{-- <p class="form-note">Set the active status for the policy.</p> --}}
                             </div>
 
-                            {{-- Privacy Content --}}
+                            {{-- about Content using TinyMCE --}}
                             <div class="col-md-12">
-                                <label for="news_content" class="form-label">News Content </label>
-                                <textarea type="text" id="content" name="content" class="form-control tinymce" placeholder="Enter news content"
-                                    value="{{ old('content') }}" rows="20">{{ old('content') }}</textarea>
+                                <label for="content" class="form-label">About Content </label>
+                                <textarea id="content" name="content" class="form-control tinymce @error('content') is-invalid @enderror"
+                                    placeholder="Enter policy content" rows="20">{{ old('content', $about->content) }}</textarea> {{-- Uses old input or $about->content --}}
                                 @error('content')
                                     <div class="invalid-feedback">
                                         {{ $message }}
                                     </div>
                                 @enderror
                             </div>
-                            {{-- Privacy Content end --}}
-
+                            {{-- terms Content end --}}
 
                             <div class="mt-5">
                                 <button type="submit" class="btn-submit">
-                                    <i class="fas fa-plus-circle me-2"></i> Add Terms
+                                    <i class="fas fa-save me-2"></i> Update About {{-- Changed button text to "Update" --}}
                                 </button>
                             </div>
+                        </div>
+                    </div>
                 </form>
             </div>
         </div>
     </div>
 
-    {{-- Editor --}}
-
+    {{-- TinyMCE Editor Initialization and Image Resizing Script --}}
     <script>
-        // Initialize TinyMCE for all textareas
+        // Initialize TinyMCE for the content textarea
         tinymce.init({
-            selector: 'textarea:not(#news_description)',
+            selector: 'textarea#content', // Explicitly target the 'content' textarea
             advcode_inline: true,
             plugins: 'searchreplace autolink directionality visualblocks visualchars image link media codesample table charmap pagebreak nonbreaking anchor insertdatetime advlist lists wordcount help charmap emoticons autosave fullscreen code',
             toolbar: "undo redo print spellcheckdialog formatpainter | blocks fontfamily fontsize | bold italic underline forecolor backcolor | link image | alignleft aligncenter alignright alignjustify | code | checklist numlist bullist indent outdent | table tabledelete | tableprops tablerowprops tablecellprops | tableinsertrowbefore tableinsertrowafter tabledeleterow | tableinsertcolbefore tableinsertcolafter tabledeletecol",
             file_picker_types: 'image',
             file_picker_callback: function(callback, value, meta) {
                 if (meta.filetype === 'image') {
-                    // Open a file picker dialog
                     openFilePicker(callback);
                 }
             },
@@ -335,72 +340,65 @@
             ],
         });
 
+        // Function to open a file picker dialog for TinyMCE
+        function openFilePicker(callback) {
+            var input = document.createElement('input');
+            input.setAttribute('type', 'file');
+            input.setAttribute('accept', 'image/*');
 
+            input.onchange = function() {
+                var file = this.files[0];
 
+                if (window.FileReader) {
+                    var reader = new FileReader();
 
-        // // Function to open file picker dialog
-        // function openFilePicker(callback) {
-        //     var input = document.createElement('input');
-        //     input.setAttribute('type', 'file');
-        //     input.setAttribute('accept', 'image/*');
+                    reader.onload = function(e) {
+                        resizeImage(e.target.result, function(resizedImage) {
+                            callback(resizedImage, {
+                                alt: file.name
+                            });
+                        });
+                    };
 
-        //     input.onchange = function() {
-        //         var file = this.files[0];
+                    reader.readAsDataURL(file);
+                } else {
+                    alert('FileReader is not supported in this browser.');
+                }
+            };
 
-        //         if (window.FileReader) {
-        //             var reader = new FileReader();
+            input.click();
+        }
 
-        //             reader.onload = function(e) {
-        //                 // Resize and compress image before passing it to TinyMCE
-        //                 resizeImage(e.target.result, function(resizedImage) {
-        //                     callback(resizedImage, {
-        //                         alt: file.name
-        //                     });
-        //                 });
-        //             };
+        // Function to resize and compress images before TinyMCE inserts them
+        function resizeImage(base64Image, callback) {
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
 
-        //             reader.readAsDataURL(file);
-        //         } else {
-        //             alert('FileReader is not supported in this browser.');
-        //         }
-        //     };
+                let width = img.width;
+                let height = img.height;
+                const maxWidth = 1920;
+                const maxHeight = 1080;
 
-        //     input.click();
-        // }
+                if (width > maxWidth || height > maxHeight) {
+                    if (width / height > maxWidth / maxHeight) {
+                        height = Math.round(maxWidth * (height / width));
+                        width = maxWidth;
+                    } else {
+                        width = Math.round(maxHeight * (width / height));
+                        height = maxHeight;
+                    }
+                }
 
+                canvas.width = width;
+                canvas.height = height;
+                ctx.drawImage(img, 0, 0, width, height);
 
-        // function resizeImage(base64Image, callback) {
-        //     const img = new Image();
-        //     img.onload = function() {
-        //         const canvas = document.createElement('canvas');
-        //         const ctx = canvas.getContext('2d');
-
-        //         // Determine new dimensions
-        //         let width = img.width;
-        //         let height = img.height;
-        //         const maxWidth = 1920;
-        //         const maxHeight = 1080;
-
-        //         if (width > maxWidth || height > maxHeight) {
-        //             if (width / height > maxWidth / maxHeight) {
-        //                 height = Math.round(maxWidth * (height / width));
-        //                 width = maxWidth;
-        //             } else {
-        //                 width = Math.round(maxHeight * (width / height));
-        //                 height = maxHeight;
-        //             }
-        //         }
-
-        //         canvas.width = width;
-        //         canvas.height = height;
-        //         ctx.drawImage(img, 0, 0, width, height);
-
-        //         // Convert canvas to base64 with compression
-        //         const compressedImage = canvas.toDataURL('image/jpeg', 0.7); // Adjust quality here
-        //         callback(compressedImage);
-        //     };
-        //     img.src = base64Image;
-        // }
+                const compressedImage = canvas.toDataURL('image/jpeg', 0.7);
+                callback(compressedImage);
+            };
+            img.src = base64Image;
+        }
     </script>
-
 @endsection

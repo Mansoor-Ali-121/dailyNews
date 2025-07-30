@@ -26,6 +26,11 @@ return [
     'all_blogs'=> 'تمام بلاگز',
     'privacy_policy'=> 'پالیسی',
     'terms_of_use'=> 'استعمال کی شرائط',
+    'about_us'=> 'ہمارے بارے میں',
+    'contact_us'=> 'ہم سے رابطہ کریں۔',
+    'other_pages'=> 'دوسرے صفحات',
+    'about_page'=> 'ہمارے بارے میں - ڈیلی نیوز',
+
     // 'to'=> 'کو',
     // 'total_News_by_this_author'=> 'اس مصنف کی طرف سے کل خبریں',
 

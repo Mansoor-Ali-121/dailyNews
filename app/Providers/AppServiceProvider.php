@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Models\News;
+use App\Models\About;
 use App\Models\Terms;
 use App\Models\Categories;
 use App\Models\BreakingNews;
@@ -118,6 +119,13 @@ class AppServiceProvider extends ServiceProvider
             ->latest('id')
             ->first();
         view()->share('terms', $terms);
+
+        // About
+        $about = About::where('status', 'active')
+            ->where('language', $locale)
+            ->latest('id')
+            ->first();
+        view()->share('about', $about);
 
         // 📌 Latest 4 news per category
         $latestnavnews = Categories::with(['posts' => function ($query) use ($locale) {

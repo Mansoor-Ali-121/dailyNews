@@ -224,17 +224,17 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h4 class="mb-0">
-                    <i class="fas fa-newspaper me-2"></i> Add New Term
+                    <i class="fas fa-newspaper me-2"></i> Add New About
                 </h4>
                 <div class="d-flex align-items-center">
-                    <a href="{{ route('terms.show') }}" class="btn btn-light btn-sm rounded-pill px-4 py-2 shadow-sm ms-3">
-                        <i class="fas fa-arrow-left me-2"></i> Back to Terms and Conditions
+                    <a href="{{ route('about.show') }}" class="btn btn-light btn-sm rounded-pill px-4 py-2 shadow-sm ms-3">
+                        <i class="fas fa-arrow-left me-2"></i> Back to About Us
                     </a>
                 </div>
             </div>
 
             <div class="card-body">
-                <form action="{{ route('terms.add') }}" method="POST">
+                <form action="{{ route('about.add') }}" method="POST">
                     @csrf
                     <div class="mb-5">
                         <div class="row g-4">
@@ -259,7 +259,7 @@
                                         {{ $message }}
                                     </div>
                                 @enderror
-                                <p class="form-note">Select the language for the privacy content.</p>
+                                <p class="form-note">Select the language for the about content.</p>
                             </div>
 
                             {{-- News Status --}}
@@ -276,7 +276,7 @@
                                 @enderror
                             </div>
 
-                            {{-- Privacy Content --}}
+                            {{-- About Content --}}
                             <div class="col-md-12">
                                 <label for="news_content" class="form-label">News Content </label>
                                 <textarea type="text" id="content" name="content" class="form-control tinymce" placeholder="Enter news content"
@@ -287,12 +287,12 @@
                                     </div>
                                 @enderror
                             </div>
-                            {{-- Privacy Content end --}}
+                            {{-- About Content end --}}
 
 
                             <div class="mt-5">
                                 <button type="submit" class="btn-submit">
-                                    <i class="fas fa-plus-circle me-2"></i> Add Terms
+                                    <i class="fas fa-plus-circle me-2"></i> Add About
                                 </button>
                             </div>
                 </form>

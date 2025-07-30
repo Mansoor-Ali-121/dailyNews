@@ -283,6 +283,19 @@
             </li>
             {{-- Terms and Conditions end --}}
 
+            {{-- About Us --}}
+            <li class="sidebar-item dropdown">
+                <a class="sidebar-link dropdown-toggle" href="#" id="aboutDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="align-middle" data-feather="user"></i> <span class="align-middle">About Us</span>
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="aboutDropdown">
+                    <li><a class="dropdown-item" href="{{ route('about.show') }}">View About Us</a></li>
+                    <li><a class="dropdown-item" href="{{ route('about.add') }}">Add About Us</a></li>
+                </ul>
+            </li>
+            {{-- About Us end --}}
+
             <li class="sidebar-item">
                 <a class="sidebar-link text-danger" href="{{ route('logout') }}">
                     <i class="align-middle" data-feather="power"></i> <span class="align-middle">Logout</span>

@@ -9,3 +9,6 @@
 .profile-container{
     direction: ltr;
 }
+.uc-menu-panel > .uc-logo > img{
+    direction: ltr ! important;
+}

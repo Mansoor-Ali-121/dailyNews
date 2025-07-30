@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\User;
+use App\Models\Terms;
 use App\Models\ContactUs;
 use App\Http\Middleware\ValidUser;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BlogController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AboutController;
+use App\Http\Controllers\TermsController;
 use App\Http\Controllers\CitiesController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\PrivacyController;
@@ -17,8 +20,6 @@ use App\Http\Controllers\CountriesController;
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\LiveVideosController;
 use App\Http\Controllers\BreakingNewsController;
-use App\Http\Controllers\TermsController;
-use App\Models\Terms;
 
 // Admin Routes
 // Route to display the login form
@@ -179,6 +180,18 @@ Route::middleware(ValidUser::class)->group(function () {
         Route::delete('/delete/{id}', [TermsController::class, 'destroy'])->name('terms.delete');
     });
 
+    // About Us
+    Route::prefix('about')->group(function () {
+
+        Route::get('/add', [AboutController::class, 'index'])->name('about.add');
+        Route::post('/add', [AboutController::class, 'store']);
+        Route::get('/show', [AboutController::class, 'show'])->name('about.show');
+        Route::get('/view/{id}', [AboutController::class,'view'])->name('about.view');
+        Route::get('/edit/{id}', [AboutController::class, 'edit'])->name('about.edit');
+        Route::patch('/update/{id}', [AboutController::class, 'update'])->name('about.update');
+        Route::delete('/delete/{id}', [AboutController::class, 'destroy'])->name('about.delete');
+    });
+
 
     // MIddleware end
 });
@@ -266,4 +279,22 @@ Route::post('/ur/contact/add', [ContactController::class, 'store']);
 Route::get('/ur/contact/add', [ContactController::class, 'index'])->name('urdu.contact.add');
 // Urdu Website Routes End
 
-// Urdu Website Routes End
+
+// web.php
+Route::get('/switch-language/{locale}', function ($locale) {
+    if (!in_array($locale, ['en', 'ur'])) {
+        abort(400);
+    }
+
+    $previousUrl = url()->previous(); // e.g., http://example.com/blog/5
+    $parsed = parse_url($previousUrl);
+    $path = $parsed['path'] ?? '/';
+
+    // Remove existing locale prefix if any
+    $path = preg_replace('#^/(ur)(/|$)#', '/', $path);
+
+    // Add locale prefix
+    $newPath = $locale === 'ur' ? '/ur' . $path : $path;
+
+    return redirect($newPath);
+})->name('switch.language');

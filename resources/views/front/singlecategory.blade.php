@@ -68,7 +68,7 @@
                                                                     <div>
                                                                         @if ($item->author)
                                                                             <div class="post-author hstack gap-1">
-                                                                                <a href="{{ route('author.profile', $item->author->user_slug) }}"
+                                                                                <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.author.profile' : 'author.profile', $item->author->user_slug) }}"
                                                                                     data-uc-tooltip="{{ $item->author->name }}">
                                                                                     <img src="{{ asset('images/users/' . $item->author->user_image) }}"
                                                                                         alt="{{ $item->author->name }}"

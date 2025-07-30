@@ -48,7 +48,7 @@
     <link rel="stylesheet" href="{{ asset('website/assets/css/style.css') }}">
     <link rel="preload" href="{{ asset('website/assets/js/uikit-components-bs.js') }}" as="script">
     <link rel="preload" href="{{ asset('website/assets/js/app.js') }}" as="script">
-@stack('urdustyle')
+    @stack('urdustyle')
     <script src="{{ asset('website/assets/js/app-head-bs.js') }}"></script>
 
     <link rel="stylesheet" href="{{ asset('website/assets/js/uni-core/css/uni-core.min.css') }}">
@@ -65,7 +65,7 @@
 <body class="uni-body panel bg-white text-gray-900 dark:bg-black dark:text-white text-opacity-50 overflow-x-hidden">
 
     <!--  Search modal -->
-    <div id="uc-search-modal" class="uc-modal-full uc-modal" data-uc-modal="overlay: true">
+    {{-- <div id="uc-search-modal" class="uc-modal-full uc-modal" data-uc-modal="overlay: true">
         <div class="uc-modal-dialog d-flex justify-center bg-white text-dark dark:bg-gray-900 dark:text-white"
             data-uc-height-viewport="">
             <button
@@ -85,15 +85,17 @@
                 </form>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!--  Sidebar panel -->
     <div id="uc-menu-panel" data-uc-offcanvas="overlay: true;">
         <div class="uc-offcanvas-bar bg-white text-dark dark:bg-gray-900 dark:text-white">
             <header class="uc-offcanvas-header hstack justify-between items-center pb-4 bg-white dark:bg-gray-900">
                 <div class="uc-logo">
-                    <a href="index.html" class="h5 text-none text-gray-900 dark:text-white">
-                        <img class="w-32px" src="{{ asset('website/assets/images/common/logo-icon.svg') }}"
+                    <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}"
+                        class="h5 text-none text-gray-900 dark:text-white">
+                        <img class="w-32px"
+                            src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
                             alt="News5" data-uc-svg>
                     </a>
                 </div>
@@ -105,38 +107,33 @@
             </header>
 
             <div class="panel">
-                <form id="search-panel" class="form-icon-group vstack gap-1 mb-3" data-uc-sticky="">
-                    <input type="email" class="form-control form-control-md fs-6" placeholder="Search..">
-                    <span class="form-icon text-gray">
-                        <i class="unicon-search icon-1"></i>
-                    </span>
-                </form>
                 <ul class="nav-y gap-narrow fw-bold fs-5" data-uc-nav>
                     {{-- Categories --}}
                     <li class="uc-parent">
-                        <a href="#">Homepages</a>
+                        <a href="#">{{ __('messages.category') }}</a>
                         <ul class="uc-nav-sub" data-uc-nav="">
-                            <li><a href="../main/index.html">Main</a></li>
-                            <li><a href="../demo-two/index.html">Classic News</a></li>
-                            <li><a href="../demo-three/index.html">Tech</a></li>
-                            <li><a href="../demo-four/index.html">Classic Blog</a></li>
-                            <li><a href="../demo-five/index.html">Gaming</a></li>
-                            <li><a href="../demo-six/index.html">Sports</a></li>
-                            <li><a href="../demo-seven/index.html">Newspaper</a></li>
-                            <li><a href="../demo-eight/index.html">Magazine</a></li>
-                            <li><a href="../demo-nine/index.html">Travel</a></li>
-                            <li><a href="../demo-ten/index.html">Food</a></li>
+                            @foreach ($allcategories as $item)
+                                <li><a
+                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.category' : 'single.category', $item->category_slug) }}">{{ $item->category_name }}</a>
+                                </li>
+                            @endforeach
+
                         </ul>
                     </li>
                     {{-- Categories end --}}
-                    <li><a href="{{ route('about') }}">About Us</a></li>
-                    <li><a href="{{ route('contact.add') }}">Contact Us</a></li>
+                    <li><a
+                            href="{{ route(app()->getLocale() === 'ur' ? 'urdu.about' : 'about') }}">{{ __('messages.about_us') }}</a>
+                    </li>
+                    <li><a href="{{ route('contact.add') }}">{{ __('messages.contact_us') }}</a></li>
                     <li class="uc-parent">
-                        <a href="#">Other pages</a>
+                        <a href="#">{{ __('messages.other_pages') }}</a>
                         <ul class="uc-nav-sub">
-                            <li><a href="page-faq.html">FAQ</a></li>
-                            <li><a href="page-terms.html">Terms of use</a></li>
-                            <li><a href="page-privacy.html">Privacy policy</a></li>
+                            <li><a
+                                    href="{{ route(app()->getLocale() === 'ur' ? 'urdu.terms' : 'terms') }}">{{ __('messages.terms_of_use') }}</a>
+                            </li>
+                            <li><a
+                                    href="{{ route(app()->getLocale() === 'ur' ? 'urdu.privacy' : 'privacy') }}">{{ __('messages.privacy_policy') }}</a>
+                            </li>
                         </ul>
                     </li>
                 </ul>
@@ -164,7 +161,7 @@
     </div>
 
     <!--  Favorites modal -->
-    <div id="uc-favorites-modal" data-uc-modal="overlay: true">
+    {{-- <div id="uc-favorites-modal" data-uc-modal="overlay: true">
         <div class="uc-modal-dialog lg:max-w-500px bg-white text-dark dark:bg-gray-800 dark:text-white rounded">
             <button
                 class="uc-modal-close-default p-0 icon-3 btn border-0 dark:text-white dark:text-opacity-50 hover:text-primary hover:rotate-90 duration-150 transition-all"
@@ -178,7 +175,7 @@
                 <a href="index.html" class="btn btn-sm btn-primary mt-2 uc-modal-close">Browse articles</a>
             </div>
         </div>
-    </div>
+    </div> --}}
 
     <!--  Bottom Actions Sticky and back to top -->
     <div class="backtotop-wrap position-fixed bottom-0 end-0 z-99 m-2 vstack">
@@ -252,7 +249,8 @@
 
                                 {{-- All Latest news with categories --}}
                                 <li>
-                                    <a href="#">{{__('messages.latest')}} <span data-uc-navbar-parent-icon></span></a>
+                                    <a href="#">{{ __('messages.latest') }} <span
+                                            data-uc-navbar-parent-icon></span></a>
                                     <div class="uc-navbar-dropdown ft-primary text-unset p-3 pb-4 rounded-0 hide-scrollbar"
                                         data-uc-drop=" offset: 0; boundary: !.navbar-container; stretch: x; animation: uc-animation-slide-top-small; duration: 150;">
                                         <div class="row col-match g-2">
@@ -260,7 +258,7 @@
                                                 <div class="uc-navbar-switcher-nav border-end">
                                                     <ul class="uc-tab-left fs-6 text-end"
                                                         data-uc-tab="connect: #uc-navbar-switcher-tending; animation: uc-animation-slide-right-small, uc-animation-slide-left-small">
-                                                        <li><a href="#category-all">{{__('messages.all')}}</a></li>
+                                                        <li><a href="#category-all">{{ __('messages.all') }}</a></li>
                                                         @foreach ($latestnavnews as $index => $item)
                                                             <li><a
                                                                     href="#category-{{ $index }}">{{ $item->category_name }}</a>
@@ -738,7 +736,8 @@
                                 </a>
                             </div> --}}
                             <div class="uc-logo d-block md:d-none">
-                                <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}">
+                                <a
+                                    href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}">
                                     <img class="w-100px text-dark dark:text-white"
                                         src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
                                         alt="News5" data-uc-svg>
@@ -747,7 +746,8 @@
                         </div>
                         <div class="uc-navbar-center">
                             <div class="uc-logo d-none md:d-block">
-                                <a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}">
+                                <a
+                                    href="{{ route(app()->getLocale() === 'ur' ? 'urdu.news.index' : 'news.index') }}">
                                     <img class="text-dark dark:text-white main-logo"
                                         src="{{ asset('website/assets/images/demo-seven/common/dailynews.webp') }}"
                                         alt="News5" data-uc-svg>
@@ -762,11 +762,35 @@
                                     <span>Live</span>
                                 </a>
                             </div> --}}
+                            {{-- Top navbar   --}}
                             <div class="uc-navbar-item d-none lg:d-inline-flex">
-                                <a class="uc-search-trigger cstack text-none text-dark dark:text-white"
-                                    href="#uc-search-modal" data-uc-toggle>
-                                    <i class="icon icon-2 fw-medium unicon-search"></i>
-                                </a>
+                                {{-- Language --}}
+                                <div class="d-inline-block">
+                                    <a href="#" class="hstack gap-1 text-none fw-medium" data-uc-drop-toggle>
+                                        <i class="icon icon-1 unicon-earth-filled"></i>
+                                        <span>{{ app()->getLocale() === 'ur' ? 'اردو' : 'English' }}</span>
+                                        <span data-uc-drop-parent-icon=""></span>
+                                    </a>
+                                    <div class="p-2 bg-white dark:bg-gray-800 shadow-xs w-150px"
+                                        data-uc-drop="mode: click; boundary: !.uc-footer-bottom; animation: uc-animation-slide-top-small; duration: 150;">
+                                        <ul class="nav-y gap-1 fw-medium items-end">
+                                            {{-- Switch to English --}}
+                                            @if (app()->getLocale() !== 'en')
+                                                <li>
+                                                    <a href="{{ route('switch.language', 'en') }}">English</a>
+                                                </li>
+                                            @endif
+
+                                            {{-- Switch to Urdu --}}
+                                            @if (app()->getLocale() !== 'ur')
+                                                <li>
+                                                    <a href="{{ route('switch.language', 'ur') }}">اردو</a>
+                                                </li>
+                                            @endif
+                                        </ul>
+                                    </div>
+                                </div>
+
                             </div>
                             <div class="uc-navbar-item d-none lg:d-inline-flex">
                                 <div class="uc-modes-trigger btn btn-xs w-32px h-32px p-0 border fw-normal rounded-circle dark:text-white hover:bg-gray-25 dark:hover:bg-gray-900"
@@ -818,9 +842,11 @@
                             </p>
                             <ul class="nav-x gap-2 fw-medium">
                                 <li><a class="uc-link text-underline hover:text-gray-900 dark:hover:text-white duration-150"
-                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.privacy' : 'privacy') }}">Privacy notice</a></li>
+                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.privacy' : 'privacy') }}">Privacy
+                                        notice</a></li>
                                 <li><a class="uc-link text-underline hover:text-gray-900 dark:hover:text-white duration-150"
-                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.terms' : 'terms') }}">Terms of condition</a></li>
+                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.terms' : 'terms') }}">Terms
+                                        of condition</a></li>
                             </ul>
                         </div>
                         <div class="footer-social hstack justify-center gap-2 lg:gap-3">
@@ -847,6 +873,7 @@
                                 </li>
                             </ul>
                             <div class="vr"></div>
+                            {{-- Lanaguage --}}
                             <div class="d-inline-block">
                                 <a href="#" class="hstack gap-1 text-none fw-medium">
                                     <i class="icon icon-1 unicon-earth-filled"></i>
