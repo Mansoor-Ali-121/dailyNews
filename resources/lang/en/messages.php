@@ -40,6 +40,7 @@ Fill out the form below, and our team will get in touch with you as soon as poss
 'mobile'=> 'Mobile',
 'submit'=> 'Submit',
 'subject'=> 'Subject',
+'message'=> 'Message',
 
 
 
