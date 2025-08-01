@@ -813,6 +813,62 @@
     @yield('content')
     {{-- Content End --}}
 
+    <footer class="footer-custom" style="background-color: #f6f6f6">
+        <div class="container">
+            <div class="row">
+                {{-- About --}}
+                <div class="col-lg-3 col-sm-6 text-center mb-4 mt-4">
+                    <h4>{{__('messages.about_us')}}</h4>
+                    <ul class="list-unstyled">
+                        <li><a href="{{route(app()->getLocale() === 'ur' ? 'urdu.about' : 'about')}}">{{__('messages.about_us')}}</a></li>
+                        <li><a href="{{route(app()->getLocale() === 'ur' ? 'urdu.terms' : 'terms')}}">{{__('messages.terms_of_use')}}</a></li>
+                        <li><a href="{{route(app()->getLocale() === 'ur' ? 'urdu.privacy' : 'privacy')}}">{{__('messages.privacy_policy')}}</a></li>
+                        <li><a href="#">{{__('messages.contact_us')}}</a></li>
+
+                    </ul>
+                </div>
+            
+                 {{-- Latest Breaking News --}}
+                <div class="col-lg-3 col-sm-6 text-center mb-4 mt-4">
+                    <h4>{{__('messages.breaking_news')}}</h4>
+                    <ul class="list-unstyled">
+                        @foreach ($livebreakingnews as $item)
+                            
+                        <li><a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $item->breakingnews_slug) }}">{{ Str::limit($item->title, 30, '...') }}</a></li>
+                        @endforeach
+
+                    </ul>
+                </div>
+                
+                {{-- Latest News --}}
+                <div class="col-lg-3 col-sm-6 text-center mb-4 mt-4">
+                    <h4>{{__('messages.latest_news')}}</h4>
+                    <ul class="list-unstyled">
+                        @foreach ($latestFourNews as $item )
+                            
+                        <li><a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}">{{ Str::limit($item->news_title, 30, '...') }}</a></li>
+                        @endforeach
+                        {{-- <li><a href="#">Al Jazeera Media Institute</a></li>
+                        <li><a href="#">Learn Arabic</a></li>
+                        <li><a href="#">Al Jazeera Centre for Public Liberties & Human Rights</a></li>
+                        <li><a href="#">Al Jazeera Forum</a></li>
+                        <li><a href="#">Al Jazeera Hotel Partners</a></li> --}}
+                    </ul>
+                </div>
+
+                   {{-- Categories --}}
+                <div class="col-lg-3 col-sm-6 text-center mb-4 mt-4">
+                    <h4>{{__('messages.category')}}</h4>
+                    <ul class="list-unstyled">
+                        @foreach ($allcategories->sortByDesc('id')->take(4) as $item)
+                            <li><a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.category' : 'single.category', $item->category_slug) }}">{{ $item->category_name }}</a></li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
     <!-- Footer start -->
     <footer id="uc-footer" class="uc-footer panel uc-dark">
         <div class="footer-outer py-4 lg:py-6 bg-white dark:bg-gray-900 text-gray-900 dark:text-white text-opacity-50">
@@ -873,32 +929,32 @@
                                 </li>
                             </ul>
                             <div class="vr"></div>
-                                {{-- Language --}}
-                                <div class="d-inline-block">
-                                    <a href="#" class="hstack gap-1 text-none fw-medium" data-uc-drop-toggle>
-                                        <i class="icon icon-1 unicon-earth-filled"></i>
-                                        <span>{{ app()->getLocale() === 'ur' ? 'اردو' : 'English' }}</span>
-                                        <span data-uc-drop-parent-icon=""></span>
-                                    </a>
-                                    <div class="p-2 bg-white dark:bg-gray-800 shadow-xs w-150px"
-                                        data-uc-drop="mode: click; boundary: !.uc-footer-bottom; animation: uc-animation-slide-top-small; duration: 150;">
-                                        <ul class="nav-y gap-1 fw-medium items-end">
-                                            {{-- Switch to English --}}
-                                            @if (app()->getLocale() !== 'en')
-                                                <li>
-                                                    <a href="{{ route('switch.language', 'en') }}">English</a>
-                                                </li>
-                                            @endif
+                            {{-- Language --}}
+                            <div class="d-inline-block">
+                                <a href="#" class="hstack gap-1 text-none fw-medium" data-uc-drop-toggle>
+                                    <i class="icon icon-1 unicon-earth-filled"></i>
+                                    <span>{{ app()->getLocale() === 'ur' ? 'اردو' : 'English' }}</span>
+                                    <span data-uc-drop-parent-icon=""></span>
+                                </a>
+                                <div class="p-2 bg-white dark:bg-gray-800 shadow-xs w-150px"
+                                    data-uc-drop="mode: click; boundary: !.uc-footer-bottom; animation: uc-animation-slide-top-small; duration: 150;">
+                                    <ul class="nav-y gap-1 fw-medium items-end">
+                                        {{-- Switch to English --}}
+                                        @if (app()->getLocale() !== 'en')
+                                            <li>
+                                                <a href="{{ route('switch.language', 'en') }}">English</a>
+                                            </li>
+                                        @endif
 
-                                            {{-- Switch to Urdu --}}
-                                            @if (app()->getLocale() !== 'ur')
-                                                <li>
-                                                    <a href="{{ route('switch.language', 'ur') }}">اردو</a>
-                                                </li>
-                                            @endif
-                                        </ul>
-                                    </div>
+                                        {{-- Switch to Urdu --}}
+                                        @if (app()->getLocale() !== 'ur')
+                                            <li>
+                                                <a href="{{ route('switch.language', 'ur') }}">اردو</a>
+                                            </li>
+                                        @endif
+                                    </ul>
                                 </div>
+                            </div>
                         </div>
                     </div>
                 </div>

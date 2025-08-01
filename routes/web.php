@@ -153,6 +153,9 @@ Route::middleware(ValidUser::class)->group(function () {
 
     // Contact show
     Route::get('/contact/show', [ContactController::class, 'show'])->name('contact.show');
+    Route::delete('/contact/delete{id}', [ContactController::class, 'destroy'])->name('contact.delete');
+
+
 
     // Privacy Crud
     Route::prefix('privacy')->group(function () {

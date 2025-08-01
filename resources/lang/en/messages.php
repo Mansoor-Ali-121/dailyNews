@@ -26,10 +26,22 @@ return [
     'all_blogs' => 'All Blogs',
     'privacy_policy' => 'Privacy Policy',
     'terms_of_use' => 'Terms of Use',
-    'about_us' => 'Aboute Us',
+    'about_us' => 'About Us',
     'contact_us' => 'Contact Us',
     'other_pages' => 'Other Pages',
     'about_page'=> 'About Us — Daily News',
+    'contact_text'=> 'Have a question,story tip, or want to share feedback?
+Fill out the form below, and our team will get in touch with you as soon as possible.',
+'get_in_touch'=> 'Get in Touch',
+'address'=> 'Address : Ghouri Town Islamabad',
+'phone'=> 'Phone : +923065533444',
+'email'=> 'Email',
+'name'=> 'Name',
+'mobile'=> 'Mobile',
+'submit'=> 'Submit',
+'subject'=> 'Subject',
+
+
 
     // 'showing'=> 'Showing',
     // 'to'=> 'To',

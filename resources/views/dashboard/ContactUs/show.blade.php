@@ -34,8 +34,8 @@
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Name</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Email</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Subject</th>
-                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Message</th>
                                             <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Timestamps</th>
+                                            <th class="py-3 text-uppercase fw-bold text-muted fs-5 border-0">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -68,14 +68,14 @@
                                                         </small>
                                                     </div>
                                                 </td>
-                                                <td>
+                                                {{-- <td>
                                                     <div class="d-flex flex-column">
                                                         <small class="text-muted fs-6">
                                                             <i class="fas fa-comment me-2" aria-hidden="true"></i>
                                                             {{ ($contact->message) }}
                                                         </small>
                                                     </div>
-                                                </td>
+                                                </td> --}}
                                                 <td>
                                                     <div class="d-flex flex-column">
                                                         <small class="text-muted fs-6">
@@ -84,6 +84,21 @@
                                                         </small>
                                                     </div>
                                                 </td>
+                                                <td>
+                                                    <a href="" class="">
+Edit
+                                                    </a>
+                                                    <form action="{{ route('contact.delete', $contact->id) }}" method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button type="submit"  class="btn btn-outline-danger" data-bs-toggle="tooltip"
+                                                            data-bs-placement="top" title="Delete Contact" aria-label="Delete Contact {{ $contact->name }}">
+                                                            <i class="fas fa-trash me-2" aria-hidden="true"></i>
+                                                            Delete
+                                                        </button>
+                                                    </form>
+                                                </td>
+
                                             </tr>
                                         @endforeach
                                     </tbody>

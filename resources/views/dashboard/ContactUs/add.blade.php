@@ -4,11 +4,9 @@
 
     <section class="contact-container">
         <div class="heading">
-            <h1>Contact Us</h1>
+            <h1>{{__('messages.contact_us')}}</h1>
             <p>
-                Have a question,story tip, or want to share feedback? <br>
-                Fill out the form below, and our team will get in
-                touch with you as soon as possible.
+                {{__('messages.contact_text')}}
             </p>
         </div>
 
@@ -31,37 +29,37 @@
 
         <div class="form-container">
             <div class="left-side">
-                <h3>Get in Touch</h3>
+                <h3>{{__('messages.get_in_touch')}}</h3>
                 <ul>
-                    <li>Address : Ghouri Town Islamabad</li>
-                    <li>Phone : +923065533444</li>
-                    <li>Email : contact@daily99news.com</li>
+                    <li>{{__('messages.address')}}</li>
+                    <li>{{__('messages.phone')}}</li>
+                    <li>{{__('messages.email')}} : contact@daily99news.com</li>
                 </ul>
             </div>
             <div class="right-side">
                 <form action="{{ route('contact.add') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="name">Name</label>
+                        <label for="name">{{__('messages.name')}}</label>
                         <input type="text" name="name" id="name" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">Email</label>
+                        <label for="email">{{__('messages.email')}}</label>
                         <input type="email" name="email" id="email" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="phone">Phone</label>
+                        <label for="phone">{{__('messages.mobile')}}</label>
                         <input type="phone" name="phone" id="phone" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="subject">Subject</label>
+                        <label for="subject">{{__('messages.subject')}}</label>
                         <input type="subject" name="subject" id="subject" class="form-control" required>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="message">Message</label>
+                        <label for="message">{{__('messages.message')}}</label>
                         <textarea name="message" id="message" class="form-control" rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-primary">{{__('messages.submit')}}</button>
             </div>
         </div>
 

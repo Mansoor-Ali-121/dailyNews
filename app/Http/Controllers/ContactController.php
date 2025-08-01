@@ -69,6 +69,8 @@ class ContactController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $contacts = ContactUs::find($id);
+        $contacts->delete();
+        return redirect()->route('contact.show')->with('success','Contact deleted successfully.');
     }
 }
