@@ -18,5 +18,8 @@
         /* top: 0; */
         right: 0;
       }
+      .count{
+        color: gray !important;
+      }
         
     }

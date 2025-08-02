@@ -232,8 +232,8 @@ Route::get('/terms', [WebController::class, 'terms'])->name('terms');
 Route::get('/about', [WebController::class, 'about'])->name('about');
 //About page end
 // Contact routes in website
-Route::post('/contact/add', [ContactController::class, 'store']);
-Route::get('/contact/add', [ContactController::class, 'index'])->name('contact.add');
+Route::post('/contact', [ContactController::class, 'store']);
+Route::get('/contact', [ContactController::class, 'index'])->name('contact.add');
 //  Website routes end
 // Route::get('/contact', [WebController::class,''])->name('');
 
@@ -278,8 +278,8 @@ Route::get('/ur/terms', [UrduWebController::class, 'terms'])->name('urdu.terms')
 Route::get('/ur/about', [UrduWebController::class, 'about'])->name('urdu.about');
 
 // Contact (same controller for form)
-Route::post('/ur/contact/add', [ContactController::class, 'store']);
-Route::get('/ur/contact/add', [ContactController::class, 'index'])->name('urdu.contact.add');
+Route::post('/ur/contact', [ContactController::class, 'store']);
+Route::get('/ur/contact', [ContactController::class, 'index'])->name('urdu.contact.add');
 // Urdu Website Routes End
 
 

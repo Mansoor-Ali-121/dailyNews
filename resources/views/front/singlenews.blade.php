@@ -434,8 +434,8 @@
                                         <ul>
                                             @foreach ($categories as $category)
                                                 <li><a
-                                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.category' : 'single.category', $category->category_slug) }}">{{ $category->category_name }}</a>
-                                                    <span>{{ $category->news_count }}</span>
+                                                        href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.category' : 'single.category', $category->category_slug) }}" class="text-black hover:text-gray">{{ $category->category_name }}</a>
+                                                    <span style="color: gray">{{ $category->news_count }}</span>
                                                 </li>
                                             @endforeach
 

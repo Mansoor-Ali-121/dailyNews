@@ -4,10 +4,8 @@
 
     <section class="contact-container">
         <div class="heading">
-            <h1>{{__('messages.contact_us')}}</h1>
-            <p>
-                {{__('messages.contact_text')}}
-            </p>
+            <h4 class="h4 sm:h2 lg:h1 xl:display-6">{{ __('messages.contact_us') }}</h4>
+            <p class="heading-text">{{ __('messages.contact_text') }}</p>
         </div>
 
         @if (session('success'))
@@ -29,37 +27,37 @@
 
         <div class="form-container">
             <div class="left-side">
-                <h3>{{__('messages.get_in_touch')}}</h3>
+                <h3>{{ __('messages.get_in_touch') }}</h3>
                 <ul>
-                    <li>{{__('messages.address')}}</li>
-                    <li>{{__('messages.phone')}}</li>
-                    <li>{{__('messages.email')}} : contact@daily99news.com</li>
+                    <li>{{ __('messages.address') }}</li>
+                    <li>{{ __('messages.phone') }}</li>
+                    <li>{{ __('messages.email') }} : contact@daily99news.com</li>
                 </ul>
             </div>
             <div class="right-side">
                 <form action="{{ route('contact.add') }}" method="POST">
                     @csrf
                     <div class="form-group">
-                        <label for="name">{{__('messages.name')}}</label>
+                        <label for="name">{{ __('messages.name') }}</label>
                         <input type="text" name="name" id="name" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="email">{{__('messages.email')}}</label>
+                        <label for="email">{{ __('messages.email') }}</label>
                         <input type="email" name="email" id="email" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="phone">{{__('messages.mobile')}}</label>
+                        <label for="phone">{{ __('messages.mobile') }}</label>
                         <input type="phone" name="phone" id="phone" class="form-control" required>
                     </div>
                     <div class="form-group">
-                        <label for="subject">{{__('messages.subject')}}</label>
+                        <label for="subject">{{ __('messages.subject') }}</label>
                         <input type="subject" name="subject" id="subject" class="form-control" required>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="message">{{__('messages.message')}}</label>
+                        <label for="message">{{ __('messages.message') }}</label>
                         <textarea name="message" id="message" class="form-control" rows="5" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary">{{__('messages.submit')}}</button>
+                    <button type="submit" class="btn btn-primary">{{ __('messages.submit') }}</button>
             </div>
         </div>
 
@@ -91,7 +89,7 @@
 
         .contact-container .heading p {
             font-size: 20px;
-            color: #000000;
+            color: #616161;
             max-width: 720px;
             margin: 0 auto;
             line-height: 1.7;
@@ -191,16 +189,16 @@
         }
 
         /* button.btn-primary {
-            background-color: #e50914;
-            color: #fff;
-            padding: 12px 26px;
-            font-size: 16px;
-            font-weight: bold;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s, transform 0.2s ease;
-        } */
+                background-color: #e50914;
+                color: #fff;
+                padding: 12px 26px;
+                font-size: 16px;
+                font-weight: bold;
+                border: none;
+                border-radius: 6px;
+                cursor: pointer;
+                transition: background-color 0.3s, transform 0.2s ease;
+            } */
 
         button.btn-primary:hover {
             background-color: #c40711;
@@ -223,5 +221,11 @@
                 padding: 20px;
             }
         }
+
+        /* [data-darkmode-toggle] .switch>.slider {
+            
+        } */
+
     </style>
+    
 @endsection

@@ -813,17 +813,17 @@
     @yield('content')
     {{-- Content End --}}
 
-    <footer class="footer-custom" style="background-color: #f6f6f6">
+    <footer class="footer-custom" style="background-color: #090909; color: rgb(149, 149, 149)">
         <div class="container">
             <div class="row">
                 {{-- About --}}
                 <div class="col-lg-3 col-sm-6 text-center mb-4 mt-4">
                     <h4>{{__('messages.about_us')}}</h4>
                     <ul class="list-unstyled">
-                        <li><a href="{{route(app()->getLocale() === 'ur' ? 'urdu.about' : 'about')}}">{{__('messages.about_us')}}</a></li>
-                        <li><a href="{{route(app()->getLocale() === 'ur' ? 'urdu.terms' : 'terms')}}">{{__('messages.terms_of_use')}}</a></li>
-                        <li><a href="{{route(app()->getLocale() === 'ur' ? 'urdu.privacy' : 'privacy')}}">{{__('messages.privacy_policy')}}</a></li>
-                        <li><a href="#">{{__('messages.contact_us')}}</a></li>
+                        <li><a href="{{route(app()->getLocale() === 'ur' ? 'urdu.about' : 'about')}}"  class="hover:text-white">{{__('messages.about_us')}}</a></li>
+                        <li><a href="{{route(app()->getLocale() === 'ur' ? 'urdu.terms' : 'terms')}}"  class="hover:text-white">{{__('messages.terms_of_use')}}</a></li>
+                        <li><a href="{{route(app()->getLocale() === 'ur' ? 'urdu.privacy' : 'privacy')}}"  class="hover:text-white">{{__('messages.privacy_policy')}}</a></li>
+                        <li><a href="{{route(app()->getLocale() === 'ur' ? 'urdu.contact.add' : 'contact.add')}}"  class="hover:text-white">{{__('messages.contact_us')}}</a></li>
 
                     </ul>
                 </div>
@@ -834,7 +834,7 @@
                     <ul class="list-unstyled">
                         @foreach ($livebreakingnews as $item)
                             
-                        <li><a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $item->breakingnews_slug) }}">{{ Str::limit($item->title, 30, '...') }}</a></li>
+                        <li><a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.breakingnews' : 'single.breakingnews', $item->breakingnews_slug) }}"  class="hover:text-white">{{ Str::limit($item->title, 25, '...') }}</a></li>
                         @endforeach
 
                     </ul>
@@ -846,13 +846,8 @@
                     <ul class="list-unstyled">
                         @foreach ($latestFourNews as $item )
                             
-                        <li><a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}">{{ Str::limit($item->news_title, 30, '...') }}</a></li>
+                        <li><a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.news' : 'single.news', $item->news_slug) }}"  class="hover:text-white">{{ Str::limit($item->news_title, 30, '...') }}</a></li>
                         @endforeach
-                        {{-- <li><a href="#">Al Jazeera Media Institute</a></li>
-                        <li><a href="#">Learn Arabic</a></li>
-                        <li><a href="#">Al Jazeera Centre for Public Liberties & Human Rights</a></li>
-                        <li><a href="#">Al Jazeera Forum</a></li>
-                        <li><a href="#">Al Jazeera Hotel Partners</a></li> --}}
                     </ul>
                 </div>
 
@@ -861,7 +856,7 @@
                     <h4>{{__('messages.category')}}</h4>
                     <ul class="list-unstyled">
                         @foreach ($allcategories->sortByDesc('id')->take(4) as $item)
-                            <li><a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.category' : 'single.category', $item->category_slug) }}">{{ $item->category_name }}</a></li>
+                            <li><a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.single.category' : 'single.category', $item->category_slug) }}"  class="hover:text-white">{{ $item->category_name }}</a></li>
                         @endforeach
                     </ul>
                 </div>
