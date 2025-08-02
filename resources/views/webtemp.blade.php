@@ -124,7 +124,7 @@
                     <li><a
                             href="{{ route(app()->getLocale() === 'ur' ? 'urdu.about' : 'about') }}">{{ __('messages.about_us') }}</a>
                     </li>
-                    <li><a href="{{ route('contact.add') }}">{{ __('messages.contact_us') }}</a></li>
+                    <li><a href="{{ route(app()->getLocale() === 'ur' ? 'urdu.contact.add' : 'contact.add') }}">{{ __('messages.contact_us') }}</a></li>
                     <li class="uc-parent">
                         <a href="#">{{ __('messages.other_pages') }}</a>
                         <ul class="uc-nav-sub">
