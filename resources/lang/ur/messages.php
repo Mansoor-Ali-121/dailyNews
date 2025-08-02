@@ -3,7 +3,7 @@
 use App\Models\Country;
 
 return [
-    'breaking_news' => 'تازہ ترین خبریں',
+'breaking_news' => 'اہم ترین خبریں',
     'category'=> 'زمرہ',
     'Related to this News'=> ' اس خبر سے متعلق',
     'latest_blogs' => 'تازہ ترین بلاگز',
@@ -16,7 +16,7 @@ return [
     'no_related_news_found_for_this_topic'=> 'اس موضوع سے متعلق کوئی خبر نہیں ملی',
     'prev_article'=> 'پچھلا مضمون',
     'next_article'=> 'اگلا مضمون',
-    'latest_news'=> 'تازہ ترین خبریں',
+   'latest_news' => 'حالیہ خبریں',
     'related_news'=> 'متعلقہ خبریں',
     'recent_breaking_news'=> 'حالیہ بریکنگ نیوز',
     'latest'=> 'تازہ ترین',
