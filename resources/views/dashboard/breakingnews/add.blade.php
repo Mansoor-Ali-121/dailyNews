@@ -450,7 +450,7 @@
     document.addEventListener('DOMContentLoaded', function () {
         const radios = document.querySelectorAll('input[name="language"]');
         const newsDropdown = document.getElementById('news_id');
-        const selectedNewsId = "{{ $breakingNews->news_id }}"; // Currently selected news
+        const selectedNewsId = "news_id"; // Currently selected news
 
         radios.forEach(radio => {
             radio.addEventListener('change', function () {
