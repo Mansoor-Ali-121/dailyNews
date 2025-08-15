@@ -287,7 +287,7 @@
                                                                                     alt="{{ $post->news_title }}"
                                                                                     data-uc-img="loading: lazy">
                                                                             </div>
-                                                                            <a href="{{ route('single.news', $post->news_slug) }}"
+                                                                            <a href="{{ route( app()->getLocale() =='ur' ? 'urdu.single.news' : 'single.news', $post->news_slug) }}"
                                                                                 class="position-cover"></a>
                                                                         </div>
                                                                         <div
@@ -295,7 +295,7 @@
                                                                             <h3
                                                                                 class="post-title h6 m-0 text-truncate-2">
                                                                                 <a class="text-none hover:text-primary duration-150"
-                                                                                    href="{{ route('single.news', $post->news_slug) }}">{{ $post->news_title }}</a>
+                                                                                    href="{{ route(app()->getLocale() =='ur' ? 'urdu.single.news' : 'single.news', $post->news_slug) }}">{{ $post->news_title }}</a>
                                                                             </h3>
                                                                             <div
                                                                                 class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60">
@@ -338,7 +338,7 @@
                                                                                         alt="{{ $post->news_title }}"
                                                                                         data-uc-img="loading: lazy">
                                                                                 </div>
-                                                                                <a href="{{ route('single.news', $post->news_slug) }}"
+                                                                                <a href="{{ route(app()->getLocale() =='ur' ? 'urdu.single.news' : 'single.news', $post->news_slug) }}"
                                                                                     class="position-cover"></a>
                                                                             </div>
                                                                             <div
@@ -346,7 +346,7 @@
                                                                                 <h3
                                                                                     class="post-title h6 m-0 text-truncate-2">
                                                                                     <a class="text-none hover:text-primary duration-150"
-                                                                                        href="{{ route('single.news', $post->news_slug) }}">{{ $post->news_title }}</a>
+                                                                                        href="{{ route( app()->getLocale() =='ur' ? 'urdu.single.news' : 'single.news', $post->news_slug) }}">{{ $post->news_title }}</a>
                                                                                 </h3>
                                                                                 <div
                                                                                     class="post-meta panel hstack justify-start gap-1 fs-7 ft-tertiary fw-medium text-gray-900 dark:text-white text-opacity-60">
