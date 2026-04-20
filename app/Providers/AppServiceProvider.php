@@ -11,143 +11,65 @@ use App\Models\PrivacyPolicy;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
+    public function register(): void { }
 
-    /**
-     * Bootstrap any application services.
-     */
     public function boot(): void
     {
-        // Set locale from URL segment
+        // 1. Locale Set Karna
         $locale = request()->segment(1);
-        if (in_array($locale, ['ur', 'en'])) {
-            App::setLocale($locale);
-        } else {
-            App::setLocale('en');
-        }
-
+        App::setLocale(in_array($locale, ['ur', 'en']) ? $locale : 'en');
         $locale = App::getLocale();
 
-        // 🔴 Breaking News (Top 4)
-        view()->share('livebreakingnews', BreakingNews::where('breakingnews_status', 'active')
-            ->where('language', $locale)
-            ->latest()
-            ->take(4)
-            ->get());
+        // 2. ✅ SAFETY CHECK (Sab se zaroori): 
+        // Agar table ya language column nahi hoga toh code crash nahi karega
+        if (!app()->runningInConsole() && Schema::hasTable('breaking_news') && Schema::hasColumn('breaking_news', 'language')) {
+            
+            // 🔴 Breaking News Logic
+            view()->share('livebreakingnews', BreakingNews::where('breakingnews_status', 'active')->where('language', $locale)->latest()->take(4)->get());
+            view()->share('singleLatestBreakingNews', BreakingNews::where('breakingnews_status', 'active')->where('language', $locale)->latest()->first());
+            
+            $secondLatestBreakingNews = BreakingNews::where('breakingnews_status', 'active')->where('language', $locale)->latest()->skip(1)->first();
+            view()->share('secondLatestBreakingNews', $secondLatestBreakingNews);
 
-        // 🔴 Single Latest Breaking News
-        view()->share('singleLatestBreakingNews', BreakingNews::where('breakingnews_status', 'active')
-            ->where('language', $locale)
-            ->latest()
-            ->first());
+            // ✅ All Categories
+            view()->share('allcategories', Categories::where('language', $locale)->get());
 
-        // 🔴 Second Latest Breaking News
-        $secondLatestBreakingNews = BreakingNews::where('breakingnews_status', 'active')
-            ->where('language', $locale)
-            ->latest()
-            ->skip(1)
-            ->first();
-        view()->share('secondLatestBreakingNews', $secondLatestBreakingNews);
+            // 🟢 News Categories (Politics, Sports, etc.) - Maine loop laga diya hai taake file lambi na ho
+            $cats = ['Politics', 'Sports', 'Entertainment', 'World'];
+            $urdu_names = ['Politics' => 'سیاست', 'Sports' => 'کھیل', 'Entertainment' => 'تفریح', 'World' => 'دنیا'];
 
-        // ✅ All categories for navbar (filtered by language)
-        view()->share('allcategories', Categories::where('language', $locale)->get());
+            foreach ($cats as $cat) {
+                $news_data = News::where('news_status', 'active')->where('language', $locale)
+                    ->whereHas('category', function ($q) use ($locale, $cat, $urdu_names) {
+                        $q->where('category_name', $locale === 'ur' ? $urdu_names[$cat] : $cat);
+                    })->latest()->take(4)->get();
+                
+                view()->share(strtolower($cat) . 'news', $news_data);
+            }
 
-        // 🟢 Politics News
-        $politicsnews = News::where('news_status', 'active')
-            ->where('language', $locale)
-            ->whereHas('category', function ($query) use ($locale) {
-                $query->where('category_name', $locale === 'ur' ? 'سیاست' : 'Politics');
-            })
-            ->latest()
-            ->take(4)
-            ->get();
-        view()->share('politicsnews', $politicsnews);
+            // 📄 Static Pages (Privacy, Terms, About)
+            view()->share('privacypolicy', PrivacyPolicy::where('status', 'active')->where('language', $locale)->latest('id')->first());
+            view()->share('terms', Terms::where('status', 'active')->where('language', $locale)->latest('id')->first());
+            view()->share('about', About::where('status', 'active')->where('language', $locale)->latest('id')->first());
 
-        // 🟢 Sports News
-        $sportsnews = News::where('news_status', 'active')
-            ->where('language', $locale)
-            ->whereHas('category', function ($query) use ($locale) {
-                $query->where('category_name', $locale === 'ur' ? 'کھیل' : 'Sports');
-            })
-            ->latest()
-            ->take(4)
-            ->get();
-        view()->share('sportsnews', $sportsnews);
+            // 📌 Navigation & General News
+            $latestnavnews = Categories::with(['posts' => fn($q) => $q->where('language', $locale)])
+                ->where('language', $locale)->latest()->take(4)->get();
 
-        // 🟢 Entertainment News
-        $entertainmentnews = News::where('news_status', 'active')
-            ->where('language', $locale)
-            ->whereHas('category', function ($query) use ($locale) {
-                $query->where('category_name', $locale === 'ur' ? 'تفریح' : 'Entertainment');
-            })
-            ->latest()
-            ->take(4)
-            ->get();
-        view()->share('entertainmentnews', $entertainmentnews);
+            $latestFourNews = News::where('language', $locale)->latest()->take(4)->get();
 
-        // 🟢 World News
-        $worldnews = News::where('news_status', 'active')
-            ->where('language', $locale)
-            ->whereHas('category', function ($query) use ($locale) {
-                $query->where('category_name', $locale === 'ur' ? 'دنیا' : 'World');
-            })
-            ->latest()
-            ->take(4)
-            ->get();
-        view()->share('worldnews', $worldnews);
-
-        // Privacy Policy
-        $privacypolicy = PrivacyPolicy::where('status', 'active')
-            ->where('language', $locale)
-            ->latest('id')
-            ->first();
-        view()->share('privacypolicy', $privacypolicy);
-
-        // Terms
-        $terms = Terms::where('status', 'active')
-            ->where('language', $locale)
-            ->latest('id')
-            ->first();
-        view()->share('terms', $terms);
-
-        // About
-        $about = About::where('status', 'active')
-            ->where('language', $locale)
-            ->latest('id')
-            ->first();
-        view()->share('about', $about);
-
-        // 📌 Latest 4 news per category
-        $latestnavnews = Categories::with(['posts' => function ($query) use ($locale) {
-            $query->where('language', $locale);
-        }])
-            ->where('language', $locale)
-            ->latest()
-            ->take(4)
-            ->get();
-
-        // 📌 Latest 4 general news
-        $latestFourNews = News::where('language', $locale)
-            ->latest()
-            ->take(4)
-            ->get();
-
-        // 🟨 Share to all views
-        View::share([
-            'latestnavnews' => $latestnavnews,
-            'latestFourNews' => $latestFourNews,
-            'locale' => $locale,
-        ]);
+            // 🟨 Share all remaining variables
+            View::share([
+                'latestnavnews' => $latestnavnews,
+                'latestFourNews' => $latestFourNews,
+                'locale' => $locale,
+            ]);
+        }
 
         Route::middleware('web')->group(base_path('routes/web.php'));
     }
