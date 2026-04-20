@@ -11,10 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('categories', function (Blueprint $table) {
-            // language column to store the language of the category
+       if (!Schema::hasColumn('categories', 'language')) {
+        Schema::table('categories', 'language', function (Blueprint $table) {
             $table->string('language')->default('en')->after('category_status');
         });
+    }
     }
 
     /**
